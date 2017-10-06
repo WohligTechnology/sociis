@@ -1,0 +1,38 @@
+<form name="formName" ng-submit="saveModel(forms)">
+    <div class="heading-sec">
+        <div class="row">
+            <div class="col-md-12 column">
+                <div class="heading-profile">
+                    <h2>{{templateArray.name}}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Bar Chart -->
+    <div class="panel-content">
+        <div class="widget">
+           <table class="file-list table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Rate</th>
+          
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="tmp in templateArray.forms">
+               <div ng-repeat="tmp2 in tmp">
+                <td>{{tmp2}}</td>
+                <td>{{tmp.rate}}</td>
+               </div>
+            </tr>
+        </tbody>
+    </table>
+        </div>
+        <div class="clearfix"></div>
+        <div class="text-center mt20 odd-even-button" ng-hide="Saved">
+            <button class="btn btn-default" type="submit" ng-disabled="formName.$invalid">Save</button>
+            <a class="btn btn-default" ui-sref="timeline({id:assignment._id})">Cancel</a>
+        </div>
+    </div>
+</form>

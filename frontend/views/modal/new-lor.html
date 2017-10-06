@@ -1,0 +1,48 @@
+<div class="modal-header green-bg">
+  <div class="pull-right">
+    <button class="btn btn-darker btn-round btn-nopad" ng-click="lorCreateCheck()">Create new</button>
+    <button class="btn btn-clear" ng-click="$dismiss()">
+      <i class="ln-cross"></i>
+    </button>
+  </div>
+  <h5 class="modal-title">View LOR</h5>
+</div>
+<div class="modal-body">
+  <table class="file-list table" ng-if="assignment.templateLor != ''">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>LOR Stage</th>
+        <th>MR #</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>PDF</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="lor in assignment.templateLor track by $index">
+        <td>{{$index + 1}}</td>
+        <td>
+          <div ng-if="$index==0">LOR</div>
+          <div ng-if="$index!==0">LOR Reminder {{$index}}</div>
+        </td>
+        <td>{{lor.templateName}}</td>
+        <td>{{lor.timestamp|date:'dd-MM-yyyy'}}</td>
+        <td>{{lor.approvalStatus}}</td>
+        <td>
+          <button class="btn btn-clear" ng-if="lor.file!=undefined">
+            <a class="btn btn-primary temp-btnbg" download="{{lor.file}}" ng-href="{{lor.file|downloadImageWithName:' '+assignment.name+' '+lor.lorCount+'.pdf'}}">
+                                            <i class="ln-download"></i>
+          </a>
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-clear" ng-click="viewTemplates('LORs','TemplateLor',lor)" ng-if="($index==assignment.templateLor.length-1 && (lor.approvalStatus=='Draft'||lor.approvalStatus=='Approved'||lor.approvalStatus=='Regenerate'))"><i class="ln-pencil"></i></button>
+          <button class="btn btn-clear" ng-if="lor.approvalStatus=='Draft'" ng-click="deleteTemplate('templateLor',$index,'LOR')"><i class="ln-trash2"></i></button>
+          <!--<button class="btn btn-clear"><i class="ln-download"></i></button>-->
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

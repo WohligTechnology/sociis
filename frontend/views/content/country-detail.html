@@ -1,0 +1,61 @@
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Locations</a>
+        </li>
+        <li>
+            <a ui-sref="country-list" >{{header.name}}</a>
+        </li>
+    </ul>
+</div>
+
+<div class="heading-sec">
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>{{header.name}}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="form-elements-sec">
+                    <div class="widget-title">
+                        <h3>Country</h3>
+                    </div>
+
+                    <form name="countryform" role="form" class="sec ng-pristine ng-valid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Country*</label>
+                                    <input type="text" name="name" ng-model="formData.name" class="form-control" required>
+                                    <div class="error-msg" ng-show="countryform.name.$invalid && countryform.name.$touched">Please Enter Country</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Country Code*</label>
+                                    <input type="text" name="countryCode" ng-model="formData.countryCode" class="form-control text-upper" maxlength="2" required>
+                                    <div class="error-msg" ng-show="countryform.countryCode.$invalid && countryform.countryCode.$touched">Please Enter Country Code</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>ISD Code*</label>
+                                    <input type="text" name="ISDCodes" ng-model="formData.ISDCodes" class="form-control" required>
+                                    <div class="error-msg" ng-show="countryform.ISDCodes.$invalid && countryform.ISDCodes.$touched">Please Enter ISD Code</div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="text-center mt20 odd-even-button">
+                            <button class="btn btn-default" type="submit" ng-click="saveCountry(formData)" ng-disabled="countryform.$invalid">Save</button>
+                            <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

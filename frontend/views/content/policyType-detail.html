@@ -1,0 +1,100 @@
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Insurance</a>
+        </li>
+        <li>
+            <a ui-sref="policyType-list">{{header.Type}}</a>
+        </li>
+    </ul>
+</div>
+<form name="policyTypeForm" ng-submit="saveModel(formData)">
+    <div class="heading-sec">
+        <div class="row">
+            <div class="col-md-12 column">
+                <div class="heading-profile">
+                    <toggle-switch ng-model="formData.status" class="switch-small switch-success pull-right"></toggle-switch>
+                    <h2>{{header.name}}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Bar Chart -->
+    <div class="panel-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="widget">
+                    <div class="form-elements-sec">
+                        <div class="widget-title">
+                            <h3>Policy Type</h3>
+                        </div>
+                        <div class="sec">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Policy Type*</label>
+                                        <input type="text" name="name" ng-model="formData.name" class="form-control" required>
+                                        <div class="error-msg" ng-show="policyTypeForm.name.$invalid && policyTypeForm.name.$touched">Please Enter Policy Name</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Department*</label>
+                                        <multiple-select my-enter name="department" required ng-model="formData.department" ng-name="name.zone" api="searchDepartment" ng-create="departmentSave"></multiple-select>
+                                        <div class="error-msg" ng-show="policyTypeForm.department.$invalid">Please Enter Department</div>
+                                    </div>
+                                    <!--<div class="form-group">
+                                        <label>Insurer*</label>
+                                        <multiple-select my-enter name="insurer" required ng-model="formData.insurer" ng-name="name.zone" api="searchCompany" ng-create="departmentSave"></multiple-select>
+                                        <div class="error-msg" ng-show="policyTypeForm.insurer.$invalid">Please Enter Insurer</div>
+                                    </div>-->
+                                    <div class="form-group">
+                                        <label>Insurer*</label>
+                                        <ui-select multiple ng-model="formData.insurer" theme="bootstrap" required>
+                                            <ui-select-match>{{$item.name}}</ui-select-match>
+                                            <ui-select-choices repeat="insurer in insurers | filter:$select.search" refresh="refreshInsurer($select.search)" ui-disable-choice="insurers.length==0">{{insurer.name}}</ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="widget-title">
+                              <a class="btn btn-primary normal pull-right" ng-click="addNatureOfLoss()">Add New</a>
+                                <h3>Insurer</h3>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-input">
+                                  <thead>
+                                    <tr>
+                                      <th>Name</th>
+                                      <th width="150px">Actions
+                                      </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td><input type="text" class="form-control" ng-readonly></td>
+                                      <td>
+                                          <a class="btn btn-primary" ng-click="editNatureOfLoss()">
+                                              <i class="fa fa-pencil"></i>
+                                          </a>
+                                          <a class="btn btn-success" ui-sref="saveNatureOfLoss({id:loss._id})">
+                                              <i class="fa fa-floppy-o"></i>
+                                          </a>
+                                          <a class="btn btn-danger" ng-click="deleteNatureOfLoss()">
+                                              <i class="fa fa-trash"></i>
+                                          </a>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                            </div> -->
+                            <div class="text-center mt20 odd-even-button">
+                                <button class="btn btn-default" type="submit" ng-disabled="policyTypeForm.$invalid">Save</button>
+                                <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

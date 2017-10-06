@@ -1,0 +1,30 @@
+<form name="modalForm" ng-submit="transferSelectedData(modelData);$dismiss()" class="min-hit">
+    <div class="modal-header blue-bg">
+        <div class="pull-right">
+            <a class="btn btn-clear" ng-click="$dismiss()">
+                <i class="ln-cross"></i>
+            </a>
+        </div>
+        <h5 class="modal-title">Transfer Assignment</h5>
+    </div>
+    <div class="modal-body">
+      <div class="sec">
+          <div class="row">
+                  <div class="col-md-12">
+                  <div class="form-group mr-form search-bar-forms">
+                      <label>Transfer To*</label>
+                       <ui-select required name="employee"
+                            ng-model="transferData.to" theme="bootstrap" title="Select Employee Name">
+                            <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="employee in employees | filter:$select.search" refresh-delay="0" refresh="refreshEmployee($select.search)">{{employee.name}}</ui-select-choices>
+                        </ui-select>
+                      <div class="error-msg" ng-show="formName.employee.$invalid">Please Select Employee</div>
+                  </div>
+              </div>
+      </div>
+<!--no-view-->
+        <div class="text-center">
+            <button class="btn btn-primary" type="submit" ng-disabled="modalForm.$invalid" >Save</button>
+        </div>
+    </div>
+</form>

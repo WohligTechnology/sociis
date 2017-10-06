@@ -1,0 +1,57 @@
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Locations</a>
+        </li>
+        <li>
+            <a ui-sref="zone-list">{{header.name}}</a>
+        </li>
+    </ul>
+</div>
+
+<div class="heading-sec">
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>{{header.name}}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="form-elements-sec">
+                    <div class="widget-title">
+                        <h3>Zone</h3>
+                    </div>
+                    <form name="zoneform" role="form" class="sec ng-pristine ng-valid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Country*</label>
+                                    <multiple-select my-enter name="country" required ng-model="formData.country" ng-name="name.country" api="searchCountry"
+                                        ng-create="countrySave"></multiple-select>
+                                    <div class="error-msg" ng-show="zoneform.country.$invalid">Please Enter Country</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Zone*</label>
+                                    <input type="tel" name="name" ng-model="formData.name" class="form-control" required>
+                                    <div class="error-msg" ng-show="zoneform.name.$invalid && zoneform.name.$touched">Please Enter Zone</div>
+                                </div>
+                                <div class="text-center mt20 odd-even-button">
+                                    <button class="btn btn-default" type="submit" ng-click="saveZone(formData)" ng-disabled="zoneform.$invalid">Save</button>
+                                    <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

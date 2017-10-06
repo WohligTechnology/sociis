@@ -1,0 +1,56 @@
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="inbox-sec">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="inbox-navigation mmb0 mpb20" ng-style="{height:emailheight}">
+                            <div class="inbox-panel-head">
+                                <button class="btn btn-danger btn-block" ng-click="newEmail();">Compose</button>
+                            </div>
+                            <!-- Inbox Panel Head -->
+                            <ul>
+                                <li class="{{tab.class}}" ng-click="tabSelected(tab.label,tab)" ng-repeat="tab in tabMenue"><a>{{tab.title}}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="inbox-lists">
+                            <div class="inbox-action">
+                                <ul>
+                                    <li><label><input type="checkbox" ng-model="allSelect" name="select-all" id="select_all" ng-change="selectAll(allSelect)"/> Select all</label></li>
+                                    <li><a class="delete-email"><i class="fa fa-trash-o"></i> Delete</a></li>
+                                    <li><a ng-click="reloadGmail()"><i class="fa fa-refresh"></i> Refresh</a></li>
+                                    <li>
+                                        <input type="search" ng-model="emailForm.search" class="form-control" placeholder="Search in mail...">
+                                    </li>
+                                    <li>
+                                        <button class="btn btn-primary" ng-click="reloadGmail();">Search</button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="mesages-lists" infinite-scroll="reloadGmail(nextPage)" infinite-scroll-distance="2" infinite-scroll-disabled="false">
+                                <ul class="message-list" ng-style="{height:emailheight-62}">
+                                    <li ng-repeat="mail in mails" class="{{mail.detail.labelIds|readUnread}}">
+                                        <input class="select-message" type="checkbox" ng-model="mail.checked" ng-click="addEmailToDelete(mail)" />
+                                        <h3 class="sender-name pointer unread-msg" ng-click="showSingle(mail)"><i class="ln-paperclip" ng-if="mail.detail.payload.mimeType=='multipart/mixed'"></i>{{mail.detail.payload.headers | from:"From"}}</h3>
+                                        <!--<span class="pull-right" ng-if="mail.detail.labelIds|readUnread">(Unread)</span>-->
+                                        <a ng-if="mail.attachment"><i class="fa fa-paperclip"></i></a>
+                                        <p><span class="subject">{{mail.detail.payload.headers | from:"Subject"}}</span> - <span>{{mail.detail.payload.headers | from:"To"}}</span></p>
+                                    </li>
+                                    <a class="tableData" ng-show="msg=='' && mails.length != 0" ng-click="reloadGmail(nextPage)">
+                                        <h5>Load More..</h5>
+                                    </a>
+                                    <div class="tableData" ng-show="msg!=''">
+                                        <h5>{{msg}}</h5>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Inbox lists -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

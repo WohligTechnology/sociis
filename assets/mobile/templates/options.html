@@ -1,0 +1,47 @@
+<ion-view>
+    <ion-header-bar align-title="left" class="bar-positive">
+        <button class="button button-clear back-arrow-margin header-btn-center" ng-click="getBack();"> 
+            <i class="icon ion-android-arrow-back"></i>
+        </button>
+        <h1 class="title header-title-center main-page-title">Options</h1>
+
+    </ion-header-bar>
+    <ion-content>
+        <div class="list list-inset">
+            <!-- FOR Global -->
+            <button class="button filterPage-list-btn" ng-click="getDataForFilter('ownerName');" ng-if="filterObj.ownerName.length == 0 || filterObj.ownerName == undefined">
+	            <span>Global</span>
+            </button>
+
+            <!-- FOR New Assingment -->
+            <button class="button filterPage-list-btn" ng-click="getDataForFilter('insurer');" ng-if="filterObj.insurer.length == 0 || filterObj.insurer == undefined">
+	            <span>New Assingment</span>
+            </button>
+
+            <!-- FOR Filter -->
+            <button class="button filterPage-list-btn" ng-click="getDataForFilter('insured');" ng-if="filterObj.insured.length == 0 || filterObj.insured == undefined">
+	            <span>Filter</span>
+            </button>
+
+            <!-- FOR MR Register -->
+            <button class="button filterPage-list-btn" ng-click="getDataForFilter('brocker');" ng-if="filterObj.brocker.length == 0 || filterObj.brocker == undefined">
+	            <span>MR Register</span>
+            </button>
+
+            <!-- FOR Status Report -->
+            <button class="button filterPage-list-btn" ng-click="getDataForFilter('city');" ng-if="filterObj.city.length == 0 || filterObj.city == undefined">
+	            <span>Status Report</span>
+            </button>
+
+            <!-- FOR Dashboard -->
+            <button class="button filterPage-list-btn" ng-click="getDataForFilter('branch');" ng-if="filterObj.branch.length == 0 || filterObj.branch == undefined">
+	            <span>Dashboard</span>
+            </button>
+
+            <!-- FOR Logout -->
+            <button class="button  logout" ng-click="getDataForFilter('natureOfSurvey');" ng-if="filterObj.natureOfSurvey.length == 0 || filterObj.natureOfSurvey == undefined">
+	            <span>Logout</span>
+            </button>
+        </div>
+    </ion-content>
+</ion-view>

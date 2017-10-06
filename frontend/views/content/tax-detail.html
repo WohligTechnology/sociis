@@ -1,0 +1,111 @@
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Insurance</a>
+        </li>
+        <li>
+            <a ui-sref="policyType-list">{{header.Type}}</a>
+        </li>
+    </ul>
+</div>
+<form name="policyTypeForm" ng-submit="saveModel(formData)">
+    <div class="heading-sec">
+        <div class="row">
+            <div class="col-md-12 column">
+                <div class="heading-profile">
+                    <toggle-switch ng-model="formData.status" class="switch-small switch-success pull-right"></toggle-switch>
+                    <h2>{{header.name}}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Bar Chart -->
+    <div class="panel-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="widget">
+                    <div class="form-elements-sec">
+                        <div class="widget-title">
+                            <h3>Tax</h3>
+                        </div>
+                        <div class="sec">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Name*</label>
+                                        <input type="text" name="name" ng-model="formData.name" class="form-control" required>
+                                        <div class="error-msg" ng-show="policyTypeForm.name.$invalid && policyTypeForm.name.$touched">Please Enter Tax Name</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Percent*</label>
+                                        <input type="text" name="percent" ng-model="formData.percent" class="form-control" required>
+                                        <div class="error-msg" ng-show="policyTypeForm.percent.$invalid && policyTypeForm.percent.$touched">Please Enter Tax Name</div>
+                                    </div>
+                                </div>
+                            </div>-->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Intra-State-Tax*</label>
+                                        <input type="number" step="0.01" name="intraStatePercent" ng-model="formData.intraStatePercent" class="form-control" required>
+                                        <div class="error-msg" ng-show="policyTypeForm.intraStatePercent.$invalid && policyTypeForm.intraStatePercent.$touched">Please Enter Intra-State-Tax</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Inter-State-Tax*</label>
+                                        <input type="number" step="0.01" name="interStatePercent" ng-model="formData.interStatePercent" class="form-control" required>
+                                        <div class="error-msg" ng-show="policyTypeForm.interStatePercent.$invalid && policyTypeForm.interStatePercent.$touched">Please Enter Inter-State-Tax</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>From Date*</label>
+                                    <div class="input-group">
+                                        <input type="text" name="fromDate" required class="form-control" uib-datepicker-popup="{{format}}" ng-model="formData.fromDate"
+                                            is-open="popup.fromDate" ng-change="chageDOB(formData.birthDate);newDateOfIntimation(formData.fromDate)"
+                                            datepicker-options="fromDateLimit" readonly/>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="popup.fromDate=true">
+                                                <i class="fa fa-calendar"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <div class="error-msg" ng-show="formName.fromDate.$invalid && formName.fromDate.$touched">Please Enter Date of Intimation</div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>To Date*</label>
+                                    <div class="input-group">
+                                        <input type="text" name="toDate" required class="form-control" uib-datepicker-popup="{{format}}" ng-model="formData.toDate"
+                                            is-open="popup.toDate" ng-change="chageDOB(formData.birthDate);newDateOfIntimation(formData.toDate)"
+                                            datepicker-options="toDateLimit" readonly/>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="popup.toDate=true">
+                                                <i class="fa fa-calendar"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <div class="error-msg" ng-show="formName.toDate.$invalid && formName.toDate.$touched">Please Enter Date of Intimation</div>
+                                </div>
+                            </div>
+                            <div class="text-center mt20 odd-even-button">
+                                <button class="btn btn-default" type="submit" ng-disabled="policyTypeForm.$invalid">Save</button>
+                                <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

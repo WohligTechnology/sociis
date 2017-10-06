@@ -1,0 +1,59 @@
+<div class="heading-sec">
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>Invoice Template List</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="table-area">
+
+                    <div class="widget-title">
+                        <div class="pull-right">
+                            <form class="search-form mr-form">
+                                <input type="text" ng-change="showAll(true)" placeholder="Search Here..." ng-model="search.keyword" />
+                                <button type="submit">
+                                  <i class="fa fa-search"></i>
+                              </button>
+                            </form>
+                            <a class="btn btn-primary" ui-sref="createtemplateInvoice" ng-if="template.currentRole.add.val">Add New</a>
+                        </div>
+                        <h3>List of Invoice Templates <span class="tableTotal">(Total : {{totalItems}}) </span></h3>
+                    </div>
+                    <div class="table-responsive" ng-show="totalItems>0">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in modelList">
+                                    <td>{{data.name}}</td>
+                                    <td>
+                                        <a class="btn btn-primary" ui-sref="edittemplateInvoice({id:data._id})" ng-if="template.currentRole.edit.val"><i class="fa fa-pencil"></i></a>
+                                        <!--<a class="btn btn-danger" ng-click="deleteModel(data._id)" ng-if="template.currentRole.delete.val"><i class="fa fa-trash"></i></a>-->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tableData" ng-show="totalItems == 0">
+                        <h5>No data found</h5>
+                    </div>
+                    <div class="tableData" ng-show="totalItems == undefined">
+                        <h5>Loading Data</h5>
+                    </div>
+                    <ul ng-if="totalItems" ng-change="changePage(currentPage);" uib-pagination total-items="totalItems" items-per-page="maxRow" ng-model="currentPage" max-size="template.pageMax" class="pagination-sm" boundary-links="true" force-ellipses="true"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

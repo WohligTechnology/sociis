@@ -1,0 +1,161 @@
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Locations</a>
+        </li>
+        <li>
+            <a ui-sref="city-list">{{header.name}}</a>
+        </li>
+    </ul>
+</div>
+<div class="heading-sec">
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>{{header.name}}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <form name="cityform" role="form" class="sec ng-pristine ng-valid">
+                <div class="widget">
+                    <div class="form-elements-sec">
+                        <div class="widget-title">
+                            <h3>Logistic</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group ui-select">
+                                    <label>Assignment MR #</label>
+                                    <ui-select multiple required tagging="tagTransform" name="mrNumber" ng-model="formData.name"
+                                        theme="bootstrap" title="Select MR Number">
+                                        <ui-select-match placeholder="">{{$item.name}}</ui-select-match>
+                                        <ui-select-choices repeat="mrNumber in assignmentNumbers | filter:$select.search" refresh-delay="0" refresh="refreshMrNumber($select.search)">{{mrNumber.name}}</ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Outward Date*</label>
+                                    <div class="input-group">
+                                        <input type="date" name="outwardDate" required class="form-control" uib-datepicker-popup="{{format}}" ng-model="formData.outwardDate"
+                                            is-open="popup.outwardDate" ng-change="chageDOB(formData.birthDate)" datepicker-options="outwardDateLimit"
+                                            readonly/>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="popup.outwardDate=true">
+                                                <i class="fa fa-calendar"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <div class="error-msg" ng-show="cityform.outwardDate.$invalid && cityform.outwardDate.$touched">Please Enter Outward Date</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Type*</label>
+                                    <select name="DropDownTimezone" class="form-control" ng-model="formData.logistictype" id="DropDownTimezone" required>
+                                        <option timeZoneId="1" gmtAdjustment="GMT-12:00" useDaylightTime="0" value="Courier">Courier</option>
+                                        <option timeZoneId="2" gmtAdjustment="GMT-11:00" useDaylightTime="0" value="In Person">In Person</option>
+                                        <option timeZoneId="3" gmtAdjustment="GMT-10:00" useDaylightTime="0" value="Soft Copy(Email)">Soft Copy(Email)</option>
+                                        </select>
+                                    <div class="error-msg" ng-show="cityform.logistictype.$invalid && cityform.logistictype.$touched">Please Enter Type</div>
+                                </div>
+                                <div class="form-group ui-select">
+                                    <label>Send To*</label>
+                                    <input type="text" name="sendTo" ng-model="formData.sendTo" class="form-control" required>
+                                    <div class="error-msg" ng-show="cityform.sendTo.$invalid && cityform.sendTo.$touched">Please Enter Send To</div>
+                                </div>
+                                <div class="form-group ui-select">
+                                    <label>Document Details*</label>
+                                    <input type="text" name="documentDetails" ng-model="formData.documentDetails" class="form-control" required>
+                                    <div class="error-msg" ng-show="cityform.documentDetails.$invalid && cityform.documentDetails.$touched">Please Enter Document Details</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget">
+                    <div class="form-elements-sec">
+                        <div class="widget-title">
+                            <h3>POD Details</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group ui-select">
+                                    <label>Courier/Person*</label>
+                                    <input type="text" name="courier" ng-model="formData.courier" class="form-control" required>
+                                    <div class="error-msg" ng-show="cityform.courier.$invalid && cityform.courier.$touched">Please Enter Courier/Person</div>
+                                </div>
+                                <div class="form-group ui-select">
+                                    <label>Docket #*</label>
+                                    <input type="text" name="docketNumber" ng-model="formData.docketNumber" class="form-control" required>
+                                    <div class="error-msg" ng-show="cityform.docketNumber.$invalid && cityform.docketNumber.$touched">Please Enter Docket #</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Docket Date*</label>
+                                    <div class="input-group">
+                                        <input type="date" name="docketDate" class="form-control" uib-datepicker-popup="{{format}}" ng-model="formData.docketDate"
+                                            is-open="popup.docketDate" ng-change="chageDOB(formData.birthDate)" datepicker-options="docketDateLimit"
+                                            required readonly/>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="popup.docketDate=true">
+                                                <i class="fa fa-calendar"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <div class="error-msg" ng-show="cityform.docketDate.$invalid && cityform.docketDate.$touched">Please Enter Docket Date</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget" ng-if="formData.timelineStatus=='DBND' || formData.timelineStatus=='Delivered'">
+                    <div class="form-elements-sec">
+                        <div class="widget-title">
+                            <h3>Recieved</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group ui-select">
+                                    <label>By*</label>
+                                    <input type="text" name="by" ng-model="formData.by" class="form-control" required>
+                                    <div class="error-msg" ng-show="cityform.by.$invalid && cityform.by.$touched">Please Enter Recieved By</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Recieved Date*</label>
+                                    <div class="input-group">
+                                        <input type="date" required name="recievedDate" class="form-control" uib-datepicker-popup="{{format}}" ng-model="formData.recievedDate"
+                                            is-open="popup.recievedDate" ng-change="chageDOB(formData.birthDate)" datepicker-options="recievedDateLimit"
+                                            readonly/>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="popup.recievedDate=true">
+                                                <i class="fa fa-calendar"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <div class="error-msg" ng-show="cityform.recievedDate.$invalid && cityform.recievedDate.$touched">Please Enter Recieved Date</div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="">
+                                        <label class="">Time*</label>
+                                        <input type="time" required class="form-control" ng-model="formData.recievedTime">
+                                        <div class="error-msg" ng-show="cityform.recievedTime.$invalid && cityform.recievedTime.$touched">Please Enter Recieved Time</div>
+                                    </div>
+                                </div>
+                                <div class="form-group ui-select">
+                                    <label>Remarks*</label>
+                                    <input type="text" required name="remark" ng-model="formData.remark" class="form-control">
+                                    <div class="error-msg" ng-show="cityform.remark.$invalid && cityform.remark.$touched">Please Enter Remarks</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt20 odd-even-button">
+                    <button class="btn btn-default" type="submit" ng-click="saveLogistic(formData)" ng-disabled="cityform.$invalid">Save</button>
+                    <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

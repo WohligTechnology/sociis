@@ -1,0 +1,265 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<%
+function checkPending (input) {
+  for(var j=0; j<input.items.length; j++){
+    if(input.items[j].submit=="Pending" || input.items[j].submit=="Partially Recieved"){
+      return true;
+  }
+  }
+  
+        return false;
+};
+%>
+
+  <head>
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style>
+      body {
+        font-family: sans-serif;
+        font-size: 8px;
+      }
+      
+      .subject {
+        font-weight: bold;
+      }
+      
+      .claim-table {
+        width: 100%;
+      }
+      
+      .claim-detail>tr>td:first-child(1) {
+        width: 80%;
+      }
+      
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        font-size: 8px;
+        padding: 8px 4px 2px;
+        width: 80%;
+      }
+      
+      .date>p {
+        margin: 2px 0;
+      }
+      
+      .justify {
+        text-align: justify;
+      }
+      
+      p {
+        font-size: 8px;
+      }
+      
+      .content-head {
+        margin: 20px 0;
+      }
+      
+      .content-lineheight {
+        line-height: 1.5;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div style="padding:0;margin:0">
+      <div style="width:555px;margin:0 auto">
+        <div style="float:right">
+          <img src="http://absolute.wohlig.co.in/api/upload/readFile?file=589c558c1d8a3a0fc6eb4c6e.png" style="width:150px">
+        </div>
+        <div>
+          <div style="width:190px">
+            <p>
+              <%=assignment.branch.name%>,<br>
+                <% if(assignment.office) { %>
+                  <%=assignment.office.address%>,<br>
+                    <%=assignment.office.city.name%>,
+                      <%=assignment.office.city.district.state.name%>.<br> Phone #:
+                        <%=assignment.office.phone%>,<br> FAX #:
+                          <%=assignment.office.fax%>
+                            <% } %>
+            </p>
+          </div>
+        </div>
+        <p style="margin:20px 0;text-align:right;text-decoration:underline">WITHOUT PREJUDICE</p>
+        <div style="clear:both">
+        </div>
+        <h4 style="margin:5px 0;text-align:center;">LIST OF REQUIREMENT</h4>
+        <div class="date">
+          <p>
+            <%=assignment.name%>
+          </p>
+          <p>
+            <%= moment(new Date(data.authTimestamp)).format("dddd, MMMM Do YYYY")%>
+          </p>
+        </div>
+        <div>
+          <p class="content-lineheight">
+            <%if(assignment.siteNumber!=undefined){%>
+              <%=assignment.siteNumber%>,<br>
+                <%}%>
+                  <%if(assignment.siteMobile!=undefined){%>
+                    <%=assignment.siteMobile%><br>
+                      <%}%>
+                        <%if(assignment.insuredOffice!=undefined){%>
+                          <%=assignment.insuredOffice.name%>,<br>
+                            <%=assignment.insuredOffice.address%>,<br>
+                              <%=assignment.insuredOffice.city.name%>,<br>
+                                <%=assignment.insuredOffice.city.district.state.name%>-
+                                  <%=assignment.insuredOffice.pincode%><br>
+                                    <%}%>
+
+          </p>
+        </div>
+        <div class="subject">
+          <p>Subject:</p>
+          <p>Insured :
+            <%if(assignment.insured){%>
+              <%=assignment.insured.name%>.
+                <% } %>
+          </p>
+          <p> Policy # & Type :
+            <%=assignment.policyNumber%> -
+              <%if(assignment.policyType){%>
+                <%=assignment.policyType.name%>
+                  <% } %>
+          </p>
+          <p>Cause of Loss / Nature of Loss:
+            <%=assignment.causeOfLoss.name%>-
+              <% for(var j=0; j<assignment.natureOfLoss.length; j++) {%>
+                <%=assignment.natureOfLoss[j].name%>
+                  <%if(j<assignment.natureOfLoss.length-1){%>,
+                    <%}%>
+                      <% } %>
+
+          </p>
+          <p>
+          <% if(assignment.products[0]) { %>
+            <%=assignment.products[0].product.name%>,
+              <%=assignment.products[0].product.category.name%>,
+                <%=assignment.products[0].product.category.industry.name%> -
+                  <%=assignment.products[0].item%>
+                  <% } %>
+          </p>
+          <p>Location ID :
+            <%if(assignment.locationArr===undefined || assignment.locationArr.length<1){%>
+              NA
+              <%}else{%>
+                <%=assignment.locationArr[0].locationString%>
+                  <% } %>
+          </p>
+        </div>
+        <div>
+          <p class="content-head">Dear Sir/Madam</p>
+          <%if(data.lorCount=="LOR"){%>
+            <p class="content-lineheight justify">
+              Thank you very much for extending your cooperation during our visit. To enable us to proceed further and finalize the loss
+              you are requested to submit / mail / courier, complete, clear and legible copies of the documents / information
+              as indicated below. An early / timely action in the matter would help us & Insurers serve you promptly.
+            </p>
+            <%}%>
+              <%if(data.lorCount=="Reminder 1"){%>
+                <p class="content-lineheight justify">
+                  This refers to your claim and the list of requirements shared earlier. We regret to state that we are yet to receive these
+                  documents/information from your end. You are requested to kindly expedite the same. This refers to your
+                  claim, the list of requirements shared earlier and your revert on the same. We appreciate that part of
+                  the information / documents asked for have been provided to us. However, we are yet to receive following
+                  documents / information from your end. You are requested to kindly expedite the same.
+                </p>
+                <%}%>
+                  <%if(data.lorCount=="Reminder 2"){%>
+                    <p class="content-lineheight justify">
+                      This refers to your claim and our two earlier mails. We regret to state that we are yet to receive following documents /
+                      information from your end. You are requested to kindly expedite the same.
+                    </p>
+                    <%}%>
+                      <%if(data.lorCount=="Notice"){%>
+                        <p class="content-lineheight justify">
+                          This refers to your claim and our three earlier mails. We regret to state that we are yet to receive following documents
+                          / information from your end.
+                        </p>
+                        <%}%>
+        </div>
+        <div style="clear:both"></div>
+        <table class="claim-table">
+          <tbody>
+            <% for(var i=0; i<data.forms.length; i++) {%>
+              <tr>
+                <%if(checkPending(data.forms[i])){%>
+                  <td colspan="4"><b><%= data.forms[i].name %></b></td>
+                  <%}%>
+              </tr>
+              <% for(var j=0; j<data.forms[i].items.length; j++) {%>
+                <tr>
+                  <% if(data.forms[i].items[j].submit=="Pending" || data.forms[i].items[j].submit=="Partially Recieved"){ %>
+
+                    <td>
+                      <%= j+1 %>.
+                        <%= data.forms[i].items[j].name %>
+                    </td>
+                    <td style="text-align:right;">
+                    <%if(data.forms[i].items[j].typeOfDoc==true){%>
+                      Original
+                      <%}else{%>
+                      Copy
+                      <%}%>
+                    </td>
+
+                    <%}%>
+                </tr>
+                <% } %>
+                  <% } %>
+
+
+          </tbody>
+        </table>
+        <div class="content-head">
+          <%if(data.lorCount=="LOR"){%>
+            <p class="content-lineheight justify">
+              Kindly ensure that every copy is duly signed, stamped and marked as “Certified True Copy”. On the basis of your reply and
+              supportings submitted, further queries / clarification would be asked for if need be. We are aware that some
+              of the information asked for above may take some time for you to arrange. You are, therefore, advised to provide
+              the rest of the documents at the earliest, and let us have the schedule for submission of balance information
+              to enable us to apprise your Insurers of the time frame possible for our reporting.<br>Thanking
+              you and assuring you of best possible attention at all times.
+
+            </p>
+            <%}%>
+              <%if(data.lorCount=="Reminder 1"){%>
+                <p class="content-lineheight justify">
+                  We are aware that some of the information asked for above may take some time for you to arrange. You are, therefore, advised
+                  to provide the rest of the documents at the earliest, and let us have the schedule for submission of balance
+                  information to enable us to apprise your Insurers of the time frame possible for our reporting. Thanking
+                  you & assuring you of best possible attention at all times. Let us have the schedule for submission of
+                  balance information to enable us to update the insuers. Thanking you & assuring you of best possible attention
+                  at all times.
+                </p>
+                <%}%>
+                  <%if(data.lorCount=="Reminder 2"){%>
+                    <p class="content-lineheight justify">
+                      Kindly ensure that every documents / information is in In Duplicate, complete, clear & legible and is duly signed, stamped
+                      and marked as “Certified True Copy”. Thanking you & assuring you of best possible attention at all
+                      times.
+                    </p>
+                    <%}%>
+                      <%if(data.lorCount=="Notice"){%>
+                        <p class="content-lineheight justify">
+                          You will appreciate that it is not possible for us to keep the file open endlessly. You are therefore requested to submit
+                          the above within 10 days of receipt of this letter, failing which, we shall presume that you are
+                          not interested to pursue the claim and shall release our independent report on the basis of available
+                          information / documents to your insurers without any further communication to you from our end.
+                          Thanking you & assuring you of best possible attention at all times.
+                        </p>
+                        <%}%>
+        </div>
+        <div>
+          <p>Sincerely,</p>
+          <p class="subject">For, Absolute Insurace Surveyors & Loss Assessors Pvt Ltd</p>
+        </div>
+
+  </body>
+
+</html>

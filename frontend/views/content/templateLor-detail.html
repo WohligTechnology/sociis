@@ -1,0 +1,77 @@
+<form name="formName" ng-submit="saveModel(formData)">
+    <div class="heading-sec">
+        <div class="row">
+            <div class="col-md-12 column">
+                <div class="heading-profile">
+                    <toggle-switch ng-model="formData.status" class="switch-small switch-success pull-right"></toggle-switch>
+                    <h2>{{header.name}}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Bar Chart -->
+    <div class="panel-content">
+        <div class="widget">
+            <div class="form-elements-sec">
+                <div class="sec">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>LOR Name*</label>
+                                <input type="text" name="name" class="form-control" ng-model="formData.name" required>
+                                <div class="error-msg" ng-show="formName.name.$invalid && formName.name.$touched">Please Enter Name</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!--<pre>{{formData.forms|json}}</pre>-->
+                        <div class="col-md-12">
+                            <uib-accordion>
+                                <div uib-accordion-group class="panel-default custom-panel" ng-repeat="category in formData.forms">
+                                    <uib-accordion-heading>
+                                        {{category.name}}
+                                    </uib-accordion-heading>
+                                    <div class="line-holder" ng-repeat="sub in category.items">
+                                        <div class="form-builder">
+                                            <div class="form-repeater">
+                                                <div>
+                                                    <div class="form-builder-item no-pad row-item">
+
+                                                        <div class="col-item">
+                                                            <p> <span class="pull-left"><toggle-switch ng-model="sub.isCheck" ng-change="addToForm(sub)" class="switch-small switch-success m5"></toggle-switch></span>                                                                {{sub.name}}</p>
+                                                        </div>
+                                                        <div class="col-item" style="flex:0.2;" ng-if="showOriginalCopySwitch">
+                                                            <toggle-switch ng-model="sub.typeOfDoc" on-label="Original" off-label="Copy" class="switch-small switch-success"></toggle-switch>
+                                                        </div>
+                                                        <div class="col-item" style="flex:0.5;" ng-if="isDateNeeded">
+                                                            <input type="date" date-model placeholder="Enter submitted date" class="form-control" ng-model="sub.date">
+                                                        </div>
+                                                        <div class="col-item" style="flex:2;" ng-if="isTypeNeeded">
+                                                            <div class="btn-group">
+                                                                <button type="button" class="btn btn-default btn-wave" ng-class="{'btn-primary': sub.submit=='Pending'}" ng-click="sub.submit='Pending'">Pending</button>
+                                                                <button type="button" class="btn btn-default btn-wave" ng-class="{'btn-primary': sub.submit=='Partially Recieved'}" ng-click="sub.submit='Partially Recieved'">Partial</button>
+                                                                <button type="button" class="btn btn-default btn-wave" ng-class="{'btn-primary': sub.submit=='Recieved'}" ng-click="sub.submit='Received'">Recieved</button>
+                                                                <button type="button" class="btn btn-default btn-wave" ng-class="{'btn-primary': sub.submit=='Waived'}" ng-click="sub.submit='Waived'">Waived</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-accordion>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="text-center mt20 odd-even-button">
+            <button class="btn btn-default" type="submit" ng-disabled="formName.$invalid">Save</button>
+            <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,37 @@
+<div class="modal-header blue-bg">
+    <div class="pull-right">
+        <a class="btn btn-clear" ng-click="$dismiss();clearOfflineSurvey()">
+            <i class="ln-cross"></i>
+        </a>
+    </div>
+    <h5 class="modal-title"> Offline Survey</h5>
+</div>
+<div class="modal-body">
+    <label>Photos</label>
+    <div class="form-group">
+        <!--<upload-image-new ng-model="img" ng-callback="SurveyPhotoUploadCallback(img,length)" multiple no-view></upload-image-new>-->
+        <upload-files ng-model="img1" ng-callback="SurveyPhotoUploadCallback(img1,length)" type="'editSurveyPhotos'" photos="surveyData.photos"
+            assignmentid="assignment._id" timeline="timeline" photolength="assignment.photos.length" length="photoLimit" employee="employee"></upload-files>
+    </div>
+</div>
+<div class="modal-body">
+    <label>Jir*</label>
+    <div class="form-group">
+        <!--<upload-image-new ng-model="img" ng-callback="SurveyJirUploadCallback(img,length)" multiple no-view></upload-image-new>-->
+        <upload-files ng-model="img2" ng-callback="SurveyJirUploadCallback(img2,length)" type="'editSurveyJir'" photos="surveyData.jir"
+            assignmentid="assignment._id" timeline="timeline" employee="employee"></upload-files>
+    </div>
+</div>
+<div class="modal-body">
+    <label>Docs</label>
+    <div class="form-group">
+        <!--<upload-image-new ng-model="img" ng-callback="SurveyDocsUploadCallback(img,length)" multiple no-view></upload-image-new>-->
+        <upload-files ng-model="img3" ng-callback="SurveyDocsUploadCallback(img3,length)" type="'editSurveyDocs'" photos="surveyData.doc"
+            assignmentid="assignment._id" timeline="timeline" employee="employee"></upload-files>
+    </div>
+</div>
+<div ng-if="surveyData.jir.length!==0">
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-outline btn-small" type="button" ng-click="surveyUploadSubmit(surveyData);$dismiss()">Submit</button>
+    </div>
+</div>

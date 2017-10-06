@@ -1,0 +1,81 @@
+<div class="modal-header blue-bg">
+    <div class="pull-right">
+        <a class="btn btn-clear" ng-click="$dismiss()">
+            <i class="ln-cross"></i>
+        </a>
+    </div>
+    <h5 class="modal-title"><i class="fa fa-filter"></i> Filter</h5>
+</div>
+<div class="modal-body modal-body-height">
+    <br>
+    <form name="filterForm" class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">City</label>
+            <div class="col-sm-7">
+                <ui-select multiple tagging="tagTransform" name="city" ng-model="cityFilter.city" theme="bootstrap" title="Choose a city">
+                    <ui-select-match placeholder="Select City">{{$item.name}}</ui-select-match>
+                    <ui-select-choices repeat="city in cities | filter:$select.search" refresh-delay="0" refresh="refreshCity($select.search)">{{city.name}}</ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+         <div class="form-group">
+            <label class="col-sm-3 control-label">District</label>
+            <div class="col-sm-7">
+                <ui-select multiple tagging="tagTransform" name="district" ng-model="cityFilter.district" theme="bootstrap" title="Choose a district" required>
+                    <ui-select-match placeholder="Select District">{{$item.name}}</ui-select-match>
+                    <ui-select-choices repeat="district in districts | filter:$select.search" refresh-delay="0" refresh="refreshDistrict($select.search)">{{district.name}}</ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">State</label>
+            <div class="col-sm-7">
+                <ui-select multiple tagging="tagTransform" name="state" ng-model="cityFilter.state" theme="bootstrap" title="Choose a state" required>
+                    <ui-select-match placeholder="Select State">{{$item.name}}</ui-select-match>
+                    <ui-select-choices repeat="state in states | filter:$select.search" refresh-delay="0" refresh="refreshState($select.search)">{{state.name}}</ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+       
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Zone</label>
+            <div class="col-sm-7">
+                <ui-select multiple tagging="tagTransform" name="zone" ng-model="cityFilter.zone" theme="bootstrap" title="Choose a zone" required>
+                 <ui-select-match placeholder="Select Zone">{{$item.name}}</ui-select-match>
+                    <ui-select-choices repeat="zone in zones | filter:$select.search" refresh-delay="0" refresh="refreshZone($select.search)">{{zone.name}}</ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Country</label>
+            <div class="col-sm-7">
+                <ui-select multiple tagging="tagTransform" name="country" ng-model="cityFilter.country" theme="bootstrap" title="Choose a country" required>
+                 <ui-select-match placeholder="Select Country">{{$item.name}}</ui-select-match>
+                    <ui-select-choices repeat="country in countries | filter:$select.search" refresh-delay="0" refresh="refreshCountry($select.search)">{{country.name}}</ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <!--<div class="form-group">
+            <label class="col-sm-3 control-label">Std Code</label>
+            <div class="col-sm-7">
+                <ui-select multiple tagging="tagTransform" name="stdCode" ng-model="cityFilter.stdCode" theme="bootstrap" title="Choose a std code" required>
+                 <ui-select-match placeholder="Select Std Code">{{$item.name}}</ui-select-match>
+                    <ui-select-choices repeat="stdCode in stdCodes | filter:$select.search" refresh-delay="0" refresh="refreshStdCodes($select.search)">{{stdCode.name}}</ui-select-choices>
+                </ui-select>-->
+            <!--</div>
+        </div>-->
+        <!--<div class="form-group">
+            <label class="col-sm-3 control-label">Timestamp</label>
+            <div class="col-sm-7">
+                <ui-select multiple tagging="tagTransform" name="timestamp" ng-model="cityFilter.timestamp" theme="bootstrap" title="Choose a timestamp" required>
+                 <ui-select-match placeholder="Select City">{{$item.name}}</ui-select-match>
+                    <ui-select-choices repeat="timestamp in timestamps | filter:$select.search" refresh-delay="0" refresh="refreshCity($select.search)">{{timestamp.name}}</ui-select-choices>
+                </ui-select>-->
+            <!--</div>
+        </div>-->
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary btn-outline btn-small" type="button" ng-click="showAllCities(filter);$dismiss()">Apply</button>
+    <button class="btn btn-primary btn-outline btn-small pull-left" ng-click="clearFilter()"> Clear Filter</button>
+</div>

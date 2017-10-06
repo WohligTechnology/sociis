@@ -1,0 +1,83 @@
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Company Setup</a>
+        </li>
+        <li>
+            <a ui-sref="menu-list" >{{header.name}}</a>
+        </li>
+    </ul>
+</div>
+
+<div class="heading-sec">
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>{{header.name}}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="form-elements-sec">
+                    <div class="widget-title">
+                        <h3>Menu</h3>
+                    </div>
+                    <form name="menuForm" role="form" class="sec ng-pristine ng-valid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="">Main Menu*</label>
+                                    <input type="text" name="main_menu" placeholder="Main Menu" ng-model="formData.main_menu" class="form-control" required>
+                                    <div class="error-msg" ng-show="menuForm.main_menu.$invalid && menuForm.main_menu.$touched">Please Enter Main Menu.</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Sub Menu*</label>
+                                    <input type="text" name="sub_menu" placeholder="Sub Menu" ng-model="formData.sub_menu" class="form-control" required>
+                                    <div class="error-msg" ng-show="menuForm.sub_menu.$invalid && menuForm.sub_menu.$touched">Please Enter District Name.</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Right Menu*</label>
+                                    <input type="text" name="right_menu" placeholder="Right Menu" ng-model="formData.right_menu" class="form-control" required>
+                                    <div class="error-msg" ng-show="menuForm.right_menu.$invalid && menuForm.right_menu.$touched">Please Enter Right Menu.</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="disabledSelect">Status</label>
+                                    <select class="form-control" ng-model="formData.status" ng-options="str.value as str.name for str in userStatus">
+                                        <!-- <option value="">Select Status </option>
+                                        <option value=true>Active</option>
+                                        <option value=false>Inactive</option> -->
+                                    </select>
+                                </div>
+                                <!-- <div class="form-group">
+                                    <label for="">Status</label>
+                                    <input type="text" name="lat" placeholder="Status" ng-model="formData.status" class="form-control" required>
+                                    <div class="error-msg" ng-show="menuForm.status.$invalid && menuForm.status.$touched">Please Enter Status.</div>
+                                </div> -->
+                                <div class="form-group">
+                                    <label for="">Activity</label>
+                                    <input type="text" name="lat" placeholder="Activity" ng-model="formData.activity" class="form-control" required>
+                                    <div class="error-msg" ng-show="menuForm.activity.$invalid && menuForm.status.$touched">Please Enter Activity.</div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                </div>
+                <div class="text-center mt20 odd-even-button">
+                    <button class="btn btn-default" type="submit" ng-click="saveMenu(formData)" ng-disabled="menuForm.$invalid">Save</button>
+                    <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+                </div>
+            </div>
+        </div>
+
+
+
+        </form>
+    </div>
+</div>
+</div>

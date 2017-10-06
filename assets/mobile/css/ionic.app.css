@@ -1,0 +1,194 @@
+.nav-bar-bgcolor{
+    background-color: #2f95ed !important;
+}
+
+.botton-margin{
+    margin-bottom: 10px !important;
+}
+
+.header-right-button{
+    -webkit-user-select: none; 
+    -webkit-user-drag: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    margin: 0px 3px !important;
+}
+
+.back-arrow-margin {
+    margin-left: -5px !important;
+    margin-right: 5px !important;
+}
+
+.remove-padding{
+    padding: 0px !important;
+}
+
+.button-border{
+    border-radius: 0px !important;
+}
+
+.border-bottom-css.active{
+      border-bottom: 2px solid #2f95ed !important;    
+}
+
+.bg-color{
+    border-color: snow !important;
+    background-color: snow !important;
+}
+
+.filterPage-list-btn{
+    border: 1px solid #2f95ed !important;
+    width: 100%;
+    color: white !important;
+    background-color: #2f95ed !important;
+    margin-bottom: 10px !important;
+    border-radius: 2px !important;
+}
+
+.header-badge{
+  top: 0px !important;
+    left: 5px;
+}
+
+.filter-card-row{
+    background-color: #2f95ed;
+    text-align: center;
+    color: white;
+}
+
+.filter-card{
+    padding-top: 1px;
+    padding-bottom: 0px !important;
+    box-shadow: 0 7px 22px rgba(0, 0, 0, 0.3) !important;
+    border-radius: 2px !important;
+    border: 1px solid #ccc;
+}
+
+.row-bottom-border{
+    border-bottom: 1px solid #dddddd;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.checkbox input:before, .checkbox .checkbox-icon:before{
+    border-color:#dddddd !important;
+}
+
+.estimated-loss-input{
+    border: 1px solid #dddddd !important;
+    width: 100%;
+    border-radius: 2px;
+}
+
+.select-width{
+    width:100%;
+}
+
+.no-data{
+    text-align: center;
+    margin-top: 50%;
+    font-size: 20px;
+}
+
+.bar{
+    height: 63px !important;
+}
+
+.bar-subheader {
+    top: 63px !important;
+    height: 45px !important;
+}
+
+.has-header {
+    top: 63px !important;
+}
+
+.header-title-center{
+    top:8px !important;
+}
+.search-date{
+    padding: 10px;
+    font-size: 18px;
+}
+.header-btn-center{
+    max-height: none !important;
+}
+.date-align{
+    /*text-align: center;*/
+    margin-top: 10px;
+    font-size:18px;
+}
+
+.cardList-top{
+    top:100px !important;
+}
+
+.timeline-list-btn{
+    background-color: #2f95ed !important;
+    color: white !important;
+    border-radius: 2px !important;
+    min-height: 36px !important;
+}
+
+.timeline-list-margin-top{
+    margin-top: 7px;
+}
+
+.main-page-title{
+        left: 29px !important;
+}
+
+.logout{
+        border: 1px solid #dc292c !important;
+    width: 100%;
+    color: white !important;
+    background-color: #dc292c !important;
+    margin-bottom: 10px !important;
+    border-radius: 2px !important;
+}
+
+.submenu-icon{
+    font-size: 19px !important;
+    left: 225px !important;
+}
+
+.list .item.item-accordion {
+  line-height: 38px;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: 0.09s all linear;
+}
+
+.list .item.item-accordion.ng-hide {
+  line-height: 0px;
+}
+
+.list .item.item-accordion.ng-hide-add,
+.list .item.item-accordion.ng-hide-remove {
+  display: block !important;
+}
+
+.platform-android .bar .title {
+    top: 6px !important;
+    font-size: 20px !important;
+}
+
+.bar-positive{
+    background-color: #2f95ed !important;
+}
+
+.badge-assertive{
+    background-color: #dc292c !important;
+}
+
+.resize-search:before{
+        font-size: 27px !important;
+}
+
+.search-input-resize{
+    height: 45px !important;
+}
+
+.remove-text-decoration{
+    color: #444444 !important;
+    text-decoration: none !important;
+}

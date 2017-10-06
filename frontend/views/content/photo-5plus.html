@@ -1,0 +1,32 @@
+<!--five plus photo view-->
+<a fancybox-box rel="gallery1" style="opacity:1;" href="{{chat.attachment[0]|uploadpath}}">
+    <div class="width50 timeline-photo-bg-color">
+         <img ng-src="{{chat.attachment[0]|uploadpath:355:287}}" class="img-responsive"/>
+    </div>
+</a>
+<a fancybox-box rel="gallery1" style="opacity:1;" href="{{chat.attachment[1]|uploadpath}}">
+    <div class="width50 timeline-photo-bg-color">
+         <img ng-src="{{chat.attachment[1]|uploadpath:356:287}}" class="img-responsive"/>
+    </div>
+</a>
+<a fancybox-box rel="gallery1" style="opacity:1;" href="{{chat.attachment[2]|uploadpath}}">
+    <div class="width30 timeline-photo-bg-color">
+        <img ng-src="{{chat.attachment[2]|uploadpath:237:172}}" class="img-responsive"/>
+    </div>
+</a>
+<a fancybox-box rel="gallery1" style="opacity:1;" href="{{chat.attachment[3]|uploadpath}}">
+    <div class="width30 timeline-photo-bg-color">
+       <img ng-src="{{chat.attachment[3]|uploadpath:237:172}}" class="img-responsive"/>
+    </div>
+</a>
+<a fancybox-box rel="gallery1" style="opacity:1;" href="{{chat.attachment[4]|uploadpath}}">
+    <div class="width30 timeline-photo-bg-color">
+          <img ng-src="{{chat.attachment[4]|uploadpath:237:172}}" class="img-responsive"/>
+        <div class="overlay">
+            <div class="plus-icon">
+                <i class="fa fa-plus" aria-hidden="true"></i><span class="span-weight">{{chat.attachment.length - 5}}</span>
+            </div>
+        </div>
+    </div>
+</a>
+<!--end five plus photo view-->

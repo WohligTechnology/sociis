@@ -1,0 +1,174 @@
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Company Setup</a>
+        </li>
+        <li>
+            <a ui-sref="branch-list">Branch List</a>
+        </li>
+    </ul>
+</div>
+<form name="formName" ng-submit="submit(formData);">
+    <div class="heading-sec">
+        <div class="row">
+            <div class="col-md-12 column">
+                <div class="heading-profile">
+                    <toggle-switch ng-model="formData.status" class="switch-small switch-success pull-right"></toggle-switch>
+                    <h2>{{header.name}}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Bar Chart -->
+    <div class="panel-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="widget">
+                    <div class="form-elements-sec">
+                        <div class="sec">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Company Name*</label>
+                                        <multiple-select my-enter name="company" required ng-model="formData.company" ng-name="name.company" api="searchCompany"></multiple-select>
+                                        <div class="error-msg" ng-show="formName.company.$invalid">Please Enter Company Name</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Office Name*</label>
+                                        <multiple-select my-enter name="office" required ng-model="formData.office" filter='{"company":"{{formData.company}}"}' ng-name="name.office"
+                                            api="searchOffice"></multiple-select>
+                                        <div class="error-msg" ng-show="formName.office.$invalid">Please Enter Office Name</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Branch Name*</label>
+                                            <input type="text" name="name" ng-model="formData.name" class="form-control" required>
+                                            <div class="error-msg" ng-show="formName.name.$invalid && formName.name.$touched">Please Enter Branch Name</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                    <div class="form-group">
+                                            <label>Branch Code*</label>
+                                            <input type="text" name="code" maxlength="2" class="form-control" ng-model="formData.code" required>
+                                            <div class="error-msg" ng-show="formName.code.$invalid && formName.code.$touched">Please Enter Branch Code</div>
+                                        </div>
+                                        </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        
+                                        <div class="form-group">
+                                            <label>Short Name*</label>
+                                            <input type="text" name="shortName" class="form-control" ng-model="formData.shortName" required>
+                                            <div class="error-msg" ng-show="formName.shortName.$invalid && formName.shortName.$touched">Please Enter Short Name</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Billable Branch*</label>
+                                            <br>
+                                            <toggle-switch on-label="Yes" off-label="No" ng-model="formData.isBillable" class="switch-mini switch-success"></toggle-switch>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Series Format</label>
+                                            <select class="form-control" name="seriesFormat" ng-model="formData.seriesFormat">
+                                                <option value="monthly" selected>Monthly</option>
+                                                <option value="yearly">Yearly</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        
+                                        <label>TAT</label>
+                                        <div class="form-group">
+                                            <label>STAT</label>
+                                            <br>
+                                            <toggle-switch on-label="Yes" off-label="No" ng-model="formData.STAT" class="switch-mini switch-success"></toggle-switch>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>ITAT</label>
+                                            <br>
+                                            <toggle-switch on-label="Yes" off-label="No" ng-model="formData.ITAT" class="switch-mini switch-success"></toggle-switch>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>LTAT</label>
+                                            <br>
+                                            <toggle-switch on-label="Yes" off-label="No" ng-model="formData.LTAT" class="switch-mini switch-success"></toggle-switch>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>FSR</label>
+                                            <br>
+                                            <toggle-switch on-label="Yes" off-label="No" ng-model="formData.FSR" class="switch-mini switch-success"></toggle-switch>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>R2NR</label>
+                                            <br>
+                                            <toggle-switch on-label="Yes" off-label="No" ng-model="formData.R2NR" class="switch-mini switch-success"></toggle-switch>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>ATAT</label>
+                                            <br>
+                                            <toggle-switch on-label="Yes" off-label="No" ng-model="formData.ATAT" class="switch-mini switch-success"></toggle-switch>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>CTAT</label>
+                                            <br>
+                                            <toggle-switch on-label="Yes" off-label="No" ng-model="formData.CTAT" class="switch-mini switch-success"></toggle-switch>
+                                        </div>
+                                        <!--<div class="checkbox">
+                                            <input type="checkbox" for="stat"  name="stat" ng-model="formData.STAT">
+                                            <label id="stat">                                            
+                                                STAT
+                                            </label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <input type="checkbox" for="itat" name="itat" ng-model="formData.ITAT">
+                                            <label id="itat">
+                                                ITAT
+                                            </label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="ltat" ng-model="formData.LTAT">
+                                                LTAT
+                                            </label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="fsr" ng-model="formData.FSR">
+                                                FSR
+                                            </label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="r2nr" ng-model="formData.R2NR">
+                                                R2NR
+                                            </label>
+                                        </div>
+                                         <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="atat" ng-model="formData.ATAT">
+                                                ATAT
+                                            </label>
+                                        </div>
+                                         <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="ctat" ng-model="formData.CTAT">
+                                                CTAT
+                                            </label>
+                                        </div>-->
+                                    </div>
+                                </div>
+                                <div class="text-center mt20 odd-even-button">
+                                    <button class="btn btn-default" type="submit" ng-disabled="formName.$invalid">Save</button>
+                                    <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</form>

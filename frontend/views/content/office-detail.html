@@ -1,0 +1,90 @@
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Company Setup</a>
+        </li>
+        <li>
+            <a ui-sref="office-list">{{header.name}}</a>
+        </li>
+    </ul>
+</div>
+<form name="officeform" ng-submit="saveOffice(formData)">
+    <div class="heading-sec">
+        <div class="row">
+            <div class="col-md-12 column">
+                <div class="heading-profile">
+                    <toggle-switch ng-model="formData.status" class="switch-small switch-success pull-right"></toggle-switch>
+                    <h2>{{header.name}}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Bar Chart -->
+    <div class="panel-content">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="widget">
+                    <div class="form-elements-sec">
+                        <div class="widget-title">
+                            <h3>Office</h3>
+                        </div>
+                        <div class="sec">
+                            <div class="form-group">
+                                <label>Company Name*</label>
+                                <multiple-select my-enter name="companyName" required ng-model="formData.company" ng-name="name.company" api="searchCompany"></multiple-select>
+                                <div class="error-msg" ng-show="officeform.companyName.$invalid">Please Enter Company Name</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Type of Office*</label>
+                                <multiple-select my-enter name="officeType" required ng-model="formData.typeOfOffice" ng-name="name.typeOfOffice" api="searchTypeOfOffice"
+                                    ng-create="typeofofficeSave"></multiple-select>
+                                <div class="error-msg" ng-show="officeform.officeType.$invalid">Please Enter Type of Office</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Office Name*</label>
+                                <input type="text" name="name" ng-model="formData.name" class="form-control" required>
+                                <div class="error-msg" ng-show="officeform.name.$invalid && officeform.name.$touched">Please Enter Office Name</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget">
+                    <div class="form-elements-sec">
+                        <div class="widget-title">
+                            <h3>Contact</h3>
+                        </div>
+                        <div class="sec">
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="tel" name="phone" class="form-control" ng-model="formData.phone">
+                                <div class="error-msg" ng-show="officeform.phone.$invalid && officeform.phone.$touched">Please Enter Phone Number</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" name="email" class="form-control" ng-model="formData.email">
+                                <div class="error-msg" ng-show="officeform.email.$invalid && officeform.email.$touched">Please Enter Email Id</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="widget">
+                    <div class="form-elements-sec">
+                        <div class="widget-title">
+                            <h3>Address</h3>
+                        </div>
+                        <div class="sec">
+                            <address-form ng-valid="officeform" ng-model="formData"></address-form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="text-center mt20 odd-even-button">
+        <button class="btn btn-default" type="submit" ng-disabled="officeform.$invalid">Save</button>
+        <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+    </div>
+</form>

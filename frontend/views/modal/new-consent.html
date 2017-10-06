@@ -1,0 +1,55 @@
+<div class="modal-header green-bg with-button">
+    <div class="pull-right">
+        <button class="btn btn-darker btn-round btn-nopad" ng-click="consentCreateCheck()">Create new</button>
+        <button class="btn btn-clear" ng-click="$dismiss();showCreate=false">
+            <i class="ln-cross"></i>
+        </button>
+    </div>
+    <h5 class="modal-title">All Consent</h5>
+</div>
+<div class="modal-body">
+    <form name="companyForm" ng-submit="saveCompany(formData)" ng-if="showCreate">
+        <div class="form-group">
+            <label>Upload Consent</label>
+            <upload-image-new ng-model="img" ng-callback="onConsentUploadCallback(img,length)" multiple no-view></upload-image-new>
+        </div>
+    </form>
+    <div class="field">
+        <div class="custom-tabs">
+            <div>Consent <span class="color-green">({{assignment.consent.length}})</span>
+                <div class="file-border" ng-if="assignment.consent.length !== 0">
+                    <div class="scroll-x-max">
+                        <table class="file-list table">
+                            <thead>
+                                <tr>
+                                    <th>User Name</th>
+                                    <th>Upload Time</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="vert-mid">
+                                <tr ng-repeat="consent in assignment.consent | orderBy: '-fileName' track by $index">
+                                    <td>
+                                        <div class="user-img">
+                                            <img ng-src="{{consent.employee.photo|uploadpath}}" alt="" class="user-mini">
+                                            <span>{{consent.employee.name}}</span>
+                                        </div>
+                                    </td>
+                                    <td>{{consent.fileName | DateTime}}</td>
+                                    <td>
+                                        <button class="btn btn-clear" ng-click="deleteTemplate('consent',$index,'Consent')"><i class="ln-trash2"></i></button>
+                                        <button class="btn btn-clear"> 
+                                        <a class="btn btn-primary temp-btnbg" download="{{consent.file}}" ng-href="{{consent.file|downloadImage}}">
+                                            <i class="ln-download"></i>
+                                        </a>
+                                    </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

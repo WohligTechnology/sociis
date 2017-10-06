@@ -1,0 +1,95 @@
+<!-- <div id="progressBar">
+	<div class="loader"></div>
+</div> -->
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Customers</a>
+        </li>
+        <li>
+            <a ui-sref="customer-list">Customer List</a>
+        </li>
+    </ul>
+</div>
+<div class="heading-sec">
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>Customer List</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="table-area">
+                    <div class="widget-title">
+                        <div class="pull-right">
+                            <form class="search-form mr-form">
+                                <input type="text" ng-change="showAllCustomers(true)" placeholder="Search Here..." ng-model="filter.text" />
+                                <button type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </form>
+                            <a class="btn btn-primary" ui-sref="createcustomer" ng-if="template.currentRole.add.val">Add New</a>
+                            <button class="btn btn-primary" ng-click="customersFilter()"><i class="fa fa-filter"></i> Filter</button>
+                            <button class="btn btn-primary" ng-click="generateCustomersExcel()"><i class="fa fa-file-excel-o"></i> Excel</button>
+                            <a class="space">"</a>
+                            <ui-select class="select-limit pull-right" ng-model="filter.maxRow" theme="bootstrap" ng-change="changeRecordLimit()" title="Choose Record Limit">
+                                <ui-select-match>{{$select.selected}}</ui-select-match>
+                                <ui-select-choices repeat="limit in limitValues | filter: $select.search">
+                                    <span ng-bind-html="limit | highlight: $select.search"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <h3>List of Customers <span class="tableTotal">(Total : {{totalItems}}) </span></h3>
+                    </div>
+                    <div class="table-responsive" ng-show="totalItems>0">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Segment</th>
+                                    <th>Customer Short Name</th>
+                                    <th>City</th>
+                                    <th>Phone No.</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-show="totalItems>0">
+                                <tr ng-repeat="data in modelList">
+                                    <td>{{data.segment || "-"}}</td>
+                                    <td>{{data.name || "-"}}</td>
+                                    <td>{{data.city || "-"}}</td>
+                                    <td><span>{{data.phone1}}</span><span ng-if="data.phone1 && data.phone2">, </span><span>{{data.phone2}}</span></td>
+                                    <td>
+                                        <toggle-switch ng-model="data.status" class="switch-mini switch-success" ng-change="changeStatus(data)"></toggle-switch>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary" ui-sref="editcustomer({id:data._id})" ng-if="template.currentRole.edit.val">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                        <a class="btn btn-danger" ng-click="deleteModel(data._id)" ng-if="template.currentRole.delete.val">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tableData" ng-show="totalItems == 0">
+                        <h5>No data found</h5>
+                    </div>
+                    <div class="tableData" ng-show="totalItems == undefined">
+                        <h5>Loading Data</h5>
+                    </div>
+                    <ul ng-if="totalItems" ng-change="changePage(currentPage);" uib-pagination total-items="totalItems" items-per-page="filter.maxRow"
+                        ng-model="currentPage" max-size="template.pageMax" class="pagination-sm" boundary-links="true" force-ellipses="true"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

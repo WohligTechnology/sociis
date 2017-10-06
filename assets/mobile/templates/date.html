@@ -1,0 +1,253 @@
+<ion-view>
+    <ion-header-bar align-title="left" class="bar-positive">
+        <button class="button button-clear header-left-button back-arrow-margin header-btn-center" ng-click="getBack();"> 
+            <i class="icon ion-android-arrow-back"></i>
+        </button>
+        <h1 class="title header-title-center">Date Filter</h1>
+        <button class="button no-animation button-clear header-right-button header-btn-center" ng-click="clearfilter();"> 
+            Clear
+        </button>
+    </ion-header-bar>
+    <ion-content>
+        <div class="row">
+            <div class="col col-25">
+                <p class="date-align"> Date:</p>
+            </div>
+            <div class="col col-75">
+                <select class="select-width  search-date" ng-model="dateType" ng-options="d for d in dates track by d" ng-change="selectDateType(dateType)">
+                    <option selected="true" value="" disabled>Date Filter</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- For today -->
+        <div ng-if="dateType == 'Today'">
+            <div class="row">
+                <div class="col col-25 date-align">
+                    <p> From:</p>
+                </div>
+                <div class="col col-75 date-align">
+                    <input type="date" ng-model="from" class="estimated-loss-input">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-25 date-align">
+                    <p> To:</p>
+                </div>
+                <div class="col col-75 date-align">
+                    <input type="date" ng-model="to" class="estimated-loss-input">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- For Date Criteria -->
+        <div ng-if="dateType == 'Date Criteria'">
+            <div class="row">
+                <div class="col col-25 date-align">
+                    From:
+                </div>
+                <div class="col col-75 date-align">
+                    <input type="date" ng-model="from" class="estimated-loss-input" ng-change="dateCriteria(from)">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-25 date-align">
+                    To:
+                </div>
+                <div class="col col-75 date-align">
+                    <input type="date" ng-model="to" class="estimated-loss-input">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- For As of Today -->
+        <div ng-if="dateType == 'As of Today'">
+            <div class="row">
+                <div class="col col-25 date-align">
+                    From:
+                </div>
+                <div class="col col-75 date-align">
+                    <input type="date" ng-model="from" class="estimated-loss-input">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-25 date-align">
+                    To:
+                </div>
+                <div class="col col-75 date-align">
+                    <input type="date" ng-model="to" class="estimated-loss-input">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- For MTD -->
+        <div ng-if="dateType == 'MTD'">
+            <div class="row">
+                <div class="col col-25 date-align">
+                    From:
+                </div>
+                <div class="col col-75 date-align">
+                    <input type="date" ng-model="from" class="estimated-loss-input">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-25 date-align">
+                    To:
+                </div>
+                <div class="col col-75 date-align">
+                    <input type="date" ng-model="to" class="estimated-loss-input">
+                </div>
+            </div>
+        </div>
+
+        <!-- For Monthly -->
+        <div ng-if="dateType == 'Monthly'">
+            <div class="row">
+                <div class="col col-25 date-align">
+                    Year:
+                </div>
+                <div class="col col-75 date-align">
+                    <select class="select-width search-date" ng-model="year" ng-options="d for d in years track by d" ng-change="getMyYear(year)">
+                    <option selected="true" value="" disabled>Date Filter</option>
+                </select>
+                </div>
+            </div>
+            <div class="row" ng-if="showMonth == true">
+                <div class="col col-25 date-align">
+                    Month:
+                </div>
+                <div class="col col-75 date-align">
+                    <select class="select-width search-date" ng-model="month" ng-options="m for m in months track by m" ng-change="setMonthlyMonth(month)">
+                    <option selected="true" value="" disabled>Date Filter</option>
+                </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-25 date-align">
+                    From:
+                </div>
+                <div class="col col-75 date-align">
+                    <input type="date" ng-model="from" class="estimated-loss-input">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-25 date-align">
+                    To:
+                </div>
+                <div class="col col-75 date-align">
+                    <input type="date" ng-model="to" class="estimated-loss-input">
+                </div>
+            </div>
+        </div>
+
+        <!-- For Quarterly -->
+        <div ng-if="dateType == 'Quarterly'">
+            <div class="row">
+                <div class="col col-25 date-align">
+                    Year:
+                </div>
+                <div class="col col-75 date-align">
+                    <select class="select-width search-date" ng-model="year" ng-options="d for d in years track by d" ng-change="getMyYear(year)">
+                    <option selected="true" value="" disabled>Date Filter</option>
+                </select>
+                </div>
+            </div>
+            <div class="list list-inset date-align">
+                <ion-radio ng-model="quarterly" ng-click="setQuarterlyDate('quarterly1')" ng-value="'quarterly1'">1st April - 30 June</ion-radio>
+                <ion-radio ng-model="quarterly" ng-click="setQuarterlyDate('quarterly2')" ng-value="'quarterly2'">1st July - 30 Sept</ion-radio>
+                <ion-radio ng-model="quarterly" ng-click="setQuarterlyDate('quarterly3')" ng-value="'quarterly3'">1st Oct - 31 Dec</ion-radio>
+                <ion-radio ng-model="quarterly" ng-click="setQuarterlyDate('quarterly4')" ng-value="'quarterly4'">1st Jan - 31 March</ion-radio>
+            </div>
+
+            <div class="row">
+                <div class="col col-25 date-align">
+                    From:
+                </div>
+                <div class="col col-75 date-align">
+                    <input type="date" ng-model="from" class="estimated-loss-input">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-25 date-align">
+                    To:
+                </div>
+                <div class="col col-75 date-align">
+                    <input type="date" ng-model="to" class="estimated-loss-input">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- For Half yearly -->
+        <div ng-if="dateType == 'Half yearly'">
+            <div class="row">
+                <div class="col col-25 date-align">
+                    Year:
+                </div>
+                <div class="col col-75 date-align">
+                    <select class="select-width search-date" ng-model="year" ng-options="d for d in years track by d" ng-change="getMyYear(year)">
+                    <option selected="true" value="" disabled>Date Filter</option>
+                </select>
+                </div>
+            </div>
+
+            <div class="list list-inset date-align">
+                <ion-radio ng-model="halfYearly" ng-click="setHalfYearlyDate('halfYearly1')" ng-value="'halfYearly1'">1st April - 30 Sept</ion-radio>
+                <ion-radio ng-model="halfYearly" ng-click="setHalfYearlyDate('halfYearly2')" ng-value="'halfYearly2'">1st Oct - 31 March</ion-radio>
+            </div>
+
+            <div class="row">
+                <div class="col col-25 date-align">
+                    From:
+                </div>
+                <div class="col col-75 date-align">
+                    <input type="date" ng-model="from" class="estimated-loss-input">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-25 date-align">
+                    To:
+                </div>
+                <div class="col col-75 date-align">
+                    <input type="date" ng-model="to" class="estimated-loss-input">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- For Annual -->
+        <div ng-if="dateType == 'Annual'">
+            <div class="row">
+                <div class="col col-25 date-align">
+                    Year:
+                </div>
+                <div class="col col-75 date-align">
+                    <select class="select-width search-date" ng-model="year" ng-options="d for d in years track by d" ng-change="getMyYear(year);setAnnualYear()">
+                    <option selected="true" value="" disabled>Date Filter</option>
+                </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-25 date-align">
+                    From:
+                </div>
+                <div class="col col-75 date-align">
+                    <input type="date" ng-model="from" class="estimated-loss-input">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-25 date-align">
+                    To:
+                </div>
+                <div class="col col-75 date-align">
+                    <input type="date" ng-model="to" class="estimated-loss-input">
+                </div>
+            </div>
+        </div>
+
+    </ion-content>
+</ion-view>

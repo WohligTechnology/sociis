@@ -1,0 +1,248 @@
+<div class="modal-header blue-bg">
+    <div class="pull-right">
+        <a class="btn btn-clear" ng-click="$dismiss()">
+            <i class="ln-cross"></i>
+        </a>
+    </div>
+    <h5 class="modal-title"><i class="fa fa-filter"></i> Filter</h5>
+</div>
+<div class="modal-body">
+    <form name="filterForm" class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Owner Name</label>
+            <div class="col-sm-8">
+                <!--<input type="text" class="form-control" ng-model="filter.owner">-->
+                <ui-select multiple tagging="tagTransform" tagging-label="(press enter to add new)" name="owner" ng-model="invoiceFilter.owner"
+                    theme="bootstrap" required>
+                    <ui-select-match>{{$item.name}}</ui-select-match>
+                    <ui-select-choices repeat="owner in ownerData | filter:$select.search" refresh-delay="0" refresh="getBackendEmployeeOnly($select.search)">{{owner.name}}</ui-select-choices>
+                </ui-select>
+                <!--<div class="error-msg" ng-show="filterForm.owner.$invalid && filterForm.owner.$touched">Please Select Owner Name</div>-->
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Insurer</label>
+            <div class="col-sm-8">
+                <!-- <input type="text" class="form-control" ng-model="filter.insurer"> -->
+                <ui-select multiple tagging="tagTransform" tagging-label="(press enter to add new)" name="insurer" ng-model="invoiceFilter.insurer"
+                    theme="bootstrap" required>
+                    <ui-select-match>{{$item.name}}</ui-select-match>
+                    <ui-select-choices repeat="insurer in insurerData | filter:$select.search" refresh-delay="0" refresh="refreshInsurer($select.search)">{{insurer.name}}</ui-select-choices>
+                </ui-select>
+                <!--<div class="error-msg" ng-show="filterForm.insurer.$invalid && filterForm.insurer.$touched">Please Select Insurer Office</div>-->
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Insured</label>
+            <div class="col-sm-8">
+                <ui-select multiple tagging="tagTransform" tagging-label="(press enter to add new)" name="insured" ng-model="invoiceFilter.insured"
+                    theme="bootstrap" required>
+                    <ui-select-match>{{$item.name}}</ui-select-match>
+                    <ui-select-choices repeat="insured in insuredData | filter:$select.search" refresh-delay="0" refresh="refreshInsurerd($select.search)">{{insured.name}}</ui-select-choices>
+                </ui-select>
+                <!--<div class="error-msg" ng-show="filterForm.insured.$invalid && filterForm.insured.$touched">Please Select Insurerd Office</div>-->
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Broker</label>
+            <div class="col-sm-8">
+                <!-- <input type="text" class="form-control" ng-model="filter.broker"> -->
+                <ui-select multiple tagging="tagTransform" tagging-label="(press enter to add new)" name="broker" ng-model="invoiceFilter.broker"
+                    theme="bootstrap" required>
+                    <ui-select-match>{{$item.name}}</ui-select-match>
+                    <ui-select-choices repeat="broker in brokerData | filter:$select.search" refresh-delay="0" refresh="refreshBroker($select.search)">{{broker.name}}</ui-select-choices>
+                </ui-select>
+                <!--<div class="error-msg" ng-show="filterForm.broker.$invalid && filterForm.broker.$touched">Please Select broker Office</div>-->
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">City</label>
+            <div class="col-sm-8">
+                <!--<input type="text" class="form-control" ng-model="filter.city">-->
+                <ui-select multiple tagging="tagTransform" tagging-label="(press enter to add new)" name="city" ng-model="invoiceFilter.city"
+                    theme="bootstrap" required>
+                    <ui-select-match>{{$item.name}}</ui-select-match>
+                    <ui-select-choices repeat="city in cityData | filter:$select.search" refresh-delay="0" refresh="refreshCity($select.search)">{{city.name}}</ui-select-choices>
+                </ui-select>
+                <!--<div class="error-msg" ng-show="filterForm.city.$invalid && filterForm.city.$touched">Please Select City Name</div>-->
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Branch</label>
+            <div class="col-sm-8">
+                <!--<input type="text" class="form-control" ng-model="filter.branch">-->
+                <ui-select multiple tagging="tagTransform" tagging-label="(press enter to add new)" name="branch" ng-model="invoiceFilter.branch"
+                    theme="bootstrap" required>
+                    <ui-select-match>{{$item.name}}</ui-select-match>
+                    <ui-select-choices repeat="branch in branchData | filter:$select.search" refresh-delay="0" refresh="refreshBranch($select.search)">{{branch.name}}</ui-select-choices>
+                </ui-select>
+                <!--<div class="error-msg" ng-show="filterForm.branch.$invalid && filterForm.branch.$touched">Please Select Branch Name</div>-->
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Nature Of Survey</label>
+            <div class="col-sm-8">
+                <ui-select multiple tagging="tagTransform" tagging-label="(press enter to add new)" name="department" ng-model="invoiceFilter.department"
+                    theme="bootstrap" required>
+                    <ui-select-match>{{$item.name}}</ui-select-match>
+                    <ui-select-choices repeat="department in departmentData | filter:$select.search" refresh-delay="0" refresh="refreshDepartment($select.search)">{{department.name}}</ui-select-choices>
+                </ui-select>
+                <!--<div class="error-msg" ng-show="filterForm.department.$invalid && filterForm.department.$touched">Please Select Nature Of Survey</div>-->
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Estimated Loss</label>
+            <div class="col-sm-1 control-label">
+                <label>From  </label>
+            </div>
+            <div class="col-sm-3">
+                <input type="number" class="form-control" ng-model="invoiceFilter.from">
+            </div>
+            <div class="col-sm-1 control-label">
+                <label>To  </label>
+            </div>
+            <div class="col-sm-3">
+                <input type="number" class="form-control" ng-model="invoiceFilter.to">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Date</label>
+            <div class="col-sm-8">
+                <ui-select class="ui-select-width" ng-model="invoiceFilter.date" theme="bootstrap" ng-change="getDateCriteria(invoiceFilter.date)"
+                    title="Choose Date Criteria">
+                    <ui-select-match>{{$select.selected}}</ui-select-match>
+                    <ui-select-choices repeat="date in invoiceFilter.dates | filter: $select.search">
+                        <span ng-bind-html="date | highlight: $select.search"></span>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="form-group" ng-if="invoiceFilter.date=='Monthly'">
+            <div class="col-sm-3"></div>
+            <label class="col-sm-1 control-label">Year</label>
+            <div class="col-sm-3">
+                <ui-select class="ui-select-year-month" ng-model="invoiceFilter.monthlyYear" ng-change="setMonthlyYear();" theme="bootstrap"
+                    title="Choose Year">
+                    <ui-select-match placeholder="Select Year">{{$select.selected}}</ui-select-match>
+                    <ui-select-choices repeat="year in invoiceFilter.years | filter: $select.search">
+                        <span ng-bind-html="year | highlight: $select.search"></span>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <label class="col-sm-1 control-label" ng-if="invoiceFilter.monthlyYear">Month</label>
+            <div class="col-sm-3" ng-if="invoiceFilter.monthlyYear">
+                <ui-select class="ui-select-year-month" ng-model="invoiceFilter.monthlyMonth" ng-change="setMonthlyMonth();" theme="bootstrap"
+                    title="Choose Month">
+                    <ui-select-match placeholder="Select Month">{{$select.selected}}</ui-select-match>
+                    <ui-select-choices repeat="month in invoiceFilter.months | filter: $select.search">
+                        <span ng-bind-html="month | highlight: $select.search"></span>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="form-group" ng-if="invoiceFilter.date=='Quarterly'">
+            <div class="col-sm-3"></div>
+            <label class="col-sm-1 control-label">Year</label>
+            <div class="col-sm-6">
+                <ui-select class="ui-select-year" ng-model="invoiceFilter.quarterlyYear" ng-change="setQuarterlyYear();" theme="bootstrap"
+                    title="Choose Year">
+                    <ui-select-match placeholder="Select Year">{{$select.selected}}</ui-select-match>
+                    <ui-select-choices repeat="year in invoiceFilter.years | filter: $select.search">
+                        <span ng-bind-html="year | highlight: $select.search"></span>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <label class="col-sm-4 control-label"></label>
+            <div class="col-sm-3 control-label">
+                <label class="radio-inline"><input type="radio"  ng-model="invoiceFilter.quarterly" value="quarterly1" ng-click="setQuarterlyDate(invoiceFilter.quarterly)">1st April - 30 June</label>
+            </div>
+            <div class="col-sm-3 control-label">
+                <label class="radio-inline"><input type="radio"  ng-model="invoiceFilter.quarterly" value="quarterly2" ng-click="setQuarterlyDate(invoiceFilter.quarterly)">1st July - 30 Sept</label>
+            </div>
+            <div class="col-sm-4 control-label"></div>
+            <div class="col-sm-3 control-label label-margin-left">
+                <label class="radio-inline"><input type="radio"  ng-model="invoiceFilter.quarterly" value="quarterly3" ng-click="setQuarterlyDate(invoiceFilter.quarterly)">1st Oct - 31 Dec</label>
+            </div>
+            <div class="col-sm-3 control-label label-margin-right">
+                <label class="radio-inline"><input type="radio"  ng-model="invoiceFilter.quarterly" value="quarterly4" ng-click="setQuarterlyDate(invoiceFilter.quarterly)">1st Jan - 31 March</label>
+            </div>
+        </div>
+        <div class="form-group" ng-if="invoiceFilter.date=='Half yearly'">
+            <div class="col-sm-3"></div>
+            <label class="col-sm-1 control-label">Year</label>
+            <div class="col-sm-6">
+                <ui-select class="ui-select-year" ng-model="invoiceFilter.halfYearlyYear" ng-change="setHalfYear();" theme="bootstrap" title="Choose Year">
+                    <ui-select-match placeholder="Select Year">{{$select.selected}}</ui-select-match>
+                    <ui-select-choices repeat="year in invoiceFilter.years | filter: $select.search">
+                        <span ng-bind-html="year | highlight: $select.search"></span>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <label class="col-sm-4 control-label"></label>
+            <div class="col-sm-3 control-label">
+                <label class="radio-inline"><input type="radio"  ng-model="invoiceFilter.halfYearly" value="halfYearly1" ng-click="setHalfYearlyDate(invoiceFilter.halfYearly)">1st April - 30 Sept</label>
+            </div>
+            <div class="col-sm-3 control-label">
+                <label class="radio-inline"><input type="radio"  ng-model="invoiceFilter.halfYearly" value="halfYearly2" ng-click="setHalfYearlyDate(invoiceFilter.halfYearly)">1st Oct - 31 March</label>
+            </div>
+        </div>
+        <div class="form-group" ng-if="invoiceFilter.date=='Annual'">
+            <div class="col-sm-3"></div>
+            <label class="col-sm-1 control-label">Year</label>
+            <div class="col-sm-6">
+                <ui-select class="ui-select-year" ng-model="invoiceFilter.annualYear" ng-change="setAnnualYear();" theme="bootstrap" title="Choose Year">
+                    <ui-select-match placeholder="Select Year">{{$select.selected}}</ui-select-match>
+                    <ui-select-choices repeat="year in invoiceFilter.years | filter: $select.search">
+                        <span ng-bind-html="year | highlight: $select.search"></span>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="form-group" ng-if="invoiceFilter.date">
+            <label class="col-sm-3 control-label"></label>
+            <div class="col-sm-1 control-label">
+                <label>From</label>
+            </div>
+            <div class="col-sm-3">
+                <input type="date" class="form-control" ng-model="invoiceFilter.fromDate">
+            </div>
+            <div class="col-sm-1 control-label">
+                <label>To</label>
+            </div>
+            <div class="col-sm-3">
+                <input type="date" class="form-control" ng-model="invoiceFilter.toDate">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Assignment Status</label>
+            <div class="col-sm-8">
+                <ui-select multiple tagging="tagTransform" name="timelineStatus" ng-model="invoiceFilter.timelineStatus" theme="bootstrap"
+                    required>
+                    <ui-select-match>{{$item}}</ui-select-match>
+                    <ui-select-choices repeat="timeline in timelineStatus | filter:$select.search" refresh-delay="0">{{timeline}}</ui-select-choices>
+                </ui-select>
+                <!--<div class="error-msg" ng-show="filterForm.timelineStatus.$invalid && filterForm.timelineStatus.$touched">Please Select TimelineStatus</div>-->
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Invoice Status</label>
+            <div class="col-sm-8">
+                <ui-select multiple tagging="tagTransform" name="invoiceStatus" ng-model="invoiceFilter.invoiceApproval" theme="bootstrap"
+                    required>
+                    <ui-select-match>{{$item}}</ui-select-match>
+                    <ui-select-choices repeat="invoice in invoiceStatus | filter:$select.search" refresh-delay="0">{{invoice}}</ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12 text-center">
+                <label class="radio-inline"><input type="radio"  ng-model="color.name" value="active" ng-click="checkStateActive(color.name)">Active</label>
+                <label class="radio-inline"><input type="radio" ng-model="color.name" value="inactive" ng-click="checkStateActive(color.name)">Inactive</label>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary btn-outline btn-small pull-left" ng-click="clearFilter()"> Clear Filter</button>
+    <button class="btn btn-primary btn-outline btn-small" type="button" ng-click="showAllInvoices(invoiceFilter);$dismiss()">Apply</button>
+</div>

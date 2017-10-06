@@ -1,0 +1,6 @@
+apps:
+  - script: "app.js"
+    name: "ABM Live"
+    watch: false
+    args: "--prod"
+    exec_mode: "cluster"

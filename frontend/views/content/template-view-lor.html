@@ -1,0 +1,92 @@
+<div class="widget">
+    <!--<div class="row">
+        <div class="col-md-12" ng-if="((forms.lorCount=='NA' && forms.approvalStatus=='Draft')||(forms.lorCount=='LOR' && forms.approvalStatus=='Pending'))">
+            <uib-accordion ng-repeat="category in forms.forms" ng-if="showAll || hasSubCategory(category)">
+                <div uib-accordion-group class="panel-default custom-panel">
+                    <uib-accordion-heading>
+                        <div class="pull-right" style="color: red;">{{getIsCheckCount(category)}}</div>
+                        {{category.name}}
+                    </uib-accordion-heading>
+                    <div class="line-holder" ng-repeat="sub in category.items">
+                        <div class="form-builder" ng-if="sub.isCheck==true || showAll">
+                            <div class="form-repeater">
+                                <div>
+                                    <div class="form-builder-item no-pad row-item">
+                                        <div class="col-item">
+                                            <p> <span class="pull-left"><toggle-switch ng-model="sub.isCheck" ng-change="addToForm(sub)" class="switch-small switch-success m5"></toggle-switch></span>
+                                                <input type="text" ng-model="sub.name" class="form-control">
+                                            </p>
+                                        </div>
+                                        <div class="col-item" ng-if="sub.isCheck">
+                                            <toggle-switch ng-model="sub.typeOfDoc" on-label="Original" off-label="Copy" class="switch-small switch-success"></toggle-switch>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-builder-item no-pad row-item">
+                        <div class="col-item" style="flex: 10">
+                            <input type="text" placeholder="Add New Document" ng-model="category.addSub" class="form-control">
+                        </div>
+                        <div class="col-item" style="flex: 1">
+                            <button ng-click="addToCategory(category);" class="btn btn-primary add-button">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </uib-accordion>
+        </div>
+    </div>-->
+
+    <!--||(forms.lorCount=='LOR' && forms.approvalStatus=='Approved')-->
+    <!--{{!((forms.lorCount=='NA' && forms.approvalStatus=='Draft')||(forms.lorCount=='LOR' && forms.approvalStatus=='Pending'))}}-->
+    <div class="col-md-12">
+        <uib-accordion ng-repeat="category in forms.forms" ng-if="showAll || hasSubCategory(category)">
+            <!--<div ng-if="category.viewallCat==true">-->
+            <div uib-accordion-group class="panel-default custom-panel">
+                <uib-accordion-heading>
+                    <div class="pull-right" style="color: red;">
+                        {{getIsCheckCount(category)}}</div>
+                    {{category.name}}
+                </uib-accordion-heading>
+                <div class="line-holder" ng-repeat="sub in category.items">
+                    <div class="form-builder" ng-if="sub.isCheck==true || showAll">
+                        <div class="form-repeater">
+                            <div>
+                                <div class="form-builder-item no-pad row-item">
+                                    <div class="col-item">
+                                        <p> <span class="pull-left"><toggle-switch ng-model="sub.isCheck" ng-change="addToForm(sub)" class="switch-small switch-success m5"></toggle-switch></span>
+                                            <input type="text" ng-model="sub.name" class="form-control"> </p>
+                                    </div>
+                                    <div class="col-item" style="flex:0.5;" ng-if="sub.isCheck && isDateNeeded">
+                                        <input type="date" date-model placeholder="Enter submitted date" class="form-control" ng-model="sub.date">
+                                    </div>
+                                    <div class="col-item" style="flex:0.5;">
+                                        <toggle-switch ng-model="sub.typeOfDoc" on-label="Original" off-label="Copy" class="switch-small switch-success"></toggle-switch>
+                                    </div>
+                                    <div class="col-item" style="flex:1;" ng-if="sub.isCheck && isTypeNeeded">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default btn-wave" ng-class="{'btn-primary': sub.submit=='Pending'}" ng-click="sub.submit='Pending';confirmNoDocsPending(forms.forms)">Pending</button>
+                                            <button type="button" class="btn btn-default btn-wave" ng-class="{'btn-primary': sub.submit=='Partially Recieved'}" ng-click="sub.submit='Partially Recieved';confirmNoDocsPending(forms.forms)">Partial</button>
+                                            <button type="button" class="btn btn-default btn-wave" ng-class="{'btn-primary': sub.submit=='Received'}" ng-click="sub.submit='Received';confirmNoDocsPending(forms.forms)">Received</button>
+                                            <button type="button" class="btn btn-default btn-wave" ng-class="{'btn-primary': sub.submit=='Waived'}" ng-click="sub.submit='Waived';confirmNoDocsPending(forms.forms)">Waived</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-builder-item no-pad row-item">
+                    <div class="col-item" style="flex: 10">
+                        <input type="text" placeholder="Add New Document" ng-model="category.addSub" class="form-control">
+                    </div>
+                    <div class="col-item" style="flex: 1">
+                        <button ng-click="addToCategory(category);" class="btn btn-primary add-button">Add</button>
+                    </div>
+                </div>
+            </div>
+            <!--</div>-->
+        </uib-accordion>
+    </div>
+</div>

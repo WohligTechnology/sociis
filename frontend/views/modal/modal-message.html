@@ -1,0 +1,54 @@
+<div class="modal-header green-bg">
+  <div class="pull-right">
+    <button class="btn btn-clear" ng-click="$dismiss()">
+      <i class="ln-cross"></i>
+    </button>
+  </div>
+  <h5 class="modal-title">Send a message</h5>
+</div>
+<form name="modalForm" ng-submit="sendMessage('Normal');$dismiss()">
+  <div class="modal-body">
+    <div class="billing-sec no-float">
+      <div class="row">
+        <div class="col-md-12 field">
+          <label>Message <span>*</span></label>
+          <textarea name="message" ui-tinymce="tinymceOptions" ng-model="message.message" required></textarea>
+          <div class="error-msg" ng-show="modalForm.message.$invalid && modalForm.message.$touched">Please enter email message</div>
+        </div>
+        <div class="col-md-12 field">
+          <label>Attachments</label>
+          <div class="custom-tabs">
+            <uib-tabset>
+              <uib-tab ng-repeat="file in files">
+                <uib-tab-heading>
+                  {{file.name}} <span ng-if="file.files.length!=0">({{file.files.length}})</span>
+                </uib-tab-heading>
+                <div class="file-selector">
+                  <div class="text-right">Select All <span class="check-bx"><input type="checkbox"><i class="ln-checkmark aired"></i></span></div>
+                  <div class="text-center" ng-if="file.files.length==0">No files found.</div>
+                  <div class="scroll-x">
+                    <div class="row" ng-if="file.files.length!=0">
+                      <div class="col-md-2 mter" ng-repeat="f in file.files">
+                        <div class="filebx">
+                          <div class="dl-bx">
+                            <input type="checkbox" name="name" value="" ng-model="f.selection">
+                            <i class="ln-checkmark aired"></i>
+                          </div>
+                          <i class="ln-document"></i>
+                          <p>{{f.name}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </uib-tab>
+            </uib-tabset>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-green btn-round" type="submit" ng-disabled="modalForm.$invalid">Send</button>
+  </div>
+</form>

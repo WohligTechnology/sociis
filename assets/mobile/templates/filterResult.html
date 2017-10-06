@@ -1,0 +1,66 @@
+<ion-view title="Assign. List">
+
+    <div class="bar bar-subheader remove-padding button-border">
+        <div class="button-bar  button-border">
+            <a class="button remove-padding button-border border-bottom-css {{activeButton1}} bg-color" ng-click="changeTab(1);">Card View<span class="badge badge-assertive header-badge">{{totalCount}}</span></span></a>
+            <a class="button remove-padding button-border border-bottom-css {{activeButton2}} bg-color" ng-click="changeTab(2);">My List<span class="badge badge-assertive header-badge">{{totalCount}}</span>
+            </a>
+        </div>
+    </div>
+    <ion-content class="has-header has-subheader cardList-top">
+        <!-- For card view-->
+        <div ng-if="isList ==1">
+            <div ng-if="filterData.length > 0">
+                <div class="card filter-card" ng-repeat="item in filterData track by $index">
+                    <div class="item item-text-wrap">
+                        <label>MR Numbar: <span>{{item.name}}</span></label><br>
+                        <label>Insured: <span>{{item.insuredName}}</span></label><br>
+                        <label>Nature of survey: <span>{{item.department}}</span></label><br>
+                        <label>Estimated Loss: <span>{{item.intimatedLoss}}</span></label><br>
+                        <label>Status: <span>{{item.timelineStatus}}</span></label>
+                    </div>
+                    <a class="remove-text-decoration" href="{{webUrl}}timeline/{{item._id}}">
+                        <div class="row filter-card-row">
+
+                            <div class="col">
+                                Timeline
+                            </div>
+
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div ng-if="filterData.length == 0">
+                <div class="no-data">
+                    <p>NO DATA FOUND</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- For list view-->
+        <div class="list timeline-list-margin-top" ng-if="isList ==2">
+            <div ng-if="filterData.length > 0">
+                <div class="item item-divider" style="padding: 0">
+                    <div class="row row-bottom-border" ng-repeat="item in filterData track by $index" ng-click="selectItem(searchResult);">
+                        <div class="col col-66" style="padding: 16px;">
+                            <h2>{{item.name}}</h2>
+                        </div>
+                        <div class="col col-33" style="text-align: right">
+                            <a class="remove-text-decoration" href="{{webUrl}}timeline/{{item._id}}">
+                                <button class="button  no-animation timeline-list-btn"> 
+                            Timeline
+                        </button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="filterData.length == 0">
+                <div class="no-data">
+                    <p>NO DATA FOUND</p>
+                </div>
+            </div>
+        </div>
+        <ion-infinite-scroll ng-if="noMoreItemsAvailable" on-infinite="loadmore()" distance="5%"></ion-infinite-scroll>
+    </ion-content>
+</ion-view>

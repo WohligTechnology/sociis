@@ -1,0 +1,64 @@
+<form name="lorForm">
+    <div class="heading-sec">
+        <div class="row">
+            <div class="col-md-12 column">
+                <div class="heading-profile">
+                    <h2>LOR</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Bar Chart -->
+    <div class="panel-content">
+        <div class="row">
+            <div class="col-md-12">
+                <pre>{{lorCategory|json}}</pre>
+                <div class="widget">
+                    <div class="form-elements-sec">
+                        <div class="widget-title">
+                            <h3>LOR</h3>
+                        </div>
+                        <div class="sec">
+                            <uib-accordion>
+                                <div uib-accordion-group class="panel-default custom-panel" ng-repeat="category in lorCategory">
+                                    <uib-accordion-heading>
+                                        {{category.name}}
+                                    </uib-accordion-heading>
+                                    <div class="line-holder" ng-repeat="sub in category.items">
+                                        <div class="form-builder">
+                                            <div class="form-repeater">
+                                                <div>
+                                                    <div class="form-builder-item no-pad row-item">
+
+                                                        <div class="col-item">
+                                                            <p> <span class="pull-left"><toggle-switch ng-model="sub.isCheck" class="switch-small switch-success m5"></toggle-switch></span>                                                                {{sub.name}}</p>
+                                                        </div>
+                                                        <div class="col-item" style="flex:0.5;" ng-if="isDateNeeded">
+                                                            <input type="date" date-model placeholder="Enter submitted date" class="form-control" ng-model="sub.date">
+                                                        </div>
+                                                        <div class="col-item" style="flex:2;" ng-if="isTypeNeeded">
+                                                            <div class="btn-group">
+                                                                <button type="button" class="btn btn-default btn-wave" ng-class="{'btn-primary': sub.type=='Pending'}" ng-click="sub.type='Pending'">Pending</button>
+                                                                <button type="button" class="btn btn-default btn-wave" ng-class="{'btn-primary': sub.type=='Partially Recieved'}" ng-click="sub.type='Partially Recieved'">Partial</button>
+                                                                <button type="button" class="btn btn-default btn-wave" ng-class="{'btn-primary': sub.type=='Recieved'}" ng-click="sub.type='Received'">Recieved</button>
+                                                                <button type="button" class="btn btn-default btn-wave" ng-class="{'btn-primary': sub.type=='Waived'}" ng-click="sub.type='Waived'">Waived</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-accordion>
+                            <div class="text-center mt20 odd-even-button">
+                                <button class="btn btn-default" type="submit" ng-click="saveLOR(formData)" ng-disabled="lorForm.$invalid">Save</button>
+                                <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

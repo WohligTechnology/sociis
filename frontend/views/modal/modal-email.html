@@ -1,0 +1,89 @@
+<div class="modal-header red-bg">
+    <div class="pull-right">
+        <button class="btn btn-clear" ng-click="$dismiss()">
+      <i class="ln-cross"></i>
+    </button>
+    </div>
+    <h5 class="modal-title">Compose an email</h5>
+</div>
+<form name="modalForm" ng-submit="sendEmail(modalForm); $dismiss()" class="min-hit">
+    <div class="modal-body">
+        <div class="billing-sec no-float">
+            <!--<pre>{{emailData|json}}</pre>-->
+            <div class="row">
+                <div class="col-md-6 field">
+                    <label>To <span>*</span> </label>
+                    <ui-select name="to" ng-disabled="disabled" ng-required="true" multiple  tagging="tagHandler" tagging-label="(press enter to add new)" ng-model="emailData.to">
+                        <ui-select-match placeholder="">{{$item.name}} &lt;{{$item.email}}&gt;</ui-select-match>
+                        <ui-select-choices refresh="refreshEmployeeTo($select.search)" refresh-delay="0" repeat="emailto in employeeTo | filter:$select.search">
+                            <small><img ng-src="{{emailto.photo | uploadpath:50:50}}" alt="{{emailto.name}}" width=50 height=50 class="dp" /></small>
+                            {{emailto.name}} &lt; {{emailto.email }} &gt; </ui-select-choices>
+                        </ui-select>
+                    <div class="error-msg" ng-show="modalForm.to.$invalid && modalForm.to.$touched">Please specify at least one recipient.</div>
+                </div>
+                <div class="col-md-6 field">
+                    <label>Cc </label>
+                    <ui-select name="cc" multiple tagging="tagHandler" tagging-label="(press enter to add new)" ng-model="emailData.cc">
+                        <ui-select-match placeholder="" >{{$item.name}} &lt;{{$item.email}} &gt;</ui-select-match>
+                        <ui-select-choices refresh="refreshEmployeeCc($select.search)" refresh-delay="0" repeat="emailto in employeeCc | filter:$select.search">
+                             <small><img ng-src="{{emailto.photo | uploadpath:50:50}}" alt="{{emailto.name}}" width=50 height=50 class="dp" /></small>
+                            {{emailto.name}} &lt; {{emailto.email }} &gt; </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-md-12 field">
+                    <label>Bcc</label>
+                    <ui-select name="bcc" multiple tagging="tagHandler" tagging-label="(press enter to add new)" ng-model="emailData.bcc">
+                        <ui-select-match placeholder="">{{$item.name}} &lt;{{$item.email}} &gt;</ui-select-match>
+                        <ui-select-choices refresh="refreshEmployeeBcc($select.search)" refresh-delay="0" repeat="emailto in employeeBcc | filter:$select.search">
+                             <small><img ng-src="{{emailto.photo | uploadpath:50:50}}" alt="{{emailto.name}}" width=50 height=50 class="dp" /></small>
+                            {{emailto.name}} &lt; {{emailto.email }} &gt;</ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-md-12 field">   
+                    <label>Subject <span>*</span></label>
+                    <input name="subject" type="text" placeholder="" ng-model="emailData.subject" ng-disabled="emailData.subject" required>
+                    <div class="error-msg" ng-show="modalForm.subject.$invalid && modalForm.subject.$touched">Please enter subject</div>
+                </div>
+                <div class="col-md-12 field">
+                    <label>Message <span>*</span></label>
+                    <textarea name="message" tiny ui-tinymce="tinymceOptions" ng-model="emailData.message" required>{{emailData.message}}</textarea>
+                    <div class="error-msg" ng-show="modalForm.message.$invalid && modalForm.message.$touched">Please enter email message</div>
+                </div>
+                <div class="col-md-12 field">
+                    <label>Attachments</label>
+                    <div class="custom-tabs">
+                        <uib-tabset>
+                            <uib-tab ng-repeat="file in files">
+                                <uib-tab-heading>
+                                    {{file.type}} <span ng-if="file.count!=0">({{file.count}})</span>
+                                </uib-tab-heading>
+                                <div class="file-selector">
+                                    <div class="text-right">Select All <span class="check-bx"><input type="checkbox"><i class="ln-checkmark aired"></i></span></div>
+                                    <div class="text-center" ng-if="file.files.length==0">No files found.</div>
+                                    <div class="scroll-x">
+                                        <div class="row" ng-if="file.files.length!=0">
+                                            <div class="col-md-2 mter" ng-repeat="f in file.files">
+                                                <div class="filebx">
+                                                    <div class="dl-bx">
+                                                        <input type="checkbox" name="name" value="" ng-model="f.selection">
+                                                        <i class="ln-checkmark aired"></i>
+                                                    </div>
+                                                    <i class="ln-document"></i>
+                                                    <p>{{f.name}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                        </uib-tabset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <!--<span ng-if="msgSend!=''">{{msgSend}}</span>-->
+        <button class="btn btn-red btn-round" type="submit" ng-disabled="modalForm.$invalid">Send</button>
+    </div>
+</form>

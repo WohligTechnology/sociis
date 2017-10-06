@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <meta content="telephone=no" name="format-detection" />
+  <title>Quasar</title>
+  <style media="screen">
+    body {
+      padding: 50px;
+      font-family: sans-serif;
+    }
+    
+    .img-header {
+      padding: 10px 0;
+      position: relative;
+    }
+    
+    .txt-position {
+      position: absolute;
+      top: 50%;
+      right: 0;
+    }
+    
+    .tpbt-border {
+      border-top: 2px solid #ebebeb;
+      border-bottom: 2px solid #ebebeb;
+    }
+    
+    .color-grey {
+      color: grey;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="img-header">
+    <img src="http://absolute.wohlig.co.in/frontend/img/logo.png" alt="Absolute Logo" width="200px" height="auto">
+    <p class="txt-position">
+      <%= email.deliveredTo %>
+    </p>
+  </div>
+  <div class="tpbt-border">
+    <h3 font-weight="bold">
+      <%= email.subject %>
+    </h3>
+  </div>
+  <div style="position:relative">
+    <p style="position:absolute ; top:-10px ; right:0">
+      <%= email.date %>
+    </p>
+    <p><b><%= email.from %></b></p>
+    <p>To:
+      <%= email.to %>
+    </p>
+    <%if (email.cc.length>7) { %>
+      <div>
+        <p>Cc:
+          <%= email.cc %>
+        </p>
+      </div>
+      <% } %>
+        <div style="padding: 20px">
+          <%- email.body %>
+        </div>
+        <div>
+          <table>
+            <% for(var i=0; i<email.attachment.length; i++) {%>
+              <td height="100px" width="100px">
+                <div class="img-header">
+                  <% if((email.attachment[i].mimeType=="image/png")||(email.attachment[i].mimeType=="image/jpeg")||(email.attachment[i].mimeType=="image/gif")||(email.attachment[i].mimeType=="image/jpg")) {%>
+                    <img src="http://absolute.wohlig.co.in/frontend/img/commonimg.png" alt="Absolute Logo" width="100px" height="100px">
+                    <p class="txt-position">
+                      <%= email.attachment[i].filename %>
+                    </p>
+                    <% }else{%>
+                        <img src="http://absolute.wohlig.co.in/frontend/img/doc.png" alt="Absolute Logo" width="100px" height="100px">
+                        <p class="txt-position">
+                          <%= email.attachment[i].filename %>
+                        </p>
+                        <% }%>
+                          
+                </div>
+              </td>
+              <% }%>
+          </table>
+        </div>
+  </div>
+</body>

@@ -1,0 +1,83 @@
+<form name="formName" ng-submit="saveModel(formData)">
+    <div class="heading-sec">
+        <div class="row">
+            <div class="col-md-12 column">
+                <div class="heading-profile">
+                    <toggle-switch ng-model="formData.status" class="switch-small switch-success pull-right"></toggle-switch>
+                    <h2>{{header.name}}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Bar Chart -->
+    <div class="panel-content">
+        <div class="widget">
+            <div class="form-elements-sec">
+                <div class="sec">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>ISR Name*</label>
+                                <input type="text" name="name" class="form-control" ng-model="formData.name" required>
+                                <div class="error-msg" ng-show="formName.name.$invalid && formName.name.$touched">Please Enter Name</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget">
+            <div class="form-elements-sec">
+                <div class="sec">
+                    <div class="clearfix"></div>
+                    <div class="form-builder">
+                        <div class="form-repeater" ng-repeat="form in formData.forms track by $index">
+                            <div class="form-builder-head">
+                                <div class="mark-float">
+                                    <i class="fa fa-plus-circle success" ng-click="addHead();"></i>
+                                    <i class="fa fa-minus-circle danger" ng-click="removeHead($index);"></i>
+                                </div>
+                                <input type="text" ng-model="form.name" placeholder="Enter Heading" class="form-control">
+                            </div>
+                            <div class="form-builder-hr" id="sortable-ul-selector-id" ui-sortable="sortableOptions" ng-model="form.items">
+                                <div class="form-builder-item row-item" ng-repeat="item in form.items track by $index">
+                                    <div class="right-float mark-float">
+                                        <i class="fa fa-bars handleBar"></i>
+                                    </div>
+                                    <div class="mark-float">
+                                        <i class="fa fa-plus-circle success" ng-click="addItem(form);"></i>
+                                        <i class="fa fa-minus-circle danger" ng-click="removeItem(form, $index);"></i>
+                                    </div>
+                                    <div class="col-item"><input type="text" placeholder="Enter item name" ng-model="item.name" class="form-control"></div>
+                                    <div class="col-item">
+                                        <select class="form-control" ng-model="item.type">
+                                    <option value="" selected disabled>Select type of item</option>
+                                    <option value="Custom Input">Custom Input</option>
+                                    <option value="System Fields">System Fields</option>
+                                    <option value="Dropdown">Dropdown</option>
+                                </select>
+                                    </div>
+                                    <div class="col-item" ng-if="item.type=='Custom Input'">
+                                        <select class="form-control" ng-model="item.value">
+                                    <option value="" selected disabled>Select type of input</option>
+                                    <option value="Text">Text</option>
+                                    <option value="Date">Date</option>
+                                    <option value="Textarea">Textarea</option>
+                                </select>
+                                    </div>
+                                    <div class="col-item" ng-if="item.type=='System Fields'"><input ng-model="item.value" type="text" placeholder="Enter Value" class="form-control"></div>
+                                    <div class="col-item" ng-if="item.type=='Dropdown'"><input ng-model="item.value" type="text" class="form-control" placeholder="Enter values (eg. Theft, Fire)"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="text-center mt20 odd-even-button">
+            <button class="btn btn-default" type="submit" ng-disabled="formName.$invalid">Save</button>
+            <a class="btn btn-default" ui-sref="templateila-list">Cancel</a>
+        </div>
+    </div>
+</form>

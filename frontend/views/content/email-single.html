@@ -1,0 +1,39 @@
+<div class="heading-sec">
+    <div class="row">
+        <div class="col-md-6 column">
+            <div class="heading-profile">
+                <h2>Absolute Links</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!--{{ email.body | base64url }}-->
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="form-elements-sec" id="myCanvas">
+                    <div class="widget-title bordered">
+                        <div class="pull-right">
+                            <a class="btn btn-default" tooltip-placement="top" uib-tooltip="Create Assignment with email date" type="button" ng-click="createAssignment()">Create Assignment</a>
+                            <button class="btn btn-default" tooltip-placement="top" uib-tooltip="Back" type="button" ui-sref="email-inbox"><i class="fa fa-arrow-left"></i></button>
+                            <button class="btn btn-default" tooltip-placement="top" uib-tooltip="Reply to All" type="button"><i class="fa fa-reply-all"></i></button>
+                            <button class="btn btn-default" tooltip-placement="top" uib-tooltip="Forward" type="button"><i class="fa fa-share"></i></button>
+                        </div>
+                        <h3>{{email.payload.headers | from:"From"}}</h3>
+                        <p>To {{email.payload.headers | from:"To"}}</p>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="sec email-sec" ng-bind-html="email.body | base64url"></div>
+                    <div class="col-md-2 mter mt-18" ng-repeat="f in email.attachment" ng-click="openAttachment(f)">
+                        <div class="filebx">
+                            <i class="ln-document"></i>
+                            <p>{{f.filename}}</p>
+                        </div>
+                    </div>
+                    <!--<div class="sec email-sec" ng-bind-html="email.detail.snippet"></div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

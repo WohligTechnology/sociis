@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+<%
+var a = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
+var b = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
+
+function toWords (num) {
+    if ((num = num.toString()).length > 9) return 'overflow';
+    n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+    if (!n) return; var str = '';
+    str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'crore ' : '';
+    str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'lakh ' : '';
+    str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'thousand ' : '';
+    str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'hundred ' : '';
+    str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'only ' : '';
+    str = str;
+    
+    return str;
+} 
+function makeItCurrency (num) {
+    return _.round(num,2);
+}
+
+%>
+
+    <head>
+        <style>
+            body {
+                font-family: sans-serif;
+                font-size: 9px;
+                margin: 0px;
+            }
+            
+            .subject {
+                font-weight: bold;
+            }
+            
+            .claim-table {
+                width: 100%;
+            }
+            
+            .noborder {
+                border: none;
+            }
+            
+            .noborder td {
+                padding: 3px 0px;
+            }
+            
+            .table-data {
+                border: 1px solid transparent;
+                border-right: 1px solid;
+                text-align: right;
+                font-weight: bold;
+            }
+            .text-right {
+                text-align: right;
+            }
+            
+            .claim-detail>tr>td:first-child(1) {
+                width: 80%;
+            }
+            
+            table,
+            th,
+            td {
+                border: 1px solid black;
+                border-collapse: collapse;
+                font-size: 9px;
+                padding: 8px 4px 2px;
+            }
+            
+            .date>p {
+                margin: 2px 0;
+            }
+            
+            .justify {
+                text-align: justify;
+            }
+            
+            p {
+                font-size: 9px;
+                line-height: 1.5;
+            }
+            
+            .content-head {
+                margin: 30px 0;
+            }
+            
+            .content-lineheight {
+                line-height: 1.5;
+            }
+            
+            #pageFooter {
+                font-size: 6px;
+            }
+        </style>
+    </head>
+
+    <body style="
+    padding: 0;
+    margin: 0;
+">
+        <div>
+            <div style="float: right;">
+                <img src="<%= realHost %>/img/logo.png" style="width:150px">
+            </div>
+            <div>
+                <div style="width: 190px;">
+                    <p>
+                        <%=data.assignment.company.address%>
+                            <%=data.assignment.company.city.name%>,
+                                <%=data.assignment.company.city.district.state.name%>.<br> Phone #:
+                                    <%=data.assignment.company.phone%> <br>FAX #:
+                                        <%=data.assignment.company.fax%>
+                                            <%=data.assignment.company.email%>
+                                                <%=data.assignment.company.website%>
+                    </p>
+                </div>
+            </div>
+            <div style="
+    clear: both;
+">
+            </div>
+            <h2 style="
+    margin: 5px 0;
+">INVOICE</h2>
+            <div class="clearfix" style="margin:0 auto;padding-bottom: 10px;">
+                <h4 class="size" style="margin:0;">
+                    <%=data.billedTo.name%>
+                </h4>
+            </div>
+            <div style="clear:both;"></div>
+            <table class="tdata noborder">
+                <tbody>
+                    <tr>
+                        <td class="noborder">
+                            <p class="size" style="margin: 5px 0;padding-right: 40px;">
+                                <%=data.billedTo.customerCompany.name%>,<br>
+                                    <%=data.billedTo.address%><br>
+                                        <%=data.billedTo.city.name%>,
+                                            <%=data.billedTo.city.district.name%>,
+                                                <%=data.billedTo.pincode%>,
+                                                    <%=data.billedTo.city.district.state.name%>,<br>
+                                                        <%=data.billedTo.city.district.state.zone.country.name%>
+                            </p>
+                        </td>
+                        <td class="noborder">
+                        </td>
+                        <td class="noborder">
+                            <div class="size"><i>Invoice No</i><span style="padding:0 12px;"><%= data.invoiceNumber%></span></div>
+                            <div class="size"> <i>Invoice Date</i><span style="padding:0 3px;"><%= moment(new Date(data.approvalTime)).format("L")%></span></div>
+                        </td>
+                        <td class="noborder">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 100px;" class="noborder">Appointed By</td>
+                        <td style="width: 250px;" class="noborder">
+                            <%=data.assignment.customer.name%>
+                        </td>
+                        <td class="noborder">COL</td>
+                        <td class="noborder">
+                            <%=data.assignment.causeOfLoss.name%>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="noborder">Insurer</td>
+                        <td class="noborder">
+                            <%=data.assignment.insurerOffice.name%>
+                        </td>
+                        <td class="noborder">NOL</td>
+                        <td class="noborder">
+                            <% for(var i=0; i<data.assignment.natureOfLoss.length; i++) {%>
+                                <%=data.assignment.natureOfLoss[i].name%>
+                                    <%if(i<data.assignment.natureOfLoss.length-1){%>,
+                                        <%}%>
+                                            <%}%>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="noborder">Insured</td>
+                        <%if(data.assignment.insuredOffice===undefined){%>
+                            <td class="noborder">
+                                -
+                            </td>
+                            <%}else{%>
+                                <td class="noborder">
+                                    <%=data.assignment.insuredOffice.name%>
+                                </td>
+                                <%}%>
+                                    <td class="noborder">Classification</td>
+                                    <td class="noborder">
+                                        <% for(var i=0; i<data.assignment.products.length; i++) {%>
+                                            <%=data.assignment.products[i].product.category.name%>
+                                                <%if(i<data.assignment.products.length-1){%>,
+                                                    <%}%>
+                                                        <%}%>
+                                    </td>
+                    </tr>
+                    <tr>
+                        <td class="noborder">Policy Type</td>
+                        <td class="noborder">
+                            <%if(data.assignment.policyType){%>
+                                <%=data.assignment.policyType.name%>
+                                    <%  } %>
+                        </td>
+                        <td class="noborder">Product</td>
+                        <td class="noborder">
+                            <% for(var i=0; i<data.assignment.products.length; i++) {%>
+                                <%=data.assignment.products[i].product.name%>
+                                    <%if(i<data.assignment.products.length-1){%>,
+                                        <%}%>
+                                            <%}%>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="noborder">Policy Number</td>
+                        <%if(data.assignment.policyNumber===undefined){%>
+                            <td class="noborder">
+                                -
+                            </td>
+                            <%}else{%>
+                                <td class="noborder">
+                                    <%=data.assignment.policyNumber%>
+                                </td>
+                                <%}%>
+                                    <td class="noborder">Item</td>
+                                    <td class="noborder">
+                                        <% for(var i=0; i<data.assignment.products.length; i++) {%>
+                                            <%=data.assignment.products[i].item%>
+                                                <%if(i<data.assignment.products.length-1){%>,
+                                                    <%}%>
+                                                        <%}%>
+                                    </td>
+                    </tr>
+                    <tr>
+                        <td class="noborder">Insurer Claim No</td>
+                        <%if(data.assignment.insurerClaimId===undefined){%>
+                            <td class="noborder">
+                                -
+                            </td>
+                            <%}else{%>
+                                <td class="noborder">
+                                    <%=data.assignment.insurerClaimId%>
+                                </td>
+                                <%}%>
+                                    </td>
+                                    <%if(data.assignment.department.name==="Marine Cargo"){%>
+                                        <td class="noborder">Invoice # &amp; Date</td>
+                                        <%if(data.assignment.invoices[0]===undefined){%>
+                                            <td class="noborder">
+                                                -
+                                            </td>
+                                            <%}else{%>
+                                                <td class="noborder">
+                                                    <%=data.assignment.invoices[0].invoiceNumber%> &
+                                                        <%= moment(new Date(data.assignment.invoices[0].invoiceNumberDate)).format("L")%>
+                                                </td>
+                                                <%}%>
+                                                    <%}else{%>
+                                                        <td class="noborder">Product ID</td>
+                                                        <td class="noborder">
+                                                            <% for(var i=0; i<data.assignment.product.length; i++) {%>
+                                                                <%=data.assignment.product[i].product%>
+                                                                    <%if(i<data.assignment.product.length-1){%>,
+                                                                        <%}%>
+                                                                            <%}%>
+                                                        </td>
+                                                        <%}%>
+                    </tr>
+                    <tr>
+                        <td class="noborder">Insured Claim No</td>
+                        <%if(data.assignment.insuredClaimId===undefined){%>
+                            <td class="noborder">
+                                -
+                            </td>
+                            <%}else{%>
+                                <td class="noborder">
+                                    <%=data.assignment.insuredClaimId%>
+                                </td>
+                                <%}%>
+                                    <%if(data.assignment.department.name==="Marine Cargo"){%>
+                                        <td class="noborder">LR # &amp; Date</td>
+                                        <%if(data.assignment.LRs[0]===undefined){%>
+                                            <td class="noborder">
+                                                -
+                                            </td>
+                                            <%}else{%>
+                                                <td class="noborder">
+                                                    <%=data.assignment.LRs[0].lrNumber%> &
+                                                        <%= moment(new Date(data.assignment.LRs[0].lrNumberDate)).format("L")%>
+                                                </td>
+                                                <%}%>
+                                                    <%}else{%>
+                                                        <td class="noborder">Location ID</td>
+                                                        <td class="noborder">
+                                                            <% for(var i=0; i<data.assignment.locationArr.length; i++) {%>
+                                                                <%=data.assignment.locationArr[i].locationString%>
+                                                                    <%if(i<data.assignment.locationArr.length-1){%>,
+                                                                        <%}%>
+                                                                            <%}%>
+                                                        </td>
+                                                        <%}%>
+                    </tr>
+                    <%if(data.assignment.department.name==="Marine Cargo"){%>
+                        <tr>
+                            <td class="noborder"></td>
+                            <td class="noborder"></td>
+                            <td class="noborder">Vehicle</td>
+                            <%if(data.assignment.vehicleNumber[0]===undefined){%>
+                                <td class="noborder">
+                                    -
+                                </td>
+                                <%}else{%>
+                                    <td class="noborder">
+                                        <%=data.assignment.vehicleNumber[0].vehicleNumber%>
+                                    </td>
+                                    <%}%>
+                        </tr>
+                        <tr>
+                            <td class="noborder">Fee Narration</td>
+                            <%if(data.narrationFee===undefined){%>
+                                <td class="noborder">
+                                    -
+                                </td>
+                                <%}else{%>
+                                    <td class="noborder">
+                                        <%=data.narrationFee%>
+                                    </td>
+                                    <%}%>
+                        </tr>
+                        <%}%>
+                            <td class="noborder"></td>
+                            <td class="noborder"></td>
+                </tbody>
+            </table>
+            <div style="padding-top: 15px;">
+                <div style="margine-top:20px;">
+                    <table class="tdata">
+                        <tbody>
+                            <tr>
+                                <th style="width:25px" class="text-center">Sr #</th>
+                                <th style="width: 305px;">Description</th>
+                                <th>Quality</th>
+                                <th>Unit</th>
+                                <th>Rate</th>
+                                <th>Amount</th>
+                            </tr>
+                            <% for(var i=0; i<data.invoiceList.length; i++) {%>
+                                <tr>
+                                    <td class="text-center">
+                                        <%=i+1%>
+                                    </td>
+                                    <td>
+                                        <%=data.invoiceList[i].description%>
+                                    </td>
+                                    <td class="text-right">
+                                        <%=data.invoiceList[i].quantity%>
+                                    </td>
+                                    <td class="text-center">
+                                        <%=data.invoiceList[i].unit%>
+                                    </td>
+                                    <td class="text-right">
+                                        <%=data.invoiceList[i].rate%>
+                                    </td>
+                                    <td class="text-right">
+                                        <%=data.invoiceList[i].amount%>
+                                    </td>
+                                </tr>
+                                <%}%>
+                                    <tr>
+                                        <td colspan="5" class="table-data">Sub Total</td>
+                                        <td class="text-right">
+                                            <%=data.subTotal%>
+                                        </td>
+                                    </tr>
+                                    <% for(var i=0; i<data.tax.length; i++) {%>
+                                        <tr>
+                                            <td colspan="5" class="table-data">
+                                                <%=data.tax[i].name%> @
+                                                    <%=data.tax[i].percent%>%</td>
+                                            <td class="text-right">
+                                                <%=data.tax[i].amount%>
+                                            </td>
+                                        </tr>
+                                        <%}%>
+                                            <tr>
+                                                <td colspan="5" class="table-data">Rounding Off </td>
+                                                <td class="text-right">-
+                                                    <%=data.roundOff%>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="5" class="table-data">Grand Total</td>
+                                                <td class="text-right">
+                                                    <%=data.grandTotal%>
+                                                </td>
+                                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div style="padding-top: 15px;">
+                <b class="size" style="float:right;">For, Absolute Insurance Surveyors &amp; Loss Assessors Pvt Ltd</b>
+                <div style="width:44%;text-align:left;display:inline-block;vertical-align:middle;">
+                    <b class="size">INR <span style="text-transform:capitalize;"><%=toWords(data.grandTotal)%></span> </b>
+                    <p class="size" style="margin: 5px 0 0;padding-right: 55px;">E. and O.E.<br> Subjected to Ahmedabad Jurisdiction <br>Service Tax No:
+                        <%=data.assignment.company.serviceTax%> <br>(Insurance Auxiliary Services)<br> PAN No:
+                            <%=data.assignment.company.pan%>.<br>CIN:
+                                <%=data.assignment.company.cin%>
+                                    Bank Name:
+                                    <%=data.assignment.company.bank.name%><br> Current A/C:
+                                        <%=data.assignment.company.bank.accountNumber%><br> IFSC Code:
+                                            <%=data.assignment.company.bank.neftCode%><br>
+                    </p>
+                </div>
+                <p class="size" style="margin-top: 10px;margin-bottom: 0;text-align: right;"> Authorized Signatory</p>
+            </div>
+        </div>
+
+
+        <div id='pageFooter' style='border-top: 1px solid;padding-top: 5px;'>
+            <div class='bt-foot'>
+                <div style=float:left; '>Absolute Insurance Surveyors &amp; Loss Assessors Pvt Ltd</div>
+<div style='float:right; '>Page {{page}} of {{pages}}</div>
+<div style='text-align:center;text-align: center;position: absolute;margin: 0 auto;width: 100%; '>Assignment # <%= data.assignment.name %></div></div>
+
+    </body>
+
+</html>

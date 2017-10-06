@@ -1,0 +1,998 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<%
+function getAssignmentTemplateValue (input, assignment) {
+        var sInput = _.split(input, '+');
+        var returnStr = "";
+        sInput = _.map(sInput, function (n) {
+            var obj = {};
+            n = _.trim(n);
+            if (_.startsWith(n, '"')) {
+                obj.type = "String";
+                obj.value = n.substr(1, n.length - 2);
+            } else {
+                obj.type = "Object";
+                var splitVal = _.split(n, ".");
+                obj.value = assignment;
+                _.each(splitVal, function (m, k) {
+                    if (!isNaN(m)) {
+                        _.each(obj.value, function (n, key) {
+                            if (m == key) {
+                                obj.value = n;
+                            }
+                        });
+                    } else if (m == "*") {
+                        var a = _.cloneDeep(obj.value);
+                        var b = {};
+                        obj.value = {};
+                        _.each(a, function (n, key) {
+                            var a = splitVal[k + 1];
+                            for (var i in n) {
+                                if (i == a) {
+                                     if (b[i] != undefined) {
+										if(i === "surveyDate"){
+											if(n["status"]==="Completed"){
+												b[i] = b[i] + ", " + makeIstDate(n[i],"DD/MM/YYYY");
+											}
+										} else {
+											b[i] = b[i] + ", " + n[i];
+										} 
+                                    } else {
+										if(i === "surveyDate"){
+											if(n["status"]==="Completed"){
+												b[i] = makeIstDate(n[i],"DD/MM/YYYY");
+											}
+										} else {
+											b[i] = n[i]; 
+										}
+                                    }
+                                }
+                            }
+                        });
+                        obj.value = b;
+                    } else {
+                        if (obj.value) {
+                            obj.value = obj.value[m];
+                        }
+                    }
+                });
+            }
+            if (obj.value == undefined) {
+                obj.value = "NA"
+            }	
+			var ifDate = _.split(obj.value, ':');
+			if(ifDate.length>1){
+            if ((obj.value.charAt(obj.value.length - 1) == "Z" || obj.value.charAt(obj.value.length - 1) == "z") && ifDate.length == 3) {
+                obj.value = moment(obj.value).add(5, "hours").add(30, "minutes").format("DD/MM/YYYY");
+            }
+			}
+            returnStr = returnStr + obj.value;
+            return obj;
+        });
+        return returnStr;
+}
+function makeItCurrency (num) {
+    var n = _.round(num,2);
+    return n.toLocaleString('en-US', {minimumFractionDigits: 2});
+}
+function makeIstDate(date,format){
+    return moment(new Date(date)).add(5, "hours").add(30, "minutes").format(format);
+}
+function getValue(type,value,field){  
+	 if(type=="Custom Input") {  
+		if(value=="Currency"){
+				 return makeItCurrency(field) 
+		 } else {
+				return field 
+		} 
+	 } else{
+			return getAssignmentTemplateValue(value,assignment) 
+	 }
+}
+function checkValue(data) {
+	if(data===undefined || data==='NaN' || data==='Invalid date' || data==="" || data===null){
+		return '';
+	} else {
+	 	return data;
+	}
+}
+%>
+
+	<head>
+		<title>ICICI ILA</title>
+	</head>
+	<link rel="stylesheet" href="" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i" rel="stylesheet">
+	<link link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<style>
+		@media print {
+			.page {
+				margin: 0;
+				border: initial;
+				border-radius: initial;
+				width: initial;
+				min-height: initial;
+				box-shadow: initial;
+				background: initial;
+				page-break-after: always;
+			}
+			.gcol {
+				background-color: #c0c0c0 !important;
+				-webkit-print-color-adjust: exact !important;
+			}
+		}
+
+		.text-right {
+			text-align: right;
+		}
+
+
+		.gcol {
+			background-color: #c0c0c0;
+		}
+
+		.cap {
+			text-transform: capitalize;
+		}
+
+		.upper {
+			text-transform: uppercase;
+		}
+
+		body {
+			background-color: #fff;
+			font-family: Roboto, sans-serif;
+			font-size: 9px;
+		}
+
+		ul,
+		p {
+			list-style: none;
+			font-family: Roboto, sans-serif;
+			font-size: 9px;
+		}
+
+		tr,
+		td {
+			font-family: Roboto, sans-serif;
+			font-size: 9px;
+		}
+
+		.pa0 {
+			padding: 0px !important;
+		}
+
+		.vl-md {
+			vertical-align: middle !important;
+		}
+
+		.top-head5 {
+			margin-top: 50px;
+		}
+
+		.header2 {
+			margin-top: 25px;
+		}
+
+		.mb0 {
+			margin-bottom: 0px !important;
+		}
+
+		.pl20 {
+			padding-left: 20px !important;
+		}
+
+		.mrt100 {
+			margin-top: 50px;
+		}
+
+		.fwb {
+			font-weight: bold;
+		}
+
+		.taj {
+			text-align: justify;
+		}
+
+		.tlr {
+			text-align: right;
+		}
+
+		.tlc {
+			text-align: center;
+		}
+		/*Customize border table*/
+
+		.cs-tab>table,
+		.cs-tab>table>tbody>tr>td {
+			border: 2px solid black !important;
+		}
+
+		.cs-tab2>table>tbody>tr>td {
+			border: 1px solid black !important;
+		}
+
+		.fs-tab>table>tbody>tr:nth-child(-n+3) {
+			border-left: 2px solid black !important;
+			border-right: 2px solid black !important;
+		}
+
+		.fs-tab>table>tbody>tr:nth-child(1) {
+			border-top: 2px solid black !important;
+		}
+
+		.fs-tab>table>tbody>tr:nth-child(3) {
+			border-bottom: 2px solid black !important;
+		}
+
+		.fs-tab>table,
+		.fs-tab2>table,
+		.fs-tab3>table,
+		.fs-tab>table>tbody>tr>td,
+		.fs-tab2>table>tbody>tr>td,
+		.fs-tab3>table>tbody>tr>td {
+			border: 1px solid black !important;
+		}
+
+		.table-bordered {
+			border: hidden !important;
+		}
+
+		.table-bordered>tbody>tr>td {
+			border-bottom-color: black;
+			border-color: black;
+		}
+
+		.wd241 {
+			width: 241px;
+		}
+
+		.wd164 {
+			width: 164px;
+		}
+
+		.fs-tab>table>tbody>tr>td:nth-child(2n+2),
+		.fs-tab2>table>tbody>tr>td:nth-child(2n+2),
+		.fs-tab3>table>tbody>tr>td:nth-child(2n+2) {
+			width: 241px !important;
+		}
+
+		.fs-tab2>table>tbody>tr>td:nth-child(-n + 1) {
+			width: 35px !important;
+		}
+	</style>
+
+	<body>
+		<div>
+			<div class="top-head">
+				<div class="table">
+					<table style="width: 100%">
+						<tr>
+							<td style="margin: 0px width=" 20% ">
+								<ul class="pa0 ">
+								<li><%=assignment.branch.name%></li>
+									<% if(assignment.office) { %>
+										<li><%=assignment.office.address%></li>
+											<li><%=assignment.office.city.name%>, 
+											     <%=assignment.office.city.district.state.name%></li>
+											<li>Phone #: <%=assignment.office.phone%></li>
+											<li>FAX #: <%=checkValue(assignment.office.fax)%></li>
+									<% } %>
+								</ul>
+							</td>
+							<td style="width="80%">
+								<div style="float:right;">
+									<img src="http://absolutesurveyors.com/frontend/img/logo.png" style="width: 150px">
+									<br><br>
+									<p class="tlr fwb">
+										<u>WITHOUT PREJUDICE</u>
+									</p>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="text-center">
+					<p class="fwb" style="font-size:12px;">
+						<u>IMMEDIATE LOSS ADVICE</u>
+					</p>
+				</div>
+				<div class="cs-tab">
+					<table class="table table-bordered">
+						<tbody>
+							<tr>
+								<td style="width:50%;">Report No :
+									<%=assignment.name%>
+								</td>
+								<td style="width:50%;" class="fwb text-right">Web URN No : Insured -
+									<%= checkValue(assignment.insuredClaimId) %>
+								</td>
+							</tr>
+							<tr>
+								<td style="width:50%;">Date :
+									<%= makeIstDate(data.authTimestamp,"D-MMM-YYYY") %>
+								</td>
+								<td style="width:50%;" class="fwb text-right">Claim Ref No : Insurer -
+									<%=checkValue(assignment.insurerClaimId)%>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="fs-tab">
+					<table class="table  table-bordered">
+						<tbody>
+							<% for(var i=0; i<data.forms.length; i++) {%>
+								<% for(var j=0; j<data.forms[i].items.length; j++) {%>
+
+									<% if(data.forms[i].items[j].name === "Policy No") { %>
+										<tr>
+											<td style="width:3% !important;">1.</td>
+											<td style="width:25% !important;">Policy No.</td>
+											<td style="width:72% !important;" class="cap">
+												<%= checkValue(getValue(data.forms[i].items[j].type,data.forms[i].items[j].value,data.forms[i].items[j].field)) %>
+											</td>
+										</tr>
+										<% } 
+							if(data.forms[i].items[j].name == "Policy Period - From") { 
+								var fromDate= checkValue(getValue(data.forms[i].items[j].type,data.forms[i].items[j].value,data.forms[i].items[j].field)) }
+							if(data.forms[i].items[j].name == "Policy Period - To") { %>
+											<tr>
+												<td>2.</td>
+												<td class="vl-md">Policy Period </td>
+												<td class="pa0 ">
+													<div class="cs-tab2">
+														<table class="table table-bordered mb0">
+															<tr>
+																<td class="fwb gcol wd241 tlc">From</td>
+																<td class="fwb gcol wd241 tlc">To</td>
+															</tr>
+															<tr>
+																<td>
+																	<%= fromDate%>
+																</td>
+																<td>
+																	<%= checkValue(getValue(data.forms[i].items[j].type,data.forms[i].items[j].value,data.forms[i].items[j].field)) %>
+																</td>
+															</tr>
+														</table>
+													</div>
+												</td>
+											</tr>
+											<% } 
+							
+							if(data.forms[i].items[j].name === "Type of Policy") { %>
+												<tr>
+													<td>3.</td>
+													<td>Type of Policy</td>
+													<td class="cap">
+														<%= checkValue(getValue(data.forms[i].items[j].type,data.forms[i].items[j].value,data.forms[i].items[j].field)) %>
+													</td>
+												</tr>
+												<% } 
+							if(data.forms[i].items[j].name === "Insured / Client name") { %>
+													<tr style="height:20px;"></tr>
+													<tr>
+														<td>4.</td>
+														<td>Insured / Client Name</td>
+														<td class="cap">
+															<%= checkValue(getValue(data.forms[i].items[j].type,data.forms[i].items[j].value,data.forms[i].items[j].field)) %>
+														</td>
+													</tr>
+													<% } 
+							if(data.forms[i].items[j].name === "Reason for delay in ILA submission") { %>
+														<tr>
+															<td>5.</td>
+															<td>Reason for delay in ILA submission </td>
+															<td class="cap">
+																<%= checkValue(data.forms[i].items[j].field) %>
+															</td>
+														</tr>
+														<% } 
+							if(data.forms[i].items[j].name == "Surveyor visit details - Date") { 
+								var surveyDate= checkValue(getValue(data.forms[i].items[j].type,data.forms[i].items[j].value,data.forms[i].items[j].field)) }
+							if(data.forms[i].items[j].name === "Surveyor visit details - Location") { %>
+															<tr>
+																<td class="vl-md">6.</td>
+																<td class="vl-md">Surveyor visit details</td>
+																<td class="pa0">
+																	<div class=cs-tab2>
+																		<table class="table table-bordered mb0">
+																			<tr>
+																				<td class="fwb gcol wd241 tlc">Date</td>
+																				<td class="fwb gcol wd241 tlc">Location</td>
+																			</tr>
+																			<tr>
+																				<td>
+																					<%= surveyDate%>
+																				</td>
+																				<td class="cap">
+																					<%= checkValue(getValue(data.forms[i].items[j].type,data.forms[i].items[j].value,data.forms[i].items[j].field)) %>
+																				</td>
+																			</tr>
+																		</table>
+																	</div>
+																</td>
+															</tr>
+															<% }
+								if(data.forms[i].items[j].name == "Surveyor appointment details - Appointment email / call Date and time") { 
+								var dateOfAppointment= checkValue(getValue(data.forms[i].items[j].type,data.forms[i].items[j].value,data.forms[i].items[j].field)) }
+							if(data.forms[i].items[j].name === "Surveyor appointment details - Appointed by") { %>
+																<tr>
+																	<td class="vl-md">7.</td>
+																	<td class="vl-md">Surveyor appointment details</td>
+																	<td class="pa0">
+																		<div class="cs-tab2">
+																			<table class="table table-bordered mb0">
+																				<tr>
+																					<td class="fwb gcol wd241 tlc">Appointment email / call Date & Time</td>
+																					<td class="fwb gcol wd241 tlc">Appointed by</td>
+																				</tr>
+																				<tr>
+																					<td>
+																						<%= dateOfAppointment%>
+																					</td>
+																					<td class="cap">
+																						<%= checkValue(getValue(data.forms[i].items[j].type,data.forms[i].items[j].value,data.forms[i].items[j].field)) %>
+																					</td>
+																				</tr>
+																			</table>
+																		</div>
+																	</td>
+																</tr>
+																<% }
+							if(data.forms[i].items[j].name === "Consignee") { %>
+																	<tr>
+																		<td>8.</td>
+																		<td>Consignee</td>
+																		<td>
+																			<%= checkValue(data.forms[i].items[j].field) %>
+																		</td>
+																	</tr>
+																	<% }
+							if(data.forms[i].items[j].name === "Consignor") { %>
+																		<tr>
+																			<td>9.</td>
+																			<td>Consignor</td>
+																			<td>
+																				<%= checkValue(data.forms[i].items[j].field) %>
+																			</td>
+																		</tr>
+																		<% }
+							if(data.forms[i].items[j].name === "Commodity Type") { %>
+																			<tr>
+																				<td>10.</td>
+																				<td>Commodity Type </td>
+																				<td class="cap">
+																					<%= checkValue(getValue(data.forms[i].items[j].type,data.forms[i].items[j].value,data.forms[i].items[j].field)) %>
+																				</td>
+																			</tr>
+																			<% }
+							if(data.forms[i].items[j].name === "Damaged Goods Description") { %>
+																				<tr>
+																					<td>11.</td>
+																					<td>Damaged Goods Description </td>
+																					<td>
+																						<%= checkValue(data.forms[i].items[j].field) %>
+																					</td>
+																				</tr>
+																				<% }
+							if(data.forms[i].items[j].name === "Cargo Type") { %>
+																					<tr>
+																						<td>12.</td>
+																						<td>Cargo Type </td>
+																						<td class="cap">
+																							<%= checkValue(getValue(data.forms[i].items[j].type,data.forms[i].items[j].value,data.forms[i].items[j].field)) %>
+																						</td>
+																					</tr>
+																					<% }
+							if(data.forms[i].items[j].name === "Vehicle Overloaded") { %>
+																						<tr>
+																							<td>13.</td>
+																							<td>Vehicle Overloaded </td>
+																							<td>
+																								<%= checkValue(data.forms[i].items[j].field) %>
+																							</td>
+																						</tr>
+																						<% } 
+							if(data.forms[i].items[j].name == "Transit details - From") { 
+								var transitFrom= checkValue(data.forms[i].items[j].field) }
+							if(data.forms[i].items[j].name === "Transit details - To") { %>
+																							<tr>
+																								<td class="vl-md">14.</td>
+																								<td class="vl-md">Transit details </td>
+																								<td class="pa0">
+																									<div class="cs-tab2">
+																										<table class="table table-bordered mb0">
+																											<tr>
+																												<td class="fwb gcol wd241 tlc">From</td>
+																												<td class="fwb gcol wd241 tlc">To</td>
+																											</tr>
+																											<tr>
+																												<td>
+																													<%= transitFrom %>
+																												</td>
+																												<td>
+																													<%= checkValue(data.forms[i].items[j].field) %>
+																												</td>
+																											</tr>
+																										</table>
+																									</div>
+																								</td>
+																							</tr>
+																							<% } 
+								if(data.forms[i].items[j].name == "Invoice / STN details - Invoice / STN No(s)") { 
+								var invoiceStn= checkValue(getValue(data.forms[i].items[j].type,data.forms[i].items[j].value,data.forms[i].items[j].field)) }
+							if(data.forms[i].items[j].name === "Invoice / STN details - Date") { %>
+																								<tr>
+																									<td>15.</td>
+																									<td class="vl-md ">Invoice / STN details</td>
+																									<td class="pa0">
+																										<div class="cs-tab2">
+																											<table class="table table-bordered mb0">
+																												<tr>
+																													<td class="fwb gcol wd241 tlc">Invoice/STN No(s).</td>
+																													<td class="fwb gcol wd241 tlc">Date</td>
+																												</tr>
+																												<tr>
+																													<td>
+																														<%= invoiceStn %>
+																													</td>
+																													<td>
+																														<%= checkValue(getValue(data.forms[i].items[j].type,data.forms[i].items[j].value,data.forms[i].items[j].field))%>
+																													</td>
+																												</tr>
+																											</table>
+																										</div>
+																									</td>
+																								</tr>
+																								<% } 
+							if(data.forms[i].items[j].name === "Total Consignment value") { %>
+																									<tr>
+																										<td>16.</td>
+																										<td>Total Consignment value</td>
+																										<td>
+																											<%= checkValue(getValue(data.forms[i].items[j].type,data.forms[i].items[j].value,data.forms[i].items[j].field))%>
+																										</td>
+																									</tr>
+																									<% } 
+							var courierData = checkValue(getValue(data.forms[i].items[j].type,data.forms[i].items[j].value,data.forms[i].items[j].field));
+							courierData = _.split(courierData, '|');
+							if(data.forms[i].items[j].name === "Courier  Receipt/BL/AWB/LR/ GRN/Postal No. & Date") { %>
+																										<tr>
+																											<td class="vl-md">17.</td>
+																											<td class="vl-md">Courier Receipt/BL/AWB/LR/ GRN/Postal No. & Date</td>
+																											<td class="pa0">
+																												<div class="cs-tab2">
+																													<table class="table table-bordered mb0">
+																														<tr>
+																															<td class="fwb gcol wd241 tlc">Receipt No.</td>
+																															<td class="fwb gcol wd241 tlc">Date</td>
+																														</tr>
+																														<tr>
+																															<td>
+																																<%= courierData[0]%>
+																															</td>
+																															<td>
+																																<%= courierData[1]%>
+																															</td>
+																														</tr>
+																													</table>
+																												</div>
+																											</td>
+																										</tr>
+																										<% } 
+							if(data.forms[i].items[j].name === "Transporter name") { %>
+																											<tr>
+																												<td>18.</td>
+																												<td>Transporter Name</td>
+																												<td>
+																													<%= checkValue(data.forms[i].items[j].field) %>
+																												</td>
+																											</tr>
+																											<% } 
+							if(data.forms[i].items[j].name === "Vehicle Registration Number") { %>
+																												<tr>
+																													<td>19.</td>
+																													<td>Vehicle Registration Number</td>
+																													<td>
+																														<%= checkValue(getValue(data.forms[i].items[j].type,data.forms[i].items[j].value,data.forms[i].items[j].field))%>
+																													</td>
+																												</tr>
+																												<% } 
+							if(data.forms[i].items[j].name == "Vehicle’s Weight (Kgs) - Gross Weight") { 
+								var grossWeight= checkValue(data.forms[i].items[j].field);  }
+							if(data.forms[i].items[j].name == "Vehicle’s Weight (Kgs) - Loaded Weight") { 
+								var loadedWeight= checkValue(data.forms[i].items[j].field);  }
+							if(data.forms[i].items[j].name === "Vehicle’s Weight (Kgs) - Empty Vehicle") { %>
+																													<tr>
+																														<td class="vl-md">20.</td>
+																														<td class="vl-md">Vehicle’s Weight (Kgs)</td>
+																														<td class="pa0">
+																															<div class="cs-tab2">
+																																<table class="table table-bordered mb0">
+																																	<tr>
+																																		<td class="fwb gcol">Gross Weight</td>
+																																		<td class="fwb gcol">Loaded Weight</td>
+																																		<td class="fwb gcol">Empty vehicle</td>
+																																	</tr>
+																																	<tr>
+																																		<td>
+																																			<%= grossWeight%>
+																																		</td>
+																																		<td>
+																																			<%= loadedWeight%>
+																																		</td>
+																																		<td>
+																																			<%= checkValue(data.forms[i].items[j].field)%>
+																																		</td>
+																																	</tr>
+																																</table>
+																															</div>
+																														</td>
+																													</tr>
+																													<% } 
+							if(data.forms[i].items[j].name === "Consignment Weight (Kgs)") { %>
+																														<tr>
+																															<td>21.</td>
+																															<td>Consignment Weight (Kgs)</td>
+																															<td>
+																																<%= checkValue(data.forms[i].items[j].field) %>
+																															</td>
+																														</tr>
+																														<% } 
+							if(data.forms[i].items[j].name == "Cargo Delivery details - Cargo Arrival Date") { 
+								var arrivalDate= checkValue(data.forms[i].items[j].field);  }
+							if(data.forms[i].items[j].name === "Cargo Delivery details - Cargo Delivery taken Date") { %>
+																															<tr>
+																																<td>22.</td>
+																																<td class="mb0">Cargo Delivery details</td>
+																																<td class="pa0">
+																																	<div class="cs-tab2">
+																																		<table class="table table-bordered mb0">
+																																			<tr>
+																																				<td class="fwb gcol wd241">Cargo Arrival Date </td>
+																																				<td class="fwb gcol wd241">Cargo Delivery taken Date</td>
+																																			</tr>
+																																			<tr>
+																																				<td>
+																																					<%= arrivalDate %>
+																																				</td>
+																																				<td>
+																																					<%= checkValue(data.forms[i].items[j].field)%>
+																																				</td>
+																																			</tr>
+																																		</table>
+																																	</div>
+																																</td>
+																															</tr>
+																															<% } 
+							if(data.forms[i].items[j].name == "Loss details - Loss noticed Date") { 
+								var noticedDate= checkValue(data.forms[i].items[j].field);  }
+							if(data.forms[i].items[j].name === "Loss details - Loss intimation to insurer Date") { %>
+																																<tr>
+																																	<td class="vl-md">23.</td>
+																																	<td class="vl-md">Loss details</td>
+																																	<td class="pa0">
+																																		<div class="cs-tab2">
+																																			<table class="table table-bordered mb0">
+																																				<tr>
+																																					<td class="fwb gcol wd241">Loss noticed Date</td>
+																																					<td class="fwb gcol wd241">Loss intimation to insurer Date</td>
+																																				</tr>
+																																				<tr>
+																																					<td>
+																																						<%= noticedDate %>
+																																					</td>
+																																					<td>
+																																						<%= checkValue(data.forms[i].items[j].field)%>
+																																					</td>
+																																				</tr>
+																																			</table>
+																																		</div>
+																																	</td>
+																																</tr>
+																																<% } 
+							if(data.forms[i].items[j].name == "Catastrophic  Event") { 
+								var catastrophic= checkValue(data.forms[i].items[j].field);  }
+								if(data.forms[i].items[j].name == "If Catastrophic Event Yes") { 
+								var yesCatastrophic = checkValue(data.forms[i].items[j].field);  }
+							if(data.forms[i].items[j].name === "Pin code") { %>
+																																	<tr>
+																																		<td class="vl-md">24.</td>
+																																		<td class="pa0">
+																																			<div class="cs-tab2">
+																																				<table class="table table-bordered mb0">
+																																					<tr>
+																																						<td>Catastrophic Event</td>
+																																					</tr>
+																																					<tr>
+																																						<td>If Catastrophic Event Yes</td>
+																																					</tr>
+																																					<tr>
+																																						<td>Pin code</td>
+																																					</tr>
+																																				</table>
+																																			</div>
+																																		</td>
+																																		<td class="pa0">
+																																			<div class="cs-tab2">
+																																				<table class="table table-bordered mb0">
+																																					<tr>
+																																						<td>
+																																							<%= catastrophic %>
+																																						</td>
+																																					</tr>
+																																					<tr>
+																																						<td>
+																																							<%= yesCatastrophic %>
+																																						</td>
+																																					</tr>
+																																					<tr>
+																																						<td>
+																																							<%= checkValue(getValue(data.forms[i].items[j].type,data.forms[i].items[j].value,data.forms[i].items[j].field))%>
+																																						</td>
+																																					</tr>
+																																				</table>
+																																			</div>
+																																		</td>
+																																	</tr>
+																																	<% } 
+							if(data.forms[i].items[j].name === "Cause of Loss") { %>
+																																		<tr>
+																																			<td>25.</td>
+																																			<td>Cause of Loss</td>
+																																			<td>
+																																				<%= checkValue(getValue(data.forms[i].items[j].type,data.forms[i].items[j].value,data.forms[i].items[j].field))%>
+																																			</td>
+																																		</tr>
+																																		<% } 
+							if(data.forms[i].items[j].name == "Loss (INR) - Estimated by Insured") { 
+								var estimatedInsured = checkValue(data.forms[i].items[j].field);  }
+							if(data.forms[i].items[j].name === "Loss (INR) - Assessed by Surveyor") { %>
+																																			<tr>
+																																				<td class="vl-md">26.</td>
+																																				<td class="vl-md">Loss (INR)</td>
+																																				<td class="pa0">
+																																					<div class="cs-tab2">
+																																						<table class="table table-bordered mb0">
+																																							<tr>
+																																								<td class="fwb gcol wd241 tlc">Estimated by Insured</td>
+																																								<td class="fwb gcol wd241 tlc">Assessed by Surveyor</td>
+																																							</tr>
+																																							<tr>
+																																								<td>
+																																									<%= estimatedInsured%>
+																																								</td>
+																																								<td>
+																																									<%= checkValue(data.forms[i].items[j].field)%>
+																																								</td>
+																																							</tr>
+																																						</table>
+																																					</div>
+																																				</td>
+																																			</tr>
+																																			<% } 
+							if(data.forms[i].items[j].name == "Liability exists") { 
+								var liabilityExists= checkValue(data.forms[i].items[j].field);  }
+							if(data.forms[i].items[j].name == "Liability exists - If Yes, recommend Reserve after deducting Policy excess, if any") { 
+								var  yesLiabilityExists= checkValue(getValue(data.forms[i].items[j].type,data.forms[i].items[j].value,data.forms[i].items[j].field));  }
+							if(data.forms[i].items[j].name === "Liability exists - If No, Reason for Repudiation / Non Repudiation") { %>
+																																				<tr>
+																																					<td class="vl-md">27.</td>
+																																					<td class="vl-md">Liability exists</td>
+																																					<td class="pa0">
+																																						<div class="cs-tab2">
+																																							<table class="table table-bordered mb0">
+																																								<tr>
+																																									<td>
+																																										<%= liabilityExists %>
+																																									</td>
+																																								</tr>
+																																								<tr>
+																																									<td class="pa0">
+																																										<div class="cs-tab2">
+																																											<table class="table table-bordered mb0">
+																																												<tr>
+																																													<td class="fwb gcol wd241 tlc">If Yes, recommend Reserve after deducting Policy excess, if any</td>
+																																													<td class="fwb gcol wd241 tlc">If No, Reason for Repudiation / Non Repudiation</td>
+																																												</tr>
+																																												<tr>
+																																													<td>
+																																														<%= yesLiabilityExists %>
+																																													</td>
+																																													<td>
+																																														<%= checkValue(getValue(data.forms[i].items[j].type,data.forms[i].items[j].value,data.forms[i].items[j].field))%>
+																																													</td>
+																																												</tr>
+																																											</table>
+																																										</div>
+																																									</td>
+																																								</tr>
+																																							</table>
+																																						</div>
+																																					</td>
+																																				</tr>
+																																				<% } 
+							if(data.forms[i].items[j].name === "Salvage expected") { %>
+																																					<tr>
+																																						<td>28.</td>
+																																						<td>Salvage expected</td>
+																																						<td>
+																																							<%= checkValue(data.forms[i].items[j].field) %>
+																																						</td>
+																																					</tr>
+																																					<% } 
+							if(data.forms[i].items[j].name == "If Salvage expected Yes - Expected amount (INR)") { 
+								var yesSalvage = checkValue(getValue(data.forms[i].items[j].type,data.forms[i].items[j].value,data.forms[i].items[j].field)) ;  }
+							if(data.forms[i].items[j].name === "If Salvage expected Yes - Recommended Buyer’s Name & Contact details") { %>
+																																						<tr>
+																																							<td>29.</td>
+																																							<td>If Salvage expected Yes</td>
+																																							<td class="pa0">
+																																								<div class="cs-tab2">
+																																									<table class="table table-bordered mb0">
+																																										<tr>
+																																											<td class="fwb gcol tlc">Expected amount (INR)</td>
+																																											<td class="fwb gcol tlc">Recommended Buyer’s Name & Contact Details</td>
+																																										</tr>
+																																										<tr>
+																																											<td>
+																																												<%= checkValue(yesSalvage)%>
+																																											</td>
+																																											<td>
+																																												<%= checkValue(data.forms[i].items[j].field) %>
+																																											</td>
+																																										</tr>
+																																									</table>
+																																								</div>
+																																							</td>
+																																						</tr>
+																																						<% } 
+							if(data.forms[i].items[j].name == "Name & Contact details of claimant’s representative present at of Survey - Contact No") { 
+								var contactNo = checkValue(data.forms[i].items[j].field);  }
+							if(data.forms[i].items[j].name === "Name & Contact details of claimant’s representative present at of Survey - Name") { %>
+																																							<tr>
+																																								<td>30.</td>
+																																								<td>Name & Contact details of claimant’s representative present at of Survey</td>
+																																								<td class="pa0">
+																																									<div class="cs-tab2">
+																																										<table class="table table-bordered mb0">
+																																											<tr>
+																																												<td class="fwb gcol wd164 tlc">Contact No</td>
+																																												<td class="fwb gcol tlc">Name</td>
+																																											</tr>
+																																											<tr>
+																																												<td>
+																																													<%= contactNo %>
+																																												</td>
+																																												<td>
+																																													<%= checkValue(data.forms[i].items[j].field) %>
+																																												</td>
+																																											</tr>
+																																										</table>
+																																									</div>
+																																								</td>
+																																							</tr>
+																																							<% } 
+							if(data.forms[i].items[j].name === "All documents submitted by insured / claimant on") { 
+								var document = checkValue(data.forms[i].items[j].field);  }
+							if(data.forms[i].items[j].name === "All documents submitted by insured / claimant on - If Yes : Date  of submission") { 
+								var dateDocument = checkValue(data.forms[i].items[j].field);  }
+							if(data.forms[i].items[j].name === "All documents submitted by insured / claimant on - If No - Documents Submitted") { 
+								var documentSubmited = checkValue(data.forms[i].items[j].field);  }
+							if(data.forms[i].items[j].name === "All documents submitted by insured / claimant on - If No - Documents Pending / Requested") { %>
+																																								<tr>
+																																									<td class="vl-md">31.</td>
+																																									<td class="vl-md">All documents submitted by insured / claimant on</td>
+																																									<td class="pa0">
+																																										<div class="cs-tab2">
+																																											<table class="table table-bordered mb0">
+																																												<tr>
+																																													<td>
+																																														<%= checkValue(document) %>
+																																													</td>
+																																													<td class="pa0">
+																																														<div class="cs-tab2">
+																																															<table class="table table-bordered mb0">
+																																																<tr>
+																																																	<td class="fwb gcol">If Yes : Date of submission</td>
+																																																</tr>
+																																																<tr>
+																																																	<td>
+																																																		<%= checkValue(dateDocument) %>
+																																																	</td>
+																																																</tr>
+																																															</table>
+																																														</div>
+																																													</td>
+																																												</tr>
+																																												<tr>
+																																													<td class="vl-md">No</td>
+																																													<td class="pa0">
+																																														<div class="cs-tab2">
+																																															<table class="table table-bordered mb0">
+																																																<tr>
+																																																	<td class="fwb gcol wd241">Documents Submitted</td>
+																																																	<td class="fwb gcol wd241">Documents Pending / Requested
+																																																	</td>
+																																																</tr>
+																																																<tr>
+																																																	<td>
+																																																		<%= documentSubmited %>
+																																																	</td>
+																																																	<td>
+																																																		<%= checkValue(data.forms[i].items[j].field) %>
+																																																	</td>
+																																																</tr>
+																																																<tr>
+																																																	<td></td>
+																																													</td>
+																																													</tr>
+																																												</tr>
+																																												<tr>
+																																													<td></td>
+																																													<td></td>
+																																												</tr>
+																																												</table>
+																																												</div>
+																																									</td>
+																																								</tr>
+																																								</table>
+																																								</div>
+																																								</td>
+																																								</tr>
+																																								<% }
+								if(data.forms[i].items[j].name === "Nature of Packing") { 
+									var natureOfPacking = checkValue(data.forms[i].items[j].field);  }
+								if(data.forms[i].items[j].name === "Summary / Narration of Loss") { 
+									var summary = checkValue(data.forms[i].items[j].field);  }
+							%>
+																																									<% } %>
+																																										<% } %>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div>
+			<p class="fwb">
+				<u>Nature of Packing</u>
+			</p>
+			<p>
+				<%= natureOfPacking%>
+			</p>
+		</div><br>
+		<div>
+			<p class="fwb">
+				<u>Summary / Narration of Loss:</u>
+			</p>
+			<div class="content-para taj">
+				<%= summary%>
+			</div>
+		</div>
+		</div>
+		<div><br><br>
+			<div class="top-head6">
+				<div class="fwb">
+					<p>
+						<u>Photographs (Damaged Cargo & For Salvage)</u>
+					</p>
+				</div>
+				<div class="mrt100" style="padding-top:10px">
+					<p>Sincerely,</p>
+					<p><b>For,
+					<%=assignment.company.name%></b>
+					</p><br><br><br>
+					<p style="margin-top: 10px;margin-bottom: 0;text-align: left;font-family: Roboto, sans-serif;"> Authorized Signatory</p>
+				</div>
+			</div>
+		</div>
+		<div id='pageFooter' style='border-top: 1px solid;padding-top: 5px;font-family: Roboto, sans-serif; font-size:6px !important;'>
+			<div>
+				<div style=float:left;font-family: Roboto, sans-serif; '><%=assignment.company.name%></div>
+<div style='float:right;font-family: Roboto, sans-serif; '>Page {{page}} of {{pages}}</div>
+<div style='text-align:center;text-align: center;position: absolute;margin: 0 auto;width: 100%;font-family: Roboto, sans-serif; '>Assignment # <%= assignment.name %></div></div>
+
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
+<%
+function getAssignmentTemplateValue (input, assignment) {
+        var sInput = _.split(input, '+');
+        var returnStr = "";
+        sInput = _.map(sInput, function (n) {
+            var obj = {};
+            n = _.trim(n);
+            if (_.startsWith(n, '"')) {
+                obj.type = "String";
+                obj.value = n.substr(1, n.length - 2);
+            } else {
+                obj.type = "Object";
+                var splitVal = _.split(n, ".");
+                obj.value = assignment;
+                _.each(splitVal, function (m) {
+                    if (obj.value) {
+                        obj.value = obj.value[m];
+                    }
+
+                });
+            }
+            if (obj.value == undefined) {
+                obj.value = "NA"
+            }
+            returnStr = returnStr + obj.value;
+            return obj;
+        });
+        var ifDate=returnStr.split(":");
+        if ((returnStr.charAt(returnStr.length-1)=="Z" || returnStr.charAt(returnStr.length-1)=="z") && ifDate.length==3) {
+            returnStr = moment(returnStr).format("DD/MM/YYYY");
+            return returnStr;
+        }
+        return returnStr;
+};
+%>
+
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <meta content="telephone=no" name="format-detection" />
+        <title>Quasar</title>
+        <style>
+            body {
+                padding: 30px;
+                font-family: sans-serif;
+            }
+            
+            tab1 {
+                margin: 20px 0;
+            }
+            
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+            
+            th {
+                width: 50%;
+                text-align: left;
+                padding: 10px;
+            }
+            
+            tr {
+                width: 100%;
+            }
+            
+            .secondClass {
+                margin: 30px 0;
+            }
+            
+            td {
+                width: 50%;
+                padding: 10px;
+                border: 1px solid #000;
+                min-height: 30px;
+            }
+            
+            .white-text {
+                color: transparent;
+                user-select: none;
+            }
+            
+            .blank-row {
+                height: 20px !important;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>
+            <%= data.name %>
+        </h1>
+        <div>
+            <table>
+                <thead>
+                    <th>
+                        <b>Template Name</b>
+                    </th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <%= data.templateName %>
+                        </td>
+                        <tr>
+                </tbody>
+            </table>
+        </div>
+        <%if(data.type=="templateLor"){%>
+            <div class="secondClass">
+                <table>
+                    <% for(var i=0; i<data.forms.length; i++) {%>
+                        <tr>
+                            <td colspan="4"><b><%= data.forms[i].name %></b></td>
+                        </tr>
+                        <% for(var j=0; j<data.forms[i].items.length; j++) {%>
+                            <tr>
+                                    <% if(data.forms[i].items[j].submit=="Pending" || data.forms[i].items[j].submit=="Partially Recieved"){ %>
+                            
+                                <td>
+                                    <%= data.forms[i].items[j].name %>
+                                </td>
+                                <td>
+                                    <%= data.forms[i].items[j].type %>
+                                </td>
+                                
+                                     <%}%>
+                            </tr>
+                            <% } %>
+                                <% } %>
+                </table>
+            </div>
+            <% } else{%>
+                <div class="secondClass">
+                    <table>
+                        <% for(var i=0; i<data.forms.length; i++) {%>
+                            <tr>
+                                <td colspan="2"><b><%= data.forms[i].name %></b></td>
+                            </tr>
+                            <% for(var j=0; j<data.forms[i].items.length; j++) {%>
+                                <tr>
+                                    <td>
+                                        <%= data.forms[i].items[j].name %>
+                                    </td>
+                                    <% if(data.forms[i].items[j].type=="Custom Input") {  %>
+                                        <td>
+                                            <%= data.forms[i].items[j].field %>
+                                        </td>
+                                        <%} else if(data.forms[i].items[j].type=="Dropdown") {  %>
+                                        <td>
+                                            <%= data.forms[i].items[j].field %>
+                                        </td>
+                                        
+                                        <% }else{%>
+                                            <td>
+                                                <%= getAssignmentTemplateValue(data.forms[i].items[j].value,assignment) %>
+                                            </td>
+                                            <% }%>
+                                </tr>
+                                <% } %>
+                                    <% } %>
+                    </table>
+                </div>
+                <% } %>
+    </body>

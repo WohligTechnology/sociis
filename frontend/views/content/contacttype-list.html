@@ -1,0 +1,65 @@
+<!-- <div id="progressBar">
+	<div class="loader"></div>
+</div> -->
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Company Setup</a>
+        </li>
+        <li>
+            <a ui-sref="contacttype-list" title="List">Contact Type List</a>
+        </li>
+    </ul>
+</div>
+
+<div class="heading-sec">
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>Contact List</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="table-area">
+
+                    <div class="widget-title">
+                      <div class="pull-right">
+                        <form class="search-form mr-form">
+                            <input type="text" placeholder="Search Here..."/>
+                            <button type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </form>
+                        <a class="btn btn-primary" ui-sref="createcontacttype">Add New</a>
+                      </div>
+                        <h3>List of Contact</h3>
+                    </div>
+                    <div class="table-responsive" ng-show="totalItems>0">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <td></td>
+                                    <td><a class="btn btn-blue" ui-sref="editoffice({id:office._id})"><i class="fa fa-pencil"></i></a>
+                                    <a class="btn btn-red" ng-click="deleteOffice(office._id)"><i class="fa fa-trash"></i></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

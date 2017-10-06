@@ -1,0 +1,56 @@
+<div class="modal-header green-bg with-button">
+    <div class="pull-right">
+        <button class="btn btn-darker btn-round btn-nopad" ng-click="assessmentCreateCheck()">Create new</button>
+        <button class="btn btn-clear" ng-click="$dismiss();showCreate=false">
+            <i class="ln-cross"></i>
+        </button>
+    </div>
+    <h5 class="modal-title">All Assessment</h5>
+</div>
+<div class="modal-body">
+    <form name="companyForm" ng-submit="saveCompany(formData)" ng-if="showCreate">
+        <div class="form-group">
+            <label>Upload Assessment</label>
+            <upload-image-new ng-model="img" ng-callback="onAssessmentUploadCallback(img,length)" multiple no-view></upload-image-new>
+            <!--<upload-image ng-model="assessment.file" ng-callback="onFileUploadCallback(assessment)" no-view></upload-image>-->
+        </div>
+    </form>
+    <div class="field">
+        <div class="custom-tabs">
+            <div>Assessment <span class="color-green">({{assignment.assessment.length}})</span>
+                <div class="file-border" ng-if="assignment.assessment.length !== 0">
+                    <div class="scroll-x-max">
+                        <table class="file-list table">
+                            <thead>
+                                <tr>
+                                    <th>User Name</th>
+                                    <th>Upload Time</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="vert-mid">
+                                <tr ng-repeat="assessment in assignment.assessment | orderBy: '-fileName' track by $index">
+                                    <td>
+                                        <div class="user-img">
+                                            <img ng-src="{{assessment.employee.photo|uploadpath}}" alt="" class="user-mini">
+                                            <span>{{assessment.employee.name}}</span>
+                                        </div>
+                                    </td>
+                                    <td>{{assessment.fileName | DateTime}}</td>
+                                    <td>
+                                        <button class="btn btn-clear" ng-click="deleteTemplate('assessment',$index,'Assessment')"><i class="ln-trash2"></i></button>
+                                        <button class="btn btn-clear"> 
+                                        <a class="btn btn-primary temp-btnbg" download="{{assessment.file}}" ng-href="{{assessment.file|downloadImage}}">
+                                            <i class="ln-download"></i>
+                                        </a>
+                                    </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

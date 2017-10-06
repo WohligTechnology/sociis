@@ -1,0 +1,72 @@
+<div class="modal-header green-bg with-button">
+    <div class="pull-right">
+        <button class="btn btn-clear" ng-click="$dismiss()">
+      <i class="ln-cross"></i>
+    </button>
+    </div>
+    <h5 class="modal-title">Assign a new surveyor</h5>
+</div>
+<div class="modal-body {{surveys.surveyClass}}">
+    <div>
+        <table ng-if="!surveyorAssigned">
+            <td width="100">
+                <h5 class="modal-title">Select Date</h5>
+            </td>
+            <td width="170">
+                <!--Alternate To this-->
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" name="surveyDate" required class="form-control" uib-datepicker-popup="{{format}}" ng-model="formData.surveyDate"
+                            is-open="popup.surveyDate" ng-change="chageDOB(formData.birthDate);" datepicker-options="dateOption"
+                            readonly/>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="openSurveyDate();">
+                               <i class="fa fa-calendar"></i>
+                            </button>
+                       </span>
+                    </div>
+                    <div class="error-msg" ng-show="formName.surveyDate.$invalid && formName.surveyDate.$touched">Please Enter Date of Survey</div>
+                </div>
+            </td>
+            <td width="100" class="space-left" ng-if="formData.surveyDate">
+                <h5 class="modal-title">Select Time</h5>
+            </td>
+            <td width="170" class="space-left" ng-if="formData.surveyDate">
+                <div class="form-group">
+                    <input type="time" class="form-control" ng-model="formData.surveyTime">
+                    <div class="error-msg" ng-show="formName.surveyTime.$invalid && formName.surveyTime.$touched">Please Enter Survey Time</div>
+                </div>
+            </td>
+            <td>
+                <form class="search-form survey-form" ng-if="formData.surveyTime">
+                    <input type="text" placeholder="Search Here..." ng-model="search.keyword" />
+                    <button type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </form>
+            </td>
+            <td class="pull-right survey-search">
+                <div class="survey-assigned-button"><button ng-if="formData.surveyTime" class="btn btn-success" ng-click="saveSurveyDate(formData);">Search</button></div>
+            </td>
+        </table>
+    </div>
+</div>
+<div class="modal-body">
+    <table class="file-list table hover-btn" ng-if="!surveyorAssigned">
+        <tbody>
+            <tr ng-repeat="r in finalSurveyors">
+                <td width="70">
+                    <div class="img-thumbu">
+                        <img src="{{r.photo|serverimage}}" class="full-image">
+                    </div>
+                </td>
+                <td width="200"><b>{{r.name}}</b><br>{{r.isSurveyor?"Surveyor":""}}{{r.isSurveyor && r.isField?", ":""}}{{r.isField?"Field":""}}</td>
+                <td width="250" class="space-left"><span data-ng-repeat="dept in r.department">{{dept.name}}<font ng-show="!$last">,</font></span></td>
+                <td width="100" class="space-left">{{r.distance}}KM</td>
+                <td width="150" class="text-right">
+                    <button class="btn btn-success btn-show" ng-click="updateEmployeeAssignment(r._id);updateAssignmentEmployee(r._id);$dismiss();">Assign Now</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

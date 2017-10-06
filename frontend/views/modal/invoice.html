@@ -1,0 +1,49 @@
+<div class="modal-header green-bg" ng-init="checkButtonViewStatus(assignment);">
+    <div class="pull-right">
+        <!--assignment.dateOfLoss  && buttonStatus && -->
+        <!--<button class="btn btn-darker btn-round btn-nopad" ng-if="assignment.invoice.length<1 && assignment.timelineStatus !== 'Force Closed'"
+            ng-click="viewInvoice(assignment,'')">Create new</button>
+        <button class="btn btn-darker btn-round btn-nopad" ng-if="(((assignment.invoice[assignment.invoice.length-1].approvalStatus=='Approved') ||(assignment.invoice[assignment.invoice.length-1].approvalStatus=='Revised')||(assignment.invoice[assignment.invoice.length-1].approvalStatus=='Cancelled')) && assignment.invoice.length>=1 && assignment.timelineStatus !== 'Force Closed')"
+            ng-click="confInvoice()">Create new</button>-->
+        <button class="btn btn-darker btn-round btn-nopad" ng-click="createInvoiceButton()">Create new</button>
+        <button class="btn btn-clear" ng-click="$dismiss()">
+            <i class="ln-cross"></i>
+        </button>
+    </div>
+    <h5 class="modal-title">View Invoice</h5>
+</div>
+<div class="modal-body">
+    <table class="file-list table" ng-if="assignment.invoice != ''">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Created By</th>
+                <th>InvoiceNumber</th>
+                <th>GrandTotal</th>
+                <th>Status </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="Invoice in assignment.invoice track by $index">
+                <td>{{$index + 1}}</td>
+                <td>{{Invoice.createdBy.name}}</td>
+                <td>{{Invoice.invoiceNumber}}</td>
+                <td align="right">{{Invoice.grandTotal | number}}</td>
+                <td>{{Invoice.approvalStatus}}</td>
+                <td>
+                    <button class="btn btn-clear" ng-if="Invoice.file!=='' && (Invoice.approvalStatus=='Approved' || Invoice.approvalStatus=='Revised' || Invoice.approvalStatus=='Cancelled')">
+      <a class="btn btn-primary temp-btnbg" download="{{Invoice.file}}" ng-href="{{Invoice.file|downloadImageWithName:Invoice.invoiceNumber+' INVOICE.pdf'}}">
+                            <i class="ln-download"></i>
+                        </a>
+                    </button>
+                    <button class="btn btn-clear" ng-if="Invoice.approvalStatus=='Regenerated' || Invoice.approvalStatus=='Draft' || Invoice.approvalStatus=='Draft'"
+                        ng-click="viewInvoice(assignment,Invoice)"><i class="ln-pencil"></i></button>
+                    <button class="btn btn-clear" ng-if="Invoice.approvalStatus=='Draft'" ng-click="deleteTemplate('invoice',$index,'INVOICE')"><i class="ln-trash2"></i></button>
+                    <span ng-if="disablePdfRegen"><button class="btn btn-clear" ng-if="Invoice.approvalStatus=='Approved' || Invoice.approvalStatus=='Revised'" ng-click="refreshInvoicePdf(Invoice._id)" title="Refresh PDF"><i class="fa fa-refresh" aria-hidden="true"></i><i class="fa fa-file-pdf-o " aria-hidden="true"></i></button>
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,35 @@
+<div class="modal-header green-bg">
+  <div class="pull-right">
+    <button class="btn btn-darker btn-round btn-nopad" ng-click="viewTemplates('JIRs','TemplateJir','')">Create new</button>
+    <button class="btn btn-clear" ng-click="$dismiss()">
+      <i class="ln-cross"></i>
+    </button>
+  </div>
+  <h5 class="modal-title">View JIRs</h5>
+</div>
+<div class="modal-body">
+  <table class="file-list table" ng-if="assignment.templateJir != ''">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>JIR Template</th>
+        <th>Template Name</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="jirs in assignment.templateJir track by $index">
+        <td>{{$index + 1}}</td>
+        <td>{{jirs.name}}</td>
+        <td>{{jirs.templateName}}</td>
+        <td>{{jirs.timestamp|date:'dd-mm-yyyy'}}</td>
+        <td>
+          <button class="btn btn-clear" ng-click="viewTemplates('JIRs','TemplateJir',jirs)"><i class="ln-pencil"></i></button>
+          <button class="btn btn-clear" ng-click="deleteTemplate('templateJir',$index,'JIR')"><i class="ln-trash2"></i></button>
+          <button class="btn btn-clear"><i class="ln-download"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

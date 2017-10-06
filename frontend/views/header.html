@@ -1,0 +1,81 @@
+<div class="top-bar">
+    <div class="row">
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="logo">
+                <a ui-sref="dashboard" title="Absolute"><img src="frontend/img/logo.png" alt="Absolute" height="45"></a>
+                <div class="menu-options active" ng-click="processForm($event)"><span class="menu-action"><i></i></span></div>
+            </div>
+        </div>
+        <div class="col-md-5 col-sm-7 col-xs-10">
+            <!--TemplateService {{TemplateService}} template {{template}}-->
+            <div class="search-bar">
+                <a tooltip-placement="bottom" uib-tooltip="Create New Assignment" class="btn btn-primary pull-left" ui-sref="createassignment"><i class="fa fa-plus fa-lg"></i></a>
+                <div class="search-bar-form">
+                    <form class="search-form mr-form search-bar-forms">
+                        <ui-select ng-change="template.goToState(mrNumber);" class="ui-select-border" multiple tagging="tagTransform" name="mrNumber"
+                            ng-model="mrNumber" theme="bootstrap" title="Select MR Number">
+                            <ui-select-match placeholder="Search Here...">{{$item.name}}</ui-select-match>
+                            <ui-select-choices repeat="assignment in mrNumbers | filter:$select.search" refresh-delay="0" refresh="template.getMrNumber($select.search)">{{assignment.name}}</ui-select-choices>
+                            </ui-select>
+                    </form>
+                </div>
+                <a tooltip-placement="bottom" uib-tooltip="Assignments" class="btn btn-primary" ng-if="isMobile == false" ui-sref="assignment-list"><i class="fa fa-bars fa-lg"></i></a>
+                <a tooltip-placement="bottom" uib-tooltip="Assignments" class="btn btn-primary" ng-if="isMobile == true" href="{{mobileUrl}}"><i class="fa fa-bars fa-lg"></i></a>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-1 col-xs-2">
+            <div class="quick-links">
+                <ul>
+                    <!--<li>
+                <a href="https://calendar.google.com/calendar" target="_blank" class="cal-tag"><i class="ln-calendar3"></i></a>
+            </li>-->
+                    <li>
+                        <a title="Logout" class="show-stats red-skin" ui-sref="login" tooltip-placement="left" uib-tooltip="Logout"><i class="fa fa-power-off"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="loaderHeader" ng-show="template.isLoader">
+            <img src="frontend/img/loader.gif" alt="" style="height:120px; width:120px;">
+        </div>
+    </div>
+</div>
+<!-- Top Bar -->
+<header class="side-header light-skin opened-menu scroll-new ">
+    <div class="admin-details">
+        <span><img ng-src="{{template.profile.photo|serverimage}}" alt="" /></span>
+        <h3 class="capitalize" ng-bind="template.profile.name"></h3>
+        <i class="capitalize" ng-bind="template.profile.accessLevel"></i>
+    </div>
+    <div class="menu-scroll">
+        <div class="side-menus">
+            <span>MAIN LINKS</span>
+            <nav ng-include="template.menu"></nav>
+        </div>
+    </div>
+    <!-- Menu Scroll -->
+</header>
+<div class="toster-header" ng-if="viewProgressBar === true">
+    <div class="toster-top">
+        <div class="close-toster" ng-click="template.closeProgressbar();">
+            <i class="fa fa-times" aria-hidden="true"></i>
+        </div>
+        <div>
+            Uploaded {{currentCount}}/{{filesLength}} Size: (<span ng-switch="fileSize > 1024*1024">
+                <span ng-switch-when="true">{{fileSize / 1024 / 1024 | number:2}} MB</span>
+            <span ng-switch-default>{{fileSize / 1024 | number:2}} kB</span>
+            </span>)
+        </div>
+    </div>
+    <!--SHOWING PROGRESS OF UPLOADED IMAGE-->
+    <div class="toster-progress">
+        <div class="progress">
+            <div class="progress-bar" role="progressPercentage" aria-valuenow="{{progressPercentage}}" aria-valuemin="0" aria-valuemax="101"
+                style="width:{{progressPercentage}}%">
+                {{progressPercentage}}%
+        </div>
+    </div>
+</div>
+<!--SHOWING FILES DETAILS-->
+<div class="label" style="font-size:79%;font-weight: 400;" ng-if="currentCount">{{imageName | limitChar:50}} </div>
+</div>

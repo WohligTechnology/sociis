@@ -1,0 +1,6 @@
+apps:
+  - script: "app.js"
+    name: "AbsoluteTesting"
+    watch: false
+    args: "--prod"
+    exec_mode: "cluster"

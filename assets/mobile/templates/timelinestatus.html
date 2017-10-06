@@ -1,0 +1,77 @@
+<ion-view>
+
+    <ion-header-bar align-title="left" class="bar-positive">
+        <button class="button button-clear back-arrow-margin header-btn-center" ng-click="getBack();"> 
+            <i class="icon ion-android-arrow-back"></i>
+        </button>
+        <h1 class="title header-title-center">Timeline Status</h1>
+        <button class="button button-clear no-animation header-btn-center header-right-button" ng-click="clearfilter();"> 
+            Clear
+        </button>
+    </ion-header-bar>
+
+    <!--<div class="bar bar-header item-input-inset bar-positive">
+        <button class="button button-clear back-arrow-margin" ng-click="getBack();"> 
+            <i class="icon ion-android-arrow-back"></i>
+        </button>
+        <label class="item-input-wrapper" focus-me>
+            <i class="icon ion-ios7-search placeholder-icon"></i>
+            <input type="search" ng-model="searchObj.searchText" placeholder="Search" ng-change="searchRecord(searchObj.searchText,searchField);">
+        </label>
+        <button class="button button-clear" ng-click="saveList();"> 
+            OK
+        </button>
+    </div>-->
+    <div class="bar bar-subheader remove-padding button-border">
+        <div class="button-bar  button-border">
+            <a class="button remove-padding button-border border-bottom-css {{activeButton1}} bg-color" ng-click="changeTab(1);">Select</a>
+            <a class="button remove-padding button-border border-bottom-css {{activeButton2}} bg-color" ng-click="changeTab(2);">
+                <!-- FOR OWNER NAME -->
+                <span ng-if="(filterObj.timelineStatus.length == 0 || filterObj.timelineStatus == undefined)">My List<span class="badge badge-assertive header-badge">0</span></span>
+                <span ng-if="filterObj.timelineStatus.length > 0">My List<span class="badge badge-assertive header-badge">{{filterObj.timelineStatus.length}}</span></span>
+            </a>
+        </div>
+    </div>
+    <!--<ion-content class="has-header">-->
+    <ion-content class="list has-header">
+
+        <div ng-if="isList ==1">
+            <div class="row">
+                <div class="col">
+                    Timeline Status:
+                </div>
+            </div>
+            <div class="item item-divider" style="padding: 0">
+                <div class="row row-bottom-border" ng-repeat="searchResult in timelineStatus track by $index" ng-click="selectItem(searchResult);">
+                    <div class="col col-75" style="padding: 16px;">
+                        <h2>{{searchResult}}</h2>
+                    </div>
+                    <div class="col col-25" style="text-align: right">
+                        <div class="checkbox checkbox-input-hidden disable-pointer-events checkbox-circle"><input type="checkbox" ng-model="item.checked"><i class="checkbox-icon"></i></div>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="list">
+
+            </div>-->
+        </div>
+        <div ng-if="isList == 2">
+            <div class="row">
+                <div class="col">
+                    Selected Timeline Status:
+                </div>
+            </div>
+
+            <div class="item item-divider" ng-if="filterObj.timelineStatus.length > 0" style="padding: 0">
+                <div class="row row-bottom-border" ng-repeat="item in filterObj.timelineStatus track by $index">
+                    <div class="col col-75" style="padding: 16px;">
+                        <h2>{{item}}</h2>
+                    </div>
+                    <div class="col col-25" style="text-align: right" ng-click="removeRecord(item)">
+                        <div class="checkbox checkbox-input-hidden disable-pointer-events checkbox-circle"><input type="checkbox" ng-model="alwaysActive"><i class="checkbox-icon"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

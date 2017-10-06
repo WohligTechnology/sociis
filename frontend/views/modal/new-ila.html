@@ -1,0 +1,49 @@
+<div class="modal-header green-bg">
+  <div class="pull-right">
+    <button class="btn btn-darker btn-round btn-nopad" ng-click="ilaCreateCheck()">Create new</button>
+    <button class="btn btn-clear" ng-click="$dismiss()">
+      <i class="ln-cross"></i>
+    </button>
+  </div>
+  <h5 class="modal-title">View ILA</h5>
+</div>
+<div class="modal-body">
+  <table class="file-list table" ng-if="assignment.templateIla != ''">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>MR #</th>
+        <th>ILA Template Type</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>PDF</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="ilas in assignment.templateIla track by $index">
+        <td>{{$index + 1}}</td>
+        <td>{{assignment.name}}</td>
+        <td>{{ilas.name}}</td>
+        <td>{{ilas.timestamp|date:'dd-MM-yyyy'}}</td>
+        <td>{{ilas.approvalStatus}}</td>
+        <td>
+          <button class="btn btn-clear" ng-if="ilas.file!=undefined">
+            <a class="btn btn-primary temp-btnbg" download="{{ilas.file}}" ng-href="{{ilas.file|downloadImageWithName:assignment.name+' ILA.pdf'}}">
+                                            <i class="ln-download"></i>
+          </a>
+          </button>
+        </td>
+        <td>
+          <!--<button class="btn btn-clear" ng-if="ilas.file!=='undefined'">
+            <a class="btn btn-primary temp-btnbg" download="{{ilas.file}}" ng-href="{{ilas.file|downloadImage}}">
+                                            <i class="ln-download"></i>
+          </a>
+          </button>-->
+          <button class="btn btn-clear" ng-click="showEdit('ILAs','TemplateIla',ilas)"><i class="ln-pencil"></i></button>
+          <button class="btn btn-clear" ng-click="deleteTemplate('templateIla',$index,'ILA')"><i class="ln-trash2"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

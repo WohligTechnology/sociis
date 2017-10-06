@@ -1,0 +1,741 @@
+<style>
+    .bg-img {
+        min-height: 300px;
+        border: 4px solid white;
+        background-size: cover !important;
+        overflow: hidden;
+        background-origin: padding-box;
+    }
+
+    .inside-img {
+        min-height: 140px;
+        border: 4px solid white;
+        background-size: cover !important;
+        overflow: hidden;
+        background-origin: padding-box;
+    }
+
+    .row-flex {
+        width: 100%;
+        height: 300px;
+        display: -webkit-flex;
+        /* Safari */
+        display: flex;
+    }
+
+    .flex-1 {
+        flex: 1;
+    }
+
+    .col-flex {
+        width: 100%;
+        height: 140px;
+        display: -webkit-flex;
+        /* Safari */
+        display: flex;
+    }
+
+    .relative {
+        position: relative;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.77);
+    }
+    /*//scss snehal*/
+
+    .width-100 {
+        width: 100%;
+        border: 3px solid white;
+    }
+
+    .plus-icon {
+        font-size: 22px;
+        position: absolute;
+        color: white;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .span-weight {
+        font-weight: 800;
+        font-size: 30px;
+    }
+
+    .bg-join-overide {
+        padding: 0px 0 15px 0 !important;
+    }
+
+    .down-btn {
+        margin-top: 10px;
+    }
+
+    .width50 {
+        width: 50%;
+        height: 250px;
+        float: left;
+        background-size: cover !important;
+        position: relative;
+        border: 1px solid white;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.44);
+    }
+
+    .width100 {
+        width: 100%;
+        height: 300px;
+        float: left;
+        background-size: cover !important;
+        position: relative;
+        border: 1px solid white;
+    }
+
+    .relate {
+        position: relative;
+    }
+
+    .width30 {
+        width: 33.33%;
+        height: 150px;
+        float: left;
+        background-size: cover !important;
+        position: relative;
+        border: 1px solid white;
+    }
+    /*//end
+    of scss snehal*/
+</style>
+<div class="panel-content" id="top-scroll">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="profile-sec">
+                <div class="info-holder bg-apply" style="display:none;border-bottom: 7px solid {{assignment.timelineStatus | timeline}} ">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="info-btn inline">
+                                <span uib-dropdown class="inline">
+                <button class="btn timeline-btn btn-round" id="new-tasks" uib-dropdown-toggle>Survey</button>
+                
+                <ul class="dropdown-menu info-dropdown" uib-dropdown-menu role="menu" aria-labelledby="new-tasks">
+                  <li role="menuitem"><a ng-click="surveyCreateCheck();">Assign Surveyor</a></li>
+                   <li role="menuitem"><a ng-if="assignment.timelineStatus !== 'Force Closed'" ng-click="assignmentSurvey();">Offline Survey</a></li>
+                   <li role="menuitem"><a ng-if="assignment.timelineStatus !== 'Force Closed' && assignment.survey.length > 0" ng-click="assignmentSurveyEdit();">Edit Survey</a></li>
+                   
+                   <!--ng-if="assignment.typeOfClaim && assignment.branch.STAT" -->
+                </ul>
+
+                </span>
+                                <button class="btn timeline-btn btn-round" ng-click="newMessage();"> Message</button>
+                                <div class="padder"></div>
+                                <span uib-dropdown class="inline">
+    
+                  <button class="btn timeline-btn btn-round" id="upload-files" uib-dropdown-toggle>  
+                      Assignment
+                    </button>
+
+                  <ul class="dropdown-menu info-dropdown" uib-dropdown-menu role="menu" aria-labelledby="upload-files">
+                    <li role="menuitem" ui-sref="editassignment({id:assignment._id})" ng-if="assignment.timelineStatus !== 'Force Closed'">
+                        <!--<i class="ln-register"></i>--> <a href="">Edit</a></li>
+                    <li role="menuitem" ng-if="assignment.timelineStatus!='BBND' && assignment.timelineStatus !== 'Force Closed'" ng-click="forceClose();"><a href="">Force Close</a></li>
+                    <li role="menuitem" ng-if="assignment.timelineStatus=='BBND' || assignment.timelineStatus=='Dispatched' || assignment.timelineStatus=='Collected' && assignment.timelineStatus !== 'Force Closed' " ng-click="reopen();"><a href="">Re-Open</a></li>
+                    <li role="menuitem" ng-if="assignment.timelineStatus!='OnHold' && assignment.timelineStatus !== 'Force Closed'" ng-click="onhold();"><a href="">OnHold</a></li>
+                    <li role="menuitem" ng-if="assignment.timelineStatus=='OnHold' && assignment.timelineStatus !== 'Force Closed'" ng-click="unhold();"><a href="">UnHold</a></li> 
+                    <li role="menuitem" ng-if="assignment.timelineStatus !== 'Force Closed'"><a ng-click="transfer(assignment);">
+                        <!--<i class="fa fa-share"></i> -->
+                        Transfer</a></li>                   
+                  </ul>
+                </span>
+                                <button class="btn timeline-btn btn-round" ng-click="newEmail();"> Email</button>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="compny text-right">
+                                <h3 style="color:black !important;">{{assignment.owner.name}}</h3>
+                                <p style="color:black !important;">{{assignment.owner.func.name}}</p>
+                                <!--<div class="pointer" uib-dropdown>
+                                    <span class="greenbg" uib-dropdown-toggle>Invoicing</span>
+                                    <ul class="dropdown-menu info-dropdown" uib-dropdown-menu role="menu">
+                                        <li role="menuitem"><a href="">Surveying</a></li>
+                                        <li role="menuitem"><a href="">Invoicing</a></li>
+                                    </ul>
+                                </div>-->
+                                <span style="color:black !important;">{{assignment.timelineStatus}}</span>
+                            </div>
+                            <div class="info-pic">
+                                <span ng-if="assignment.owner.photo"><img ng-src="{{assignment.owner.photo|uploadpath:300:300}}" alt="Varun Dhawan" class="dp" /></span>
+                                <span ng-if="!assignment.owner.photo"><img ng-src="{{template.profile.photo|serverimage}}" alt="Varun Dhawan" class="dp" /></span>
+                                <img src="frontend/img/house/house-{{assignment.owner.houseColor}}.png" alt="{{assignment.owner.houseColor}} House" class="info-house"
+                                
+                                />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="compny inline">
+                                <h6><span class="dif" style="color:black !important;">{{assignment.city.name }} {{ assignment.city.district.state.name ?',':'' }} {{assignment.city.district.state.name}}  {{ assignment.city.district.state.name ?'-':'' }} {{assignment.pincode}}</span></h6>
+                                <h3><strong style="color:black !important;">{{assignment.name}}</strong></h3>
+                                <h6 ng-if="assignment.causeOfLoss" style="color:black !important;">{{assignment.causeOfLoss.name}} - <span ng-repeat="nl in assignment.natureOfLoss" style="color:black !important;">{{nl.name}}<span ng-if="$index < assignment.natureOfLoss.length - 1">, </span></span>
+                                </h6>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="compny inline">
+                                <h6><span class="dif" style="color:black !important;">{{assignment.city.name }} {{ assignment.city.district.state.name ?',':'' }} {{assignment.city.district.state.name}}  {{ assignment.city.district.state.name ?'-':'' }} {{assignment.pincode}}</span></h6>
+                                <h3><strong style="color:black !important;">{{assignment.name}}</strong></h3>
+                                <h6 ng-if="assignment.causeOfLoss" style="color:black !important;">{{assignment.causeOfLoss.name}} - <span ng-repeat="nl in assignment.natureOfLoss" style="color:black !important;">{{nl.name}}<span ng-if="$index < assignment.natureOfLoss.length - 1">, </span></span>
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-holder bg-apply" style="border-bottom: 7px solid {{assignment.timelineStatus | timeline}} ">
+
+                    <div class="first-half pull-right">
+                        <!-- <div class="clearfix"></div> -->
+                        <!--<div class="fl-right">-->
+                        <!--<span uib-dropdown class="pull-right">
+                           <button class="btn btn-blue btn-round" id="new-tasks" uib-dropdown-toggle><i class="ln-gear"></i> Setting</button>
+                            <ul class="dropdown-menu info-dropdown" uib-dropdown-menu role="menu" aria-labelledby="new-tasks">
+                            <li role="menuitem"><a ng-click="markActivity();">Mark Activity</a></li>
+                             </ul>
+                          </span>-->
+                        <!--<div class="clearfix"></div>
+                            <!--<button class="btn btn-green btn-round pull-right mt-5" ng-click="newMessage();"><i class="ln-comments"></i> Send Message</button>-->
+                        <div class="padder"></div>
+                        <!--<button class="btn btn-primary btn-round pull-right mt-5" ng-click="transfer(assignment);"><i class="fa fa-share"></i> Transfer</button>-->
+                        <!--<button class="btn btn-primary btn-round pull-right mt-5" ng-if="assignment.typeOfClaim && assignment.branch.STAT" ng-click="assignmentSurvey();">Offline Survey</button>-->
+                        <!--<button class="btn btn-primary" ng-click="assignmentSurvey()">Offline Survey</button>-->
+                        <!--</div>-->
+                        <div class="compny inline holder">
+                            <h3><strong style="color:black !important;">{{assignment.name}}</strong></h3>
+                            <h6><span style="color:black !important;">{{assignment.insurer.name}}</span></h6>
+                            <h6><span style="color:black !important;">{{assignment.insured.name}}</span></h6>
+                            <h6><span style="color:black !important;">{{assignment.department.name}}</span></h6>
+
+                        </div>
+                        <div class="compny inline holder">
+                            <h3 ng-if="assignment.intimatedLoss" style="color:black !important;">₹ {{assignment.intimatedLoss|number}}</h3>
+                            <h6 style="color:black !important;">{{assignment.products[0].item}} - {{assignment.products[0].product.name}}, {{assignment.products[0].product.category.name}},
+                                {{assignment.products[0].product.category.industry.name}} </h6>
+                            <h6 ng-if="assignment.causeOfLoss" style="color:black !important;">{{assignment.causeOfLoss.name}} - <span ng-repeat="nl in assignment.natureOfLoss" style="color:black !important;">{{nl.name}}<span ng-if="$index < assignment.natureOfLoss.length - 1">, </span></span>
+                            </h6>
+                            <h6><span class="dif" style="color:black !important;">{{assignment.city.name }} {{ assignment.city.district.state.name ?',':'' }} {{assignment.city.district.state.name}}  {{ assignment.city.district.state.name ?'-':'' }} {{assignment.pincode}}</span></h6>
+                        </div>
+
+                    </div>
+                    <div class="first-half inline mt-10">
+                        <div class="info-btn inline">
+                            <span uib-dropdown class="inline">
+                <button class="btn timeline-btn btn-round" id="new-tasks" uib-dropdown-toggle>Survey</button>
+                
+                <ul class="dropdown-menu info-dropdown" uib-dropdown-menu role="menu" aria-labelledby="new-tasks">
+                  <li role="menuitem"><a ng-click="surveyCreateCheck();">Assign Surveyor</a></li>
+                   <li role="menuitem"><a ng-if="assignment.timelineStatus !== 'Force Closed'" ng-click="assignmentSurvey();">Offline Survey</a></li>
+                   <li role="menuitem"><a ng-if="assignment.timelineStatus !== 'Force Closed' && assignment.survey.length > 0" ng-click="assignmentSurveyEdit();">Edit Survey</a></li>
+                   
+                   <!--ng-if="assignment.typeOfClaim && assignment.branch.STAT" -->
+                </ul>
+
+                </span>
+                            <button class="btn timeline-btn btn-round" ng-click="newMessage();"> Message</button>
+                            <div class="padder"></div>
+                            <span uib-dropdown class="inline">
+    
+                  <button class="btn timeline-btn btn-round" id="upload-files" uib-dropdown-toggle>  
+                      Assignment
+                    </button>
+
+                  <ul class="dropdown-menu info-dropdown" uib-dropdown-menu role="menu" aria-labelledby="upload-files">
+                    <li role="menuitem" ui-sref="editassignment({id:assignment._id})" ng-if="assignment.timelineStatus !== 'Force Closed'">
+                        <!--<i class="ln-register"></i>--> <a href="">Edit</a></li>
+                    <li role="menuitem" ng-if="assignment.timelineStatus!='BBND' && assignment.timelineStatus !== 'Force Closed'" ng-click="forceClose();"><a href="">Force Close</a></li>
+                    <li role="menuitem" ng-if="assignment.timelineStatus=='BBND' || assignment.timelineStatus=='Dispatched' || assignment.timelineStatus=='Collected' && assignment.timelineStatus !== 'Force Closed' " ng-click="reopen();"><a href="">Re-Open</a></li>
+                    <li role="menuitem" ng-if="assignment.timelineStatus!='OnHold' && assignment.timelineStatus !== 'Force Closed'" ng-click="onhold();"><a href="">OnHold</a></li>
+                    <li role="menuitem" ng-if="assignment.timelineStatus=='OnHold' && assignment.timelineStatus !== 'Force Closed'" ng-click="unhold();"><a href="">UnHold</a></li> 
+                    <li role="menuitem" ng-if="assignment.timelineStatus !== 'Force Closed'"><a ng-click="transfer(assignment);">
+                        <!--<i class="fa fa-share"></i> -->
+                        Transfer</a></li>                   
+                  </ul>
+                </span>
+                            <button class="btn timeline-btn btn-round" ng-click="newEmail();"> Email</button>
+                        </div>
+                        <div class="pull-right">
+                            <div class="compny text-right">
+                                <h3 style="color:black !important;">{{assignment.owner.name}}</h3>
+                                <p style="color:black !important;">{{assignment.owner.func.name}}</p>
+                                <!--<div class="pointer" uib-dropdown>
+                                    <span class="greenbg" uib-dropdown-toggle>Invoicing</span>
+                                    <ul class="dropdown-menu info-dropdown" uib-dropdown-menu role="menu">
+                                        <li role="menuitem"><a href="">Surveying</a></li>
+                                        <li role="menuitem"><a href="">Invoicing</a></li>
+                                    </ul>
+                                </div>-->
+                                <h3 style="color:black !important;">{{assignment.timelineStatus}}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-pic">
+                        <span ng-if="assignment.owner.photo"><img ng-src="{{assignment.owner.photo|uploadpath:300:300}}" alt="Varun Dhawan" class="dp" /></span>
+                        <span ng-if="!assignment.owner.photo"><img ng-src="{{template.profile.photo|serverimage}}" alt="Varun Dhawan" class="dp" /></span>
+                        <img src="frontend/img/house/house-{{assignment.owner.houseColor}}.png" alt="{{assignment.owner.houseColor}} House" class="info-house"
+                        />
+                    </div>
+                </div>
+                <div class="profile-all">
+                    <div class="row">
+                        <div class="col-sm-4 col-xs-12 visible-xs">
+                            <div class="widget">
+                                <div class="padding-border folder">
+                                    <div class="row">
+                                        <div class="col-xs-4 pointer" ng-click="viewJIR();"><img src="frontend/img/folder.png">
+                                            <h6>JIR</h6>
+                                        </div>
+                                        <div class="col-xs-4 pointer" ng-click="viewILA();"><img src="frontend/img/folder.png">
+                                            <h6>ILA</h6>
+                                        </div>
+                                        <div class="col-xs-4 pointer" ng-click="viewISR();"><img src="frontend/img/folder.png">
+                                            <h6>ISR</h6>
+                                        </div>
+                                    </div>
+                                    <div class="row mt20">
+                                        <div class="col-xs-4 pointer" ng-click="viewLOR();"><img src="frontend/img/folder.png">
+                                            <h6>LOR</h6>
+                                        </div>
+                                        <div class="col-xs-4 pointer" ng-click="allAssessment(false);"><img src="frontend/img/folder.png">
+                                            <h6>Assessments</h6>
+                                        </div>
+                                        <div class="col-xs-4 pointer" ng-click="viewConsent();"><img src="frontend/img/folder.png">
+                                            <h6>Consent</h6>
+                                        </div>
+                                    </div>
+                                    <div class="row mt20">
+                                        <div class="col-xs-4 pointer" ng-click="viewFSR();"><img src="frontend/img/folder.png">
+                                            <h6>FSR</h6>
+                                        </div>
+                                        <div class="col-xs-4 pointer" ng-click="viewFiles();"><img src="frontend/img/folder.png">
+                                            <h6>Documents</h6>
+                                        </div>
+                                        <div class="col-xs-4 pointer" ng-click="viewPhotos();"><img src="frontend/img/folder.png">
+                                            <h6>Photos</h6>
+                                        </div>
+                                    </div>
+                                    <div class="row mt20">
+                                        <div class="col-xs-4 pointer" ng-click="newInvoice();"><img src="frontend/img/folder.png">
+                                            <h6>Invoices</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="widget cust-widg">
+                                <div class="only-email">
+                                    <div class="form-group">
+                                        <label class="ml-4">Only email</label>
+                                        <toggle-switch on-label="Yes" off-label="No" ng-model="formName.broker" class="switch-mini switch-success"></toggle-switch>
+                                    </div>
+                                </div>
+                            </div>-->
+                            <div class="text-center" ng-init="show=false">
+                                <button ng-click="accessForEditButtons();show=!show" style="margin-top: 10px;" class="btn btn-primary pull-left edit-mob"> Edit</button>
+                                <button ng-if="accessForEditButton && requestAccess" ng-click="submitRequestForAccessButtons()" style="margin-top: 10px;"
+                                    class="btn btn-primary"> Request</button>
+                                <button ng-if="accessForEditButton && approvalAccess" ng-click="submitApprovalForAccessButtons()" style="margin-top: 10px;"
+                                    class="btn btn-primary pull-right"> Approve</button>
+                            </div>
+                            <div class="widget cust-widg">
+                                <div class="only-email">
+                                    <div class="form-group">
+                                        <label class="ml-4 span-on">Survey </label>
+                                        <toggle-switch ng-if="surveyAccess && accessForEditButton" ng-model="assignment.surveyAccessReq" class="switch-mini switch-success"
+                                            ng-change="saveSurvey()"></toggle-switch>
+                                        <span ng-if="assignment.surveyAccess" style="color: green"> ON </span>
+                                        <span ng-if="!assignment.surveyAccess" style="color: red"> OFF </span>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.survey=='Done' && assignment.getAllTaskStatus.surveyTime==undefined"
+                                            style="color: green">Uploaded</label>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.surveyTime" style="color: green">{{assignment.getAllTaskStatus.surveyTime|DateTime}} </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget cust-widg">
+                                <div class="only-email">
+                                    <div class="form-group">
+                                        <label class="ml-4 span-on">ILA </label>
+                                        <toggle-switch ng-if="ilaAccess && accessForEditButton" ng-model="assignment.ilaAccessReq" class="switch-mini switch-success"
+                                            ng-change="saveILA()"></toggle-switch>
+                                        <span ng-if="assignment.ilaAccess" style="color: green"> ON </span>
+                                        <span ng-if="!assignment.ilaAccess" style="color: red"> OFF </span>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.ila=='Done' && assignment.getAllTaskStatus.ilaTime==undefined"
+                                            style="color: green">Uploaded</label>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.ilaTime" style="color: green">{{assignment.getAllTaskStatus.ilaTime|DateTime}} </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget cust-widg">
+                                <div class="only-email">
+                                    <div class="form-group">
+                                        <label class="ml-4 span-on">LOR </label>
+                                        <toggle-switch ng-if="lorAccess && accessForEditButton" ng-model="assignment.lorAccessReq" class="switch-mini switch-success"
+                                            ng-change="saveLOR()"></toggle-switch>
+                                        <span ng-if="assignment.lorAccess" style="color: green"> ON </span>
+                                        <span ng-if="!assignment.lorAccess" style="color: red"> OFF </span>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.lor=='Done' && assignment.getAllTaskStatus.lorTime==undefined"
+                                            style="color: green">Uploaded</label>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.lorTime" style="color: green">{{assignment.getAllTaskStatus.lorTime|DateTime}} </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget cust-widg">
+                                <div class="only-email">
+                                    <div class="form-group">
+                                        <label class="ml-4 span-on">Assessment </label>
+                                        <toggle-switch ng-if="assessmentAccess && accessForEditButton" ng-model="assignment.assessmentAccessReq" class="switch-mini switch-success"
+                                            ng-change="saveAssessment()"></toggle-switch>
+                                        <span ng-if="assignment.assessmentAccess" style="color: green"> ON </span>
+                                        <span ng-if="!assignment.assessmentAccess" style="color: red"> OFF </span>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.assessment=='Done' && assignment.getAllTaskStatus.assessmentTime==undefined"
+                                            style="color: green">Uploaded</label>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.assessmentTime" style="color: green">{{assignment.getAllTaskStatus.assessmentTime|DateTime}} </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget cust-widg">
+                                <div class="only-email">
+                                    <div class="form-group">
+                                        <label class="ml-4 span-on">Consent </label>
+                                        <toggle-switch ng-if="consentAccess && accessForEditButton" ng-model="assignment.consentAccessReq" class="switch-mini switch-success"
+                                            ng-change="saveConsent()"></toggle-switch>
+                                        <span ng-if="assignment.consentAccess" style="color: green"> ON </span>
+                                        <span ng-if="!assignment.consentAccess" style="color: red"> OFF </span>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.consent=='Done' && assignment.getAllTaskStatus.consentTime==undefined"
+                                            style="color: green">Uploaded</label>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.consentTime" style="color:green">{{assignment.getAllTaskStatus.consentTime|DateTime}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget cust-widg">
+                                <div class="only-email">
+                                    <div class="form-group">
+                                        <label class="ml-4 span-on">FSR </label>
+                                        <toggle-switch ng-if="fsrAccess && accessForEditButton" ng-model="assignment.fsrAccessReq" class="switch-mini switch-success"
+                                            ng-change="saveFSR()"></toggle-switch>
+                                        <span ng-if="assignment.fsrAccess" style="color: green"> ON </span>
+                                        <span ng-if="!assignment.fsrAccess" style="color: red"> OFF </span>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.fsr=='Done' && assignment.getAllTaskStatus.fsrTime==undefined"
+                                            style="color: green">Uploaded</label>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.fsrTime" style="color: green">{{assignment.getAllTaskStatus.fsrTime|DateTime}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget cust-widg">
+                                <div class="only-email">
+                                    <div class="form-group">
+                                        <label class="ml-4 span-on">Invoice</label>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.invoice=='Done' && assignment.getAllTaskStatus.invoiceTime==undefined"
+                                            style="color: green">Uploaded</label>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.invoiceTime" style="color: green">{{assignment.getAllTaskStatus.invoiceTime|DateTime}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <!--when-scrolled="loadMore();"-->
+                            <div class="widget no-color overflow-widget scroll-new" id="list-top" when-scrolled="loadMore();">
+                                <div class="activity-feed">
+                                    <ul class="activity-timeline">
+                                        <li ng-repeat="chat in timelineList">
+                                            <div class="info-holder">
+                                                <!--Addation Div for Background-->
+                                                <span class="user-device" ng-if="chat.type!='Email' && !formName.onlyEmail"></span>
+                                                <div class="user-activity" ng-if="chat.type!='Email' && !formName.onlyEmail">
+                                                    <div class="who-post-this">
+                                                        <span><img ng-src="{{chat.employee.photo|uploadpath:300:300}}" alt="{{chat.employee.name}}" />
+                                                        <img ng-src="frontend/img/house/house-{{chat.employee.houseColor}}.png" alt="{{chat.employee.houseColor}} House" class="house"></span>
+                                                        <div class="who-post-detail">
+                                                            <h3>{{chat.employee.name}} <span class="vsmall">{{chat.employee.func.name}}</span></h3>
+                                                            <!--<i>23JUN2016, Thrusday, 18:24</i>-->
+                                                            <i>{{chat.time|date:"dd-MMM-yyyy, EEEE, HH:mm"}}</i>
+                                                            <span ng-if="chat.title!=='Sent a new message'">{{chat.title}}</span>
+                                                            <div ng-if="chat.title=='Sent a new message'">
+                                                                <div class="inline msg-color"><span>Message : </span></div>
+                                                                <div class="inline "><span class="msg-color" ng-bind-html="chat.message"></span></div>
+                                                            </div>
+                                                        </div>
+                                                        <!--viewEmailStatus-->
+                                                        <button ng-if="chat.acknowledgmentStatus == true" class="btn btn-green btn-round pull-right"><i class="ln-envelope"></i> Acknowledgment Sent</button>
+                                                        <button ng-if="chat.deputationStatus == true" class="btn btn-green btn-round pull-right"><i class="ln-envelope"></i> Deputation Sent</button>
+                                                        <button ng-if="chat.emailStatus == true" class="btn btn-green btn-round pull-right"><i class="ln-envelope"></i> Email Sent</button>
+                                                        <button ng-if="chat.viewEmailStatus == 'true' && chat.emailStatus == false" class="btn btn-red btn-round pull-right" ng-click="getMail(chat);"><i class="ln-envelope"></i> Send Email</button>
+                                                        <button ng-if="chat.isSurveyApproved == true && chat.acknowledgmentStatus==false" class="btn btn-red btn-top btn-round pull-right"
+                                                            ng-click="getMail(chat,'Acknowledgment Email');"><i class="ln-envelope"></i> Acknowledgment Email</button>
+                                                        <button ng-if="chat.isSurveyApproved == true && chat.deputationStatus==false" class="btn btn-red btn-top btn-round pull-right "
+                                                            ng-click="getMail(chat,'Deputation mail');"><i class="ln-envelope"></i> Deputation Email</button>
+                                                        <button ng-if="chat.onSurveyAttended == true && chat.emailStatus == false" class="btn btn-red btn-round pull-right" ng-click="getMail(chat,'On Survey Attended');"><i class="ln-envelope"></i> Survey Attended Email</button>
+                                                    </div>
+                                                    <div class="post-content bg-join" ng-if="chat.type=='Normal' && (chat.attachment.length!==0 || chat.message)  && chat.title!=='Sent a new message'">
+                                                        <div class="width-100 msg-color">
+                                                            <p ng-bind-html="chat.message"></p>
+                                                            <div ng-if="chat.attachment.length!==0" class="">
+                                                                <div ng-if="chat.attachment.length == 1" ng-include="photoGridObj.one"></div>
+                                                                <div ng-if="chat.attachment.length == 2" ng-include="photoGridObj.two"></div>
+                                                                <div ng-if="chat.attachment.length == 3" ng-include="photoGridObj.three"></div>
+                                                                <div ng-if="chat.attachment.length == 4" ng-include="photoGridObj.four"></div>
+                                                                <div ng-if="chat.attachment.length == 5" ng-include="photoGridObj.five"></div>
+                                                                <div ng-if="chat.attachment.length > 5" ng-include="photoGridObj.six"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="post-content bg-join" ng-if="chat.type=='SurveyDone'">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="text-center">Date Of Survey</th>
+                                                                    <!--<th class="text-center">Survey Time</th>-->
+                                                                    <th class="text-center">Start Time</th>
+                                                                    <th class="text-center">End Time</th>
+                                                                    <th class="text-center">Address</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>{{chat.surveyDate|date:"ddMMMyyyy, EEEE"}}</td>
+                                                                    <!--<td>{{chat.surveyTime|date:"hh:mm a"}}</td>-->
+                                                                    <td>{{chat.surveyStartTime|date:"hh:mm a"}}</td>
+                                                                    <td>{{chat.surveyEndTime|date:"hh:mm a"}}</td>
+                                                                    <td>{{chat.address}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="post-content" ng-if="chat.type=='Template'">
+                                                        <p>View Template <a ng-click="templateAttachment(chat.attachment)"><b>Here</b></a></p>
+                                                    </div>
+                                                    <div class="post-content" ng-if="chat.type=='File'">
+                                                        <!--<p>View Template <a ng-click="templateAttachment(chat.attachment)"><b>Here</b></a></p>-->
+                                                        <div class="e-attachments">
+                                                            <div class="row">
+                                                                <!--<div class="col-md-4"></div>-->
+                                                                <div class="col-md-12 col-xs-12 col-sm-12">
+                                                                    <div class="filebx">
+                                                                        <object data="{{chat.attachment|uploadpathPdf}}" type="application/pdf" style="width:100%; height:400px;">
+                                                                            <iframe ng-src="{{chat.attachment|googlePdfViewer}}" style="width:100%; height:400px;" frameborder="1" scrolling="auto"></iframe> 
+                                                                        </object>
+                                                                        <!--<a fancybox rel="gallery2" style="opacity:1;" href="{{chat.attachment|downloadImageWithName:assignment.name+'.pdf'}}"></a>-->
+                                                                    </div>
+                                                                </div>
+                                                                <span class="clearfix"></span>
+                                                                <div class="col-md-12 col-xs-12 col-sm-12 pdf-dwnld">
+                                                                    <div class="dwnld-bx">
+                                                                        <a download="{{chat.attachment}}" href="{{chat.attachment|downloadImageWithName:assignment.name+'.pdf'}}"><i class="fa fa-arrow-down"></i></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div ng-if="chat.type=='Email'">
+                                                    <span class="user-device"></span>
+                                                    <div class="user-activity emailed mt-10">
+                                                        <div class="who-post-this">
+                                                            <span><img ng-src="{{chat.employee.photo|uploadpath:300:300}}" alt="{{chat.employee.name}}" /></span>
+                                                            <div class="who-post-detail">
+                                                                <h3>{{chat.employee.name}} <span class="vsmall">{{chat.employee.func.name}}</span>
+                                                                </h3>
+                                                                <span><span class="sp-cl">Sent an email To :</span> {{chat.email.to}}</span>
+                                                                <span ng-if="chat.email.cc != ''"><span class="sp-cl">Cc : </span>                                                                {{chat.email.cc}}</span>
+                                                                <span ng-if="chat.email.bcc != ''"><span class="sp-cl">Bcc : </span>{{chat.email.bcc}}</span>
+                                                                <i>{{chat.time|date:"ddMMMyyyy, EEEE, hh:mm"}}</i>
+                                                            </div>
+                                                        </div>
+                                                        <div class="post-content">
+                                                            <div class="e-subject">
+                                                                <p class="strong">{{chat.email.subject}}</p>
+                                                            </div>
+                                                            <div class="e-message">
+                                                                <p ng-bind-html="chat.email.message">
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div id="list-bottom"></div>
+                            </div>
+                            <div class="load-more">
+                                <button class="btn btn-primary load-more-btn btn-padd" ng-if="loadMoreBtn==true" ng-click="loadMore()" promise-btn promise-btn-options="options">Load More</button></div>
+                        </div>
+                        <div class="col-sm-4 hidden-xs">
+                            <div class="widget">
+                                <div class="padding-border folder">
+                                    <div class="row">
+                                        <div class="col-xs-4 pointer" ng-click="viewJIR();"><img src="frontend/img/folder.png">
+                                            <h6>JIR</h6>
+                                        </div>
+                                        <div class="col-xs-4 pointer" ng-click="viewILA();"><img src="frontend/img/folder.png">
+                                            <h6>ILA</h6>
+                                        </div>
+                                        <div class="col-xs-4 pointer" ng-click="viewISR();"><img src="frontend/img/folder.png">
+                                            <h6>ISR</h6>
+                                        </div>
+                                    </div>
+                                    <div class="row mt20">
+                                        <div class="col-xs-4 pointer" ng-click="viewLOR();"><img src="frontend/img/folder.png">
+                                            <h6>LOR</h6>
+                                        </div>
+                                        <div class="col-xs-4 pointer" ng-click="allAssessment(false);"><img src="frontend/img/folder.png">
+                                            <h6>Assessments</h6>
+                                        </div>
+                                        <div class="col-xs-4 pointer" ng-click="viewConsent();"><img src="frontend/img/folder.png">
+                                            <h6>Consent</h6>
+                                        </div>
+                                    </div>
+                                    <div class="row mt20">
+                                        <div class="col-xs-4 pointer" ng-click="viewFSR();"><img src="frontend/img/folder.png">
+                                            <h6>FSR</h6>
+                                        </div>
+                                        <div class="col-xs-4 pointer" ng-click="viewFiles();"><img src="frontend/img/folder.png">
+                                            <h6>Documents</h6>
+                                        </div>
+                                        <div class="col-xs-4 pointer" ng-click="viewPhotos();"><img src="frontend/img/folder.png">
+                                            <h6>Photos</h6>
+                                        </div>
+                                    </div>
+                                    <div class="row mt20">
+                                        <div class="col-xs-4 pointer" ng-click="newInvoice();"><img src="frontend/img/folder.png">
+                                            <h6>Invoices</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center" ng-init="show=false">
+                                <button ng-click="accessForEditButtons();show=!show" style="margin-top: 10px;" class="btn btn-primary pull-left btn-edit btn-padd"> Edit</button>
+                                <button ng-if="accessForEditButton && requestAccess" ng-click="submitRequestForAccessButtons()" style="margin-top: 10px;"
+                                    class="btn btn-primary"> Request</button>
+                                <button ng-if="accessForEditButton && approvalAccess" ng-click="submitApprovalForAccessButtons()" style="margin-top: 10px;"
+                                    class="btn btn-primary pull-right"> Approve</button>
+                            </div>
+                            <div class="widget cust-widg" ng-init="show=false">
+                                <div class="only-email">
+                                    <div class="form-group">
+                                        <label class="ml-4" ng-class="{'span-on': show ,'span-off': !show}">Survey </label>
+                                        <toggle-switch ng-if="surveyAccess && accessForEditButton" ng-model="assignment.surveyAccessReq" class="switch-mini switch-success"
+                                            ng-change="saveSurvey()"></toggle-switch>
+                                        <span ng-if="assignment.surveyAccess" style="color: green"> ON </span>
+                                        <span ng-if="!assignment.surveyAccess" style="color: red"> OFF </span>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.survey=='Done' && assignment.getAllTaskStatus.surveyTime==undefined"
+                                            style="color: green">Uploaded</label>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.surveyTime" style="color: green">{{assignment.getAllTaskStatus.surveyTime|DateTime}} </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget cust-widg">
+                                <div class="only-email">
+                                    <div class="form-group">
+                                        <label class="ml-4" ng-class="{'span-on': show ,'span-off': !show}">ILA </label>
+                                        <toggle-switch ng-if="ilaAccess && accessForEditButton" ng-model="assignment.ilaAccessReq" class="switch-mini switch-success"
+                                            ng-change="saveILA()"></toggle-switch>
+                                        <span ng-if="assignment.ilaAccess" style="color: green"> ON </span>
+                                        <span ng-if="!assignment.ilaAccess" style="color: red"> OFF </span>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.ila=='Done' && assignment.getAllTaskStatus.ilaTime==undefined"
+                                            style="color: green">Uploaded</label>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.ilaTime" style="color: green">{{assignment.getAllTaskStatus.ilaTime|DateTime}} </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget cust-widg">
+                                <div class="only-email">
+                                    <div class="form-group">
+                                        <label class="ml-4" ng-class="{'span-on': show ,'span-off': !show}">LOR </label>
+                                        <toggle-switch ng-if="lorAccess && accessForEditButton" ng-model="assignment.lorAccessReq" class="switch-mini switch-success"
+                                            ng-change="saveLOR()"></toggle-switch>
+                                        <span ng-if="assignment.lorAccess" style="color: green"> ON </span>
+                                        <span ng-if="!assignment.lorAccess" style="color: red"> OFF </span>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.lor=='Done' && assignment.getAllTaskStatus.lorTime==undefined"
+                                            style="color: green">Uploaded</label>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.lorTime" style="color: green">{{assignment.getAllTaskStatus.lorTime|DateTime}} </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget cust-widg">
+                                <div class="only-email">
+                                    <div class="form-group">
+                                        <label class="ml-4" ng-class="{'span-on': show ,'span-off': !show}">Assessment </label>
+                                        <toggle-switch ng-if="assessmentAccess && accessForEditButton" ng-model="assignment.assessmentAccessReq" class="switch-mini switch-success"
+                                            ng-change="saveAssessment()"></toggle-switch>
+                                        <span ng-if="assignment.assessmentAccess" style="color: green"> ON </span>
+                                        <span ng-if="!assignment.assessmentAccess" style="color: red"> OFF </span>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.assessment=='Done' && assignment.getAllTaskStatus.assessmentTime==undefined"
+                                            style="color: green">Uploaded</label>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.assessmentTime" style="color: green">{{assignment.getAllTaskStatus.assessmentTime|DateTime}} </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget cust-widg">
+                                <div class="only-email">
+                                    <div class="form-group">
+                                        <label class="ml-4" ng-class="{'span-on': show ,'span-off': !show}">Consent </label>
+                                        <toggle-switch ng-if="consentAccess && accessForEditButton" ng-model="assignment.consentAccessReq" class="switch-mini switch-success"
+                                            ng-change="saveConsent()"></toggle-switch>
+                                        <span ng-if="assignment.consentAccess" style="color: green"> ON </span>
+                                        <span ng-if="!assignment.consentAccess" style="color: red"> OFF </span>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.consent=='Done' && assignment.getAllTaskStatus.consentTime==undefined"
+                                            style="color: green">Uploaded</label>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.consentTime" style="color:green">{{assignment.getAllTaskStatus.consentTime|DateTime}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget cust-widg">
+                                <div class="only-email">
+                                    <div class="form-group">
+                                        <label class="ml-4" ng-class="{'span-on': show ,'span-off': !show}">FSR </label>
+                                        <toggle-switch ng-if="fsrAccess && accessForEditButton" ng-model="assignment.fsrAccessReq" class="switch-mini switch-success"
+                                            ng-change="saveFSR()"></toggle-switch>
+                                        <span ng-if="assignment.fsrAccess" style="color: green"> ON </span>
+                                        <span ng-if="!assignment.fsrAccess" style="color: red"> OFF </span>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.fsr=='Done' && assignment.getAllTaskStatus.fsrTime==undefined"
+                                            style="color: green">Uploaded</label>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.fsrTime" style="color: green">{{assignment.getAllTaskStatus.fsrTime|DateTime}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget cust-widg">
+                                <div class="only-email">
+                                    <div class="form-group">
+                                        <label class="ml-4" ng-class="{'span-on': show ,'span-off': !show}">Invoice</label>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.invoice=='Done' && assignment.getAllTaskStatus.invoiceTime==undefined"
+                                            style="color: green">Uploaded</label>
+                                        <label class="ml-4 pull-right" ng-if="assignment.getAllTaskStatus.invoiceTime" style="color: green">{{assignment.getAllTaskStatus.invoiceTime|DateTime}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div scroll-to-item id="back-top">
+                                <a href="#top-scroll"><span></span>Top</a>
+                            </div>
+                            <div scroll-to-bottom id="back-bottom">
+                                <a href="#bottom-scroll"><span></span>Bottom</a>
+                            </div>
+                            <a id="scroll-bottom"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

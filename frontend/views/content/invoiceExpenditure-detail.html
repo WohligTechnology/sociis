@@ -1,0 +1,113 @@
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Knowledge Base</a>
+        </li>
+        <li>
+            <a ui-sref="knowledgebase-list">Knowledge Base</a>
+        </li>
+    </ul>
+</div>
+<form name="policyTypeForm" ng-submit="saveInvoiceExpenditure(formData)">
+    <div class="heading-sec">
+        <div class="row">
+            <div class="col-md-12 column">
+                <div class="heading-profile">
+                    <toggle-switch ng-model="formData.type" on-label="Fee" off-label="Expense" class="switch-small switch-success pull-right"></toggle-switch>
+                    <h2>Document Type</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Bar Chart -->
+    <div class="panel-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="widget">
+                    <div class="form-elements-sec">
+                        <div class="widget-title">
+                            <h3>Document Type</h3>
+                        </div>
+                        <div class="sec">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Document name*</label>
+                                        <input type="text" name="name" ng-model="formData.name" class="form-control" required>
+                                        <div class="error-msg" ng-show="policyTypeForm.name.$invalid && policyTypeForm.name.$touched">Please Enter Document Name</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Unit*</label>
+                                        <input type="text" name="unit" ng-model="formData.unit" class="form-control" required>
+                                        <div class="error-msg" ng-show="policyTypeForm.unit.$invalid && policyTypeForm.unit.$touched">Please Enter Document Name</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Rate*</label>
+                                        <input type="number" min="0" step="0.01" name="rate" ng-model="formData.rate" class="form-control" readonly>
+                                        <div class="error-msg" ng-show="policyTypeForm.rate.$invalid && policyTypeForm.rate.$touched">Please Enter Document Name</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Description*</label>
+                                        <input type="text" name="description" ng-model="formData.description" class="form-control" required>
+                                        <div class="error-msg" ng-show="policyTypeForm.description.$invalid && policyTypeForm.description.$touched">Please Enter Document Name</div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="widget">
+                                <div class="form-elements-sec">
+                                    <div class="widget-title">
+                                        <a class="btn btn-primary pull-right" ng-click="addModal( 'modal-assignment', '',
+                        'rateArray', '', '',formData.rateArray)">Add New</a>
+                                            <h3>All Rate</h3>
+                                    </div>
+                                    <div class="sec">
+                                        <div class="table-responsive">
+                                            <table class="table table-input" ng-if="formData.rateArray.length!=0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Rate</th>
+                                                        <th>From</th>
+                                                        <th>To</th>
+                                                        <th width="150px">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in formData.rateArray track by $index">
+                                                        <td>{{data.rate}}</td>
+                                                        <td>{{data.validFrom | date:"dd-MM-yyyy"}}</td>
+                                                        <td>{{data.validTo || "-" | date:"dd-MM-yyyy"}}</td>
+                                                        <td>
+                                                            <a class="btn btn-primary" ng-click="addModal( 'modal-assignment',$index,
+                        'rateArray',data, '',formData.rateArray)">
+                                                                <i class="fa fa-pencil"></i>
+                                                                </a>
+                                                                <a class="btn btn-danger" ng-click="deleteElements($index, formData.rateArray)">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="text-center mt20 odd-even-button" ng-hide="hideSaveCancel">
+            <button class="btn btn-default" type="submit" ng-disabled="policyTypeForm.$invalid">Save</button>
+            <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+        </div>
+    </div>
+</form>

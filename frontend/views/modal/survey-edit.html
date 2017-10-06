@@ -1,0 +1,42 @@
+<div class="modal-header blue-bg">
+  <div class="pull-right">
+    <button class="btn btn-clear" ng-click="$dismiss()">
+      <i class="ln-cross"></i>
+    </button>
+  </div>
+  <h5 class="modal-title">Survey List</h5>
+</div>
+<div class="modal-body">
+  <table class="file-list table">
+    <thead>
+      <tr>
+        <th>Survey #</th>
+        <th>Date</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Location</th>
+        <th>Surveyor</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="survey in assignment.survey track by $index">
+        <td>{{$index + 1}}</td>
+        <td>{{survey.surveyDate |date:'dd-MM-yyyy'}}</td>
+        <td>{{survey.surveyStartTime |date:"hh:mm a"}}</td>
+        <td>{{survey.surveyEndTime |date:"hh:mm a"}}</td>
+        <td>{{survey.address}}</td>
+        <td>{{survey.employee.name}}</td>
+        <td ng-if="survey.status =='Approval Pending'">Requested</td>
+        <td ng-if="survey.status =='Pending'">Approved</td>
+        <td ng-if="survey.status =='Completed'">Completed</td>
+        <td ng-if="survey.status =='Declined'">Declined</td>
+        <td>
+          <button class="btn btn-clear" ng-if="survey.status =='Completed'" ng-click="surveyEditForm(survey);$dismiss()"><i class="ln-pencil"></i></button>
+          <button class="btn btn-clear" ng-if="survey.status =='Pending' || survey.status =='Completed'" ng-click="surveyUpload(survey);$dismiss()"><i class="ln-upload"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,88 @@
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Insurance</a>
+        </li>
+        <li>
+            <a ui-sref="policyname-list" >{{header.name}}</a>
+        </li>
+    </ul>
+</div>
+<form name="policyNameForm" ng-submit="savePolicyType(formData)">
+    <div class="heading-sec">
+        <div class="row">
+            <div class="col-md-12 column">
+                <div class="heading-profile">
+                  <toggle-switch ng-model="formData.status" class="switch-small switch-success pull-right"></toggle-switch>
+                    <h2>{{header.name}}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Bar Chart -->
+    <div class="panel-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="widget">
+                    <div class="form-elements-sec">
+                        <div class="widget-title">
+                            <h3>Policy Name</h3>
+                        </div>
+                        <div class="sec">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Policy Name*</label>
+                                        <input type="text" name="name" ng-model="formData.policyName" class="form-control" required>
+                                        <div class="error-msg" ng-show="policyNameForm.name.$invalid && policyNameForm.name.$touched">Please Enter Policy Name</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Department*</label>
+                                        <multiple-select my-enter name="department" required ng-model="formData.department" filter='{"department":"{{formData.department}}"}' ng-name="name.zone" api="searchDepartment" ng-create="departmentSave"></multiple-select>
+                                        <div class="error-msg" ng-show="policyNameForm.department.$invalid">Please Enter Department</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget-title">
+                              <a class="btn btn-primary normal pull-right" ng-click="addNatureOfLoss()">Add New</a>
+                                <h3>Insurer</h3>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-input">
+                                  <thead>
+                                    <tr>
+                                      <th>Name</th>
+                                      <th width="150px">Actions
+                                      </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td><input type="text" class="form-control" ng-readonly></td>
+                                      <td>
+                                          <a class="btn btn-primary" ng-click="editNatureOfLoss()">
+                                              <i class="fa fa-pencil"></i>
+                                          </a>
+                                          <a class="btn btn-success" ui-sref="saveNatureOfLoss({id:loss._id})">
+                                              <i class="fa fa-floppy-o"></i>
+                                          </a>
+                                          <a class="btn btn-danger" ng-click="deleteNatureOfLoss()">
+                                              <i class="fa fa-trash"></i>
+                                          </a>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                            </div>
+                            <div class="text-center mt20">
+                                <button class="btn btn-default" type="submit" ng-disabled="policyNameForm.$invalid">Save</button>
+                                <button class="btn btn-default" ui-sref="policyname-list">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

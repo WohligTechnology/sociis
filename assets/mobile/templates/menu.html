@@ -1,0 +1,60 @@
+<ion-side-menus enable-menu-with-back-views="false">
+    <ion-side-menu-content>
+        <ion-nav-bar class="bar-positive">
+            <ion-nav-buttons side="left hamburger">
+                <button class="button button-icon button-clear ion-navicon " menu-toggle="left">
+        </button>
+            </ion-nav-buttons>
+            <ion-nav-buttons side="right ">
+                <div class="buttons">
+                    <button class="button no-animation button-clear header-right-button header-btn-center" ng-click="search();">
+	           <i class="icon fa fa-search resize-search"></i>
+            </button>
+                    <button class="button no-animation button-clear header-right-button header-btn-center" ng-click="filter();">
+            Filter
+            </button>
+                </div>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-view name="menuContent"></ion-nav-view>
+    </ion-side-menu-content>
+    <ion-side-menu side="left" class="gradient-bg">
+        <ion-content class="top-statusbar">
+            <ion-list>
+                <ion-item menu-close ui-sref="app.coach-profile" ui-sref-active="on">
+                    <img src="../img/logo.png" alt="Absolute" height="45" class="doneLoading">
+                </ion-item>
+
+                <!-- For Desktop view-->
+                <ion-item class="item-icon-left" menu-close>
+                    <a class="remove-text-decoration" href="{{desktop}}">
+                        <i class="icon fa fa-desktop "></i> Desktop View</a>
+                </ion-item>
+
+                <ion-item class="item-icon-left" menu-close>
+                    <a class="remove-text-decoration" href="{{newAssignment}}">
+                        <i class="icon fa fa-pencil"></i> New Assignment</a>
+                </ion-item>
+
+                <ion-item class="item-icon-left" menu-close ng-click="generateMRExcel()">
+                    <i class="icon fa fa-pencil"></i> MR Register
+                </ion-item>
+
+                <ion-item class="item-icon-left" menu-close>
+                    <i class="icon fa fa-flag"></i> Status Report
+                </ion-item>
+
+                <ion-item class="item-icon-left" menu-close>
+                    <a class="remove-text-decoration" href="{{dashboard}}">
+                        <i class="icon fa fa-tachometer"></i> Dashboard</a>
+                </ion-item>
+
+                <ion-item class="item-icon-left" menu-close>
+                    <a class="remove-text-decoration" href="{{login}}">
+                        <i class="icon fa fa-sign-out "></i> Logout</a>
+                </ion-item>
+
+            </ion-list>
+        </ion-content>
+    </ion-side-menu>
+</ion-side-menus>

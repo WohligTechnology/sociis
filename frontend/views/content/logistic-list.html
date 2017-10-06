@@ -1,0 +1,84 @@
+<!-- <div id="progressBar">
+	<div class="loader"></div>
+</div> -->
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Locations</a>
+        </li>
+        <li>
+            <a ui-sref="city-list">City List</a>
+        </li>
+    </ul>
+</div>
+<div class="heading-sec">
+    <div class="btn-group pull-right">
+        <button type="button" class="btn btn-default" ng-class="{'btn-primary': logisticFilter.timelineStatus=='All'}" ng-click="logisticFilter.timelineStatus='All';showAllLogistic(true);">All</button>
+        <button type="button" class="btn btn-default" ng-class="{'btn-primary': logisticFilter.timelineStatus=='BBND'}" ng-click="logisticFilter.timelineStatus='BBND';showAllLogistic(true)">BBND</button>
+        <button type="button" class="btn btn-default" ng-class="{'btn-primary': logisticFilter.timelineStatus=='DBND'}" ng-click="logisticFilter.timelineStatus='DBND';showAllLogistic(true);">DBND</button>
+        <button type="button" class="btn btn-default" ng-class="{'btn-primary': logisticFilter.timelineStatus=='Delivered'}" ng-click="logisticFilter.timelineStatus='Delivered';showAllLogistic(true);">Delivered</button>
+    </div>
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>Logistic List</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="table-area">
+                    <div class="widget-title">
+                        <div class="pull-right">
+                            <form class="search-form mr-form">
+                                <input type="text" ng-change="showAllLogistic(true)" placeholder="Search Here..." ng-model="logisticFilter.text" />
+                                <button type="submit">
+                                  <i class="fa fa-search"></i>
+                              </button>
+                            </form>
+                        </div>
+                        <h3>List of Logistic <span class="tableTotal">(Total : {{totalItems}}) </span></h3>
+                    </div>
+                    <div class="table-responsive" ng-show="totalItems>0">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        #
+                                    </th>
+                                    <th>MR #</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="logistic in logistics">
+                                    <td>
+                                        {{($index + 1)+((currentPage-1)*maxRow)}}
+                                    </td>
+                                    <td>{{logistic.name}}</td>
+                                    <td>{{logistic.timelineStatus}}</td>
+                                    <td>
+                                        <a class="btn btn-primary" ui-sref="editlogistic({id:logistic._id})"><i class="fa fa-pencil"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tableData" ng-show="totalItems == 0">
+                        <h5>No data found</h5>
+                    </div>
+                    <div class="tableData" ng-show="totalItems == undefined">
+                        <h5>Loading Data</h5>
+                    </div>
+                    <ul ng-if="totalItems" ng-change="changePage(currentPage);" uib-pagination total-items="totalItems" items-per-page="maxRow"
+                        ng-model="currentPage" max-size="template.pageMax" class="pagination-sm" boundary-links="true" force-ellipses="true"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

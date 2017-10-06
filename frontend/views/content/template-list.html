@@ -1,0 +1,59 @@
+<div class="heading-sec">
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>Template List</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="table-area">
+
+                    <div class="widget-title">
+                        <div class="pull-right">
+                            <form class="search-form mr-form">
+                                <input type="text" ng-change="showAll(true)" placeholder="Search Here..." ng-model="search.keyword" />
+                                <button type="submit">
+                                  <i class="fa fa-search"></i>
+                              </button>
+                            </form>
+                            <a class="btn btn-primary" ui-sref="createtemplate">Add New</a>
+                        </div>
+                        <h3>List of Templates <span class="tableTotal">(Total : {{totalItems}}) </span></h3>
+                    </div>
+                    <div class="table-responsive" ng-show="totalItems>0">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="template in modelList">
+                                    <td>{{template.name}}</td>
+                                    <td>
+                                        <a class="btn btn-primary" ui-sref="edittemplate({id:template._id})"><i class="fa fa-pencil"></i></a>
+                                        <!--<a class="btn btn-danger" ng-click="deleteModel(template._id)"><i class="fa fa-trash"></i></a>-->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tableData" ng-show="totalItems == 0">
+                        <h5>No data found</h5>
+                    </div>
+                    <div class="tableData" ng-show="totalItems == undefined">
+                        <h5>Loading Data</h5>
+                    </div>
+                    <ul ng-if="totalItems" ng-change="changePage(currentPage);" uib-pagination total-items="totalItems" items-per-page="maxRow" ng-model="currentPage" max-size="template.pageMax" class="pagination-sm" boundary-links="true" force-ellipses="true"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,72 @@
+<!-- <div id="progressBar">
+	<div class="loader"></div>
+</div> -->
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Company Setup</a>
+        </li>
+        <li>
+            <a ui-sref="menu-list" >Menu List</a>
+        </li>
+    </ul>
+</div>
+
+<div class="heading-sec">
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>Menu List</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="table-area">
+
+                    <div class="widget-title">
+                        <div class="pull-right">
+                          <form class="search-form mr-form">
+                              <input type="text" placeholder="Search Here..."/>
+                              <button type="submit">
+                                  <i class="fa fa-search"></i>
+                              </button>
+                          </form>
+                            <a class="btn btn-primary" ui-sref="createmenu">Add New</a>
+                        </div>
+                        <h3>List of Menu</h3>
+                    </div>
+                    <div class="table-responsive" ng-show="totalItems>0">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Main Menu</th>
+                                    <th>Sub Menu</th>
+                                    <th>Right Menu</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="menu in allMenus">
+                                    <td>{{menu.main_menu}}</td>
+                                    <td>{{menu.sub_menu}}</td>
+                                    <td>{{menu.right_menu}}</td>
+                                    <td>{{menu.status}}</td>
+                                    <td>
+                                      <a class="btn btn-primary" ui-sref="editmenu({id:menu._id})"><i class="fa fa-pencil"></i></a>
+                                      <a class="btn btn-danger" ng-click="deleteMenu(menu._id)"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,126 @@
+<form name="modalForm1" ng-submit="addElements(modalData);$dismiss()" ng-if="holdObject=='Travel Expense'" class=" min-hit">
+    <div class="modal-header blue-bg">
+        <div class="pull-right">
+            <a class="btn btn-clear" ng-click="$dismiss()">
+                <i class="ln-cross"></i>
+            </a>
+        </div>
+        <h5 class="modal-title">Upload {{holdObject}}</h5>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <!-- Departure -->
+            <div class="col-md-12">
+                <h4>Departure</h4>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Date*</label>
+                    <div class="input-group">
+                        <input type="text" name="depatureDate" class="form-control" uib-datepicker-popup="{{format}}" ng-model="modalData.depatureDate" is-open="popup.depatureDate"
+                            datepicker-options="dateOptions" required readonly />
+                        <div class="error-msg" ng-show="modalForm1.depatureDate.$invalid && modalForm1.depatureDate.$touched">Please Select Depature Date</div>
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-default" ng-click="popup.depatureDate = true">
+                              <i class="fa fa-calendar"></i>
+                          </button>
+                      </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Ex*</label>
+                    <input type="text" class="form-control" name="depatureFrom" ng-model="modalData.depatureFrom" required>
+                    <div class="error-msg" ng-show="modalForm1.depatureFrom.$invalid && modalForm1.depatureFrom.$touched">Please Enter Departure Ex</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Hr*</label>
+                    <input type="text" class="form-control" name="depatureHr" ng-model="modalData.depatureHr" required>
+                    <div class="error-msg" ng-show="modalForm1.depatureHr.$invalid && modalForm1.depatureHr.$touched">Please Enter Departure Hr</div>
+                </div>
+            </div>
+            <!--Arrival-->
+            <div class="col-md-12">
+                <h4>Arrival</h4>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Date*</label>
+                    <div class="input-group">
+                        <input type="text" name="arrivalDate" class="form-control" uib-datepicker-popup="{{format}}" ng-model="modalData.arrivalDate" is-open="popup.arrivalDate"
+                            datepicker-options="dateOptions" required readonly />
+                        <div class="error-msg" ng-show="modalForm1.arrivalDate.$invalid && modalForm1.arrivalDate.$touched">Please Select Arrival Date</div>
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-default" ng-click="popup.arrivalDate = true">
+                              <i class="fa fa-calendar"></i>
+                          </button>
+                      </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>To*</label>
+                    <input type="text" class="form-control" name="arrivalTo" ng-model="modalData.arrivalTo" required>
+                    <div class="error-msg" ng-show="modalForm1.arrivalTo.$invalid && modalForm1.arrivalTo.$touched">Please Enter Arrival To</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Hr*</label>
+                    <input type="text" class="form-control" name="arrivalHr" ng-model="modalData.arrivalHr" required>
+                    <div class="error-msg" ng-show="modalForm1.arrivalHr.$invalid && modalForm1.arrivalHr.$touched">Please Enter Arrival Hr</div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Mode*</label>
+                    <input type="text" class="form-control" name="travelExpenseMode" ng-model="modalData.travelExpenseMode" required>
+                    <div class="error-msg" ng-show="modalForm1.travelExpenseMode.$invalid && modalForm1.travelExpenseMode.$touched">Please Enter Mode</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Class*</label>
+                    <input type="text" class="form-control" name="travelExpenseClass" ng-model="modalData.travelExpenseClass" required>
+                    <div class="error-msg" ng-show="modalForm1.travelExpenseClass.$invalid && modalForm1.travelExpenseClass.$touched">Please Enter Class</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Ticket No.*</label>
+                    <input type="text" class="form-control" name="travelExpenseTicketNo" ng-model="modalData.travelExpenseTicketNo" required>
+                    <div class="error-msg" ng-show="modalForm1.travelExpenseTicketNo.$invalid && modalForm1.travelExpenseTicketNo.$touched">Please Enter Ticket No.</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Km*</label>
+                    <input type="number" class="form-control" name="travelExpenseKm" ng-model="modalData.travelExpenseKm" required>
+                    <div class="error-msg" ng-show="modalForm1.travelExpenseKm.$invalid && modalForm1.travelExpenseKm.$touched">Please Enter Km</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Rate*</label>
+                    <input type="number" class="form-control" name="travelExpenseRate" ng-model="modalData.travelExpenseRate" required>
+                    <div class="error-msg" ng-show="modalForm1.travelExpenseRate.$invalid && modalForm1.travelExpenseRate.$touched">Please Enter Rate</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Amount*</label>
+                    <input type="number" class="form-control" name="travelExpenseAmount" ng-model="modalData.travelExpenseAmount" required>
+                    <div class="error-msg" ng-show="modalForm1.travelExpenseAmount.$invalid && modalForm1.travelExpenseAmount.$touched">Please Enter Amount</div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-primary" type="submit" ng-disabled="modalForm1.$invalid">Save</button>
+        </div>
+    </div>
+</form>

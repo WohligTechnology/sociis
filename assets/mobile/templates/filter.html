@@ -1,0 +1,146 @@
+<ion-view>
+    <ion-header-bar align-title="left" class="bar-positive">
+        <button class="button button-clear back-arrow-margin header-btn-center" ng-click="applyFilter();"> 
+            <i class="icon ion-android-arrow-back"></i>
+        </button>
+        <h1 class="title header-title-center">Filter</h1>
+        <div class="buttons">
+            <button class="button no-animation button-clear header-right-button header-btn-center" ng-click="clear();">
+            Clear
+            </button>
+            <!--<button class="button no-animation button-clear header-right-button header-btn-center" ng-click="applyFilter();">
+	            Apply
+            </button>-->
+        </div>
+
+    </ion-header-bar>
+    <ion-content>
+        <div class="list list-inset">
+
+            <!-- For Assignment type -->
+            <!-- FOR Timeline Status -->
+            <button class="button filterPage-list-btn" ng-click="getCategory();">
+	            <span>{{filterObj.ownerStatus}}</span>
+            </button>
+            <div ng-if="isCategory == true">
+                <ion-radio ng-model="filterObj.ownerStatus" ng-click="category('Global')" ng-value="'Global'">Global</ion-radio>
+                <ion-radio ng-model="filterObj.ownerStatus" ng-click="category('My files')" ng-value="'My files'">My Assignment</ion-radio>
+                <ion-radio ng-model="filterObj.ownerStatus" ng-click="category('Shared with me')" ng-value="'Shared with me'">Shared With Me</ion-radio>
+                <ion-radio ng-model="filterObj.ownerStatus" ng-click="category('All files')" ng-value="'All files'">All Assignment</ion-radio>
+            </div><br>
+
+            <!-- FOR OWNER NAME -->
+            <button class="button filterPage-list-btn" ng-click="getDataForFilter('owner');" ng-if="filterObj.owner.length == 0 || filterObj.owner == undefined">
+	            <span>Owner Name</span>
+            </button>
+            <button class="button filterPage-list-btn" ng-click="getDataForFilter('owner');" ng-if="filterObj.owner.length>0">
+	           Owner Name: <span ng-repeat="item in filterObj.owner">{{item.name}},</span>
+            </button>
+
+            <!-- FOR INSURER -->
+            <button class="button filterPage-list-btn" ng-click="getDataForFilter('insurer');" ng-if="filterObj.insurer.length == 0 || filterObj.insurer == undefined">
+	            <span>Insurer</span>
+            </button>
+            <button class="button filterPage-list-btn" ng-click="getDataForFilter('insurer');" ng-if="filterObj.insurer.length>0">
+	            Insurer: <span ng-repeat="item in filterObj.insurer">{{item.name}},</span>
+            </button>
+
+            <!-- FOR INSURED -->
+            <button class="button filterPage-list-btn" ng-click="getDataForFilter('insured');" ng-if="filterObj.insured.length == 0 || filterObj.insured == undefined">
+	            <span>Insured</span>
+            </button>
+            <button class="button filterPage-list-btn" ng-click="getDataForFilter('insured');" ng-if="filterObj.insured.length>0">
+	            Insured: <span ng-repeat="item in filterObj.insured">{{item.name}},</span>
+            </button>
+
+            <!-- FOR Brocker -->
+            <button class="button filterPage-list-btn" ng-click="getDataForFilter('brocker');" ng-if="filterObj.brocker.length == 0 || filterObj.brocker == undefined">
+	            <span>Brocker</span>
+            </button>
+            <button class="button filterPage-list-btn" ng-click="getDataForFilter('brocker');" ng-if="filterObj.brocker.length>0">
+	            Brocker: <span ng-repeat="item in filterObj.brocker">{{item.name}},</span>
+            </button>
+
+            <!-- FOR City -->
+            <button class="button filterPage-list-btn" ng-click="getDataForFilter('city');" ng-if="filterObj.city.length == 0 || filterObj.city == undefined">
+	            <span>City</span>
+            </button>
+            <button class="button filterPage-list-btn" ng-click="getDataForFilter('city');" ng-if="filterObj.city.length>0">
+	            City: <span ng-repeat="item in filterObj.city">{{item.name}},</span>
+            </button>
+
+            <!-- FOR Branch -->
+            <button class="button filterPage-list-btn" ng-click="getDataForFilter('branch');" ng-if="filterObj.branch.length == 0 || filterObj.branch == undefined">
+	            <span>Branch</span>
+            </button>
+            <button class="button filterPage-list-btn" ng-click="getDataForFilter('branch');" ng-if="filterObj.branch.length>0">
+	            Branch: <span ng-repeat="item in filterObj.branch">{{item.name}},</span>
+            </button>
+
+            <!-- FOR Nature Of Survey -->
+            <button class="button filterPage-list-btn" ng-click="getDataForFilter('natureOfSurvey');" ng-if="filterObj.natureOfSurvey.length == 0 || filterObj.natureOfSurvey == undefined">
+	            <span>Nature Of Survey</span>
+            </button>
+            <button class="button filterPage-list-btn" ng-click="getDataForFilter('natureOfSurvey');" ng-if="filterObj.natureOfSurvey.length>0">
+	            Nature Of Survey: <span ng-repeat="item in filterObj.natureOfSurvey">{{item.name}},</span>
+            </button>
+
+            <!-- FOR Date -->
+            <button class="button filterPage-list-btn" ng-click="getDateType();" ng-if="(filterObj.fromDate == '' && filterObj.toDate == '') || (filterObj.fromDate == undefined && filterObj.toDate == undefined)">
+	            <span>Date</span>
+            </button>
+            <button class="button filterPage-list-btn" ng-click="getDateType();" ng-if="(filterObj.fromDate != undefined || filterObj.toDate != undefined) ">
+            From: <span >{{filterObj.fromDate | date}},</span><br>
+            To: <span >{{filterObj.toDate |date}}</span><br>
+            </button>
+
+            <!-- FOR Timeline Status -->
+            <button class="button filterPage-list-btn" ng-click="getRange();">
+	            <span>Estimated Loss</span>
+            </button>
+            <div ng-if="isShowEstimated == true">
+                <div class="row">
+                    <div class="col col-25">
+                        From:
+                    </div>
+                    <div class="col col-75">
+                        <input type="number" ng-model="filterObj.from" class="estimated-loss-input">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-25">
+                        To:
+                    </div>
+                    <div class="col col-75">
+                        <input type="number" ng-model="filterObj.to" class="estimated-loss-input">
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOR Timeline Status -->
+            <button class="button filterPage-list-btn" ng-click="getTimelineStatus('timelineStatus');" ng-if="filterObj.timelineStatus.length == 0 || filterObj.timelineStatus == undefined">
+	            <span>Timeline Status</span>
+            </button>
+            <button class="button filterPage-list-btn" ng-click="getTimelineStatus('timelineStatus');" ng-if="filterObj.timelineStatus.length>0">
+	            Timeline Status: <span ng-repeat="item in filterObj.timelineStatus">{{item}},</span>
+            </button>
+            <!--<label class="item item-input botton-margin">
+                <input type="text" ng-model="filterObj.owner"placeholder="Owner Name" ng-change="getSearchText(filterObj.owner,'owner');">
+            </label>-->
+
+            <!--<div class="row">
+                <div class="col-50" ng-click="changeStatus(1)">
+                    <input type="radio" ng-model="isActive"> Active
+                </div>
+                <div class="col-50" ng-click="changeStatus(2)">
+                    <input type="radio" ng-model="isInactive"> Inactive<br>
+                </div>
+            </div>-->
+
+            <!--<ion-list>-->
+            <ion-radio ng-model="isActive" ng-click="changeStatus(1)" ng-value="'A'">Active</ion-radio>
+            <ion-radio ng-model="isActive" ng-click="changeStatus(2)" ng-value="'B'">Inactive</ion-radio>
+            <!--</ion-list>-->
+        </div>
+    </ion-content>
+</ion-view>

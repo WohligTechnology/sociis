@@ -1,0 +1,196 @@
+<ion-view>
+    <!--<ion-header-bar align-title="left" class="bar-positive">
+        <h1 class="title">Filter</h1>
+
+
+    </ion-header-bar>-->
+    <div class="bar bar-header item-input-inset bar-positive">
+        <button class="button button-clear back-arrow-margin" ng-click="getBack();"> 
+            <i class="icon ion-android-arrow-back"></i>
+        </button>
+        <label class="item-input-wrapper search-input-resize" focus-me>
+            <i class="icon ion-ios7-search placeholder-icon"></i>
+            <input type="search" ng-model="searchObj.searchText" placeholder="Search" ng-change="searchRecord(searchObj.searchText,searchField);">
+        </label>
+        <button class="button button-clear" ng-click="clearfilter(searchField);"> 
+            Clear
+        </button>
+    </div>
+    <div class="bar bar-subheader remove-padding button-border">
+        <div class="button-bar  button-border">
+            <a class="button remove-padding button-border border-bottom-css {{activeButton1}} bg-color" ng-click="changeTab(1);">Select</a>
+            <a class="button remove-padding button-border border-bottom-css {{activeButton2}} bg-color" ng-click="changeTab(2);">
+                <!-- FOR OWNER NAME -->
+                <span ng-if="(filterObj.owner.length == 0 ||filterObj.owner == undefined) && searchField == 'owner'">My List<span class="badge badge-assertive header-badge">0</span></span>
+                <span ng-if="filterObj.owner.length > 0 && searchField == 'owner'">My List<span class="badge badge-assertive header-badge">{{filterObj.owner.length}}</span></span>
+
+                <!-- FOR INSURER -->
+                <span ng-if="(filterObj.insurer.length == 0 ||filterObj.insurer == undefined) && searchField == 'insurer'">My List<span class="badge badge-assertive header-badge">0</span></span>
+                <span ng-if="filterObj.insurer.length > 0 && searchField == 'insurer'">My List<span class="badge badge-assertive header-badge">{{filterObj.insurer.length}}</span></span>
+
+                <!-- FOR Insured -->
+                <span ng-if="(filterObj.insured.length == 0 ||filterObj.insured == undefined) && searchField == 'insured'">My List<span class="badge badge-assertive header-badge">0</span></span>
+                <span ng-if="filterObj.insured.length > 0 && searchField == 'insured'">My List<span class="badge badge-assertive header-badge">{{filterObj.insured.length}}</span></span>
+
+                <!-- FOR Brocker -->
+                <span ng-if="(filterObj.brocker.length == 0 ||filterObj.brocker == undefined) && searchField == 'brocker'">My List<span class="badge badge-assertive header-badge">0</span></span>
+                <span ng-if="filterObj.brocker.length > 0 && searchField == 'brocker'">My List<span class="badge badge-assertive header-badge">{{filterObj.brocker.length}}</span></span>
+
+                <!-- FOR City -->
+                <span ng-if="(filterObj.city.length == 0 ||filterObj.city == undefined) && searchField == 'city'">My List<span class="badge badge-assertive header-badge">0</span></span>
+                <span ng-if="filterObj.city.length > 0 && searchField == 'city'">My List<span class="badge badge-assertive header-badge">{{filterObj.city.length}}</span></span>
+
+                <!-- FOR Branch -->
+                <span ng-if="(filterObj.branch.length == 0 ||filterObj.branch == undefined) && searchField == 'branch'">My List<span class="badge badge-assertive header-badge">0</span></span>
+                <span ng-if="filterObj.branch.length > 0 && searchField == 'branch'">My List<span class="badge badge-assertive header-badge">{{filterObj.branch.length}}</span></span>
+
+                <!-- FOR natureOfSurvey -->
+                <span ng-if="(filterObj.natureOfSurvey.length == 0 ||filterObj.natureOfSurvey == undefined) && searchField == 'natureOfSurvey'">My List<span class="badge badge-assertive header-badge">0</span></span>
+                <span ng-if="filterObj.natureOfSurvey.length > 0 && searchField == 'natureOfSurvey'">My List<span class="badge badge-assertive header-badge">{{filterObj.natureOfSurvey.length}}</span></span>
+            </a>
+        </div>
+    </div>
+    <!--<ion-content class="has-header">-->
+    <ion-content class="list has-header">
+        <!--<div class="list">
+            <a class="item item-avatar" ng-click="getMyResult(searchResult,searchField);" ng-repeat="searchResult in searchResultArray">
+                <img ng-src="{{(searchResult.photo|uploadpath)||'img/photo.png'}}">
+                <h2>{{searchResult.name}}</h2>
+                <p>{{searchResult.email}}</p>
+            </a>
+        </div>-->
+
+        <div ng-if="isList ==1">
+            <div class="row">
+                <div class="col">
+                    Search result:
+                </div>
+            </div>
+            <!--<ion-checkbox class="item-avatar item-checkbox-right" ng-checked="searchResult.checked" ng-model="searchResult.checked" ng-click="selectItem(searchResult,searchField);"
+                ng-repeat="searchResult in searchResultArray track by $index">
+                <img ng-src="{{(searchResult.photo|uploadpath)||'img/photo.png'}}">
+                <h2>{{searchResult.name}}</h2>
+                <p>{{searchResult.email}}</p>
+                </ion-checkbox>-->
+            <div class="item item-divider" style="padding: 0">
+                <div class="row row-bottom-border" ng-repeat="searchResult in searchResultArray track by $index" ng-click="selectItem(searchResult,searchField);">
+                    <div class="col col-75" style="padding: 16px;">
+                        <h2>{{searchResult.name}}</h2>
+                    </div>
+                    <div class="col col-25" style="text-align: right">
+                        <div class="checkbox checkbox-input-hidden disable-pointer-events checkbox-circle"><input type="checkbox" ng-model="item.checked"><i class="checkbox-icon"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="list">
+
+
+                <!--<div class="row item  item-divider" ng-repeat="searchResult in searchResultArray track by $index" ng-click="selectItem(searchResult,searchField);">
+                    <div class="col col-75">
+                        <p>{{searchResult.name}}</p>
+                    </div>
+                    <div class="col col-25" style="text-align: right">
+                        <div class="checkbox checkbox-input-hidden checkbox-circle">
+                            <input type="checkbox" ng-checked="searchResult.checked">
+                            <i class="checkbox-icon">
+    </i>
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+        </div>
+        <div ng-if="isList == 2">
+            <div class="row">
+                <div class="col">
+                    Selected records:
+                </div>
+            </div>
+
+            <!-- FOR OWNER NAME -->
+            <div class="item item-divider" ng-if="filterObj.owner.length > 0 && searchField=='owner'" style="padding: 0">
+                <div class="row row-bottom-border" ng-repeat="item in filterObj.owner track by $index">
+                    <div class="col col-75" style="padding: 16px;">
+                        <h2>{{item.name}}</h2>
+                    </div>
+                    <div class="col col-25" style="text-align: right" ng-click="removeRecord(item,searchField)">
+                        <div class="checkbox checkbox-input-hidden disable-pointer-events checkbox-circle"><input type="checkbox" ng-model="item.checked"><i class="checkbox-icon"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOR INSURER -->
+            <div class="item item-divider" ng-if="filterObj.insurer.length > 0 && searchField=='insurer'" style="padding: 0">
+                <div class="row row-bottom-border" ng-repeat="item in filterObj.insurer track by $index">
+                    <div class="col col-75" style="padding: 16px;">
+                        <h2>{{item.name}}</h2>
+                    </div>
+                    <div class="col col-25" style="text-align: right" ng-click="removeRecord(item,searchField)">
+                        <div class="checkbox checkbox-input-hidden disable-pointer-events checkbox-circle"><input type="checkbox" ng-model="item.checked"><i class="checkbox-icon"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOR INSURED -->
+            <div class="item item-divider" ng-if="filterObj.insured.length > 0 && searchField=='insured'" style="padding: 0">
+                <div class="row row-bottom-border" ng-repeat="item in filterObj.insured track by $index">
+                    <div class="col col-75" style="padding: 16px;">
+                        <h2>{{item.name}}</h2>
+                    </div>
+                    <div class="col col-25" style="text-align: right" ng-click="removeRecord(item,searchField)">
+                        <div class="checkbox checkbox-input-hidden disable-pointer-events checkbox-circle"><input type="checkbox" ng-model="item.checked"><i class="checkbox-icon"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOR Brocker -->
+            <div class="item item-divider" ng-if="filterObj.brocker.length > 0 && searchField=='brocker'" style="padding: 0">
+                <div class="row row-bottom-border" ng-repeat="item in filterObj.brocker track by $index">
+                    <div class="col col-75" style="padding: 16px;">
+                        <h2>{{item.name}}</h2>
+                    </div>
+                    <div class="col col-25" style="text-align: right" ng-click="removeRecord(item,searchField)">
+                        <div class="checkbox checkbox-input-hidden disable-pointer-events checkbox-circle"><input type="checkbox" ng-model="item.checked"><i class="checkbox-icon"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOR City -->
+            <div class="item item-divider" ng-if="filterObj.city.length > 0 && searchField=='city'" style="padding: 0">
+                <div class="row row-bottom-border" ng-repeat="item in filterObj.city track by $index">
+                    <div class="col col-75" style="padding: 16px;">
+                        <h2>{{item.name}}</h2>
+                    </div>
+                    <div class="col col-25" style="text-align: right" ng-click="removeRecord(item,searchField)">
+                        <div class="checkbox checkbox-input-hidden disable-pointer-events checkbox-circle"><input type="checkbox" ng-model="item.checked"><i class="checkbox-icon"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOR Branch -->
+            <div class="item item-divider" ng-if="filterObj.branch.length > 0 && searchField=='branch'" style="padding: 0">
+                <div class="row row-bottom-border" ng-repeat="item in filterObj.branch track by $index">
+                    <div class="col col-75" style="padding: 16px;">
+                        <h2>{{item.name}}</h2>
+                    </div>
+                    <div class="col col-25" style="text-align: right" ng-click="removeRecord(item,searchField)">
+                        <div class="checkbox checkbox-input-hidden disable-pointer-events checkbox-circle"><input type="checkbox" ng-model="item.checked"><i class="checkbox-icon"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOR Nature Of Survey -->
+            <div class="item item-divider" ng-if="filterObj.natureOfSurvey.length > 0 && searchField=='natureOfSurvey'" style="padding: 0">
+                <div class="row row-bottom-border" ng-repeat="item in filterObj.natureOfSurvey track by $index">
+                    <div class="col col-75" style="padding: 16px;">
+                        <h2>{{item.name}}</h2>
+                    </div>
+                    <div class="col col-25" style="text-align: right" ng-click="removeRecord(item,searchField)">
+                        <div class="checkbox checkbox-input-hidden disable-pointer-events checkbox-circle"><input type="checkbox" ng-model="item.checked"><i class="checkbox-icon"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </ion-content>
+</ion-view>

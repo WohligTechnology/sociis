@@ -1,0 +1,98 @@
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Company Setup</a>
+        </li>
+        <li>
+            <a ui-sref="customerCompany-list">{{header.name}}</a>
+        </li>
+    </ul>
+</div>
+
+<form name="formName" ng-submit="saveModel(formData)">
+    <div class="heading-sec">
+        <div class="row">
+            <div class="col-md-4 column">
+                <div class="heading-profile">
+                    <h2>{{header.name}}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Bar Chart -->
+    <div class="panel-content">
+        <div class="sec">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="widget">
+                        <div class="form-elements-sec">
+                            <div class="widget-title">
+                                <h3>Customer Company</h3>
+                            </div>
+                            <div class="sec">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Customer Segment*</label>
+                                            <multiple-select my-enter name="customerSegment" required ng-model="formData.customerSegment" ng-name="name.customerSegment"
+                                                api="searchCustomerSegment" ng-create="customerSegmentSave"></multiple-select>
+                                            <div class="error-msg" ng-show="formName.customerSegment.$invalid">Please Select Customer Segment</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Name*</label>
+                                            <input type="text" name="name" ng-model="formData.name" class="form-control" required>
+                                            <div class="error-msg" ng-show="formName.name.$invalid && formName.name.$touched">Please Enter Name</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Short Name*</label>
+                                            <input type="text" name="shortName" ng-model="formData.shortName" class="form-control" required>
+                                            <div class="error-msg" ng-show="formName.shortName.$invalid && formName.shortName.$touched">Please Enter Short Name</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>HAS GST*</label>
+                                            <br>
+                                            <toggle-switch ng-model="formData.hasGST" on-label="Yes" off-label="No" class="switch-small switch-success"></toggle-switch>
+                                            <div class="error-msg" ng-show="formName.hasGST.$invalid">Please Select Type of Claim </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="widget">
+                        <div class="form-elements-sec">
+                            <div class="widget-title">
+                                <h3>GST Details</h3>
+                            </div>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>State</th>
+                                        <th style="width: 100px;">GST #</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="GSTIN in formData.GSTINByState">
+                                        <td>{{GSTIN.state.name}}</td>
+                                        <td>
+                                            <input type="text" class="form-control" style="width: 200px;" ng-model="GSTIN.GST">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt20 odd-even-button">
+                <button class="btn btn-default" type="submit" ng-disabled="formName.$invalid">Save</button>
+                <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+            </div>
+        </div>
+    </div>
+
+</form>

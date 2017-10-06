@@ -1,0 +1,87 @@
+<div class="modal-header green-bg with-button">
+    <div class="pull-right">
+        <button class="btn btn-clear" ng-click="refreshTimeline();$dismiss();">
+            <i class="ln-cross"></i>
+        </button>
+    </div>
+    <h5 class="modal-title">Documents</h5>
+</div>
+<div class="modal-body">
+    <form name="docsForm">
+        <div class="form-group">
+            <!--<upload-image-new ng-model="img" ng-if="assignment.dateOfLoss && assignment.timelineStatus !== 'Force Closed'" ng-callback="onDocsUploadCallback(img,length)"
+                multiple no-view></upload-image-new>-->
+                <upload-files ng-model="img" ng-if="assignment.dateOfLoss && assignment.timelineStatus !== 'Force Closed'" ng-callback="onDocsUploadCallback(img,length)" type="'Documents'" photos="assignment.docs" assignmentid="assignment._id" timeline="timeline" employee="employee" ></upload-files>
+            <!--<upload-image ng-model="doc.file" ng-callback="onDocsUploadCallback(doc)" no-view></upload-image>-->
+        </div>
+    </form>
+    <div class="field">
+        <div class="custom-tabs">
+            <div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <span class="space-left">Other Documents </span><span class="color-green">({{assignment.docs.length}})</span>
+                        <span class="space-left">
+                <a tooltip-placement="top" uib-tooltip="Download Zip of All Documents" class="btn btn-primary temp-btnbg" ng-if="assignment.docs.length > 0" ng-click="generateZip('Documents');">
+                                            <i class="ln-file-zip font-size22"></i>
+                </a>
+                <a tooltip-placement="top" uib-tooltip="Delete Documents" class="btn btn-primary temp-btnbg" ng-click="deleteSelectedData('Documents');">
+                                            <i class="ln-trash2 font-size22"></i>
+                </a>
+                </span>
+                        <div class="checkbox checkbox-primary float-left">
+                            <input id="checkboxAll" type="checkbox" ng-model="selectAll" ng-click="selectAllData('Documents',selectAll)">
+                            <label for="checkboxAll">Select All</label></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="scroll-x-max" ng-if="assignment.docs.length !== 0">
+                    <table class="file-list table">
+                        <thead>
+                            <tr>
+                                <th class="docs-row12">User</th>
+                                <th class="docs-row6">Date</th>
+                                <th class="docs-row6">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="vert-mid">
+                            <tr ng-repeat="doc in assignment.docs | orderBy: '-fileName' track by $index">
+                                <td>
+                                    <div class="col-md-12">
+                                        <div class="user-img">
+                                            <img ng-src="{{doc.employee.photo|uploadpath}}" alt="" class="user-mini">
+                                            <span>{{doc.employee.name}}</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-md-12">{{doc.fileName | date:'ddMMMyy, hh:mm'}}</div>
+                                </td>
+                                <td>
+                                    <div class="col-md-6">
+                                        <div class="col-md-2">
+                                            <div class="checkbox checkbox-primary">
+                                                <input id="{{ 'checkbox'+ $index }}" type="checkbox" ng-click="addDataToDelete('Documents',$index,doc.file)" ng-checked="selectAll">
+                                                <label for="{{ 'checkbox'+ $index }}"> </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 download-doc">
+                                            <a tooltip-placement="top" uib-tooltip="Download Document" class="btn btn-primary temp-btnbg" download="{{doc.file}}" ng-href="{{doc.file|downloadImage}}">
+                                                <i class="ln-download font-size18"></i>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-2 remove-doc">
+                                            <a tooltip-placement="top" uib-tooltip="Remove Document" class="btn btn-primary temp-btnbg" ng-click="removeElement('Documents',$index)">
+                                                <i class="ln-trash2 font-size18"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

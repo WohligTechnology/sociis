@@ -1,0 +1,62 @@
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">LOR Master</a>
+        </li>
+        <li>
+            <a ui-sref="knowledgebase-list">LOR Master</a>
+        </li>
+    </ul>
+</div>
+<form name="policyTypeForm" ng-submit="saveLorMaster(formData)">
+    <div class="panel-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="widget">
+                    <div class="form-elements-sec">
+                        <div class="widget-title">
+                            <h3>LOR Details</h3>
+                        </div>
+                        <div class="sec">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Document name*</label>
+                                        <input type="text" name="name" ng-model="formData.name" class="form-control" required>
+                                        <div class="error-msg" ng-show="policyTypeForm.name.$invalid && policyTypeForm.name.$touched">Please Enter Document Name</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Category Name*</label>
+                                        <multiple-select my-enter my-enter name="lorCategory" required ng-model="formData.lorCategory" ng-name="name.lorCategory"
+                                            api="searchLorCategory"></multiple-select>
+                                        <div class="error-msg" ng-show="formName.lorCategory.$invalid">Please Select Category</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>Status*</label>
+                                    <toggle-switch ng-model="formData.typeOfDoc" on-label="Original" off-label="Copy" class="switch-small switch-success"></toggle-switch>
+
+                                    <!--<toggle-switch ng-model="formData.status" class="switch-mini switch-success" ></toggle-switch>-->
+
+                                        <!--<select name="status" class="form-control" ng-model="formData.status" required ng-options="salutation for salutation in salutations"></select>
+                                        <div class="error-msg" ng-show="policyTypeForm.salutation.$invalid && policyTypeForm.salutation.$touched">Please Select Status</div>-->
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="text-center mt20 odd-even-button">
+            <button class="btn btn-default" type="submit" ng-disabled="policyTypeForm.$invalid">Save</button>
+            <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+        </div>
+    </div>
+</form>

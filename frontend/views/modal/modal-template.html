@@ -1,0 +1,24 @@
+<div class="modal-header green-bg">
+    <h5 class="modal-title">Select {{allTemplate}} Template</h5>
+</div>
+<div class="modal-body">
+    <table class="file-list table">
+        <thead>
+            <tr>
+                <th>Template Name</th>
+                <th>Updated At</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="tmp in templateList">
+                <td>{{tmp.name}}</td>
+                <td>{{tmp.updatedAt|date:'dd-MM-yyyy'}}</td>
+                <td>
+                    <!--<button class="btn btn-clear" ui-sref="template-view({template:tmp._id, assignment:assignment._id, type:api})"><i class="ln-pencil"></i></button>-->
+                    <button class="btn btn-clear" ng-click="createTemplate(tmp); $dismiss()"><i class="ln-pencil"></i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

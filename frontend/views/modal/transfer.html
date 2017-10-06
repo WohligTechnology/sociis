@@ -1,0 +1,27 @@
+<form name="modalForm" ng-submit="transferAssignment(modelData);$dismiss()" class="min-hit">
+    <div class="modal-header blue-bg">
+        <div class="pull-right">
+            <a class="btn btn-clear" ng-click="$dismiss()">
+                <i class="ln-cross"></i>
+            </a>
+        </div>
+        <h5 class="modal-title">Transfer Assignment</h5>
+    </div>
+    <div class="modal-body">
+      <div class="sec">
+          <div class="row">
+                  <div class="col-md-12">
+                  <div class="form-group">
+                      <label>Transfer To*</label>
+                      <multiple-select my-enter name="department" required ng-model="modelData.owner" ng-name="name.zone" api="searchEmployee" ng-create="departmentSave"></multiple-select>
+                      <div class="error-msg" ng-show="formName.department.$invalid">Please Select Department</div>
+                  </div>
+              </div>
+      </div>
+<!--no-view-->
+
+        <div class="text-center">
+            <button class="btn btn-primary btn-save" type="submit" ng-disabled="modalForm.$invalid" >Save</button>
+        </div>
+    </div>
+</form>

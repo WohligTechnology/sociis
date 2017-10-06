@@ -1,0 +1,94 @@
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Insurance</a>
+        </li>
+        <li>
+            <a ui-sref="policyDoc-list">{{header.name}}</a>
+        </li>
+    </ul>
+</div>
+<form name="formName" role="form" ng-submit="saveModel(formData)">
+    <div class="heading-sec">
+        <div class="row">
+            <div class="col-md-12 column">
+                <div class="heading-profile">
+                    <toggle-switch ng-model="formData.status" class="switch-small switch-success pull-right"></toggle-switch>
+                    <h2>{{header.name}}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Bar Chart -->
+    <div class="panel-content">
+        <div class="widget">
+            <div class="form-elements-sec">
+                <div class="widget-title">
+                    <h3>Insured Office</h3>
+                </div>
+                <div class="sec">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Insured Company*</label>
+                                <multiple-select my-enter name="insuredCompany" required ng-model="formData.insuredCompany" ng-name="name.zone" api="searchInsured"></multiple-select>
+                                <div class="error-msg" ng-show="formName.insuredCompany.$invalid">Please Select Company</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Insured Office*</label>
+                                <multiple-select my-enter name="insuredOffice" required ng-model="formData.insuredOffice" filter='{"customerCompany":"{{formData.insuredCompany}}"}'
+                                    ng-name="name.zone" api="searchCustomer"></multiple-select>
+                                <div class="error-msg" ng-show="formName.insuredOffice.$invalid">Please Select Insured Office</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget">
+            <div class="form-elements-sec">
+                <div class="widget-title">
+                    <div class="pull-right">
+                        <a class="btn btn-primary" ng-click="openCreateOfficer()">Add New</a>
+                    </div>
+                    <h3>List of Documents</h3>
+                </div>
+                <div class="table-responsive" ng-if="formData.listOfDocuments != ''">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Policy Name</th>
+                                <th>Policy No.</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in formData.listOfDocuments">
+                                <td>{{data.name}}</td>
+                                <td>{{data.policyNo}}</td>
+                                <td>
+                                    <a class="btn btn-primary" download="{{data.documentImage}}" ng-href="{{data.documentImage|downloadImageWithName:data.name}}">
+                                            <i class="fa fa-download"></i>
+                                        </a>
+                                    <a class="btn btn-primary" ng-click="openEditOfficer($index)">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <a class="btn btn-danger" ng-click="deleteOfficer($index)">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="text-center mt20 odd-even-button">
+            <button class="btn btn-default" type="submit" ng-disabled="formName.$invalid">Save</button>
+            <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,22 @@
+<div class="modal-header blue-bg">
+    <div class="pull-right">
+        <a class="btn btn-clear" ng-click="$dismiss()">
+            <i class="ln-cross"></i>
+        </a>
+    </div>
+    <h5 class="modal-title"><i class="fa fa-filter"></i> Filter</h5>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>New Surveyor*</label>
+                <multiple-select my-enter name="employee" required ng-model="formData.employee" ng-name="name.employee" api="getSurveyor"></multiple-select>
+                <div class="error-msg" ng-show="formName.employee.$invalid">Please Select employee</div>
+            </div>  
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary btn-outline btn-small" type="button" ng-click="changeSurveyor(formData);$dismiss()">Apply</button>
+</div>

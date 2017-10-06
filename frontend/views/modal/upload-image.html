@@ -1,0 +1,61 @@
+<div class="modal-header blue-bg with-button">
+    <div class="pull-right">
+        <button class="btn btn-clear" ng-click="$dismiss()">
+            <i class="ln-cross"></i>
+        </button>
+    </div>
+    <h5 class="modal-title">All Images</h5>
+</div>
+<div class="modal-body">
+    <form name="companyForm" ng-submit="saveCompany(formData)">
+        <div class="form-group">
+            <label>Upload Images</label>
+            <upload-image ng-model="companyForm.logo"></upload-image>
+        </div>
+    </form>
+    <div class="field">
+        <div class="custom-tabs">
+            <div>
+                Images <span class="color-green">(1)</span>
+                <div class="file-selector">
+                    <!-- <div class="text-center" ng-if="file.files.length==0">No files found.</div> -->
+                    <div class="scroll-x-max">
+                        <div class="row">
+                            <div class="col-md-3 mter">
+                                <div class="photosbx">
+                                  <img src="img/resource/admin-bg.jpg" alt="" class="img-responsive">
+                                    <p>250216-3pm.jpg</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mter">
+                                <div class="photosbx">
+                                    <img src="img/resource/admin-bg.jpg" alt="" class="img-responsive">
+                                    <p>250216-3pm.jpg</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mter">
+                                <div class="photosbx">
+                                    <img src="img/resource/admin-bg.jpg" alt="" class="img-responsive">
+                                    <p>250216-3pm.jpg</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mter">
+                                <div class="photosbx">
+                                    <img src="img/resource/admin-bg.jpg" alt="" class="img-responsive">
+                                    <p>250216-3pm.jpg</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mter">
+                                <div class="photosbx">
+                                    <img src="img/resource/admin-bg.jpg" alt="" class="img-responsive">
+                                    <p>250216-3pm.jpg</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

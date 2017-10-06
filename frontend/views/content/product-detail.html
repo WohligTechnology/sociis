@@ -1,0 +1,62 @@
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Company Setup</a>
+        </li>
+        <li>
+            <a ui-sref="product-list" title="Product List">Product List</a>
+        </li>
+    </ul>
+</div>
+
+<div class="heading-sec">
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>{{header.name}}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="form-elements-sec">
+                    <div class="widget-title">
+                        <h3>Product</h3>
+                    </div>
+                    <form name="formName" class="sec ng-pristine ng-valid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Industry*</label>
+                                    <multiple-select my-enter  name="industry" required ng-model="formData.industry" ng-name = "name.industry" api="searchIndustry" ng-create="industrySave"></multiple-select>
+                                    <div class="error-msg" ng-show="formName.industry.$invalid">Please Enter Industry</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Category*</label>
+                                    <multiple-select my-enter  name="category" required ng-model="formData.category" filter='{"industry":"{{formData.industry}}"}' ng-name = "name.category" api="searchCategory" ng-create="categorySave"></multiple-select>
+                                    <div class="error-msg" ng-show="formName.industry.$invalid">Please Enter Category</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Product Name*</label>
+                                    <input type="text" name="name" class="form-control" ng-model="formData.name" required>
+                                    <div class="error-msg" ng-show="formName.name.$invalid && formName.name.$touched">Please Enter Product Name</div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="text-center mt20 odd-even-button">
+                            <button class="btn btn-default" type="submit" ng-click="saveProduct(formData)" ng-disabled="formName.$invalid">Save</button>
+                            <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</div>

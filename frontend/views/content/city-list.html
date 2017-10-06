@@ -1,0 +1,100 @@
+<!-- <div id="progressBar">
+	<div class="loader"></div>
+</div> -->
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Locations</a>
+        </li>
+        <li>
+            <a ui-sref="city-list">City List</a>
+        </li>
+    </ul>
+</div>
+<div class="heading-sec">
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>City List</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content city-list-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="table-area">
+                    <div class="widget-title">
+                        <div class="pull-right">
+                            <form class="search-form mr-form">
+                                <!--<input type="text" ng-change="showAllCities(true)" placeholder="Search Here..." ng-model="cityFilter.city"/>
+                              <button type="submit">
+                                  <i class="fa fa-search"></i>
+                              </button>-->
+                                <ui-select ng-change="showAllCities(filter);" class="ui-select-border" multiple tagging="tagTransform" name="city" ng-model="cityFilter.city" theme="bootstrap" title="Choose a city">
+                                    <ui-select-match placeholder="Search Here...">{{$item.name}}</ui-select-match>
+                                    <ui-select-choices repeat="city in cities | filter:$select.search" refresh-delay="0" refresh="refreshCity($select.search)">{{city.name}}</ui-select-choices>
+                                </ui-select>
+                            </form>
+                            <a class="btn btn-primary" ui-sref="createcity" ng-if="template.currentRole.add.val"><i class="fa fa-plus"></i> Add New</a>
+                            <button class="btn btn-primary" ng-click="citiesFilter()"><i class="fa fa-filter"></i> Filter</button>
+                            <button class="btn btn-primary" ng-click="generateExcel()"><i class="fa fa-file-excel-o"></i> Excel Export</button>
+                            <a class="space">"</a>
+                            <ui-select class="select-limit pull-right" ng-model="cityFilter.maxRow" theme="bootstrap" ng-change="changeRecordLimit()"
+                                title="Choose Record Limit">
+                                <ui-select-match>{{$select.selected}}</ui-select-match>
+                                <ui-select-choices repeat="limit in limitValues | filter: $select.search">
+                                    <span ng-bind-html="limit | highlight: $select.search"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <h3>List of Cities <span class="tableTotal">(Total : {{totalItems}}) </span></h3>
+                    </div>
+                    <div class="table-responsive" ng-show="totalItems>0">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        #
+                                    </th>
+                                    <th>City <span ng-click="showAllCities(true,['city',cityFilter.sortNumber]);" class="fa fa-sort"></span></th>
+                                    <th>District <span ng-click="showAllCities(true,['district',cityFilter.sortNumber]);" class="fa fa-sort"></span></th>
+                                    <th>State <span ng-click="showAllCities(true,['state',cityFilter.sortNumber]);" class="fa fa-sort"></span></th>
+                                    <th>Zone <span ng-click="showAllCities(true,['zone',cityFilter.sortNumber]);" class="fa fa-sort"></span></th>
+                                    <th>Country <span ng-click="showAllCities(true,['country',cityFilter.sortNumber]);" class="fa fa-sort"></span></th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="city in allCities">
+                                    <td>
+                                        {{($index + 1)+((currentPage-1)*cityFilter.maxRow)}}
+                                    </td>
+                                    <td>{{city.city}}</td>
+                                    <td>{{city.district}}</td>
+                                    <td>{{city.state}}</td>
+                                    <td>{{city.zone}}</td>
+                                    <td>{{city.country}}</td>
+                                    <td>
+                                        <a class="btn btn-primary" ui-sref="editcity({id:city._id})" ng-if="template.currentRole.edit.val"><i class="fa fa-pencil"></i></a>
+                                        <!--<a class="btn btn-danger" ng-click="deleteCity(city._id)" ng-if="template.currentRole.delete.val"><i class="fa fa-trash"></i></a>-->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tableData" ng-show="totalItems == 0">
+                        <h5>No data found</h5>
+                    </div>
+                    <div class="tableData" ng-show="totalItems == undefined">
+                        <h5>Loading Data</h5>
+                    </div>
+                    <ul ng-if="totalItems" ng-change="changePage(currentPage);" uib-pagination total-items="totalItems" items-per-page="cityFilter.maxRow"
+                        ng-model="currentPage" max-size="template.pageMax" class="pagination-sm" boundary-links="true" force-ellipses="true"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

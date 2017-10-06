@@ -1,0 +1,44 @@
+<div class="modal-header blue-bg">
+    <div class="pull-right">
+        <a class="btn btn-clear" ng-click="$dismiss()">
+            <i class="ln-cross"></i>
+        </a>
+    </div>
+    <h5 class="modal-title"><i class="fa fa-filter"></i> Filter</h5>
+</div>
+<div class="modal-body modal-body-height">
+    <br>
+    <form name="filterForm" class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Segment</label>
+            <div class="col-sm-7">
+                <ui-select multiple tagging="tagTransform" name="segment" ng-model="filter.segment" theme="bootstrap" title="Choose a segment">
+                    <ui-select-match placeholder="Select Segment">{{$item.name}}</ui-select-match>
+                    <ui-select-choices repeat="segment in segmentData | filter:$select.search" refresh-delay="0" refresh="refreshSegment($select.search)">{{segment.name}}</ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+         <div class="form-group">
+            <label class="col-sm-3 control-label">Company</label>
+            <div class="col-sm-7">
+                <ui-select multiple tagging="tagTransform" name="company" ng-model="filter.company" theme="bootstrap" title="Choose a company" required>
+                    <ui-select-match placeholder="Select Company">{{$item.name}}</ui-select-match>
+                    <ui-select-choices repeat="company in companyData | filter:$select.search" refresh-delay="0" refresh="refreshCompany($select.search)">{{company.name}}</ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">State</label>
+            <div class="col-sm-7">
+                <ui-select multiple tagging="tagTransform" name="state" ng-model="filter.state" theme="bootstrap" title="Choose a state" required>
+                    <ui-select-match placeholder="Select State">{{$item.name}}</ui-select-match>
+                    <ui-select-choices repeat="state in stateData | filter:$select.search" refresh-delay="0" refresh="refreshState($select.search)">{{state.name}}</ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary btn-outline btn-small" type="button" ng-click="showAllCustomers(filter);$dismiss()">Apply</button>
+    <button class="btn btn-primary btn-outline btn-small pull-left" ng-click="clearFilter()"> Clear Filter</button>
+</div>

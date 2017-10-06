@@ -1,0 +1,118 @@
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Roles</a>
+        </li>
+        <li>
+            <a>{{header.name}}</a>
+        </li>
+    </ul>
+</div>
+
+<div class="heading-sec">
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>Roles</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="form-elements-sec">
+                    <div class="widget-title">
+                        <h3>Roles</h3>
+                    </div>
+
+                    <form name="roles" role="form" class="sec ng-pristine ng-valid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Role Name*</label>
+                                    <input type="text" name="name" ng-model="formData.name" class="form-control" required>
+                                    <div class="error-msg" ng-show="roles.name.$invalid && roles.name.$touched">Please Enter Role</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                {{formData.roles[0].mainMenu}}
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Main Menu</th>
+                                                <th>Sub Menu</th>
+                                                <th></th>
+                                                <th>View</th>
+                                                <th>Add</th>
+                                                <th>Edit</th>
+                                                <th>Delete</th>
+                                                <th>Add Request</th>
+                                                <th>Modify Request</th>
+                                                <th>Approve</th>
+                                                <th>Reject</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="role in formData.roles track by $index">
+                                                <td>
+                                                    <span ng-if="$index > 0">
+                        <span ng-if="roles[$index-1].mainMenu != role.mainMenu">
+                            {{role.mainMenu}}
+                        </span>
+                                                    </span>
+                                                    <span ng-if="$index == 0">
+                     {{role.mainMenu}}
+                </span>
+                                                </td>
+                                                <td>
+                                                    {{role.subMenu}}
+                                                </td>
+                                                <td>
+                                                    {{role.subThirdMenu}}
+                                                </td>
+                                                <td>
+                                                    <toggle-switch ng-model="role.view.val" class="switch-mini switch-success" ng-if="role.view.isExist"></toggle-switch>
+                                                </td>
+                                                <td>
+                                                    <toggle-switch ng-model="role.add.val" class="switch-mini switch-success" ng-if="role.add.isExist"></toggle-switch>
+                                                </td>
+                                                <td>
+                                                    <toggle-switch ng-model="role.edit.val" class="switch-mini switch-success" ng-if="role.edit.isExist"></toggle-switch>
+                                                </td>
+                                                <td>
+                                                    <toggle-switch ng-model="role.delete.val" class="switch-mini switch-success" ng-if="role.delete.isExist"></toggle-switch>
+                                                </td>
+                                                <td>
+                                                    <toggle-switch ng-model="role.addRequest.val" class="switch-mini switch-success" ng-if="role.addRequest.isExist"></toggle-switch>
+                                                </td>
+                                                <td>
+                                                    <toggle-switch ng-model="role.modifyRequest.val" class="switch-mini switch-success" ng-if="role.modifyRequest.isExist"></toggle-switch>
+                                                </td>
+                                                <td>
+                                                    <toggle-switch ng-model="role.approve.val" class="switch-mini switch-success" ng-if="role.approve.isExist"></toggle-switch>
+                                                </td>
+                                                <td>
+                                                    <toggle-switch ng-model="role.reject.val" class="switch-mini switch-success" ng-if="role.reject.isExist"></toggle-switch>
+                                                </td>
+                                            </tr ng-init="oldMainMenu = role.mainMenu">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt20 odd-even-button">
+                            <button class="btn btn-default" type="submit" ng-click="saveModel(formData)" ng-disabled="roles.$invalid">Save</button>
+                            <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

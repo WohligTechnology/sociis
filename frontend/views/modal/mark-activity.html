@@ -1,0 +1,121 @@
+<form name="formName" ng-submit="addElements(modalData);$dismiss()" class="min-hit">
+    <div class="modal-header blue-bg with-button">
+        <div class="pull-right">
+            <button class="btn btn-clear" ng-click="$dismiss()">
+                <i class="ln-cross"></i>
+            </button>
+        </div>
+        <h5 class="modal-title">Select activities required again this case</h5>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Will ILA be issued?*</label>
+                    <br>
+              <toggle-switch on-label="Yes" off-label="No" ng-model="formName.ILA" class="switch-mini switch-success"></toggle-switch>
+                    <div class="error-msg" ng-show="formName.category.$invalid && formName.category.$touched">Please Select ILA issued</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Will LOR be issued to Broker?*</label>
+                    <br>
+                  <toggle-switch on-label="Yes" off-label="No" ng-model="formName.broker" class="switch-mini switch-success"></toggle-switch>
+                    <div class="error-msg" ng-show="formName.category.$invalid && formName.category.$touched">Please Select LOR issued</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Will LOR be issued to Insured?*</label>
+                    <br>
+                    <toggle-switch on-label="Yes" off-label="No" ng-model="formName.insured" class="switch-mini switch-success"></toggle-switch>
+                    <div class="error-msg" ng-show="formName.category.$invalid && formName.category.$touched">Please Select LOR issued</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Will LOR be issued to Insurer?*</label>
+                    <br>
+                  <toggle-switch on-label="Yes" off-label="No" ng-model="formName.insurer" class="switch-mini switch-success"></toggle-switch>
+                    <div class="error-msg" ng-show="formName.category.$invalid && formName.category.$touched">Please Select LOR issued</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Target Day*</label>
+                    <input type="text" name="name" ng-model="modalData.name" class="form-control" required>
+                    <div class="error-msg" ng-show="modalForm.name.$invalid && modalForm.name.$touched">Please Enter Target Day</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Currency*</label>
+                    <multiple-select my-enter name="currency" required ng-model="formData.branch"  ng-name="name.currency"
+                        api="searchCurrency"></multiple-select>
+                    <div class="error-msg" ng-show="formName.currency.$invalid">Please Select Currency</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>ILA Template*</label>
+                    <multiple-select my-enter name="ila" required ng-model="formData.ila"  ng-name="name.ila"
+                        api="searchIla"></multiple-select>
+                    <div class="error-msg" ng-show="formName.ila.$invalid">Please Select ILA Template</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>UDF Template*</label>
+                    <multiple-select my-enter name="udf" required ng-model="formData.udf"  ng-name="name.udf"
+                        api="searchUdf"></multiple-select>
+                    <div class="error-msg" ng-show="formName.ila.$invalid">Please Select UDF Template</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Broker LOR Template*</label>
+                    <multiple-select my-enter name="broker" required ng-model="formData.broker"  ng-name="name.broker"
+                        api="searchBroker"></multiple-select>
+                    <div class="error-msg" ng-show="formName.broker.$invalid">Please Select UDF Template</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Insured LOR Template*</label>
+                    <multiple-select my-enter name="insured" required ng-model="formData.insured"  ng-name="name.insured"
+                        api="searchInsured"></multiple-select>
+                    <div class="error-msg" ng-show="formName.insured.$invalid">Please Select Insured LOR Template</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Insurer LOR Template*</label>
+                    <multiple-select my-enter name="insurer" required ng-model="formData.insurer"  ng-name="name.insurer"
+                        api="searchInsurer"></multiple-select>
+                    <div class="error-msg" ng-show="formName.insurer.$invalid">Please Select Insurer LOR Template</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Invoice Template*</label>
+                    <multiple-select my-enter name="invoice" required ng-model="formData.invoice" ng-name="name.invoice"
+                        api="searchInvoice"></multiple-select>
+                    <div class="error-msg" ng-show="formName.invoice.$invalid">Please Select Invoice Template</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Tax Category*</label>
+                    <multiple-select my-enter name="tax" required ng-model="formData.tax" ng-name="name.tax"
+                        api="searchTax"></multiple-select>
+                    <div class="error-msg" ng-show="formName.tax.$invalid">Please Select Tax Category</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="text-center">
+            <button class="btn btn-primary" type="submit" ng-disabled="modalForm1.$invalid">Save</button>
+        </div>
+    </div>
+</form>

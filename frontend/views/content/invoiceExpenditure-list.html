@@ -1,0 +1,85 @@
+<div class="heading-sec">
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>Invoice Expenditure List</h2>
+            </div>
+        </div>
+        
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="table-area">
+                    <div class="widget-title">
+                        <div class="pull-right">
+                            <form class="search-form mr-form">
+                                <input type="text" ng-change="showAll(true)" placeholder="Search Here..." ng-model="search.keyword" />
+                                <button type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </form>
+                            <a class="btn btn-primary" ui-sref="createInvoiceExpenditure">Add New</a>
+                        </div>
+                        <h3>List of Invoice Expenditure
+                            <span class="tableTotal">(Total :
+                                {{totalItems}})
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="table-responsive" ng-show="totalItems>0">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        #
+                                    </th>
+                                    <th>Name</th>
+                                    <th>Unit</th>
+                                    <th>Rate</th>
+                                    <th>Type</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in modelList">
+                                    <td>
+                                        {{($index + 1)+((currentPage-1)*maxRow)}}
+                                    </td>
+                                    <td>{{data.name}}</td>
+                                    <td>{{data.unit}}</td>
+                                    <td>{{data.rate}}</td>
+                                    <td ng-if="data.type">
+                                            Fee
+                                    </td>
+                                    <td ng-if="!data.type">
+                                            Expense
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary" ui-sref="editInvoiceExpenditure({id:data._id})">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                        <!--<a class="btn btn-danger" ng-click="deleteModel(data._id)">
+                                            <i class="fa fa-trash"></i>
+                                        </a>-->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tableData" ng-show="totalItems == 0">
+                        <h5>No data found</h5>
+                    </div>
+                    <div class="tableData" ng-show="totalItems == undefined">
+                        <h5>Loading Data</h5>
+                    </div>
+                    <ul ng-if="totalItems" ng-change="changePage(currentPage);" uib-pagination total-items="totalItems" items-per-page="maxRow"
+                        ng-model="currentPage" max-size="template.pageMax" class="pagination-sm" boundary-links="true" force-ellipses="true"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

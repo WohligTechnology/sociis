@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="firstapp">
+
+<head ng-controller="headerctrl">
+    <meta charset="utf-8">
+    <base href="/">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="robots" content="noindex">
+    <meta name="googlebot" content="noindex">
+    <title ng-bind="'Absolute Business Manager | '+template.title">Absolute Business Manager</title>
+    <link rel="shortcut icon" href="frontend/img/favicon.png" />
+    <!--[if IE]> <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script> <script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script> <![endif]-->
+    <!--[if IE]> <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script> <script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script> <![endif]-->
+</head>
+
+<body>
+    <div class="repeated-item" ui-view></div>
+    <link rel="stylesheet" type="text/css" href="frontend/css/main.css" />
+    <script>
+        var adminurl = "<%= ((typeof adminurl) == "undefined") ? "" : adminurl  %>";
+        var isproduction = false;
+    </script>
+    <% if(adminurl == "http://absolute.wohlig.co.in/api/"){%>
+        <script src="http://absolute.wohlig.co.in/js/sails.io.js"></script>
+        <script>
+            var isapp = true;
+            io.sails.useCORSRouteToGetCookie = false;
+            io.sails.url = "http://absolute.wohlig.co.in:80";
+        </script>
+        <script>
+            io.sails.transports = ['websocket']
+        </script>
+        <%}else if(adminurl == "http://absolutesurveyors.com/api/"){%>
+            <script src="http://absolutesurveyors.com/js/sails.io.js"></script>
+            <script>
+                var isapp = true;
+                io.sails.useCORSRouteToGetCookie = false;
+                io.sails.url = "http://absolutesurveyors.com:80";
+            </script>
+            <script>
+                io.sails.transports = ['websocket']
+            </script>
+            <%}%>
+                <% _.each(jsFiles,function(file) {  %>
+                    <script src="frontend/js/<%= file %>"></script>
+                    <% }); %>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="firstapp">
+
+<head ng-controller="headerctrl">
+    <meta charset="utf-8">
+    <base href="/">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="robots" content="noindex">
+    <meta name="googlebot" content="noindex">
+    <title ng-bind="'Absolute Business Manager | '+template.title">Absolute Business Manager</title>
+    <link rel="shortcut icon" href="frontend/img/favicon.png" />
+
+   
+
+
+    <!--[if IE]> <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script> <script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script> <![endif]-->
+    <!--[if IE]> <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script> <script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script> <![endif]-->
+</head>
+
+<body>
+    <div class="repeated-item" ui-view></div>
+
+
+    <link rel="stylesheet" type="text/css" href="frontend/css/main.css" />
+
+   <script>
+        var adminurl = "<%= ((typeof adminurl) == "undefined") ? "" : adminurl  %>";
+        var isproduction = false;
+        console.log("adminurl",adminurl);
+    </script>
+    <% if(adminurl == "http://wohlig.io/api/"){%>
+     <script src="http://wohlig.io/js/sails.io.js"></script>
+    <script>
+    var isapp = true;
+    io.sails.useCORSRouteToGetCookie = false;
+    // io.sails.url = "http://104.154.228.140:1667"; //co.in
+    // io.sails.url = "http://104.154.228.140:555"; //com
+    io.sails.url = "http://wohlig.io:80";
+
+    </script>
+    <%}%>
+    <% _.each(jsFiles,function(file) {  %>
+        <script src="frontend/js/<%= file %>"></script>
+        <% }); %>
+
+
+</body>
+
+</html>

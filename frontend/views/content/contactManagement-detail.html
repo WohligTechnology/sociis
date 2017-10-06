@@ -1,0 +1,60 @@
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Company Setup</a>
+        </li>
+        <li>
+            <a ui-sref="contactManagement-list" title="List">Contact Management List</a>
+        </li>
+    </ul>
+</div>
+
+<div class="heading-sec">
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>{{header.name}}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="form-elements-sec">
+                    <div class="widget-title">
+                        <h3>Contact Management</h3>
+                    </div>
+                    <form class="sec">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Address*</label>
+                                    <textarea placeholder="Address" class="form-control"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>City*</label>
+                                    <input type="text" class="form-control" placeholder="City">
+                                </div>
+                                <div class="form-group">
+                                    <label>People Under the Office*</label> <button class="btn btn-primary btn-xs"><i class="fa fa-plus"></i>Add More</button>
+                                    <input type="text" class="form-control" placeholder="Full Name">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="text-center mt20 odd-even-button">
+                            <button class="btn btn-default" type="submit">Save</button>
+                            <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+                        </div>
+                </div>
+            </div>
+
+
+
+            </form>
+        </div>
+    </div>
+</div>

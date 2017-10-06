@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<style>
+		body {
+			font-family: Arial, sans-serif !important;
+			font-size: 9px;
+			margin: 0px;
+		}
+		
+		.subject {
+			font-family: Arial, sans-serif !important;
+			font-weight: bold;
+		}
+		
+		.claim-table {
+			width: 100%;
+		}
+		
+		.cap {
+			text-transform: capitalize;
+		}
+		
+		.upper {
+			text-transform: uppercase;
+		}
+		
+		.claim-detail>tr>td:first-child(1) {
+			width: 80%;
+		}
+		
+		table,
+		th,
+		td {
+			border: 1px solid black;
+			border-collapse: collapse;
+			font-family: Arial, sans-serif !important;
+			font-size: 9px;
+			padding: 8px 4px 2px;
+		}
+		
+		.date>p {
+			margin: 2px 0;
+		}
+		
+		.justify {
+			text-align: justify;
+		}
+		
+		p {
+			font-family: Arial, sans-serif !important;
+			font-size: 9px;
+			line-height: 1.5;
+		}
+		
+		.content-head {
+			margin: 30px 0;
+		}
+		
+		.content-lineheight {
+			line-height: 1.5;
+		}
+		
+		#pageFooter {
+			font-family: Arial, sans-serif !important;
+			font-size: 6px;
+		}
+	</style>
+</head>
+
+<body>
+	<div style="padding:0;margin:0">
+		<div style="margin:0 auto">
+			<div style="float:right;">
+				<img src="frontend/img/logo.png" width="60" height="20" style="background-color:white;">
+			</div>
+			<div>
+				{{assignment.company.name }},<br>
+				<div style="width:190px;font-family: Arial, sans-serif;">
+					<p>
+						{{assignment.branch.name }},<br>
+						<!--<% if(assignment.office) { %>-->
+						{{assignment.office.address}},<br> {{assignment.office.city.name}}, {{assignment.office.city.district.state.name}}.
+						<br> Phone #: {{assignment.office.phone}}
+						<br> FAX #: {{assignment.office.fax}}
+						<!--<% } %>-->
+					</p>
+				</div>
+			</div>
+			<p style="margin:20px 0;text-align:right;text-decoration:underline;font-family: Arial, sans-serif;">WITHOUT PREJUDICE</p>
+			<h5 style="float:right;font-family: Arial, sans-serif;">Date : {{ authTimestamp }}
+			</h5>
+			<h4 style="float:left;font-family: Arial, sans-serif;">Immediate Loss Advice # {{assignment.name }}
+			</h4>
+			<div class="clearfix"></div>
+			<div>
+				<table class="table" style="width:100%;font-family: Arial, sans-serif;">
+					<tbody ng-repeat="form in forms.forms track by $index" ng-init="parenIndex = $index">
+						<tr ng-if="$index == 0">
+							<th style="text-align:left;font-family: Arial, sans-serif;" class="upper">
+								{{ parenIndex+1 }} {{ form.name }}
+							</th>
+							<th></th>
+						</tr>
+						<tr ng-if="$index != 0">
+							<th style="height:20px;">
+							</th>
+							<th></th>
+						</tr>
+						<tr ng-if="$index != 0">
+							<th style="text-align:left;font-family: Arial, sans-serif;" class="upper">
+								{{ parenIndex+1 }} {{ form.name }}
+							</th>
+							<th></th>
+						</tr>
+						<tr ng-repeat="items in form.items">
+							<td style="width:30%;font-family: Arial, sans-serif;" class="cap">
+								{{parenIndex+1}}. {{$index+1}}
+								<i>{{ items.name || "-"  }}</i>
+								<!--{{items}}-->
+							</td>
+							<!---->
+							<td style="width:70%;font-family: Arial, sans-serif;" class="cap" ng-if="items.value=='WYSIWYG'">
+								{{items.field || "-"}}
+							</td>
+							<!---->
+							<td style="width:70%;font-family: Arial, sans-serif;" class="cap" ng-if="items.value=='Currency'">
+								<!--{{ makeItCurrency(items.field) }}-->
+								{{ items.field || "-"}}
+							</td>
+							<!---->
+							<td style="width:70%;font-family: Arial, sans-serif;" ng-if="items.value=='Textarea'">
+								{{ items.field || "-"}}
+							</td>
+							<!---->
+							<td style="width:70%;font-family: Arial, sans-serif;" class="cap" ng-if="items.value=='Text' || items.value=='Number'">
+								{{ items.field || "-"}}
+							</td>
+							<!---->
+							<td style="width:70%;font-family: Arial, sans-serif;" class="cap" ng-if="items.type=='Dropdown'">
+								{{ items.field || "-"}}
+							</td>
+							<td style="width:70%;font-family: Arial, sans-serif;" class="cap" ng-if="items.type=='System Fields'">
+								{{items.value | toobject:assignment}}
+								<!--{{items.value }}-->
+							</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<p>Sincerely,</p>
+				<p class="subject">For,
+					{{assignment.company.name}}
+				</p><br><br><br>
+				<p class="size " style="margin-top: 10px;margin-bottom: 0;text-align: left;font-family: Arial, sans-serif; "> Authorized Signatory</p>
+
+			</div>
+
+		</div>
+
+
+
+		<div id='pageFooter' style='border-top: 1px solid;padding-top: 5px;font-family: Arial, sans-serif;'>
+			<div class='bt-foot'>
+				<div style='float:left;font-family: Arial, sans-serif; '>{{assignment.company.name }}</div>
+<div style='float:right;font-family: Arial, sans-serif; '>Page {{page}} of {{pages}}</div>
+<div style='text-align:center;text-align: center;position: absolute;margin: 0 auto;width: 100%;font-family: Arial, sans-serif; '>Assignment # {{ assignment.name }}</div></div>
+
+</body>
+
+</html>

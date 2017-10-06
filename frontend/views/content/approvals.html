@@ -1,0 +1,88 @@
+<!-- <div id="progressBar">
+	<div class="loader"></div>
+</div> -->
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Absolute</a>
+        </li>
+        <li>
+            <a title="Approvals">Approvals</a>
+        </li>
+    </ul>
+</div>
+
+<div class="heading-sec">
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>Approvals Branch Office</h2>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Branch Office*</label>
+                <multiple-select my-enter my-enter name="branchOffice" required ng-model="formData.branch" filter='{"office":"{{formData.office}}"}'
+                    ng-name="name.branch" api="searchBranch"></multiple-select>
+                <div class="error-msg" ng-show="formName.branchOffice.$invalid">Please Select Branch Office</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="table-area">
+                    <div class="widget-title">
+                        <div class="pull-right">
+                            <form class="search-form mr-form">
+                                <input type="text" ng-change="showAll(true)" placeholder="Search Here..." />
+                                <button type="submit">
+                                  <i class="fa fa-search"></i>
+                              </button>
+                            </form>
+                            <span uib-dropdown>
+                                <button uib-dropdown-toggle id="sortby" class="btn btn-primary">Sort by <span class="caret"></span></button>
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="sortby">
+                                <li role="menuitem"><a ng-click="">Time</a></li>
+                                <li role="menuitem"><a ng-click="">Date</a></li>
+                            </ul>
+                            </span>
+
+                        </div>
+                        <h3>List of Approvals <span class="tableTotal">(Total : {{totalItems}}) </span></h3>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Owner</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-class="getDelayClass(someDate)">
+                                    <td><span class="label label-default">{{someDate|getHours}}hrs</span></td>
+                                    <td>Doc Name</td>
+                                    <td>ILA</td>
+                                    <td>Owner Name</td>
+                                    <td>
+                                        <button class="btn btn-primary" uib-tooltip="Edit &amp; Accept"><i class="fa fa-pencil"></i></button>
+                                        <button class="btn btn-success" uib-tooltip="Accept"><i class="fa fa-check"></i></button>
+                                        <button class="btn btn-primary" uib-tooltip="Revise/Comment"><i class="fa fa-reply"></i></button>
+                                        <button class="btn btn-danger" uib-tooltip="Reject"><i class="fa fa-times"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Company Setup</a>
+        </li>
+        <li>
+            <a ui-sref="typeOfOffice-list" >{{header.name}}</a>
+        </li>
+    </ul>
+</div>
+
+<div class="heading-sec">
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>{{header.name}}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="form-elements-sec">
+                    <div class="widget-title">
+                        <h3>Type Of Office</h3>
+                    </div>
+                    <form name="cityform" class="sec ng-pristine ng-valid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="">Office Type*</label>
+                                    <input type="text" name="name" ng-model="formData.name" class="form-control" required>
+                                    <div class="error-msg" ng-show="cityform.name.$invalid && cityform.name.$touched">Please Enter Office Type</div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="">Short Code*</label>
+                                    <input type="text" name="shortCode" ng-model="formData.shortCode" class="form-control" required>
+                                    <div class="error-msg" ng-show="cityform.shortCode.$invalid && cityform.shortCode.$touched">Please Enter Office Type</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt20 odd-even-button">
+                            <button class="btn btn-default" type="submit" ng-click="savetypeOfOffice(formData)" ng-disabled="cityform.$invalid">Save</button>
+                            <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

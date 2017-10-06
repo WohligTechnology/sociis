@@ -1,0 +1,50 @@
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Customers</a>
+        </li>
+        <li>
+            <a ui-sref="customerSegment-list">{{header.name}}</a>
+        </li>
+    </ul>
+</div>
+<form name="formName" ng-submit="saveModel(formData)" class="sec">
+    <div class="heading-sec">
+        <div class="row">
+            <div class="col-md-4 column">
+                <div class="heading-profile">
+                    <h2>{{header.name}}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Bar Chart -->
+    <div class="panel-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="widget">
+                    <div class="form-elements-sec">
+                        <div class="widget-title">
+                            <h3>Customer Segment</h3>
+                        </div>
+                        <div class="sec">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Customer Segment*</label>
+                                        <input type="text" name="name" ng-model="formData.name" class="form-control" required>
+                                        <div class="error-msg" ng-show="formName.name.$invalid && formName.name.$touched">Please Enter Customer Segment</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center mt20 odd-even-button">
+                                <button class="btn btn-default" type="submit" ng-disabled="formName.$invalid">Save</button>
+                                <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

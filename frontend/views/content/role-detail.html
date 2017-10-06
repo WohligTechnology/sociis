@@ -1,0 +1,76 @@
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Company Setup</a>
+        </li>
+        <li>
+            <a ui-sref="role-list" >{{header.name}}</a>
+        </li>
+    </ul>
+</div>
+
+<div class="heading-sec">
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>{{header.name}}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="form-elements-sec">
+                    <div class="widget-title">
+                        <h3>Role</h3>
+                    </div>
+                    <form name="roleForm" role="form" class="sec ng-pristine ng-valid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="">Role Name</label>
+                                    <input type="text" name="name" placeholder="Role Name" ng-model="formData.name" class="form-control" required>
+                                    <div class="error-msg" ng-show="roleForm.name.$invalid && roleForm.name.$touched">Please Enter City Name.</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="disabledSelect">Menu*</label>
+                                    <select class="form-control" ng-model="formData.menu" value="{{menu.main_menu}}">
+                                        <option ng-selected="true" value="">Select Menu</option>
+                                        <option ng-repeat="menu in allMenus">{{menu.main_menu}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Description</label>
+                                    <input type="text" name="stdCode" placeholder="Descriptione" ng-model="formData.description" class="form-control" required>
+                                    <div class="error-msg" ng-show="roleForm.description.$invalid && roleForm.description.$touched">Please Enter Description.</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Privileges</label>
+                                    <input type="text" name="privileges" placeholder="Privileges" ng-model="formData.privileges" class="form-control" required>
+                                    <div class="error-msg" ng-show="roleForm.privileges.$invalid && roleForm.privileges.$touched">Please Enter Privileges.</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="disabledSelect">User Type*</label>
+                                    <select class="form-control" ng-model="formData.user_type" value="{{type}}">
+                                        <option ng-selected="true" value="">Select User Type</option>
+                                        <option ng-repeat="type in UserType">{{type}}</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="text-center mt20 odd-even-button">
+                            <button class="btn btn-default" type="submit" ng-click="saveRole(formData)" ng-disabled="roleForm.$invalid">Save</button>
+                            <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+                        </div>
+               
+            </form>
+             </div>
+            </div>
+        </div>
+    </div>
+</div>

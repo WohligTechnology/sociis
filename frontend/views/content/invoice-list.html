@@ -1,0 +1,120 @@
+<!-- <div id="progressBar">
+	<div class="loader"></div>
+</div> -->
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Invoice</a>
+        </li>
+        <li>
+            <a ui-sref="invoice-list">Invoice List</a>
+        </li>
+    </ul>
+</div>
+<div class="heading-sec invoice-sec">
+    <div class="btn-group pull-right">
+        <button type="button" class="btn btn-default" ng-class="{'btn-primary': invoiceFilter.ownerStatus=='My files'}" ng-click="invoiceFilter.ownerStatus='My files';showAllInvoices(true)">My Invoice</button>
+        <button type="button" class="btn btn-default" ng-class="{'btn-primary': invoiceFilter.ownerStatus=='All files'}" ng-click="invoiceFilter.ownerStatus='All files';showAllInvoices(true);">All Invoice</button>
+    </div>
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>Invoice List</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content city-list-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="table-area">
+                    <div class="widget-title">
+                        <div class="pull-right">
+                            <form class="search-form mr-form">
+                                <input type="text" ng-change="showAllInvoices(true)" placeholder="Search Here..." ng-model="invoiceFilter.invoiceNumber"
+                                />
+                                <button type="submit">
+                                  <i class="fa fa-search"></i>
+                              </button>
+                            </form>
+                            <a class="btn btn-primary" ui-sref="createInvoice"><i class="fa fa-plus"></i> Add New</a>
+                            <button class="btn btn-primary" ng-click="invoiceFilterModal()"><i class="fa fa-filter"></i> Filter</button>
+                            <button class="btn btn-primary" ng-click="generateSalesRegisterExcel()"><i class="fa fa-file-excel-o"></i> Excel Export</button>
+                            <a class="space">"</a>
+                            <!--<a class="btn btn-primary" ui-sref="create-invoices">Add New</a>-->
+                            <ui-select class="select-limit pull-right" ng-model="invoiceFilter.maxRow" theme="bootstrap" ng-change="changeRecordLimit()"
+                                title="Choose Record Limit">
+                                <ui-select-match>{{$select.selected}}</ui-select-match>
+                                <ui-select-choices repeat="limit in limitValues | filter: $select.search">
+                                    <span ng-bind-html="limit | highlight: $select.search"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <h3>List of Invoices <span class="tableTotal">(Total : {{totalItems}}) </span></h3>
+                    </div>
+                    <div class="table-responsive" ng-show="totalItems>0">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <!--<th>Name</th>-->
+                                    <th>Billed To <span ng-click="showAllInvoices(true,['billedTo',invoiceFilter.sortNumber]);"
+                                            class="fa fa-sort"></span></th>
+                                    <th>Invoice Number <span ng-click="showAllInvoices(true,['invoiceNumber',invoiceFilter.sortNumber]);"
+                                            class="fa fa-sort"></span></th>
+                                    <th>Created By <span ng-click="showAllInvoices(true,['createdBy',invoiceFilter.sortNumber]);"
+                                            class="fa fa-sort"></span></th>
+                                    <th>Insured <span ng-click="showAllInvoices(true,['insured',invoiceFilter.sortNumber]);"
+                                            class="fa fa-sort"></span></th>
+                                    <th>Grand Total <span ng-click="showAllInvoices(true,['grandTotal',invoiceFilter.sortNumber]);"
+                                            class="fa fa-sort"></span></th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in modelList">
+                                    <td>
+                                        {{($index + 1)+((currentPage-1)*invoiceFilter.maxRow)}}
+                                    </td>
+                                    <!--<td>{{data.name}}</td>-->
+                                    <td>{{data.billedTo}}</td>
+                                    <td>{{data.invoiceNumber}}</td>
+                                    <td>{{data.createdBy}}</td>
+                                    <td>{{data.insuredName}}</td>
+                                    <td style="text-align:right;">{{data.grandTotal | number}}</td>
+                                    <td>{{data.approvalTime | DateFormat}}</td>
+                                    <td>{{data.approvalStatus}}</td>
+                                    <td>
+                                        <button class="btn btn-clear">
+                                            <a class="btn btn-primary temp-btnbg" ng-if="template.currentRole.add.val" download="{{data.file}}" ng-href="{{data.file|downloadImageWithName:data.invoiceNumber+' INVOICE.pdf'}}">
+                                                 <i class="ln-download"></i>
+                                            </a>
+                                        </button>
+                                        <!--<a class="btn btn-primary" ui-sref="editInvoice({invoiceId:data._id,assignmentId:data.assignment._id})"><i class="fa fa-pencil"></i></a>-->
+                                        <!--<button class="btn btn-warning" ng-click="gotoRevise(data._id,data.assignment._id)">Revise</button>-->
+                                        <button class="btn btn-warning" ng-if="template.currentRole.edit.val" ng-click="reviseCheck($index,data._id,data.assignment._id)">Revise</button>
+                                        <button class="btn btn-danger" ng-if="template.currentRole.delete.val" ng-click="confCancel(data)">Cancel</button>
+
+                                        <!--<a class="btn btn-danger" ng-click="deleteModel(data._id)"><i class="fa fa-trash"></i></a>-->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tableData" ng-show="totalItems == 0">
+                        <h5>No data found</h5>
+                    </div>
+                    <!--<div class="tableData" ng-show="totalItems == undefined">
+                        <h5>Loading Data</h5>
+                    </div>-->
+                    <ul ng-if="totalItems" ng-change="changePages(currentPage);" uib-pagination total-items="totalItems" items-per-page="invoiceFilter.maxRow"
+                        ng-model="currentPage" max-size="template.pageMax" class="pagination-sm" boundary-links="true" force-ellipses="true"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

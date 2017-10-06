@@ -1,0 +1,71 @@
+<!-- <div id="progressBar">
+	<div class="loader"></div>
+</div> -->
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Absolute</a>
+        </li>
+        <li>
+            <a title="Approvals">Approvals</a>
+        </li>
+    </ul>
+</div>
+
+<div class="heading-sec">
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>ReOpen Approvals</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="table-area">
+                    <div class="widget-title">
+                        <div class="pull-right">
+                            <form class="search-form mr-form">
+                                <input type="text"ng-change="showAll(true)" placeholder="Search Here..." ng-model="search.keyword"/>
+                                <button type="submit">
+                                  <i class="fa fa-search"></i>
+                              </button>
+                            </form>
+                        </div>
+                        <h3>List of Approvals <span class="tableTotal">(Total : {{totalItems}}) </span></h3>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Assignment</th>
+                                    <th>Reason</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-repeat="data in modelList track by $index">
+                                <tr ng-class="getDelayClass(data.survey.timestamp)">
+                                    <td>{{data.name}}</td>                                                                 
+                                    <td>{{data.reopenComment}}</td>
+                                    <td>
+                                        <button class="btn btn-primary" uib-tooltip="Edit" ui-sref="editassignment({id:data._id})"><i class="fa fa-pencil"></i></button>
+                                        <button class="btn btn-success" uib-tooltip="Accept" ng-click="acceptReOpen(data)"><i class="fa fa-check"></i></button>
+                                      </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tableData" ng-show="totalItems == 0 || totalItems == undefined ">
+                        <h5>No data found</h5>
+                    </div>
+                    <ul ng-if="totalItems" ng-change="changePage(currentPage);" uib-pagination total-items="totalItems" items-per-page="maxRow"
+                        ng-model="currentPage" max-size="template.pageMax" class="pagination-sm" boundary-links="true" force-ellipses="true"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

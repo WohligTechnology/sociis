@@ -1,0 +1,154 @@
+<form name="modalForm1" ng-submit="addElements(modalData);$dismiss()" ng-hide="holdObject == 'CTCDetails'" class=" min-hit">
+    <div class="modal-header blue-bg">
+        <div class="pull-right">
+            <a class="btn btn-clear" ng-click="$dismiss()">
+                <i class="ln-cross"></i>
+            </a>
+        </div>
+        <h5 class="modal-title">Upload New Document</h5>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Upload {{holdObject}}</label>
+                    <upload-image ng-model="modalData.image" no-view required></upload-image>
+                    <div class="error-msg" ng-show="modalForm1.image.$invalid && modalForm1.image.$touched">Please Upload Document</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>From</label>
+                    <div class="input-group">
+                        <input type="text" name="from" class="form-control" uib-datepicker-popup="{{format}}" ng-model="modalData.from" is-open="popup.fromLicense"
+                            datepicker-options="dateOptions" required readonly/>
+                        <div class="error-msg" ng-show="modalForm1.from.$invalid && modalForm1.from.$touched">Please Enter Start Date</div>
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-default" ng-click="popup.fromLicense = true">
+                              <i class="fa fa-calendar"></i>
+                          </button>
+                      </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group" ng-if="holdObject != 'IIISLACertificate'">
+                    <label>To</label>
+                    <div class="input-group">
+                        <input type="text" name="to" min-date="minDate" class="form-control" uib-datepicker-popup="{{format}}" ng-model="modalData.to"
+                            is-open="popup.toLicense" datepicker-options="dateOptions" required readonly/>
+                        <div class="error-msg" ng-show="modalForm1.to.$invalid && modalForm1.to.$touched">Please Enter End Date</div>
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-default" ng-click="popup.toLicense = true; minDate = modalData.from;">
+                              <i class="fa fa-calendar"></i>
+                          </button>
+                      </span>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="holdObject == 'IIISLACertificate'">
+                    <label>Department</label>
+                    <multiple-select my-enter name="department" required ng-model="modalData.department" ng-name="name.zone" api="searchDepartment"
+                        ng-create="departmentSave"></multiple-select>
+                    <div class="error-msg" ng-show="modalForm.to.$invalid && modalForm.to.$touched">Please Select Department</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group" ng-if="holdObject == 'IIISLACertificate'">
+                    <label>Membership Level</label>
+                    <multiple-select my-enter name="membership" required ng-model="modalData.membership" ng-name="name.membership" api="getMembership"></multiple-select>
+
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-primary" type="submit" ng-disabled="modalForm1.$invalid">Save</button>
+        </div>
+    </div>
+</form>
+
+
+<form name="modalForm" ng-submit="addElements(modalData);$dismiss()" ng-show="holdObject == 'CTCDetails'">
+    <div class="modal-header blue-bg">
+        <div class="pull-right">
+            <a class="btn btn-clear" ng-click="$dismiss()">
+                <i class="ln-cross"></i>
+            </a>
+        </div>
+        <h5 class="modal-title">Upload New Document</h5>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>CTC Amount</label>
+                    <div class="input-group">
+                        <input type="text" name="amount" cleave="template.currencyNoDecimal" class="form-control" ng-model="modalData.amount" required>
+                        <div class="error-msg" ng-show="modalForm.amount.$invalid && modalForm.amount.$touched">Please Enter CTC Amount</div>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Upload Document</label>
+                    <upload-image ng-model="modalData.image" no-view></upload-image>
+                    <div class="error-msg" ng-show="modalForm.image.$invalid && modalForm.image.$touched">Please Upload Document</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>From</label>
+                    <div class="input-group">
+                        <input type="text" name="from" class="form-control" uib-datepicker-popup="{{format}}" ng-model="modalData.from" is-open="popup.fromLicense"
+                            datepicker-options="dateOptions" required readonly/>
+                        <div class="error-msg" ng-show="modalForm.from.$invalid && modalForm.from.$touched">Please Enter CTC From Date</div>
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-default" ng-click="popup.fromLicense = true">
+                              <i class="fa fa-calendar"></i>
+                          </button>
+                      </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>To</label>
+                    <div class="input-group">
+                        <input type="text" name="to" class="form-control" uib-datepicker-popup="{{format}}" ng-model="modalData.to" is-open="popup.toLicense"
+                            datepicker-options="dateOptions" readonly/>
+                        <div class="error-msg" ng-show="modalForm.to.$invalid && modalForm.to.$touched">Please Enter CTC To Date</div>
+                        <span class="input-group-btn">
+                          <button type="button" class="btn btn-default" ng-click="popup.toLicense = true">
+                              <i class="fa fa-calendar"></i>
+                          </button>
+                      </span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Grade*</label>
+                        <div class="input-group">
+                            <multiple-select my-enter name="grade" required ng-model="modalData.grade" ng-name="name.grade" api="searchGrade" ng-create="gradeSave"
+                                readonly></multiple-select>
+                            <div class="error-msg" ng-show="modalForm.to.$invalid && modalForm.to.$touched">Please Enter Grade Based On CTC</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-md-4">
+              <div class="form-group">
+                  <label>To</label>
+                  <div class="input-group">
+                      <input type="text" name="to" class="form-control" uib-datepicker-popup="{{format}}" ng-model="modalData.CTCTo" is-open="popup.toLicense" datepicker-options="dateOptions" required readonly/>
+                      <div class="error-msg" ng-show="modalForm.CTCTo.$invalid && modalForm.CTCTo.$touched">Please Enter CTC To Date</div>
+                      <span class="input-group-btn">
+                          <button type="button" class="btn btn-default" ng-click="popup.toLicense = true">
+                              <i class="fa fa-calendar"></i>
+                          </button>
+                      </span>
+                  </div>
+              </div>
+          </div> -->
+        </div>
+
+        <div class="text-center">
+            <button class="btn btn-primary btn-submit" type="submit" ng-disabled="modalForm.$invalid">Save</button>
+        </div>
+    </div>
+</form>

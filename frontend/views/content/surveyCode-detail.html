@@ -1,0 +1,55 @@
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Insurance</a>
+        </li>
+        <li>
+            <a ui-sref="surveyCode-list">Survey Code List</a>
+        </li>
+    </ul>
+</div>
+<form name="formName" ng-submit="saveModel(formData)">
+    <div class="heading-sec">
+        <div class="row">
+            <div class="col-md-12 column">
+                <div class="heading-profile">
+                    <toggle-switch ng-model="formData.status" class="switch-small switch-success pull-right"></toggle-switch>
+                    <h2>Create Survey Code</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Bar Chart -->
+    <div class="panel-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="widget">
+                    <div class="form-elements-sec">
+                        <div class="sec">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Name*</label>
+                                        <input type="text" name="name" class="form-control" ng-model="formData.name" required>
+                                        <div class="error-msg" ng-show="formName.name.$invalid && formName.name.$touched">Please Enter Name</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Code*</label>
+                                        <input type="text" name="code" maxlength="2" class="form-control" ng-model="formData.code" maxlength="2" required>
+                                        <div class="error-msg" ng-show="formName.code.$invalid && formName.code.$touched">Please Enter Code</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center mt20 odd-even-button">
+                                <button class="btn btn-default" type="submit" ng-disabled="formName.$invalid">Save</button>
+                                <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,57 @@
+<div class="modal-header blue-bg">
+    <div class="pull-right">
+          <button class="btn btn-clear" ng-click="$dismiss();assignmentSurveyEdit();">
+            <i class="ln-cross"></i>
+        </button>
+    </div>
+    <h5 class="modal-title"> Survey Form</h5>
+</div>
+<div class="modal-body modal-body-height">
+    <br>
+    <form name="filterForm" class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Date Of Survey</label>
+            <div class="input-group survey-datepicker">
+                <input type="text" name="surveyDate" class="form-control" uib-datepicker-popup="{{format}}" ng-model="offlineEditSurvey.surveyDate"
+                    is-open="popup.fromLicense" datepicker-options="dateOptions" required readonly/>
+                <div class="error-msg" ng-show="filterForm.surveyDate.$invalid && filterForm.surveyDate.$touched">Please Enter Survey Date</div>
+                <span class="input-group-btn">
+                          <button type="button" class="btn btn-default" ng-click="popup.fromLicense = true">
+                              <i class="fa fa-calendar"></i>
+                          </button>
+                      </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Survey Time</label>
+            <div class="col-sm-6">
+                <input type="time" class="form-control" ng-model="offlineEditSurvey.surveyTime">
+                <div class="error-msg" ng-show="filterForm.surveyTime.$invalid && filterForm.surveyTime.$touched">Please Enter Survey Time</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Start Time</label>
+            <div class="col-sm-6">
+                <input type="time" class="form-control" ng-model="offlineEditSurvey.startTime">
+                <div class="error-msg" ng-show="filterForm.startTime.$invalid && filterForm.startTime.$touched">Please Enter Start Time</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">End Time</label>
+            <div class="col-sm-6">
+                <input type="time" class="form-control" ng-model="offlineEditSurvey.endTime">
+                <div class="error-msg" ng-show="filterForm.endTime.$invalid && filterForm.endTime.$touched">Please Enter End Time</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Address</label>
+            <div class="col-sm-6">
+                <textarea type="textarea" rows=3 class="form-control" placeholder="Address" ng-model="offlineEditSurvey.address"></textarea>
+                <div class="error-msg" ng-show="filterForm.address.$invalid && filterForm.address.$touched">Please Enter Address</div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+     <button class="btn btn-primary btn-outline btn-small pull-left" type="button" ng-click="$dismiss();assignmentSurveyEdit()">Cancel</button>
+    <button class="btn btn-primary btn-outline btn-small" type="button" ng-disabled="filterForm.$invalid" ng-click="submitEditSurvey(offlineEditSurvey);$dismiss()">Submit</button</div>

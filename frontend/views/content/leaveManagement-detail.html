@@ -1,0 +1,124 @@
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Leave Management</a>
+        </li>
+        <li>
+            <a ui-sref="leaveManagement-list">{{header.name}}</a>
+        </li>
+    </ul>
+</div>
+<form name="formName" ng-submit="saveModel(formData)" class="sec">
+    <div class="heading-sec">
+        <div class="row">
+            <div class="col-md-4 column">
+                <div class="heading-profile">
+                    <!--<toggle-switch ng-model="formData.status" class="switch-small switch-success pull-right"></toggle-switch>-->
+                    <h2>{{header.name}}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Bar Chart -->
+    <div class="panel-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="widget">
+                    <div class="form-elements-sec">
+                        <div class="widget-title">
+                            <h3>Leave Management</h3>
+                        </div>
+                        <div class="sec">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Employee Name*</label>
+                                        <multiple-select my-enter name="name" required ng-model="formData.name" ng-name="name.firstName" api="searchEmployee" ng-create="employeeName"></multiple-select>
+                                        <div class="error-msg" ng-show="formName.name.$invalid && formName.name.$touched">Please Enter Employee Name</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>From Date*</label>
+                                        <div class="input-group">
+                                            <input type="text" name="fromDate" required class="form-control" uib-datepicker-popup="{{format}}" ng-model="formData.fromDate"
+                                                is-open="popup.fromDate" datepicker-options="dateOptions" readonly/>
+                                            <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="popup.fromDate = true">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </span>
+                                        </div>
+                                        <div class="error-msg" ng-show="formName.fromDate.$invalid && formName.fromDate.$touched">Please enter From Date</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>To Date*</label>
+                                        <div class="input-group">
+                                            <input type="text" name="toDate" required class="form-control" uib-datepicker-popup="{{format}}" ng-model="formData.toDate"
+                                                is-open="popup.toDate" datepicker-options="dateOptions" readonly/>
+                                            <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="popup.toDate = true">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </span>
+                                        </div>
+                                        <div class="error-msg" ng-show="formName.toDate.$invalid && formName.toDate.$touched">Please enter To Date</div>
+                                    </div>
+                                </div>
+                                <!--</div>-->
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Reasons*</label>
+                                        <textarea class="form-control" required ng-model="formData.reason"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Status *</label>
+                                        <select name="status" class="form-control" ng-model="formData.status" ng-options="status for status in status"></select>
+                                        <div class="error-msg" ng-show="formName.status.$invalid && formName.status.$touched">Please Select status</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>Approved From </label>
+                                        <div class="input-group">
+                                            <input type="text" name="approvedFrom" class="form-control" uib-datepicker-popup="{{format}}" ng-model="formData.approvedFrom"
+                                                is-open="popup.approvedFrom" datepicker-options="dateOptions" readonly/>
+                                            <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="popup.approvedFrom = true">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </span>
+                                        </div>
+                                        <div class="error-msg" ng-show="formName.approvedFrom.$invalid && formName.approvedFrom.$touched">Please enter Date of Birth</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>Approved To </label>
+                                        <div class="input-group">
+                                            <input type="text" name="approvedTo" class="form-control" uib-datepicker-popup="{{format}}" ng-model="formData.approvedTo"
+                                                is-open="popup.approvedTo" datepicker-options="dateOptions" readonly/>
+                                            <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="popup.approvedTo = true">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </span>
+                                        </div>
+                                        <div class="error-msg" ng-show="formName.approvedTo.$invalid && formName.approvedTo.$touched">Please enter Date of Birth</div>
+                                    </div>
+                                </div>
+                                <div class="text-center mt20 odd-even-button">
+                                    <button class="btn btn-default" type="submit" ng-disabled="formName.$invalid">Save</button>
+                                    <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</form>

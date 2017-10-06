@@ -1,0 +1,90 @@
+<!-- <div id="progressBar">
+	<div class="loader"></div>
+</div> -->
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Absolute</a>
+        </li>
+        <li>
+            <a title="Approvals">Approvals</a>
+        </li>
+    </ul>
+</div>
+
+<div class="heading-sec">
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>ILA Approvals</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="table-area">
+                    <div class="widget-title">
+                        <div class="pull-right">
+                            <form class="search-form mr-form">
+                                <input type="text" ng-change="showAll(true)" placeholder="Search Here..." ng-model="search.keyword" />
+                                <button type="submit">
+                                  <i class="fa fa-search"></i>
+                              </button>
+                            </form>
+                            <!--<span uib-dropdown>
+                                <button uib-dropdown-toggle id="sortby" class="btn btn-primary">Sort by <span class="caret"></span></button>
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="sortby">
+                                <li role="menuitem"><a ng-click="">Time</a></li>
+                                <li role="menuitem"><a ng-click="">Date</a></li>
+                            </ul>
+                            </span>-->
+
+                        </div>
+                        <h3>List of Approvals <span class="tableTotal">(Total : {{totalItems}}) </span></h3>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table approval-table">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>MR #</th>
+                                    <th>Sent By</th>
+                                    <th>Owner</th>
+                                    <th>Sent To</th>
+                                    <th>Template</th>
+                                    <th>Intimated Loss</th>
+                                    <th>Reserve Amount</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-repeat="data in ilaList track by $index">
+                                <tr ng-class="getDelayClass(data.templateIla.reqtimestamp)">
+                                    <td>{{data.templateIla.reqtimestamp|getHours}} hrs</td>
+                                    <td>{{data.name}}</td>
+                                    <td>{{data.templateIla.sentBy.name}}</td>
+                                    <td>{{data.owner.name}}</td>
+                                    <td>{{data.templateIla.sentTo.name}}</td>
+                                    <td>{{data.templateIla.name}}</td>
+                                    <td>{{data.intimatedLoss}}</td>
+                                    <td>{{data.templateIla.reserveAmount}}</td>
+                                    <td>
+                                        <button class="btn btn-primary" uib-tooltip="Open" ng-if="template.currentRole.view.val" ng-click="viewTemplates('ILAs','TemplateIla',data.templateIla)">Open</button>
+                                        <!--<button class="btn btn-success" uib-tooltip="Accept" ng-click="acceptIla(data)"><i class="fa fa-check"></i></button>
+                                        <button class="btn btn-primary" uib-tooltip="Revise/Comment" ng-click="reviseIla(data)"><i class="fa fa-reply"></i></button>
+                                        <button class="btn btn-danger" uib-tooltip="Reject"><i class="fa fa-times"></i></button>-->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <ul ng-if="totalItems" ng-change="changePage(currentPage);" uib-pagination total-items="totalItems" items-per-page="maxRow"
+                        ng-model="currentPage" max-size="template.pageMax" class="pagination-sm" boundary-links="true" force-ellipses="true"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

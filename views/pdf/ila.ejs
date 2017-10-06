@@ -1,0 +1,217 @@
+<html>
+<%
+function getAssignmentTemplateValue (input, assignment) {
+        var sInput = _.split(input, '+');
+        var returnStr = "";
+        sInput = _.map(sInput, function (n) {
+            var obj = {};
+            n = _.trim(n);
+            if (_.startsWith(n, '"')) {
+                obj.type = "String";
+                obj.value = n.substr(1, n.length - 2);
+            } else {
+                obj.type = "Object";
+                var splitVal = _.split(n, ".");
+                obj.value = assignment;
+                _.each(splitVal, function (m) {
+                    if (obj.value) {
+                        obj.value = obj.value[m];
+                    }
+
+                });
+            }
+            if (obj.value == undefined) {
+                obj.value = "NA"
+            }
+            returnStr = returnStr + obj.value;
+            return obj;
+        });
+        var ifDate=returnStr.split(":");
+        if ((returnStr.charAt(returnStr.length-1)=="Z" || returnStr.charAt(returnStr.length-1)=="z") && ifDate.length==3) {
+            returnStr = moment(returnStr).add(1, "d").format("DD/MM/YYYY");
+            return returnStr;
+        }
+        return returnStr;
+};
+%>
+
+    <head>
+        <style>
+            body {
+                font-family: sans-serif;
+                font-size: 9px;
+                margin: 0px;
+            }
+            
+            .subject {
+                font-weight: bold;
+            }
+            
+            .claim-table {
+                width: 100%;
+            }
+            
+            .claim-detail>tr>td:first-child(1) {
+                width: 80%;
+            }
+            
+            table,
+            th,
+            td {
+                border: 1px solid black;
+                border-collapse: collapse;
+                font-size: 9px;
+                padding: 8px 4px 2px;
+                width: 80%;
+            }
+            
+            .date>p {
+                margin: 2px 0;
+            }
+            
+            .justify {
+                text-align: justify;
+            }
+            
+            p {
+                font-size: 9px;
+                line-height: 1.5;
+            }
+            
+            .content-head {
+                margin: 30px 0;
+            }
+            
+            .content-lineheight {
+                line-height: 1.5;
+            }
+            
+            #pageFooter {
+                font-size: 6px;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <div style="padding:0;margin:0">
+            <div style="margin:0 auto">
+            </div>
+            <div>
+                <div class="float-left marg0">
+                    <p>
+                        <%=assignment.branch.name%>,<br></p>
+                    <% if(assignment.office) { %>
+                        <p>
+                            <%=assignment.office.address%>,<br></p>
+                        <p>
+                            <%=assignment.office.city.name%>,</p>
+                        <p>
+                            <%=assignment.office.city.district.state.name%>.<br> </p>
+                        <p>Phone #:
+                            <%=assignment.office.phone%>,<br> </p>
+                        <p>FAX #:
+                            <%=assignment.office.fax%>
+                        </p>
+                        <% } %>
+                </div>
+                <div style="float:right">
+                    <img src="<%= realHost %>/img/logo.png" style="width:150px">
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="float-right">
+            <p class="without logo">without prejudice</p>
+        </div>
+        <div class="clearfix"></div>
+        <div>
+            <p class="float-left" style="font-weight: bold;">
+                <% if(assignment.policyType)  {%>
+                    <%=assignment.policyType.name%> #
+                        <%=assignment.name%>
+                            <% } %>
+            </p>
+            <p class="float-right">Date:
+                <%= moment(new Date(data.authTimestamp)).format("D-MMM-YYYY")%>
+            </p>
+        </div>
+        <div class="clearfix"></div>
+        <div>
+            <table>
+                <tbody>
+                    <% for(var i=0; i<data.forms.length; i++) {%>
+                        <% if(i==0){%>
+                            <tr>
+                                <th colspan="2">
+                                    <%= i+1 %>
+                                        <%= data.forms[i].name %>
+                                </th>
+                            </tr>
+                            <%}else{%>
+
+                                <tr>
+                                    <th colspan="2" class="height-blank">
+
+                                    </th>
+                                </tr>
+
+                                <tr>
+                                    <th colspan="2">
+                                        <%= i+1 %>
+                                            <%= data.forms[i].name %>
+                                    </th>
+                                </tr>
+                                <%}%>
+                                    <% for(var j=0; j<data.forms[i].items.length; j++) {%>
+                                        <tr>
+                                            <td>
+                                                <%=i+1%>.
+                                                    <%=j+1%>
+                                                        <%= data.forms[i].items[j].name %>
+                                            </td>
+                                            <% if(data.forms[i].items[j].type=="Custom Input") {  %>
+                                                <td>
+                                                    <%= data.forms[i].items[j].field %>
+                                                </td>
+                                                <%} else if(data.forms[i].items[j].type=="Dropdown") {  %>
+                                                    <td>
+                                                        <%= data.forms[i].items[j].field %>
+                                                    </td>
+
+                                                    <% }else{%>
+                                                        <td>
+                                                            <%= getAssignmentTemplateValue(data.forms[i].items[j].value,assignment) %>
+                                                        </td>
+                                                        <% }%>
+                                        </tr>
+                                        <% } %>
+                                            <% } %>
+
+
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <p>Sincerely,</p>
+        <p class="subject">For, Absolute Insurace Surveyors & Loss Assessors Pvt Ltd</p>
+        <br><br><br><br> Authorised Signatory,<br>
+
+
+
+
+
+        <div id="pageFooter">
+            <div class="bt-foot">
+                <div class="float-right">
+                    Assignment #
+                    <%=assignment.name%> - Page {{page}} of {{pages}}
+                </div>
+                Absolute Insurance Surveyors &amp; Loss Assessors Pvt Ltd
+            </div>
+        </div>
+    </body>
+
+</html>

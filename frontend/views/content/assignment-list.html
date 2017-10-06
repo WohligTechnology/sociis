@@ -1,0 +1,134 @@
+<div class="heading-sec assignment-btn">
+    <div class="btn-group pull-right">
+        <button type="button" class="btn btn-default" ng-class="{'btn-primary': filter.ownerStatus=='Global'}" ng-if="template.assignmentRole['Global View'].view.val"
+            ng-click="filter.ownerStatus='Global';showAssignment(true);">Global</button>
+        <button type="button" class="btn btn-default" ng-class="{'btn-primary': filter.ownerStatus=='My files'}" ng-if="template.assignmentRole['My Files'].view.val"
+            ng-click="filter.ownerStatus='My files';showAssignment(true)">My Assignment</button>
+        <button type="button" class="btn btn-default" ng-class="{'btn-primary': filter.ownerStatus=='Shared with me'}" ng-if="template.assignmentRole['Shared With'].view.val"
+            ng-click="filter.ownerStatus='Shared with me';showAssignment(true)">Shared With Me</button>
+        <button type="button" class="btn btn-default" ng-class="{'btn-primary': filter.ownerStatus=='All files'}" ng-if="template.assignmentRole['All Files'].view.val"
+            ng-click="filter.ownerStatus='All files';showAssignment(true);">All Assignment</button>
+    </div>
+    <!--<pre>{{filter|json}}</pre>-->
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>Assignment List</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content assignment-section">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <!--<span>{{template.assignmentRole.New|json}}</span>-->
+                <div class="table-area assignment-area">
+                    <div class="widget-title">
+                        <div class="pull-right">
+                            <form class="search-form search-assignment mr-form">
+                                <input type="text" ng-change="showAssignment(true)" placeholder="Search Here..." ng-model="filter.name" />
+                                <button type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </form>
+                            <!--ng-if="template.currentRole.add.val"-->
+                            <!--<a class="btn btn-primary" ui-sref="createassignment"><i class="fa fa-plus"></i> Add New</a>-->
+                            <button class="btn btn-primary" ng-click="transferTo()"><i class="fa fa-exchange"></i> Transfer</button>
+                            <button class="btn btn-primary" ng-click="assignmentFilter()"><i class="fa fa-filter"></i> Filter</button>
+                            <button class="btn btn-primary" ng-click="generateMRExcel()"><i class="fa fa-file-excel-o"></i> Excel</button>
+                            <button class="btn btn-primary" ng-click="generateStatusReport()"><i class="fa fa-file-text-o"></i> Status</button>
+                            <a class="space">"</a>
+                            <ui-select class="select-limit select-assignment pull-right" ng-model="filter.maxRow" theme="bootstrap" ng-change="changeRecordLimit()"
+                                title="Choose Record Limit">
+                                <ui-select-match>{{$select.selected}}</ui-select-match>
+                                <ui-select-choices repeat="limit in limitValues | filter: $select.search">
+                                    <span ng-bind-html="limit | highlight: $select.search"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <h3> List of Assignment
+                            <span class="tableTotal">(Total :
+                                {{totalItems}})
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="table-responsive" ng-show="totalItems>0">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div class="checkbox checkbox-upload checkbox-primary float-left">
+                                            <input id="{{'checkboxAll' }}" type="checkbox" ng-model="selectAll" ng-click="selectAllData('assignment',selectAll)">
+                                            <label for="{{'checkboxAll' }}"></label></a>
+                                        </div>
+                                    </th>
+                                    <th>#</th>
+                                    <th>MR Number <span ng-click="showAssignment(true,['name',filter.sortNumber]);" class="fa fa-sort"></span></th>
+                                    <th>Owner <span ng-click="showAssignment(true,['owner',filter.sortNumber]);" class="fa fa-sort"></span></th>
+                                    <th>Insurer <span ng-click="showAssignment(true,['insurer',filter.sortNumber]);" class="fa fa-sort"></span></th>
+                                    <th>Insured <span ng-click="showAssignment(true,['insured',filter.sortNumber]);" class="fa fa-sort"></span></th>
+                                    <th>Site City <span ng-click="showAssignment(true,['city',filter.sortNumber]);" class="fa fa-sort"></span></th>
+                                    <th>Nature Of Survey <span ng-click="showAssignment(true,['department',filter.sortNumber]);"
+                                            class="fa fa-sort"></span></th>
+                                    <th>Estimated Loss <span ng-click="showAssignment(true,['intimatedLoss',filter.sortNumber]);"
+                                            class="fa fa-sort"></span></th>
+                                    <th>Status <span ng-click="showAssignment(true,['timelineStatus',filter.sortNumber]);" class="fa fa-sort"></span></th>
+                                    <th>Actions </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in modelList">
+                                    <td>
+                                        <div class="checkbox checkbox-primary">
+                                            <input id="{{ 'checkbox' + $index }}" type="checkbox" ng-click="addDataToTransfer(type,$index,data._id,data.name)" ng-checked="selectAll">
+                                            <label for="{{ 'checkbox' + $index }}"> </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {{($index + 1)+((currentPage-1)*filter.maxRow)}}
+                                    </td>
+                                    <td>{{data.name}}</td>
+                                    <td>{{data.owner}}</td>
+                                    <td>{{data.insurerName}}</td>
+                                    <td>{{data.insuredName}}</td>
+                                    <td>{{data.city}}</td>
+                                    <td>{{data.department}}</td>
+                                    <td style="text-align:right;">
+                                        <div ng-if="data.intimatedLoss!=undefined">{{data.intimatedLoss| number}}</div>
+                                        <div ng-if="data.intimatedLoss==undefined">-</div>
+                                    </td>
+                                    <td>
+                                        {{data.timelineStatus}}
+                                        <!--<toggle-switch ng-model="data.status" class="switch-mini switch-success" ng-change="changeStatus(data)"></toggle-switch>-->
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary" ui-sref="editassignment({id:data._id})" title="Edit">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                        <!--<a class="btn btn-danger" ng-click="deleteModel(data._id)" ng-if="template.currentRole.delete.val">
+                                            <i class="fa fa-trash"></i>
+                                        </a>-->
+                                        <a class="btn btn-danger" ui-sref="timeline({id:data._id})">
+                                            Timeline
+                                        </a>
+                                        <!--Clone-->
+                                        <!--<a class="btn btn-danger" ui-sref="createassignment({assignment:data._id})">
+                                            Clone
+                                        </a>-->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tableData" ng-show="totalItems == 0 || totalItems == undefined ">
+                        <h5>No data found</h5>
+                    </div>
+                    <ul ng-if="totalItems" ng-change="changePages(currentPage,filter);" uib-pagination total-items="totalItems" items-per-page="filter.maxRow"
+                        ng-model="currentPage" max-size="template.pageMax" class="pagination-sm" boundary-links="true" force-ellipses="true"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

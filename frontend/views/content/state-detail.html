@@ -1,0 +1,69 @@
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Locations</a>
+        </li>
+        <li>
+            <a ui-sref="state-list">{{header.name}}</a>
+        </li>
+    </ul>
+</div>
+
+<div class="heading-sec">
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>{{header.name}}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="form-elements-sec">
+                    <div class="widget-title">
+                        <h3>State</h3>
+                    </div>
+                    <form name="stateform" role="form" class="sec ng-pristine ng-valid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Country*</label>
+                                    <multiple-select my-enter name="country" required ng-model="formData.country" ng-name="name.country" api="searchCountry"
+                                        ng-create="countrySave"></multiple-select>
+                                    <div class="error-msg" ng-show="stateform.country.$invalid">Please Enter Country</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="disabledSelect">Zone*</label>
+                                    <multiple-select my-enter name="zone" required ng-model="formData.zone" filter='{"country":"{{formData.country}}"}' ng-name="name.zone"
+                                        api="searchZone" ng-create="zoneSave"></multiple-select>
+                                    <div class="error-msg" ng-show="stateform.zone.$invalid">Please Enter Zone</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">State*</label>
+                                    <input type="text" name="name" ng-model="formData.name" class="form-control" required>
+                                    <div class="error-msg" ng-show="stateform.name.$invalid && stateform.name.$touched">Please Enter State</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">State Code</label>
+                                    <input type="text" name="name" ng-model="formData.stateCode" class="form-control">
+                                    <div class="error-msg" ng-show="stateform.stateCode.$invalid && stateform.stateCode.$touched">Please Enter State</div>
+                                </div>
+                                <div class="text-center mt20 odd-even-button">
+                                    <button class="btn btn-default" type="submit" ng-click="saveState(formData)" ng-disabled="stateform.$invalid">Save</button>
+                                    <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>

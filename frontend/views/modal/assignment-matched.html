@@ -1,0 +1,39 @@
+<div class="modal-header blue-bg" data-backdrop="static">
+    <div class="pull-right">
+        <!--<button class="btn btn-clear" ng-click="$dismiss()">
+            <i class="ln-cross"></i>
+        </button>-->
+    </div>
+    <h5 class="modal-title text-center">Likely Duplication Found</h5>
+</div>
+<div class="modal-body">
+    <table class="file-list table table-fixed" style="overflow:auto;">
+        <thead>
+            <tr>
+                <th>MR Number</th>
+                <th>DOA</th>
+                <th>Insurer</th>
+                <th>Insured</th>
+                <th ng-if="type == 'invoices'">Invoice</th>
+                <th ng-if="type == 'LRs'">LRs</th>
+                <th ng-if="type == 'product'">Product ID</th>
+                <th ng-if="type == 'locationArr'">Location ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="matchedData in assignmentMatchedData track by $index">
+                <td><a ui-sref="timeline({id:matchedData._id})" target="_blank">{{matchedData.name}}</a></td>
+                <td>{{matchedData.dateOfAppointment | date:'dd MMM yyyy'}}</td>
+                <td>{{matchedData.insurer}}</td>
+                <td>{{matchedData.insured}}</td>
+                <td ng-if="type == 'invoices'">{{matchedData.invoices}}</td>
+                <td ng-if="type == 'LRs'">{{matchedData.LRs}}</td>
+                <td ng-if="type == 'product'">{{matchedData.product}}</td>
+                <td ng-if="type == 'locationArr'">{{matchedData.locationArr}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary btn-outline btn-small" type="button" ng-click="$dismiss();">Continue</button>
+</div>

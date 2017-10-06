@@ -1,0 +1,80 @@
+<!-- <div id="progressBar">
+	<div class="loader"></div>
+</div> -->
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Company Setup</a>
+        </li>
+        <li>
+            <a ui-sref="company-list">Company List</a>
+        </li>
+    </ul>
+</div>
+
+<div class="heading-sec">
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>Company List</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="table-area">
+                    <div class="widget-title">
+                        <div class="pull-right">
+                            <form class="search-form mr-form search-list">
+                                <input type="text" ng-change="showAllCountries(true)" placeholder="Search Here..." ng-model="search.keyword" />
+                                <button type="submit">
+                                  <i class="fa fa-search"></i>
+                              </button>
+                            </form>
+                            <a class="btn btn-primary  mt-10mob" ui-sref="createcompany" ng-if="template.currentRole.add.val">Add New</a>
+                        </div>
+                        <h3>List of Companies <span class="tableTotal">(Total : {{totalItems}}) </span></h3>
+                    </div>
+                    <div class="table-responsive" ng-show="totalItems>0">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Company Name</th>
+                                    <th>Short name</th>
+                                    <th>City</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="company in allCompanies">
+                                    <td>{{($index + 1)+((currentPage-1)*maxRow)}}</td>
+                                    <td>{{company.name}}</td>
+                                    <td>{{company.shortName}}</td>
+                                    <td>{{company.city.name}}</td>
+                                    <td>
+                                        <a class="btn btn-blue" ui-sref="editcompany({id:company._id})" ng-if="template.currentRole.edit.val"><i class="fa fa-pencil"></i></a>
+                                        <!--<a class="btn btn-red" ng-click="deleteCompany(company._id)" ng-if="template.currentRole.delete.val"><i class="fa fa-trash"></i></a>-->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tableData" ng-show="totalItems == 0">
+                        <h5>No data found</h5>
+                    </div>
+                    <div class="tableData" ng-show="totalItems == undefined">
+                        <h5>Loading Data</h5>
+                    </div>
+
+                    <ul ng-if="totalItems" ng-change="changePage(currentPage);" uib-pagination total-items="totalItems" items-per-page="maxRow"
+                        ng-model="currentPage" max-size="template.pageMax" class="pagination-sm" boundary-links="true" force-ellipses="true"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

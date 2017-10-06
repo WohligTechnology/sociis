@@ -1,0 +1,179 @@
+<!-- <div id="progressBar">
+	<div class="loader"></div>
+</div> -->
+<div class="breadcrumbs">
+    <ul>
+        <li><a title="Home">Home</a></li>
+        <li><a ui-sref="dashboard" title="Dashboard">Dashboard</a></li>
+    </ul>
+</div>
+<div class="heading-sec">
+    <div class="btn-group pull-right">
+        <button type="button" class="btn btn-default" ng-class="{'btn-primary': filter.typeOfStatus=='Global'}" ng-if="template.assignmentRole['Global View'].view.val"
+            ng-click="filter.typeOfStatus='Global';getDashCounts(true);">Global</button>
+        <button type="button" class="btn btn-default" ng-class="{'btn-primary': filter.typeOfStatus=='All files'}" ng-if="template.assignmentRole['All Files'].view.val"
+            ng-click="filter.typeOfStatus='All files';getDashCounts(true);">All Assignment</button>
+    </div>
+    <div class="row" ng-if="timelineCount === false">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>Assignments</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="mini-stats-sec">
+                <div class="row" ng-if="timelineCount === false">
+                    <div class="col-md-3" ng-repeat="data in timelineArray">
+                        <div class="widget" ng-click="gotoAssignmentList(data.status)">
+                            <div class="mini-stats tmp-mini-stats" ng-style="{'background':'{{data.color}}','color':'{{data.textColor}}'}">
+                                <h2 class="display-inblock marg0" ng-style="{'color':'{{data.textColor}}'}">{{ data.count }}</h2>
+                                <div>
+                                    <p class="mini-stats_color display-inblock marg0" style="padding:0px;" ng-style="{'color':'{{data.textColor}}'}">{{ data.status}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><br>
+                <div class="approvals" ng-if="approvalsPendingArr != undefined && approvalView == true">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>Approvals Pending</h4>
+                        </div>
+                    </div>
+                    <div class="row" ng-if="approvalView == true">
+                        <div class="col-md-3" ng-repeat="data in approvalsPendingArr">
+                            <a ui-sref="{{data.state}}">
+                                <div class="widget">
+                                    <div class="mini-stats tmp-mini-stats" ng-style="{'background':'{{data.color}}','color':'{{data.textColor}}'}">
+                                        <h2 class="display-inblock marg0" ng-style="{'color':'{{data.textColor}}'}">{{ data.count }}</h2>
+                                        <div>
+                                            <p class="mini-stats_color display-inblock marg0" style="padding:0px;" ng-style="{'color':'{{data.textColor}}'}">{{ data.status}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="widget">
+                                <div class="mini-stats tmp-mini-stats" ng-style="{'background':'#fff','color':'#000','cursor':'initial'}">
+                                    <h2 class="display-inblock marg0" ng-style="{'color':'#000'}">{{ appTotal.count }}</h2>
+                                    <div>
+                                        <p class="mini-stats_color display-inblock marg0" style="padding:0px;" ng-style="{'color':'#000'}">{{ appTotal.status}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="assignment" ng-if="assignmentSummary != undefined">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <h4>Assignment Summary</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9 col-sm-12 w100">
+                            <div class="widget">
+                                <!--<span>{{template.assignmentRole.New|json}}</span>-->
+                                <div class="table-area">
+                                    <!--ng-show="totalItems>0"-->
+                                    <div class="table-responsive dashboard-table">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th class="dashboard-width">
+                                                        <div class="col-sm-12 dashboard-select">
+                                                            <!--<input type="text" class="form-control" ng-model="filter.branch">-->
+                                                            <ui-select ng-change="AllAssignmentSummary()" multiple tagging="tagTransform" tagging-label="(press enter to add new)" name="branch"
+                                                                ng-model="summaryFilter.branch" theme="bootstrap" title="Select Branch"
+                                                                placeholder="Select Branch" required>
+                                                                <ui-select-match placeholder="Search Branch">{{$item.name}}</ui-select-match>
+                                                                <ui-select-choices repeat="branch in branchData | filter:$select.search" refresh-delay="0" refresh="refreshBranch($select.search)">{{branch.name}}</ui-select-choices>
+                                                            </ui-select>
+                                                            <!--<div class="error-msg" ng-show="filterForm.branch.$invalid && filterForm.branch.$touched">Please Select Branch Name</div>-->
+                                                        </div>
+                                                    </th>
+                                                    <th>Today </th>
+                                                    <th>For Month </th>
+                                                    <th>For Quarterly</th>
+                                                    <th>For Year</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th>Login</th>
+                                                    <td class="sec-total">{{assignmentSummary.login.today}}</td>
+                                                    <td class="sec-total">{{assignmentSummary.login.month}}</td>
+                                                    <td class="sec-total">{{assignmentSummary.login.quarterly}}</td>
+                                                    <td class="sec-total">{{assignmentSummary.login.year}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Force Closed</th>
+                                                    <td class="sec-total">{{assignmentSummary.forceClosed.today}}</td>
+                                                    <td class="sec-total">{{assignmentSummary.forceClosed.month}}</td>
+                                                    <td class="sec-total">{{assignmentSummary.forceClosed.quarterly}}</td>
+                                                    <td class="sec-total">{{assignmentSummary.forceClosed.year}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Net Login</th>
+                                                    <td class="sec-total">{{assignmentSummary.netLogin.today}}</td>
+                                                    <td class="sec-total">{{assignmentSummary.netLogin.month}}</td>
+                                                    <td class="sec-total">{{assignmentSummary.netLogin.quarterly}}</td>
+                                                    <td class="sec-total">{{assignmentSummary.netLogin.year}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Logout</th>
+                                                    <td class="sec-total">{{assignmentSummary.logout.today}}</td>
+                                                    <td class="sec-total">{{assignmentSummary.logout.month}}</td>
+                                                    <td class="sec-total">{{assignmentSummary.logout.quarterly}}</td>
+                                                    <td class="sec-total">{{assignmentSummary.logout.year}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Collected</th>
+                                                    <td class="sec-total">{{assignmentSummary.collected.today[0].count || 0 }}</td>
+                                                    <td class="sec-total">{{assignmentSummary.collected.month[0].count || 0 }}</td>
+                                                    <td class="sec-total">{{assignmentSummary.collected.quarterly[0].count || 0 }}</td>
+                                                    <td class="sec-total">{{assignmentSummary.collected.year[0].count || 0 }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Sales</th>
+                                                    <td class="sec-total">{{assignmentSummary.sales.today[0].count | number}}</td>
+                                                    <td class="sec-total">{{assignmentSummary.sales.month[0].count | number}}</td>
+                                                    <td class="sec-total">{{assignmentSummary.sales.quarterly[0].count | number}}</td>
+                                                    <td class="sec-total">{{assignmentSummary.sales.year[0].count | number}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Receipt</th>
+                                                    <td class="sec-total">{{assignmentSummary.receipt.today[0].count || 0 }}</td>
+                                                    <td class="sec-total">{{assignmentSummary.receipt.month[0].count || 0 }}</td>
+                                                    <td class="sec-total">{{assignmentSummary.receipt.quarterly[0].count || 0 }}</td>
+                                                    <td class="sec-total">{{assignmentSummary.receipt.year[0].count || 0 }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Disposal Ratio</th>
+                                                    <td class="sec-total">{{assignmentSummary.disposalRatio.today || 0 }}</td>
+                                                    <td class="sec-total">{{assignmentSummary.disposalRatio.month || 0 }}</td>
+                                                    <td class="sec-total">{{assignmentSummary.disposalRatio.quarterly || 0 }}</td>
+                                                    <td class="sec-total">{{assignmentSummary.disposalRatio.year || 0 }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!--<div class="tableData" ng-show="totalItems == 0 || totalItems == undefined ">
+                                            <h5>No data found</h5>
+                                        </div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

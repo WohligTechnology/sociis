@@ -1,0 +1,55 @@
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Company Setup</a>
+        </li>
+        <li>
+            <a ui-sref="policy-list" >{{header.name}}</a>
+        </li>
+    </ul>
+</div>
+
+<div class="heading-sec">
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>{{header.name}}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="form-elements-sec">
+                    <div class="widget-title">
+                        <h3>Policy</h3>
+                    </div>
+                    <form name="policyForm" role="form" class="sec ng-pristine ng-valid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Policy Name*</label>
+                                    <input type="text" name="name" placeholder="Policy Name" ng-model="formData.name" class="form-control" required>
+                                    <div class="error-msg" ng-show="policyForm.name.$invalid && policyForm.name.$touched">Please Enter Policy Name</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Policy Name*</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt20 odd-even-button">
+                            <button class="btn btn-default" type="submit" ng-click="savePolicy(formData)" ng-disabled="policyForm.$invalid">Save</button>
+                            <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+                        </div>
+                </div>
+            </div>
+
+
+
+            </form>
+        </div>
+    </div>
+</div>

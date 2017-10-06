@@ -1,0 +1,58 @@
+<form name="formName" ng-submit="addElements(modalData);$dismiss()" class="min-hit">
+    <div class="modal-header blue-bg with-button">
+        <div class="pull-right">
+            <button class="btn btn-clear" ng-click="$dismiss()">
+                <i class="ln-cross"></i>
+            </button>
+        </div>
+        <h5 class="modal-title">Backoffice feedback process</h5>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12 b-top-m">
+                <div class="form-group">
+                    <label>Quality of intimation mail which contain correct contact detail & proper address?*</label>
+                    <br>
+              <toggle-switch on-label="Yes" off-label="No" ng-model="formName.ILA" class="switch-mini switch-success"></toggle-switch>
+                    <!-- <div class="error-msg" ng-show="formName.category.$invalid && formName.category.$touched">Please Select ILA issued</div> -->
+                </div>
+            </div>
+            <div class="col-md-12 b-top-m">
+                <div class="form-group">
+                    <label>Quality of coordination for arranging the confirmation appointment for survey?*</label>
+                    <br>
+                  <toggle-switch on-label="Yes" off-label="No" ng-model="formName.broker" class="switch-mini switch-success"></toggle-switch>
+                    <!-- <div class="error-msg" ng-show="formName.category.$invalid && formName.category.$touched">Please Select LOR issued</div> -->
+                </div>
+            </div>
+            <div class="col-md-12 b-top-m">
+                <div class="form-group">
+                    <label>Providing addtional information/detail required by surveyor and need to be incorprate in the JIR/MOM & document required as per the nature of survey?*</label>
+                    <br>
+                    <toggle-switch on-label="Yes" off-label="No" ng-model="formName.insured" class="switch-mini switch-success"></toggle-switch>
+                    <!-- <div class="error-msg" ng-show="formName.category.$invalid && formName.category.$touched">Please Select LOR issued</div> -->
+                </div>
+            </div>
+            <div class="col-md-12 b-top-m">
+                <div class="form-group">
+                    <label>Attaching proper format of JIR/MOM?*</label>
+                    <br>
+                  <toggle-switch on-label="Yes" off-label="No" ng-model="formName.insurer" class="switch-mini switch-success"></toggle-switch>
+                    <!-- <div class="error-msg" ng-show="formName.category.$invalid && formName.category.$touched">Please Select LOR issued</div> -->
+                </div>
+            </div>
+            <div class="col-md-12 b-top-m">
+                <div class="form-group">
+                    <label>Responsiveness to survvey calls / queries & help providing to resolved the same?*</label>
+                    <br>
+                  <toggle-switch on-label="Yes" off-label="No" ng-model="formName.insurer" class="switch-mini switch-success"></toggle-switch>
+                    <!-- <div class="error-msg" ng-show="formName.category.$invalid && formName.category.$touched">Please Select LOR issued</div> -->
+                </div>
+            </div>
+
+        </div>
+        <div class="text-center">
+            <button class="btn btn-primary" type="submit" ng-disabled="modalForm1.$invalid">Save</button>
+        </div>
+    </div>
+</form>

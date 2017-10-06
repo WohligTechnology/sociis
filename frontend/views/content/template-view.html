@@ -1,0 +1,151 @@
+<form name="formName">
+    <div class="heading-sec">
+        <div class="row">
+            <div class="col-md-12 column">
+                <div class="heading-profile">
+                    <h2>{{forms.name}}</h2>
+                    <div ng-if="forms.type=='templateLor'">
+                        <toggle-switch ng-model="formData.status" on-label="Show All" off-label="Selected" ng-change="lorShowCategory(formData.status)"
+                            class="switch-small switch-success pull-right"></toggle-switch>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Bar Chart -->
+    <div class="panel-content">
+        <div class="widget">
+            <div class="form-elements-sec">
+                <div class="sec">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div ng-if="forms.type=='templateIla'"><label>ILA Name</label></div>
+                                <div ng-if="forms.type!='templateIla'"><label>Template Name</label></div>
+                                <input type="text" class="form-control" ng-model="forms.templateName" name="templateName" readonly>
+                                <div class="error-msg" ng-show="formName.templateName.$invalid">Please enter Template name</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--{{forms}}-->
+        <div class="widget" ng-if="forms.type!='templateLor'">
+            <div class="form-elements-sec">
+                <div class="sec">
+                    <div class="clearfix"></div>
+                    <div class="form-builder">
+                        <div class="form-repeater" ng-repeat="form in forms.forms">
+                            <div class="form-builder-head">
+                                <p>{{form.name}}</p>
+                            </div>
+                            <div class="form-builder-hr" id="sortable-ul-selector-id" ng-model="form.items">
+                                <div class="form-builder-item no-pad row-item" ng-repeat="item in form.items">
+                                    <div class="col-item col-item-35">
+                                        <p>{{item.name}}
+                                            <span ng-if="item.value == true"></span>
+                                        </p>
+                                    </div>
+                                    <!-- TEXT -->
+                                    <div class="col-item" ng-if="item.value=='Text'">
+                                        <input type="text" ng-model="item.field" placeholder="Enter {{item.name}}" class="form-control">
+                                    </div>
+                                    <!-- DATE -->
+                                    <div class="col-item" ng-if="item.value=='Date'">
+                                        <input type="date" date-model placeholder="Enter {{item.name}}" class="form-control" ng-model="item.field">
+                                    </div>
+                                    <!-- TEXT AREA -->
+                                    <div class="col-item" ng-if="item.value=='Textarea'">
+                                        <textarea class="form-control" msd-elastic ng-model="item.field" placeholder="Enter {{item.name}}"></textarea>
+                                    </div>
+                                    <!-- WUSIWYG -->
+                                    <div class="col-item wuc" ng-if="item.value=='WYSIWYG'">
+                                        <text-angular ta-toolbar="[['ol'],['ul']]" ng-model="item.field" placeholder="Enter {{item.name}}"></text-angular>
+                                        <!--<textarea class="form-control" msd-elastic ng-model="item.field" placeholder="Enter {{item.name}}"></textarea>-->
+                                    </div>
+                                    <!-- NUMBER -->
+                                    <div class="col-item" ng-if="item.value=='Number'">
+                                        <input type="number" placeholder="Enter {{item.name}}" class="form-control" ng-model="item.field">
+                                    </div>
+                                    <!-- Currency -->
+                                    <div class="col-item" ng-if="item.value=='Currency'">
+                                        <input type="text" cleave="template.currencyNoDecimal" placeholder="Enter {{item.name}}" class="form-control" ng-model="item.field">
+                                    </div>
+                                    <!-- SYSTEM FIELD -->
+                                    <div class="col-item" ng-if="item.type=='System Fields'">
+                                        <p>{{item.value|toobject:assignment}}</p>
+                                        <!--<input type="text"  class="form-control" ng-model="item.value">                                        -->
+                                    </div>
+                                    <!-- LOR -->
+                                    <div class="col-item" ng-if="item.type=='Copy'||item.type=='Original'">
+                                        <p>{{item.type}}
+                                            <span class="pull-right">Submitted<toggle-switch ng-model="item.submit" class="switch-small switch-success m5"></toggle-switch></span>
+                                            <span class="pull-right" ng-if="item.submit"><input type="date" date-model placeholder="Enter submitted date" class="form-control" ng-model="item.date"></span>
+                                        </p>
+                                    </div>
+                                    <!-- DROPDOWN -->
+                                    <div class="col-item" ng-if="item.type=='Dropdown'">
+                                        <select class="form-control" ng-model="item.field">
+                                            <option value="{{item}}" ng-repeat="item in item.dropdownValues">{{item}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div>
+            <generate-pdf ng-model="forms"></generate-pdf>
+            {{forms}}
+        </div>-->
+        <!--ng-show="showPdf"-->
+        <div id="pdfView" ng-include="'frontend/views/pdf/new-ila.html'" ng-show="showPdf"></div>
+        <div ng-include="'frontend/views/content/template-view-lor.html'" ng-if="forms.type=='templateLor'"></div>
+        <div class="widget" ng-if="forms.type=='templateLor'">
+            <div class="btn btn-primary" style="margin:40px 40px 0px;" ng-click="checkLorPara()">
+                Fetch Paragraphs </div>
+            <div class="error-msg" ng-show="formName.templateName2.$invalid">Please Click</div>
+            <div class="form-elements-sec">
+                <label>Opening Paragraph</label>
+                <text-angular ta-toolbar="[]" ng-model="forms.openingPara"></text-angular>
+
+                <!--<textarea rows="4" class="form-control" ng-model="forms.openingPara"></textarea>-->
+            </div>
+            <div class="form-elements-sec" ng-if="forms.middlePara!=='' || confirmIfRecieved">
+                <label>Middle Paragraph</label>
+                <textarea rows="4" class="form-control" ng-model="forms.middlePara"></textarea>
+            </div>
+            <div class="form-elements-sec">
+                <label>Closing Paragraph</label>
+                <text-angular style="height: auto;" ta-toolbar="[]" ng-model="forms.closingPara"></text-angular>
+            </div>
+        </div>
+        <div class="widget" ng-if="approval==false">
+            <div class="form-elements-sec">
+                <div class="sec">
+                    <label>Supervisor </label>
+                    <div class="col-item" style="flex:1; padding-left:25%; width:75%">
+                        <select class="form-control" ng-model="forms.officeEmail" required>
+                    <option ng-value="{{employees.officeEmail}}" ng-repeat="employees in employee">{{employees.name}} &lt;{{employees.email}}&gt;</option>
+             </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="text-center mt20 odd-even-button template-btn" ng-if="!disableSave">
+            <button class="btn btn-warning" ng-click="confLor()" ng-if="approval==false && confirmNoDocsPendingB && forms.approvalStatus=='Approved'">Confirm No Docs Pending</button>
+            <button class=" btn btn-primary " ng-click="previewPdf() ">PDF Preview</button>
+            <button class=" btn btn-primary " ng-click="saveDraft(forms) ">Save as Draft</button>
+            <button class="btn btn-warning " ng-click="saveModel(forms) " ng-if="approval==false " ng-disabled="formName.$invalid ">Send for Authorization</button>
+            <button class="btn btn-danger btn-reject" ng-click="comment( 'Reject') " ng-if="approval==true " ng-disabled="formName.$invalid ">Reject</button>
+            <button class="btn btn-success " ng-click="acceptModel(forms) " ng-if="approval==true ">Save & Authorize</button>
+            <button class="btn btn-warning " ng-click="comment( 'Revise') " ng-if="approval==true ">Save & Regenerate</button>
+            <a class="btn btn-danger " ng-click="cancel() ">Cancel</a>
+        </div>
+
+    </div>
+</form>

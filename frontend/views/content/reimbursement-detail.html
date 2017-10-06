@@ -1,0 +1,446 @@
+<div class="breadcrumbs">
+    <ul>
+        <li>
+            <a title="Home">Reimbursement Management</a>
+        </li>
+        <li>
+            <a ui-sref="customerSegment-list">{{header.name}}</a>
+        </li>
+    </ul>
+</div>
+<form name="formName" ng-submit="saveModel(formData)" class="sec">
+    <div class="heading-sec">
+        <div class="row">
+            <div class="col-md-4 column">
+                <div class="heading-profile">
+                    <h2>{{header.name}}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Bar Chart -->
+    <div class="panel-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="widget">
+                    <div class="form-elements-sec">
+                        <div class="widget-title">
+                            <h3>Reimbursement Management</h3>
+                        </div>
+                        <div class="sec">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Employee Name*</label>
+                                        <multiple-select my-enter name="name" required ng-model="formData.name" ng-name="name.firstName" api="searchEmployee" ng-create="employeeName"></multiple-select>
+                                        <div class="error-msg" ng-show="formName.name.$invalid && formName.name.$touched">Please Enter Employee Name</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Branch Office*</label>
+                                        <multiple-select my-enter my-enter name="branch" required ng-model="formData.branch" ng-name="name.branch" api="searchBranch"></multiple-select>
+                                        <div class="error-msg" ng-show="formName.branch.$invalid && formName.branch.$touched">Please Select Branch Office</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Assignment*</label>
+                                        <multiple-select my-enter name="assignment" required ng-model="formData.assignment" ng-name="assignment.name" api="searchAssignment"
+                                            ng-create="assignment"></multiple-select>
+                                        <div class="error-msg" ng-show="formName.ename.$invalid && formName.ename.$touched">Please Enter Employee Name</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Cost*</label>
+                                        <input type="number" name="cost" class="form-control" ng-model="formData.cost" required>
+                                        <div class="error-msg" ng-show="formName.cost.$invalid && formName.cost.$touched">Please Enter cost</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Reasons</label>
+                                        <textarea class="form-control" ng-model="formData.reason"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Approved amount</label>
+                                        <input type="number" name="amnt" class="form-control" ng-model="formData.approvedAmount">
+                                        <div class="error-msg" ng-show="formName.amnt.$invalid && formName.amnt.$touched">Please Enter Amount</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Status*</label>
+                                        <select name="status" class="form-control" ng-model="formData.status" required ng-options="status for status in status"></select>
+                                        <div class="error-msg" ng-show="formName.status.$invalid && formName.status.$touched">Please Select status</div>
+                                    </div>
+                                </div>
+                                <!--<div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Upload Documents</label>
+                                        <upload-image multiple ng-model="formData.image"></upload-image>
+                                    </div>
+                                </div>-->
+                                <!--Start Expense-->
+                                <div class="widget" ng-if="true">
+                                    <div class="form-elements-sec">
+                                        <div class="widget-title">
+                                            <a class="btn btn-primary pull-right" ng-click="addModal( 'expense', '', 'Expense',
+                        '', '',formData.expense)">Add New</a>
+                                            <h3>Expense</h3>
+                                        </div>
+                                        <div class="sec">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Starting*</label>
+                                                        <input type="text" name="starting" class="form-control" ng-model="formData.starting" required>
+                                                        <div class="error-msg" ng-show="formName.starting.$invalid && formName.starting.$touched">Please Enter Starting week</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Ending*</label>
+                                                        <input type="text" name="ending" class="form-control" ng-model="formData.ending" required>
+                                                        <div class="error-msg" ng-show="formName.ending.$invalid && formName.ending.$touched">Please Enter Ending week</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-input" ng-if="formData.expense.length!=0">
+                                                    <thead ng-init="resetExpense()">
+                                                        <tr>
+                                                            <th>Date</th>
+                                                            <th>From</th>
+                                                            <th>To</th>
+                                                            <th>Purpose</th>
+                                                            <th>Mode</th>
+                                                            <th>Distance</th>
+                                                            <th>Rate</th>
+                                                            <th>Amount</th>
+                                                            <th width="150px">Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="expense in formData.expense">
+                                                            <td ng-init="calculateExpense(expense)">{{expense.expenseDate | date:'dd MMM yyyy'}} </td>
+                                                            <td>{{expense.expenseFrom}}</td>
+                                                            <td>{{expense.expenseTo}}</td>
+                                                            <td>{{expense.expensePurpose}}</td>
+                                                            <td>{{expense.expenseMode}}</td>
+                                                            <td>{{expense.expenseDistance}}</td>
+                                                            <td>{{expense.expenseRate}}</td>
+                                                            <td>{{expense.expenseAmount}}</td>
+                                                            <td>
+                                                                <a class="btn btn-primary" ng-click="addModal( 'expense',$index,
+                        'Expense',expense, '',formData.expense)">
+                                                                    <i class="fa fa-pencil"></i>
+                                                                </a>
+                                                                <a class="btn btn-danger" ng-click="deleteElements($index, formData.expense)">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td>
+                                                                <h5>Total</h5>
+                                                            </td>
+                                                            <td>
+                                                                <h5>{{ totals.expense }}</h5>
+                                                            </td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End-->
+                                <!--Start Travel Expense-->
+                                <div class="widget" ng-if="true">
+                                    <div class="form-elements-sec">
+                                        <div class="widget-title">
+                                            <a class="btn btn-primary pull-right" ng-click="addModal( 'travel-expense', '', 'Travel Expense',
+                        'datefilter', '',formData.travelExpense)">Add New</a>
+                                            <h3>Travel Expense</h3>
+                                        </div>
+                                        <div class="sec">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>From Date*</label>
+                                                        <div class="input-group">
+                                                            <input type="text" name="from" class="form-control" uib-datepicker-popup="{{format}}" ng-model="formData.from" is-open="popup.from"
+                                                                datepicker-options="dateOptions" required readonly />
+                                                            <div class="error-msg" ng-show="formName.from.$invalid && formName.from.$touched">Please Enter To date period</div>
+                                                            <span class="input-group-btn">
+                                                                <button type="button" class="btn btn-default" ng-click="popup.from = true">
+                                                                    <i class="fa fa-calendar"></i>
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>To Date*</label>
+                                                        <div class="input-group">
+                                                            <input type="text" name="to" class="form-control" uib-datepicker-popup="{{format}}" ng-model="formData.to" is-open="popup.to"
+                                                                datepicker-options="dateOptions" required readonly />
+                                                            <div class="error-msg" ng-show="formName.to.$invalid && formName.to.$touched">Please Enter To date period</div>
+                                                            <span class="input-group-btn">
+                                                                <button type="button" class="btn btn-default" ng-click="popup.to = true">
+                                                                    <i class="fa fa-calendar"></i>
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Destination*</label>
+                                                        <input type="text" name="destination" class="form-control" ng-model="formData.destination" required>
+                                                        <div class="error-msg" ng-show="formName.destination.$invalid && formName.destination.$touched">Please Enter Destination Period</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-input" ng-if="formData.travelExpense.length!=0">
+                                                    <thead ng-init="resetTravelExpense();">
+                                                        <tr>
+                                                            <th colspan="6" class="text-center">Journey</th>
+                                                            <th></th>
+                                                            <th></th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th colspan="3" class="text-center">Departure</th>
+                                                            <th colspan="3" class="text-center">Arrival</th>
+                                                            <th></th>
+                                                            <th></th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Ex</th>
+                                                            <th>Date</th>
+                                                            <th>Hr</th>
+                                                            <th>To</th>
+                                                            <th>Date</th>
+                                                            <th>Hr</th>
+                                                            <th>Mode</th>
+                                                            <th>Amount</th>
+                                                            <th width="150px">Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="travelExpense in formData.travelExpense">
+                                                            <td ng-init="calculateTravelExpense(travelExpense)">{{travelExpense.depatureFrom}} </td>
+                                                            <td>{{travelExpense.depatureDate | date:'dd MMM yyyy'}}</td>
+                                                            <td>{{travelExpense.depatureHr}}</td>
+                                                            <td>{{travelExpense.arrivalTo}}</td>
+                                                            <td>{{travelExpense.arrivalDate | date:'dd MMM yyyy'}}</td>
+                                                            <td>{{travelExpense.arrivalHr}}</td>
+                                                            <td>{{travelExpense.travelExpenseMode}}</td>
+                                                            <td>{{travelExpense.travelExpenseAmount}}</td>
+                                                            <td>
+                                                                <a class="btn btn-primary" ng-click="addModal( 'travel-expense',$index,
+                        'Travel Expense',travelExpense, '',formData.travelExpense)">
+                                                                    <i class="fa fa-pencil"></i>
+                                                                </a>
+                                                                <a class="btn btn-danger" ng-click="deleteElements($index, formData.travelExpense)">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td>
+                                                                <h5>Total</h5>
+                                                            </td>
+                                                            <td>
+                                                                <h5>{{totals.travelExpense}}</h5>
+                                                            </td>
+                                                            <td width="150px"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End-->
+                                <!--Start Lodging Boarding-->
+                                <div class="widget" ng-if="true">
+                                    <div class="form-elements-sec">
+                                        <div class="widget-title">
+                                            <a class="btn btn-primary pull-right" ng-click="addModal( 'lodging-boarding', '', 'Lodging Boarding',
+                        'datefilter', '',formData.lodgingBoarding)">Add New</a>
+                                            <h3>Lodging & Boarding</h3>
+                                        </div>
+                                        <div class="sec">
+                                            <div class="table-responsive">
+                                                <table class="table table-input" ng-if="formData.lodgingBoarding.length!=0">
+                                                    <thead ng-init="resetLodgingBoarding()">
+                                                        <tr>
+                                                            <th>Date</th>
+                                                            <th>Night Halt</th>
+                                                            <th>Class</th>
+                                                            <th>Rate</th>
+                                                            <th>Amount</th>
+                                                            <th>Hotel Charges</th>
+                                                            <th>Total</th>
+                                                            <th width="150px">Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="lodgingBoarding in formData.lodgingBoarding">
+                                                            <td ng-init="calculateLodgingBoarding(lodgingBoarding)">{{lodgingBoarding.lodgingBoardingDate| date:'dd MMM yyyy'}} </td>
+                                                            <td>{{lodgingBoarding.lodgingBoardingNightHalt}}</td>
+                                                            <td>{{lodgingBoarding.lodgingBoardingClass}}</td>
+                                                            <td>{{lodgingBoarding.lodgingBoardingRate}}</td>
+                                                            <td>{{lodgingBoarding.lodgingBoardingAmount}}</td>
+                                                            <td>{{lodgingBoarding.lodgingBoardingHotelCharges}}</td>
+                                                            <td>{{lodgingBoarding.lodgingBoardingTotal}}</td>
+                                                            <td>
+                                                                <a class="btn btn-primary" ng-click="addModal( 'lodging-boarding',$index,
+                        'Lodging Boarding',lodgingBoarding, '',formData.lodgingBoarding)">
+                                                                    <i class="fa fa-pencil"></i>
+                                                                </a>
+                                                                <a class="btn btn-danger" ng-click="deleteElements($index, formData.lodgingBoarding)">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td>
+                                                                <h5>Total</h5>
+                                                            </td>
+                                                            <td>
+                                                                <h5>{{ totals.lodgingBoarding }}</h5>
+                                                            </td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End-->
+                                <!--Start Pocket Expense-->
+                                <div class="widget" ng-if="true">
+                                    <div class="form-elements-sec">
+                                        <div class="widget-title">
+                                            <a class="btn btn-primary pull-right" ng-click="addModal( 'pocket-expense', '', 'Pocket Expense',
+                        'datefilter', '',formData.pocketExpense)">Add New</a>
+                                            <h3>Out of Pocket Expense</h3>
+                                        </div>
+                                        <div class="sec">
+                                            <div class="table-responsive">
+                                                <table class="table table-input" ng-if="formData.pocketExpense.length!=0">
+                                                    <thead ng-init="resetPocketExpense()">
+                                                        <tr>
+                                                            <th>Date</th>
+                                                            <th>Place</th>
+                                                            <th>Description</th>
+                                                            <th>Total</th>
+                                                            <th width="150px">Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="pocketExpense in formData.pocketExpense">
+                                                            <td ng-init="calculatePocketExpense(pocketExpense)">{{pocketExpense.pocketExpenseDate| date:'dd MMM yyyy'}} </td>
+                                                            <td>{{pocketExpense.pocketExpensePlace}}</td>
+                                                            <td>{{pocketExpense.pocketExpenseDescription}}</td>
+                                                            <td>{{pocketExpense.pocketExpenseTotal}}</td>
+                                                            <td>
+                                                                <a class="btn btn-primary" ng-click="addModal( 'pocket-expense',$index,
+                        'Pocket Expense',pocketExpense, '',formData.pocketExpense)">
+                                                                    <i class="fa fa-pencil"></i>
+                                                                </a>
+                                                                <a class="btn btn-danger" ng-click="deleteElements($index, formData.pocketExpense)">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                        <!--<tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td><h5>Total</h5></td>
+                                                            <td><h5>{{totals.pocketExpense}}</h5></td>
+                                                            <td></td>
+                                                        </tr>-->
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End-->
+                                <!--Start Lodging Boarding-->
+                                <div class="widget" ng-if="true">
+                                    <div class="form-elements-sec">
+                                        <div class="sec">
+                                            <div class="col-md-6"></div>
+                                            <div class="col-md-6">
+                                                <div class="table-responsive" ng-if="totals">
+                                                    <table class="table table-input" ng-init="resetGrandTotal()">
+                                                        <tbody ng-init="calculateGrandTotal(totals)">
+                                                            <tr>
+                                                                <th>Total(A)</th>
+                                                                <td>{{totals.expense}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Total(B)</th>
+                                                                <td>{{totals.travelExpense}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Total(C)</th>
+                                                                <td>{{totals.lodgingBoarding}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Total(D)</th>
+                                                                <td>{{totals.pocketExpense}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Grand Total</th>
+                                                                <td>{{totals.grandTotal}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End-->
+                            </div>
+                            <div class="text-center mt20 odd-even-button">
+                                <button class="btn btn-default" type="submit" ng-disabled="formName.$invalid">Save</button>
+                                <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
