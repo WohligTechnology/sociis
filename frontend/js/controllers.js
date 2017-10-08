@@ -11498,207 +11498,42 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.template = TemplateService.changecontent("customer-list", $state);
         $scope.menutitle = NavigationService.makeactive("Customer List");
         TemplateService.title = $scope.menutitle;
-
-        $scope.navigation = NavigationService.getnav();
-
-        $scope.generateCustomersExcel = function () {
-            NavigationService.saveJsonStore($scope.filter2, function (data) {
-                window.open(adminurl + 'Customer/generateCustomersExcel?id=' + data + "&accessToken=" +
-                    $.jStorage.get("accessToken"), '_blank');
-            });
-        };
-
-        $scope.clearFilter = function () {
-            $scope.filter.text = "";
-            $scope.filter.segment = "";
-            $scope.filter.company = "";
-            $scope.filter.state = "";
-            $.jStorage.set("CustomerFilter", $scope.filter);
-        };
-        $scope.filter = {};
-        $scope.filter.text = "";
-        $scope.filter.segment = "";
-        $scope.filter.company = "";
-        $scope.filter.state = "";
-        if ($stateParams.sorting) {
-            $scope.filter.sorting = $stateParams.sorting;
-        } else {
-            $scope.filter.sorting = [];
-        }
-
         $scope.currentPage = $stateParams.page;
         var i = 0;
         $scope.search = {
-            text: ""
+            keyword: ""
         };
-
-        $scope.changeRecordLimit = function () {
-            $scope.showAssignment();
+        if ($stateParams.keyword) {
+            $scope.search.keyword = $stateParams.keyword;
         }
-        $scope.filter.sortName = "";
-        $scope.filter.sortNumber = 1;
-
-        $scope.filter.maxRow = 10;
-        $scope.limitValues = [10, 50, 100];
-        $scope.changeRecordLimit = function () {
-            $scope.showAllCustomers();
-        }
-        if ($.jStorage.get("CustomerFilter")) {
-            $scope.filter = $.jStorage.get("CustomerFilter");
-        }
-        console.log('$stateParams', $stateParams);
-        if ($stateParams.text) {
-            $scope.filter.text = $stateParams.text;
-        }
-        if ($stateParams.segment) {
-            $scope.filter.segment = $stateParams.segment;
-        }
-        if ($stateParams.company) {
-            $scope.filter.company = $stateParams.company;
-        }
-        if ($stateParams.state) {
-            $scope.filter.state = $stateParams.state;
-        }
-        $scope.showAllCustomers = function (keywordChange, sorting) {
-            if (_.isEmpty(sorting)) {
-                sorting = [];
-            }
-            if (!_.isEmpty($stateParams.sorting)) {
-                $scope.filter.sortName = $stateParams.sorting[0];
-                $scope.filter.sortNumber = $stateParams.sorting[1];
-                console.log("state : sortname::: ", $scope.filter.sortName, $scope.filter.sortNumber);
-            }
-            if (sorting[0]) {
-                $scope.filter.sortName = sorting[0];
-                if (sorting[1] == 1) {
-                    $scope.filter.sortNumber = -1;
-                } else {
-                    $scope.filter.sortNumber = 1;
-                }
-            }
-            TemplateService.getLoader();
-            var segments = [];
-            segments = $scope.filter.segment;
-            $scope.filter.segment = [];
-            _.each(segments, function (values) {
-                $scope.filter.segment.push(values._id);
-            });
-
-            var companies = [];
-            companies = $scope.filter.company;
-            $scope.filter.company = _.map(companies, function (values) {
-                return values._id;
-            });
-
-            var states = [];
-            states = $scope.filter.state;
-            $scope.filter.state = _.map(states, function (values) {
-                return values._id;
-            });
-
+        $scope.showAll = function (keywordChange) {
             $scope.totalItems = undefined;
             if (keywordChange) {
                 $scope.currentPage = 1;
             }
-
-            $scope.filter2 = {
-                sorting: [$scope.filter.sortName, $scope.filter.sortNumber],
+            NavigationService.searchCustomer({
                 page: $scope.currentPage,
-                pagelimit: $scope.filter.maxRow,
-                segment: $scope.filter.segment,
-                company: $scope.filter.company,
-                state: $scope.filter.state,
-                text: $scope.filter.text
-            };
-
-            NavigationService.getAllCustomer($scope.filter2, function (data) {
-                if (data.value == true) {
-                    $scope.modelList = data.data.results;
+                keyword: $scope.search.keyword
+            }, ++i, function (data, ini) {
+                if (ini == i) {
+                    $scope.customerList = data.data.results;
                     $scope.totalItems = data.data.total;
-                    // $scope.maxRow = $scope.maxRow;
+                    $scope.maxRow = data.data.options.count;
                 }
-                TemplateService.removeLoader();
             });
-            $scope.filter.segment = segments;
-            $scope.filter.company = companies;
-            $scope.filter.state = states;
-            $.jStorage.set("CustomerFilter", $scope.filter);
-
         };
+
         $scope.changePage = function (page) {
-            var goTo = "customer-list";
+            var goTo = "typeOfOffice-list";
+            if ($scope.search.keyword) {
+                goTo = "typeOfOffice-list";
+            }
             $state.go(goTo, {
-                sorting: [$scope.filter.sortName, $scope.filter.sortNumber],
                 page: page,
-                text: $scope.filter.text,
-                pagelimit: $scope.filter.maxRow,
-                segment: $scope.filter.segment,
-                company: $scope.filter.company,
-                state: $scope.filter.state
+                keyword: $scope.search.keyword
             });
         };
-
-        $scope.cancel = function () {
-            $window.history.back();
-        };
-
-        $scope.showAllCustomers();
-        $scope.customersFilter = function () {
-            var modalInstance = $uibModal.open({
-                scope: $scope,
-                templateUrl: '/frontend/views/modal/customer-filter.html',
-                size: 'md'
-            });
-        };
-
-        $scope.refreshSegment = function (data) {
-            var formdata = {};
-            formdata.keyword = data;
-            NavigationService.searchCustomerSegment(formdata, 1, function (data) {
-                $scope.segmentData = data.data.results;
-            });
-        };
-
-        $scope.refreshCompany = function (data) {
-            var formdata = {};
-            formdata.keyword = data;
-            NavigationService.searchCustomerCompany(formdata, 1, function (data) {
-                $scope.companyData = data.data.results;
-            });
-        };
-
-        $scope.refreshState = function (data) {
-            var formdata = {};
-            formdata.keyword = data;
-            NavigationService.searchState(formdata, 1, function (data) {
-                $scope.stateData = data.data.results;
-            });
-        };
-
-        if ($.jStorage.get("CustomerFilter")) {
-            $scope.filter = $.jStorage.get("CustomerFilter");
-        }
-
-        $scope.deleteCustomer = function (id) {
-            NavigationService.deleteCustomer({
-                id: id
-            }, function (data) {
-                $scope.showAllCustomers();
-            });
-        };
-
-        $scope.changeStatus = function (data) {
-            var formData = {}
-            formData._id = data._id;
-            formData.status = data.status;
-            NavigationService.modelSave("Customer", formData, function (data) {
-                if (data.value === true) {
-                    toastr.success('Status Changed Successfully');
-                } else {
-                    toastr.error('Error changing status', 'There was an error while changing status');
-                }
-            });
-        };
+        $scope.showAll();
     })
 
     .controller('CreateCustomerCtrl', function ($scope, hotkeys, $window, TemplateService, NavigationService, $timeout, $state, $uibModal, $stateParams, toastr, $filter) {
@@ -11741,81 +11576,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 $scope.passType = 'text';
             }
         };
-        $scope.$watch('formData.typeOfOffice', function () {
-            // console.log("typeOfOffice", $scope.formData.TOFShortName);
-            if ($scope.formData.typeOfOffice) {
-                NavigationService.getOneModel('TypeOfOffice', $scope.formData.typeOfOffice, function (data) {
-                    console.log("data.data.shortCode", data.data.shortCode);
-                    $scope.formData.TOFShortName1 = data.data.shortCode;
-                    console.log("CIty Detalis", $scope.formData);
-                    if ($scope.formData.officeCode === "") {
-                        arr = _.split($scope.formData.city1, ",", 1);
-                        $scope.formData.city1 = arr[0];
-                        // $scope.formData.sname = $scope.formData.TOFShortName ;
-                        $scope.formData.name = $scope.formData.companyShortName + ' ' + $scope.formData.TOFShortName1 + ' ' + $scope.formData.city1;
-                    } else {
-                        arr = _.split($scope.formData.city1, ",", 1);
-                        $scope.formData.city1 = arr[0];
-                        //  $scope.formData.sname = $scope.formData.TOFShortName ;
-                        $scope.formData.name = $scope.formData.companyShortName + ' ' + $scope.formData.TOFShortName1 + ' ' + $scope.formData.officeCode + ' ' + $scope.formData.city1;
-                    }
-                });
-            }
-        });
-        $scope.$watch('formData.customerCompany', function () {
-            if ($scope.formData.customerCompany) {
-                NavigationService.getOneModel('CustomerCompany', $scope.formData.customerCompany, function (data) {
-                    $scope.formData.companyShortName = data.data.shortName;
-                    if ($scope.formData.officeCode === "") {
-                        arr = _.split($scope.formData.city1, ",", 1);
-                        $scope.formData.city1 = arr[0];
-                        $scope.formData.name = $scope.formData.companyShortName + ' ' + $scope.formData.TOFShortName1 + ' ' + $scope.formData.city1;
-                    } else {
-                        arr = _.split($scope.formData.city1, ",", 1);
-                        $scope.formData.city1 = arr[0];
-                        $scope.formData.name = $scope.formData.companyShortName + ' ' + $scope.formData.TOFShortName1 + ' ' + $scope.formData.officeCode + ' ' + $scope.formData.city1;
-                    }
-                });
-            }
-        });
-        $scope.$watch('formData.officeCode', function () {
-            if ($scope.formData.officeCode === "") {
-                arr = _.split($scope.formData.city1, ",", 1);
-                $scope.formData.city1 = arr[0];
-                $scope.formData.name = $scope.formData.companyShortName + ' ' + $scope.formData.TOFShortName1 + ' ' + $scope.formData.city1;
-            } else {
-                arr = _.split($scope.formData.city1, ",", 1);
-                $scope.formData.city1 = arr[0];
-                $scope.formData.name = $scope.formData.companyShortName + ' ' + $scope.formData.TOFShortName1 + ' ' + $scope.formData.officeCode + ' ' + $scope.formData.city1;
-            }
-        });
-        $scope.$watch('formData.city1', function () {
-            console.log($scope.formData);
-            if ($scope.formData.officeCode === "") {
-                arr = _.split($scope.formData.city1, ",", 1);
-                $scope.formData.city1 = arr[0];
-                $scope.formData.name = $scope.formData.companyShortName + ' ' + $scope.formData.TOFShortName1 + ' ' + $scope.formData.city1;
-            } else {
-                arr = _.split($scope.formData.city1, ",", 1);
-                $scope.formData.city1 = arr[0];
-                $scope.formData.name = $scope.formData.companyShortName + ' ' + $scope.formData.TOFShortName1 + ' ' + $scope.formData.officeCode + ' ' + $scope.formData.city1;
-            }
-        });
-        $scope.addOfficer = function () {
-            var modalInstance = $uibModal.open({
-                scope: $scope,
-                templateUrl: '/frontend/views/modal/modal-officer.html',
-                size: 'lg'
-            });
-        };
 
-        $scope.transferOfficer = function () {
-            var modalInstance = $uibModal.open({
-                scope: $scope,
-                templateUrl: '/frontend/views/modal/modal-transfer-officer.html',
-                size: 'lg'
-            });
-        };
         $scope.cancel = function () {
             $window.history.back();
         }
@@ -11842,34 +11603,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 } else {
                     toastr.error("Customer" + data.error.message + " creation failed.", "Customer" + " creation error");
                 }
-            });
-        };
-        $scope.createOfficer = function (modelData) {
-            modelData.name = modelData.firstName + " " + modelData.lastName;
-            NavigationService.saveOfficer(modelData, function (data) {
-                if (data.value) {
-                    if ($scope.buttonValue === "Save") {
-                        $scope.formData.officers.push(data.data);
-                    } else {
-                        $scope.formData.officers[$scope.formIndex] = modelData;
-                    }
-                }
-            });
-        };
-        $scope.openCreateOfficer = function () {
-            $scope.buttonValue = "Save";
-            $scope.modalData = {};
-            $scope.addOfficer();
-        };
-        $scope.openEditOfficer = function (index) {
-            $scope.formIndex = index;
-            $scope.buttonValue = "Edit";
-            $scope.modalData = $scope.formData.officers[index];
-            $scope.addOfficer();
-        };
-        $scope.deleteOfficer = function (index) {
-            NavigationService.deleteModel("Officer", $scope.formData.officers[index]._id, function (data) {
-                $scope.formData.officers.splice(index, 1);
             });
         };
     })
@@ -11905,91 +11638,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         };
         $scope.showing = false;
         $scope.passType = 'password';
-        $scope.showPass = function () {
-            $scope.showing = !$scope.showing;
-            if ($scope.showing === false) {
-                $scope.passType = 'password';
-            } else {
-                $scope.passType = 'text';
-            }
-        };
-        $scope.addOfficer = function () {
-            var modalInstance = $uibModal.open({
-                scope: $scope,
-                templateUrl: '/frontend/views/modal/modal-officer.html',
-                size: 'lg'
-            });
-        };
-        $scope.transferOfficer = function () {
-            var modalInstance = $uibModal.open({
-                scope: $scope,
-                templateUrl: '/frontend/views/modal/modal-transfer-officer.html',
-                size: 'lg'
-            });
-        };
-        $scope.$watch('formData.typeOfOffice', function () {
-            console.log($scope.formData.typeOfOffice);
-            if ($scope.formData.typeOfOffice) {
-                NavigationService.getOneModel('TypeOfOffice', $scope.formData.typeOfOffice, function (data) {
-                    $scope.formData.TOFShortName = data.data.shortCode;
-                    if ($scope.formData.officeCode === "") {
-                        arr = _.split($scope.formData.city1, ",", 1);
-                        $scope.formData.city1 = arr[0];
-                        $scope.formData.name = $scope.formData.companyShortName + ' ' + $scope.formData.TOFShortName + ' ' + $scope.formData.city1;
-                    } else {
-                        arr = _.split($scope.formData.city1, ",", 1);
-                        $scope.formData.city1 = arr[0];
-                        $scope.formData.name = $scope.formData.companyShortName + ' ' + $scope.formData.TOFShortName + ' ' + $scope.formData.officeCode + ' ' + $scope.formData.city1;
-                    }
-                });
-            }
-        });
-        $scope.$watch('formData.customerCompany', function () {
-            if ($scope.formData.customerCompany) {
-                NavigationService.getOneModel('CustomerCompany', $scope.formData.customerCompany, function (data) {
-                    $scope.formData.companyShortName = data.data.shortName;
-                    if ($scope.formData.officeCode === "") {
-                        arr = _.split($scope.formData.city1, ",", 1);
-                        $scope.formData.city1 = arr[0];
-                        $scope.formData.name = $scope.formData.companyShortName + ' ' + $scope.formData.TOFShortName + ' ' + $scope.formData.city1;
-                    } else {
-                        arr = _.split($scope.formData.city1, ",", 1);
-                        $scope.formData.city1 = arr[0];
-                        $scope.formData.name = $scope.formData.companyShortName + ' ' + $scope.formData.TOFShortName + ' ' + $scope.formData.officeCode + ' ' + $scope.formData.city1;
-                    }
-                });
-            }
-        });
-        $scope.$watch('formData.officeCode', function () {
-            if ($scope.formData.officeCode === "") {
-                arr = _.split($scope.formData.city1, ",", 1);
-                $scope.formData.city1 = arr[0];
-                $scope.formData.name = $scope.formData.companyShortName + ' ' + $scope.formData.TOFShortName + ' ' + $scope.formData.city1;
-            } else {
-                arr = _.split($scope.formData.city1, ",", 1);
-                $scope.formData.city1 = arr[0];
-                $scope.formData.name = $scope.formData.companyShortName + ' ' + $scope.formData.TOFShortName + ' ' + $scope.formData.officeCode + ' ' + $scope.formData.city1;
-            }
-        });
-        $scope.$watch('formData.city1', function () {
-            if ($scope.formData.officeCode === "") {
-                arr = _.split($scope.formData.city1, ",", 1);
-                $scope.formData.city1 = arr[0];
-                $scope.formData.name = $scope.formData.companyShortName + ' ' + $scope.formData.TOFShortName + ' ' + $scope.formData.city1;
 
 
-            } else {
-                arr = _.split($scope.formData.city1, ",", 1);
-                $scope.formData.city1 = arr[0];
-                $scope.formData.name = $scope.formData.companyShortName + ' ' + $scope.formData.TOFShortName + ' ' + $scope.formData.officeCode + ' ' + $scope.formData.city1;
-            }
-        });
 
         NavigationService.getOneModel("Customer", $stateParams.id, function (data) {
             $scope.formData = data.data;
-            $scope.formData.creditLimitPending = $scope.formData.creditLimitAlloted - $scope.formData.creditLimitExhausted;
-            if (data.data.city) {}
-            $scope.formData.name = $scope.formData.companyShortName + '-' + $scope.formData.TOFShortName + '-' + $scope.formData.officeCode + '-' + $scope.formData.city1;
+            $scope.formData.creditPending = $scope.formData.creditAlloted - $scope.formData.creditExhausted;
         });
         $scope.cancel = function () {
             $window.history.back();
@@ -12020,38 +11674,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             });
         };
 
-        $scope.custId = $stateParams.id;
-
-        $scope.createOfficer = function (modelData) {
-            modelData.customer = $stateParams.id;
-            modelData.name = modelData.firstName + " " + modelData.lastName;
-            NavigationService.saveOfficer(modelData, function (data) {
-                if (data.value) {
-                    if ($scope.buttonValue === "Save") {
-                        $scope.formData.officers.push(data.data);
-                    } else {
-                        $scope.formData.officers[$scope.formIndex] = modelData;
-                    }
-                }
-            });
-        };
-        $scope.openCreateOfficer = function () {
-            $scope.buttonValue = "Save";
-            $scope.modalData = {};
-            $scope.addOfficer();
-        };
-        $scope.openEditOfficer = function (index) {
-            $scope.formIndex = index;
-            $scope.buttonValue = "Edit";
-            $scope.modalData = $scope.formData.officers[index];
-            $scope.modalData.birthDate = new Date($scope.formData.officers[index].birthDate);
-            $scope.addOfficer();
-        };
-        $scope.deleteOfficer = function (index) {
-            NavigationService.deleteModel("Officer", $scope.formData.officers[index]._id, function (data) {
-                $scope.formData.officers.splice(index, 1);
-            });
-        };
     })
 
     .controller('EditGradeCtrl', function ($scope, $window, TemplateService, NavigationService, $timeout, $state, $stateParams) {
@@ -12835,6 +12457,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.getLoginEmployee = $.jStorage.get("getLoginEmployee");
         $scope.disableSave = false;
         $scope.formData = {};
+        $scope.formData.name = "";
+        $scope.formData.employee = $scope.getLoginEmployee._id;
         $scope.formData.invoiceList = [{}];
         $scope.addHead = function () {
             $scope.formData.invoiceList.push({});
@@ -12860,16 +12484,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         };
 
         $scope.refreshBilledTos = function (data) {
-                var formdata = {};
-                formdata.keyword = data;
-                NavigationService.searchCustomer(formdata, 1, function (data) {
-                    $scope.billedTos = data.data.results;
-                });
-            
+            var formdata = {};
+            formdata.keyword = data;
+            NavigationService.searchCustomer(formdata, 1, function (data) {
+                $scope.billedTos = data.data.results;
+            });
+
         };
         $scope.refreshBilledTos();
         $scope.formData.tax = [];
-        $scope.formData.status = true;
+        // $scope.formData.status = true;
         $scope.required = true;
         $scope.formData.subTotal = 0;
         $scope.showForm = false;
@@ -12881,39 +12505,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.cancel = function () {
             $window.history.back();
         }
-        // $scope.sendMessage = function (fileName, success) {
-        //     $scope.message.type = "Normal";
-        //     $scope.message.title = "Invoice " + $scope.invoiceNumber + " sent for authorization";
-        //     $scope.message.invoiceNumber = $scope.invoiceNumber;
-        //     $scope.timeline.chat.push($scope.message);
-        //     NavigationService.saveChat($scope.timeline, function (data) {
-        //         if (data.value) {
-        //             $window.history.back();
-        //             toastr.clear();
-        //             toastr.success(success[0], success[1]);
-        //         } else {
-        //             $window.history.back();
-        //             toastr.clear();
-        //             toastr.success("There was an error while saving data to the timeline", "Error Updating Timeline");
-        //         }
-        //     });
-        // };
-
-        // $scope.updateTimelineChat = function (timeline, success) {
-        //     $scope.timeline.chat.push(timeline);
-        //     NavigationService.saveChat($scope.timeline, function (data) {
-        //         if (data.value) {
-        //             toastr.clear();
-        //             toastr.success(success[0], success[1]);
-        //             $window.history.back();
-        //             $scope.getTimeline();
-        //         } else {
-        //             toastr.clear();
-        //             toastr.error("There was an error while updating Timeline.", "Error Updating Timeline");
-        //             $window.history.back();
-        //         }
-        //     });
-        // };
         $scope.getParentEmployee = function () {
             NavigationService.getEmployeeData($scope.empId, function (data) {
                 if (data.value) {
@@ -13168,7 +12759,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                     }
                 }
             });
-        }
+        };
+        $scope.createInvoice = function (data) {
+            console.log("In Controller", data);
+            NavigationService.createInvoice($scope.formData, function (data) {
+                console.log("Data In Result", data);
+            });
+        };
+
     })
     .controller('EditInvoiceCtrl', function ($scope, $window, $uibModal, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
         //Used to name the .html file

@@ -1145,6 +1145,12 @@ var navigationservice = angular.module('navigationservice', [])
                     callback(data, i);
                 });
             },
+            createInvoice: function (formData, callback) {
+                $http.post(adminurl + 'Invoice/createInvoice', formData).success(function (err, data) {
+                    console.log("CreateInvoice Data", data)
+                    callback(data);
+                })
+            },
             searchShop: function (formData, i, callback) {
                 // formData.accessToken = $.jStorage.get("accessToken");
                 $http.post(adminurl + 'Shop/search', formData).success(function (data) {

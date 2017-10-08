@@ -1,12 +1,6 @@
 <form name="formName">
     <div class="heading-sec">
-        <div class="row">
-            <div class="col-md-12 column">
-                <div class="heading-profile">
-                    <toggle-switch ng-model="formData.status" class="switch-small switch-success pull-right"></toggle-switch>
-                </div>
-            </div>
-        </div>
+
     </div>
     <div class="panel-content">
         <div class="widget">
@@ -35,6 +29,19 @@
                                 <div class="error-msg" ng-show="formName.shop.$invalid">Please Select shop </div>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <!--<div class="form-group">
+                                <label>Employee*{{formData.employee}}</label>
+                                <multiple-select my-enter name="employee" required ng-model="formData.employee" ng-name="name.employee" api="searchEmployee"></multiple-select>
+                                <div class="error-msg" ng-show="formName.employee.$invalid">Please Select employee </div>
+                            </div>-->
+                            <div class="form-group">
+                                <label>Owner*</label>
+                                <multiple-select my-enter name="owner" required ng-model="formData.owner" ng-name="name.owner" api="getBackendEmployeeOnly"></multiple-select>
+                                <div class="error-msg" ng-show="formName.owner.$invalid">Please Select owner</div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -144,32 +151,34 @@
                 </div>
             </div>
         </div>
-
-        <div class="widget" ng-if="showForm && !approval">
+        <div class="widget">
             <div class="form-elements-sec">
                 <div class="sec">
-                    <label>Supervisor </label>
-                    <div class="col-item" style="flex:1; padding-left:25%; width:75%">
-                        <select class="form-control" ng-model="formData.officeEmail" required>
-                    <option ng-value="{{employees.officeEmail}}" ng-repeat="employees in employee">{{employees.name}} &lt;{{employees.email}}&gt;</option>
-             </select>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Payment Method*</label>
+                            <br>
+                            <label class="radio-inline">
+                                            <input type="radio" name="paymentMethod" value="Cash" required ng-model="formData.paymentMethod">Cash
+                                        </label>
+                            <label class="radio-inline">
+                                            <input type="radio" name="paymentMethod" value="Credit" required ng-model="formData.paymentMethod">Credit
+                                        </label>
+                            <div class="error-msg" ng-show="formName.paymentMethod.$invalid && formName.paymentMethod.$touched">Please Select paymentMethod</div>
+                        </div>
+                    </div>
+                    <div class="form-elements-sec">
+                        <label>Comment</label>
+                        <text-angular ta-toolbar="[]" ng-model="formData.comment"></text-angular>
+
+                        <!--<textarea rows="4" class="form-control" ng-model="forms.openingPara"></textarea>-->
                     </div>
                 </div>
             </div>
         </div>
-        <div class="clearfix"></div>
-        <!--<div ng-if="hasGST">-->
-        <div class="text-center mt20 odd-even-button" ng-if="!disableSave">
-            <button class="btn btn-primary" ng-click="previewPdf(formData)" ng-if="showForm">PDF Preview</button>
-            <button class="btn btn-primary" ng-click="saveDraft(formData)" ng-if="showForm">Save As Draft</button>
-            <button class="btn btn-warning" ng-click="saveModel(formData)" ng-if="showForm && !approval" ng-disabled="formName.$invalid">Send for Authorisation</button>
-            <button class="btn btn-success" ng-click="saveModel(formData)" ng-if="showForm && approval" ng-disabled="formName.$invalid">Save & Authorize</button>
-            <button class="btn btn-danger" ng-click="comment('Reject')" ng-if="showForm && approval" ng-disabled="formName.$invalid">Reject</button>
-            <button class="btn btn-warning" ng-click="comment('Revise')" ng-if="showForm && approval" ng-disabled="formName.$invalid">Save & Regenerate</button>
-            <a class="btn btn-danger" ng-click="cancel()">Cancel</a>
-        </div>
-        <div class="text-center mt20 odd-even-button" ng-if="saveForInvoiceList">
-            <button class="btn btn-primary" ng-click="saveRevise()" ng-if="showForm">Revise</button>
+
+        <div class="text-center mt20 odd-even-button">
+            <button class="btn btn-success" ng-click="createInvoice(formData)" ng-disabled="formName.$invalid">Save</button>
             <a class="btn btn-danger" ng-click="cancel()">Cancel</a>
         </div>
         <!--</div>-->

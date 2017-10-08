@@ -13,7 +13,7 @@ var schema = new Schema({
         ref: "Shop",
         index: true
     },
-    createdBy: {
+    employee: {
         type: Schema.Types.ObjectId,
         ref: "Employee",
         index: true
@@ -42,7 +42,14 @@ var schema = new Schema({
     },
     status: {
         type: String,
-        enum: ["Pending", "Partial Pending", "Paid", "Cancelled"]
+        enum: ["Pending", "Partial Pending", "Paid"]
+    },
+    paymentMethod: {
+        type: String,
+        enum: ["Cash", "Credit"]
+    },
+    comment: {
+        type: String
     }
 });
 
@@ -247,37 +254,36 @@ var model = {
         }
     },
     generateInvoiceNumber: function (data, callback) {
-        var sInput = '';
-        var invoiceNumber = "";
-        sInput = _.split(data.name, '-');
-        if (sInput.length != 4) {
-            invoiceNumber = sInput[0] + "-" + sInput[1] + "-" + sInput[2];
-        } else {
-            invoiceNumber = sInput[1] + "-" + sInput[2] + "-" + sInput[3];
-        }
-        if (data.invoice.length > 0) {
-            if (data.invoiceApprovalStatus == "Draft") {
-                if (data.invoice.length != 1) {
-                    invoiceNumber = invoiceNumber + "-" + String.fromCharCode(63 + data.invoice.length);
-                }
-            } else {
-                invoiceNumber = invoiceNumber + "-" + String.fromCharCode(64 + data.invoice.length);
-            }
-        }
-        Invoice.find({
-            "invoiceNumber": invoiceNumber
-        }).exec(function (err, data) {
+        // var sInput = '';
+        var invoiceNumber = 1;
+        // sInput = _.split(data.name, '-');
+        // if (sInput.length != 4) {
+        //     invoiceNumber = sInput[0] + "-" + sInput[1] + "-" + sInput[2];
+        // } else {
+        //     invoiceNumber = sInput[1] + "-" + sInput[2] + "-" + sInput[3];
+        // }
+        // if (data.invoice.length > 0) {
+        //     if (data.invoiceApprovalStatus == "Draft") {
+        //         if (data.invoice.length != 1) {
+        //             invoiceNumber = invoiceNumber + "-" + String.fromCharCode(63 + data.invoice.length);
+        //         }
+        //     } else {
+        //         invoiceNumber = invoiceNumber + "-" + String.fromCharCode(64 + data.invoice.length);
+        //     }
+        // }
+        Invoice.find({}, {
+            name: 1
+        }).sort({
+            name: -1
+        }).limit(1).exec(function (err, data) {
             if (err) {
                 callback(err, null)
             } else {
                 if (data.length == 0) {
                     callback(null, invoiceNumber)
                 } else {
-                    var error = {
-                        msg: "Invoice number is to be unique",
-                        number: invoiceNumber
-                    }
-                    callback(error, null);
+                    invoiceNumber = invoiceNumber + parseInt(data[0].name)
+                    callback(null, invoiceNumber);
                 }
             }
         });

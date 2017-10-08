@@ -19,7 +19,6 @@
             </div>
         </div>
     </div>
-    <!-- Top Bar Chart -->
     <div class="panel-content">
         <div class="row">
             <div class="col-md-12">
@@ -30,70 +29,41 @@
                                 <h3>Customer</h3>
                             </div>
                             <div class="row">
-                                <div class="col-sm-6">
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Customer Segment*</label>
-                                        <multiple-select my-enter name="customerSegment" required ng-model="formData.customerSegment" ng-name="name.customerSegment"
-                                            api="searchCustomerSegment" ng-create="customerSegmentSave"></multiple-select>
-                                        <div class="error-msg" ng-show="formName.customerSegment.$invalid">Please Select Customer Segment</div>
+                                        <label>Name*</label>
+                                        <input type="text" name="name" class="form-control" ng-model="formData.name" ng-value="formData.name">
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Customer Company*</label>
-                                        <multiple-select my-enter name="customerCompany" required ng-model="formData.customerCompany" filter='{"customerSegment":"{{formData.customerSegment}}"}'
-                                            ng-name="name.customerCompany" api="searchCustomerCompany"></multiple-select>
-                                        <div class="error-msg" ng-show="formName.customerCompany.$invalid">Please Select Customer Company</div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Type of Office*</label>
-                                        <multiple-select my-enter name="typeOfOffice" required ng-model="formData.typeOfOffice" ng-name="formData.TOFShortName" api="searchTypeOfOffice"
-                                            ng-create="typeofofficeSave"></multiple-select>
-                                        <div class="error-msg" ng-show="formName.typeOfOffice.$invalid">Please Select Type of Office</div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Customer Short Name*</label>
-                                        <input type="text" name="name" class="form-control" ng-model="formData.name" ng-value="formData.name" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6" ng-show="name.customerSegment=='Insurer'">
-                                    <div class="form-group">
-                                        <label>Policy Issuing Office</label>
-                                        <br>
-                                        <toggle-switch on-label="Yes" off-label="No" ng-model="formData.issueOffice" class="switch-mini switch-success"></toggle-switch>
-                                        <div class="error-msg" ng-show="formName.issueOffice.$invalid && formName.issueOffice.$touched">Please Select Policy Issuing Office</div>
-                                    </div>
-                                </div>
-                                <!--<div class="col-sm-6" ng-show="name.customerSegment=='Insurer'">-->
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Office Code</label>
-                                        <input type="text" name="officeCode" class="form-control" ng-model="formData.officeCode">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Category*</label>
                                         <br>
                                         <label class="radio-inline">
-                                            <input type="radio" name="category" value="Active" required ng-model="formData.category">Active
+                                            <input type="radio" name="category" value="Silver" required ng-model="formData.category">Silver
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="category" value="Prospective" required ng-model="formData.category">Prospective
+                                            <input type="radio" name="category" value="Gold" required ng-model="formData.category">Gold
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="category" value="Platinum" required ng-model="formData.category">Platinum
                                         </label>
                                         <div class="error-msg" ng-show="formName.category.$invalid && formName.category.$touched">Please Select Category</div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Reporting To</label>
-                                        <multiple-select my-enter name="reportingTo" ng-model="formData.reportingTo" ng-name="name.reportingTo" api="searchCustomer"
-                                            filter='{"customerCompany":"{{formData.customerCompany}}"}'></multiple-select>
-                                        <div class="error-msg" ng-show="formName.reportingTo.$invalid">Please Select ReportingTo</div>
+                                        <label>Mobile</label>
+                                        <input type="text" class="form-control" ng-model="formData.mobile">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Email Id</label>
+                                        <input type="email" class="form-control" ng-model="formData.email">
                                     </div>
                                 </div>
                             </div>
@@ -104,92 +74,24 @@
                             <div class="widget-title">
                                 <h3>Credit Limit</h3>
                             </div>
-                            <div class="form-group">
-                                <label>Credit Limit Alloted</label>
-                                <input class="form-control" name="creditLimitAlloted" ng-model="formData.creditLimitAlloted">
-                            </div>
-                            <div class="form-group">
-                                <label>Credit Limit exhausted</label>
-                                <input class="form-control" name="creditLimitExhausted" ng-model="formData.creditLimitExhausted" ng-init="formData.creditLimitExhausted = 0"
-                                    readonly>
-                            </div>
-                            <div class="form-group">
-                                <label>Credit Limit Pending</label>
-                                <input class="form-control" name="creditLimitPending" ng-model="formData.creditLimitPending" ng-init="formData.creditLimitPending = 0"
-                                    readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="widget">
-                                <div class="form-elements-sec">
-                                    <div class="widget-title">
-                                        <h3>Address</h3>
-                                    </div>
-                                    <address-form ng-name="name" ng-valid="formName" ng-model="formData"></address-form>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label>Credit Limit Alloted</label>
+                                    <input class="form-control" name="creditAlloted" ng-model="formData.creditAlloted">
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="widget">
-                                <div class="form-elements-sec">
-                                    <div class="widget-title">
-                                        <h3>Contact</h3>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Direct Number</label>
-                                        <input type="text" class="form-control" ng-model="formData.direct">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Phone Number 1</label>
-                                        <input type="text" class="form-control" ng-model="formData.phone1">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Phone Number 2</label>
-                                        <input type="text" class="form-control" ng-model="formData.phone2">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Email Id</label>
-                                        <input type="email" class="form-control" ng-model="formData.email">
-                                    </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label>Credit Limit exhausted</label>
+                                    <input class="form-control" name="creditExhausted" ng-model="formData.creditExhausted" ng-init="formData.creditExhausted = 0"
+                                        readonly>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="widget" ng-if="custId">
-                        <div class="form-elements-sec">
-                            <div class="widget-title">
-                                <div class="pull-right">
-                                    <a class="btn btn-primary" ng-click="openCreateOfficer()">Add New</a>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label>Credit Limit Pending</label>
+                                    <input class="form-control" name="creditPending" ng-model="formData.creditPending" ng-init="formData.creditPending = 0" readonly>
                                 </div>
-                                <h3>List of Officers</h3>
-                            </div>
-                            <div class="table-responsive" ng-if="formData.officers != ''">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="data in formData.officers">
-                                            <td>{{data.firstName}}</td>
-                                            <td>
-                                                <a class="btn btn-primary" ng-click="openEditOfficer($index)">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
-                                                <a class="btn btn-danger" ng-click="deleteOfficer($index)">
-                                                    <i class="fa fa-trash"></i>
-                                                </a>
-                                                <a class="btn btn-warning" ng-click="transferOfficer()">
-                                                    <i class="fa fa-refresh"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                     </div>
@@ -198,7 +100,9 @@
                         <button class="btn btn-default" type="submit" ng-disabled="formName.$invalid">Save</button>
                         <a class="btn btn-default" type="submit" ng-click="cancel()">Cancel</a>
                     </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </form>
-</div>
-</div>
-</div>

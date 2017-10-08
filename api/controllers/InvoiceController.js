@@ -1,5 +1,53 @@
 module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 var controller = {
+    createInvoice: function (req, res) {
+        async.waterfall([
+            function (callback) {
+                req.model.generateInvoiceNumber(req.body, function (err, invoiceNumber) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        req.body.name = invoiceNumber;
+                        console.log("Number", invoiceNumber)
+                        req.model.saveData(req.body, function (err, data) {
+                            console.log("data", err, data);
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                console.log("Invoice Data", data);
+                                callback(null, data)
+                            }
+                        });
+                    }
+                })
+            },
+            // function (data, callback) {
+            //     async.each(formData.tax, function (n, callback) {
+            //         n.amount = n.percent * formData.subTotal / 100;
+            //         formData.grandTotal = n.amount + formData.grandTotal;
+            //         callback();
+            //     }, function (err) {
+            //         if (err) {
+            //             toastr.error("Error In SubTotal Calulation");
+            //         } else {
+            //             callback(null, true);
+            //         }
+            //     });
+            // }
+        ], function (err, results) {
+
+            if (err) {
+                res.callback(err, null);
+            } else {
+                console.log("Res", results);
+                var newData = {
+                    data: results,
+                    value: true
+                }
+                res.callback(null, newData);
+            }
+        });
+    },
     generateSalesRegisterExcel: function (req, res) {
         JsonStore.findOne({
             _id: req.query.id

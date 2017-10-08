@@ -1,6 +1,3 @@
-<!-- <div id="progressBar">
-	<div class="loader"></div>
-</div> -->
 <div class="breadcrumbs">
     <ul>
         <li>
@@ -29,21 +26,13 @@
                     <div class="widget-title">
                         <div class="pull-right">
                             <form class="search-form mr-form">
-                                <input type="text" ng-change="showAllCustomers(true)" placeholder="Search Here..." ng-model="filter.text" />
+                                <input type="text" ng-change="showAll(true)" placeholder="Search Here..." ng-model="search.keyword" />
                                 <button type="submit">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </form>
                             <a class="btn btn-primary" ui-sref="createcustomer" ng-if="template.currentRole.add.val">Add New</a>
-                            <button class="btn btn-primary" ng-click="customersFilter()"><i class="fa fa-filter"></i> Filter</button>
-                            <button class="btn btn-primary" ng-click="generateCustomersExcel()"><i class="fa fa-file-excel-o"></i> Excel</button>
-                            <a class="space">"</a>
-                            <ui-select class="select-limit pull-right" ng-model="filter.maxRow" theme="bootstrap" ng-change="changeRecordLimit()" title="Choose Record Limit">
-                                <ui-select-match>{{$select.selected}}</ui-select-match>
-                                <ui-select-choices repeat="limit in limitValues | filter: $select.search">
-                                    <span ng-bind-html="limit | highlight: $select.search"></span>
-                                </ui-select-choices>
-                            </ui-select>
+
                         </div>
                         <h3>List of Customers <span class="tableTotal">(Total : {{totalItems}}) </span></h3>
                     </div>
@@ -51,29 +40,22 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Segment</th>
-                                    <th>Customer Short Name</th>
-                                    <th>City</th>
-                                    <th>Phone No.</th>
-                                    <th>Status</th>
+                                    <th>Customer Name</th>
+                                    <th>Mobile</th>
+                                    <th>Category</th>
+                                    <th>Pending Bill</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody ng-show="totalItems>0">
-                                <tr ng-repeat="data in modelList">
-                                    <td>{{data.segment || "-"}}</td>
-                                    <td>{{data.name || "-"}}</td>
-                                    <td>{{data.city || "-"}}</td>
-                                    <td><span>{{data.phone1}}</span><span ng-if="data.phone1 && data.phone2">, </span><span>{{data.phone2}}</span></td>
-                                    <td>
-                                        <toggle-switch ng-model="data.status" class="switch-mini switch-success" ng-change="changeStatus(data)"></toggle-switch>
-                                    </td>
+                                <tr ng-repeat="data in customerList">
+                                    <td>{{data.name}}</td>
+                                    <td>{{data.mobile}}</td>
+                                    <td>{{data.category}}</td>
+                                    <td>{{data.balancePayment || "-"}}</td>
                                     <td>
                                         <a class="btn btn-primary" ui-sref="editcustomer({id:data._id})" ng-if="template.currentRole.edit.val">
                                             <i class="fa fa-pencil"></i>
-                                        </a>
-                                        <a class="btn btn-danger" ng-click="deleteModel(data._id)" ng-if="template.currentRole.delete.val">
-                                            <i class="fa fa-trash"></i>
                                         </a>
                                     </td>
                                 </tr>
