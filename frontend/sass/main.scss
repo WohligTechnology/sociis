@@ -408,9 +408,11 @@ $trans-black: rgba( black, .15);
 .btn-edit {
     margin-left: 20px;
 }
-.ml-22{
+
+.ml-22 {
     margin-left: 22px;
 }
+
 .padding-border {
     padding: 20px 0;
 }
@@ -497,11 +499,13 @@ $trans-black: rgba( black, .15);
 .btn-padd {
     padding: 4px 12px;
 }
-.checkbox-upload{
-    margin-top:7px;
+
+.checkbox-upload {
+    margin-top: 7px;
 }
+
 .dwnld-bx {
-     width: 8%;
+    width: 8%;
     background-color: #2f95ed;
     right: 5px;
     top: 5px;
@@ -528,16 +532,19 @@ $trans-black: rgba( black, .15);
 .btn-approve {
     margin-right: 20px
 }
-    .btn-upload-directive{
+
+.btn-upload-directive {
     background-color: #2f95ed;
-    color:white;
-       padding: 2px 4px 0px;
-    }
-     .red-upload-directive{
+    color: white;
+    padding: 2px 4px 0px;
+}
+
+.red-upload-directive {
     background-color: $red;
     color: white;
     padding: 3px 5px 1px;
-    }
+}
+
 // .side-header{
 //     position: absolute !important;
 // }
@@ -1974,9 +1981,11 @@ img.uploadingImage {
     padding-top: 20%;
     padding-right: 0;
 }
-.ml-5{
-        margin-left: 5px;
+
+.ml-5 {
+    margin-left: 5px;
 }
+
 .download-doc {
     padding-left: 8%;
     padding-top: 7%;
@@ -2468,6 +2477,78 @@ form.search-form {
 
 .toster-progress {
     padding: 0 15px;
+}
+
+//login
+.back-color {
+    background-color: #27363d;
+}
+
+.login-content {
+    width: 400px;
+    margin: 150px 20px;
+    padding: 10px 30px 30px;
+    overflow: hidden;
+    position: relative;
+}
+
+.log-form-control {
+    height: 45px;
+    width: 80%;
+    padding: 1px 10px;
+    color: #fff;
+    background-color: #27363d;
+    border: 2px solid #536269;
+    border-radius: 6px !important;
+}
+
+.log-form-control {
+    &:active,
+    &:focus {
+        border: 2px solid #6dd99f;
+    }
+}
+
+// .log-form-control:{
+//     border: 2px solid #6dd99f ;
+// }
+.light-green {
+    height: 43px;
+    width: 80%;
+    margin-top: 20px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-radius: 6px !important;
+    background-color: #6dd99f
+}
+
+.forget-passwordd {
+    font-size: 15px;
+    color: #536269;
+}
+
+.mar-t {
+    margin-top: 20px;
+}
+
+.bor-right {
+    height: 200px;
+    border-right: 1px solid #536269;
+}
+
+.login-logo {
+    // width: 90%;
+    margin: 150px 0px;
+}
+
+.sociis {
+    h1 {
+        padding: 10% 40%;
+        font-size: 40px;
+        color: #fff;
+    }
 }
 
 @import "fancybox-override";
