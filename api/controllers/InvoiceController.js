@@ -8,13 +8,11 @@ var controller = {
                         callback(err, null);
                     } else {
                         req.body.name = invoiceNumber;
-                        // console.log("Number", invoiceNumber)
                         req.model.saveData(req.body, function (err, data) {
                             console.log("data", err, data);
                             if (err) {
                                 callback(err, null);
                             } else {
-                                // console.log("Invoice Data", data);
                                 callback(null, data)
                             }
                         });
@@ -33,18 +31,14 @@ var controller = {
                 paymentObj.invoice.push(data._id);
                 if (req.body.paymentMethod == "Cash") {
                     Payment.generatePaymentNumber(req.body, function (err, name) {
-                        console.log("***************generate payment number *********", name)
                         if (err) {
                             callback(err, null);
                         } else {
                             paymentObj.name = name;
-                            console.log("Number", name)
                             Payment.saveData(paymentObj, function (err, data) {
-                                console.log("data", err, data);
                                 if (err) {
                                     callback(err, null);
                                 } else {
-                                    console.log("Invoice Data", data);
                                     callback(null, data)
                                 }
                             });
@@ -60,12 +54,11 @@ var controller = {
             if (err) {
                 res.callback(err, null);
             } else {
-                console.log("Res", results);
-                var newData = {
-                    data: results,
-                    value: true
-                }
-                res.callback(null, newData);
+                // var newData = {
+                //     data: results,
+                //     value: true
+                // }
+                res.callback(null, results);
             }
         });
     },

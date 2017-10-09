@@ -81,7 +81,7 @@ templateservicemod.service('TemplateService', function ($filter, NavigationServi
       function (callback) {
         async.each(formData.invoiceList, function (n, callback) {
           if (!isNaN(n.amount)) {
-            formData.subTotal = formData.subTotal + n.amount;
+            formData.total = formData.total + n.amount;
             callback();
           } else {
             callback();
@@ -94,30 +94,31 @@ templateservicemod.service('TemplateService', function ($filter, NavigationServi
           }
         });
       },
-      function (data, callback) {
-        formData.grandTotal = formData.subTotal;
-        callback(null, true);
-      },
-      function (data, callback) {
-        async.each(formData.tax, function (n, callback) {
-          n.amount = n.percent * formData.subTotal / 100;
-          formData.grandTotal = n.amount + formData.grandTotal;
-          callback();
-        }, function (err) {
-          if (err) {
-            toastr.error("Error In SubTotal Calulation");
-          } else {
-            callback(null, true);
-          }
-        });
-      }
+      // function (data, callback) {
+      //   formData.grandTotal = formData.subTotal;
+      //   callback(null, true);
+      // },
+      // function (data, callback) {
+      //   async.each(formData.tax, function (n, callback) {
+      //     n.amount = n.percent * formData.subTotal / 100;
+      //     formData.grandTotal = n.amount + formData.grandTotal;
+      //     callback();
+      //   }, function (err) {
+      //     if (err) {
+      //       toastr.error("Error In SubTotal Calulation");
+      //     } else {
+      //       callback(null, true);
+      //     }
+      //   });
+      // }
     ], function (err, results) {
       if (err) {
         toastr.error("Error In Tax calculation");
       } else {
-        var round = formData.grandTotal - Math.floor(formData.grandTotal);
-        formData.grandTotal = Math.round(formData.grandTotal);
-        formData.roundOff = round.toFixed(2);
+        // var round = formData.grandTotal - Math.floor(formData.grandTotal);
+        // formData.grandTotal = Math.round(formData.grandTotal);
+        // formData.roundOff = round.toFixed(2);
+
         callback(err, formData);
       }
     });
@@ -324,10 +325,10 @@ templateservicemod.service('TemplateService', function ($filter, NavigationServi
     });
   }
 
-   this.closeProgressbar = function () {
-     $rootScope.viewProgressBar = false;
+  this.closeProgressbar = function () {
+    $rootScope.viewProgressBar = false;
   }
-  
+
 
   this.init();
 

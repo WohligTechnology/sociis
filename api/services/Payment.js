@@ -39,9 +39,6 @@ module.exports = mongoose.model('Payment', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
     generatePaymentNumber: function (data, callback) {
-        console.log("*****************************inside generate APyment Number api*********", data);
-
-        // var sInput = '';
         var name = 1;
         Payment.find({}, {
             name: 1

@@ -94,8 +94,7 @@
                                     <div class="col-item col-item-15">
                                         <!--<input type="text" ng-model="form.unit" placeholder="Enter Unit" class="form-control">
                                         -->
-                                        <select class="form-control" ng-model="form.unit">
-											<option value="">SELECT</option>
+                                        <select class="form-control" ng-model="form.unit" ng-change="calAmt(form.rate,form.quantity,$index)">
 											<option value="Kg">Kg</option>
 											<option value="grm">grm</option>
 											<option value="Per">Per</option>
@@ -106,7 +105,7 @@
                                             ng-change="calAmt(form.rate,form.quantity,$index)">
                                     </div>
                                     <div class="col-item col-item-15">
-                                        <input type="text" cleave="template.currency" min="0" ng-model="form.quantity" placeholder="Enter Quantity" class="form-control text-right"
+                                        <input type="text" cleave="template.currencyNoDecimal" min="0" ng-model="form.quantity" placeholder="Enter Quantity" class="form-control text-right"
                                             ng-change="calAmt(form.rate,form.quantity,$index)">
                                     </div>
                                     <div class="col-item col-item-15">
