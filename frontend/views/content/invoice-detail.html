@@ -92,7 +92,14 @@
                                         <input type="text" title="{{form.description}}" ng-model="form.description" placeholder="Enter Unit" class="form-control">
                                     </div>
                                     <div class="col-item col-item-15">
-                                        <input type="text" ng-model="form.unit" placeholder="Enter Unit" class="form-control" readonly>
+                                        <!--<input type="text" ng-model="form.unit" placeholder="Enter Unit" class="form-control">
+                                        -->
+                                        <select class="form-control" ng-model="form.unit">
+											<option value="">SELECT</option>
+											<option value="Kg">Kg</option>
+											<option value="grm">grm</option>
+											<option value="Per">Per</option>
+										</select>
                                     </div>
                                     <div class="col-item col-item-15">
                                         <input type="text" cleave="template.currency" ng-model="form.rate" placeholder="Enter Rate" class="form-control text-right"
@@ -117,37 +124,17 @@
                 </div>
             </div>
         </div>
-        <div class="widget" ng-if="showForm">
+        <div class="widget">
             <div class="form-elements-sec">
                 <div class="sec-total">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Sub-Total: </label> {{formData.subTotal|number:2}}
+                                <label>Total: </label> {{formData.total|number:2}}
                             </div>
                         </div>
                     </div>
-                    <div class="row" ng-repeat="form1 in formData.tax track by $index">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>{{form1.name}}@{{form1.percent}}%: </label> {{form1.amount|number:2}}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Rounding-Off: </label> {{formData.roundOff|number:2}}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Grand-Total: </label> {{formData.grandTotal|number:2}}
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>

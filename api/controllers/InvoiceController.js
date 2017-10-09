@@ -8,32 +8,53 @@ var controller = {
                         callback(err, null);
                     } else {
                         req.body.name = invoiceNumber;
-                        console.log("Number", invoiceNumber)
+                        // console.log("Number", invoiceNumber)
                         req.model.saveData(req.body, function (err, data) {
                             console.log("data", err, data);
                             if (err) {
                                 callback(err, null);
                             } else {
-                                console.log("Invoice Data", data);
+                                // console.log("Invoice Data", data);
                                 callback(null, data)
                             }
                         });
                     }
-                })
+                });
             },
-            // function (data, callback) {
-            //     async.each(formData.tax, function (n, callback) {
-            //         n.amount = n.percent * formData.subTotal / 100;
-            //         formData.grandTotal = n.amount + formData.grandTotal;
-            //         callback();
-            //     }, function (err) {
-            //         if (err) {
-            //             toastr.error("Error In SubTotal Calulation");
-            //         } else {
-            //             callback(null, true);
-            //         }
-            //     });
-            // }
+            function (data, callback) {
+                var paymentObj = {
+                    name: "",
+                    shop: req.body.shop,
+                    employee: req.body.employee,
+                    customer: req.body.customer,
+                    amount: req.body.total,
+                    invoice: []
+                };
+                paymentObj.invoice.push(data._id);
+                if (req.body.paymentMethod == "Cash") {
+                    Payment.generatePaymentNumber(req.body, function (err, name) {
+                        console.log("***************generate payment number *********", name)
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            paymentObj.name = name;
+                            console.log("Number", name)
+                            Payment.saveData(paymentObj, function (err, data) {
+                                console.log("data", err, data);
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    console.log("Invoice Data", data);
+                                    callback(null, data)
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    callback(null, data);
+                }
+
+            }
         ], function (err, results) {
 
             if (err) {
@@ -408,17 +429,17 @@ var controller = {
         }
     },
     calAmtAfterBilledToChange: function () {
-        $scope.formData.subTotal = 0;
+        $scope.formData.total = 0;
         $scope.formData.grandTotal = 0;
         // $scope.formData.invoiceList[index].amount = a * b;
         _.each($scope.formData.invoiceList, function (n) {
             if (!isNaN(n.amount)) {
-                $scope.formData.subTotal = $scope.formData.subTotal + n.amount;
+                $scope.formData.total = $scope.formData.total + n.amount;
             }
         })
-        $scope.formData.grandTotal = $scope.formData.subTotal;
+        $scope.formData.grandTotal = $scope.formData.total;
         _.each($scope.formData.tax, function (n) {
-            n.amount = n.percent * $scope.formData.subTotal / 100;
+            n.amount = n.percent * $scope.formData.total / 100;
             $scope.formData.grandTotal = n.amount + $scope.formData.grandTotal;
         })
         var round = $scope.formData.grandTotal - Math.floor($scope.formData.grandTotal);
