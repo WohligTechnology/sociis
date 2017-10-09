@@ -127,8 +127,8 @@ global["Jimp"] = require("jimp");
 //Mime types
 global["mime"] = require('mime-types');
 
-//xoauth2 for send gmail mail with NodeMailer
-global["xoauth2"] = require('xoauth2');
+// //xoauth2 for send gmail mail with NodeMailer
+// global["xoauth2"] = require('xoauth2');
 
-//NodeMailer
-global["nodemailer"] = require('nodemailer');
+// //NodeMailer
+// global["nodemailer"] = require('nodemailer');

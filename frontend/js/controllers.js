@@ -12495,7 +12495,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.formData.tax = [];
         // $scope.formData.status = true;
         $scope.required = true;
-        $scope.formData.subTotal = 0;
+        $scope.formData.total = 0;
         $scope.showForm = false;
 
         $scope.message = {};
@@ -12634,14 +12634,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         }
         $scope.calAmtAfterBilledToChange = function () {
             console.log("HERE IN -->");
-            $scope.formData.subTotal = 0;
+            $scope.formData.total = 0;
             $scope.formData.grandTotal = 0;
             TemplateService.getInvoiceWithTax($scope.formData, function (err, data) {
                 $scope.formData = data;
             });
         }
         $scope.calAmt = function (a, b, index) {
-            $scope.formData.subTotal = 0;
+            $scope.formData.total = 0;
             $scope.formData.grandTotal = 0;
             $scope.formData.invoiceList[index].amount = a * b;
             TemplateService.getInvoiceWithTax($scope.formData, function (err, data) {
@@ -12649,7 +12649,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             });
         }
         $scope.calAmtOnRemove = function () {
-            $scope.formData.subTotal = 0;
+            $scope.formData.total = 0;
             $scope.formData.grandTotal = 0;
             TemplateService.getInvoiceWithTax($scope.formData, function (err, data) {
                 $scope.formData = data;
@@ -12795,23 +12795,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 $scope.surveyDate = moment(new Date($scope.assignment.survey[$scope.assignment.survey.length - 1].surveyDate)).add(5, "hours").add(30, "minutes").format("DD/MM/YYYY");
             }
             $scope.assignedDate = moment(new Date($scope.assignment.surveyDate)).add(5, "hours").add(30, "minutes").format("DD/MM/YYYY");
-            // if ($scope.assignment.templateIla.length !== 0) {
-            //     if ($scope.assignment.templateIla[0].authTimestamp) {
-            //         $scope.ilaDate = moment(new Date($scope.assignment.templateIla[0].authTimestamp)).add(5, "hours").add(30, "minutes").format("DD/MM/YYYY");
-            //     }
-            // }
+            
             $scope.policyDetails = $scope.assignment.policyNumber;
-            // if ($scope.assignment.policyDoc) {
-            //     var filter = {
-            //         _id: $scope.assignment.policyDoc
-            //     }
-            //     NavigationService.getPolicyDoc({
-            //         filter
-            //     }, 1, function (data) {
-            //         console.log("Data OF Policy Doc", data);
-            //         $scope.policyDetails = data.data.results[0];
-            //     });
-            // }
+            
             $scope.billedTos = [];
             if ($scope.assignment.customer) {
                 $scope.billedTos.push($scope.assignment.customer);
@@ -12903,42 +12889,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 $scope.calAmtOnRemove();
             }
         };
-        // $scope.sendMessage = function (fileName) {
-        //     console.log("In Send MSG", fileName);
-        //     // $scope.message.title = "Updated Invoice";
-        //     if ($scope.approval) {
-        //         $scope.message.title = "Invoice " + $scope.formData.invoiceNumber + " Approved";
-        //         $scope.message.invoiceNumber = $scope.formData.invoiceNumber;
-        //         $scope.message.type = "File";
-        //         $scope.message.viewEmailStatus = "true";
-        //         $scope.message.event = "Invoice Release";
-        //         $scope.message.attachment.push(fileName);
-        //     } else {
-        //         $scope.message.title = $scope.formData.invoiceNumber + " Invoice sent for approval";
-        //         $scope.message.invoiceNumber = $scope.formData.invoiceNumber;
-        //         $scope.message.type = "Normal";
-        //     }
-        //     $scope.timeline.chat.push($scope.message);
-        //     NavigationService.saveChat($scope.timeline, function (data) {
-        //         console.log("FFFFF", data);
-        //     });
-        // };
-        // $scope.updateTimelineChat = function (timeline, success) {
-        //     console.log("Template updateTimelineChat");
-        //     $scope.timeline.chat.push(timeline);
-        //     NavigationService.saveChat($scope.timeline, function (data) {
-        //         if (data.value) {
-        //             toastr.clear();
-        //             toastr.success(success[0], success[1]);
-        //             $window.history.back();
-        //             $scope.getTimeline();
-        //         } else {
-        //             toastr.clear();
-        //             toastr.error("There was an error while updating Timeline.", "Error Updating Timeline");
-        //             $window.history.back();
-        //         }
-        //     });
-        // };
         $scope.getParentEmployee = function () {
             NavigationService.getEmployeeData($scope.empId, function (data) {
                 if (data.value) {
@@ -12994,14 +12944,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
         $scope.calAmtAfterBilledToChange = function () {
             console.log("Here IN -->");
-            $scope.formData.subTotal = 0;
+            $scope.formData.total = 0;
             $scope.formData.grandTotal = 0;
             TemplateService.getInvoiceWithTax($scope.formData, function (err, data) {
                 $scope.formData = data;
             });
         }
         $scope.calAmt = function (a, b, index) {
-            $scope.formData.subTotal = 0;
+            $scope.formData.total = 0;
             $scope.formData.grandTotal = 0;
             $scope.formData.invoiceList[index].amount = a * b;
             TemplateService.getInvoiceWithTax($scope.formData, function (err, data) {
@@ -13009,7 +12959,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             });
         }
         $scope.calAmtOnRemove = function () {
-            $scope.formData.subTotal = 0;
+            $scope.formData.total = 0;
             $scope.formData.grandTotal = 0;
             TemplateService.getInvoiceWithTax($scope.formData, function (err, data) {
                 $scope.formData = data;
