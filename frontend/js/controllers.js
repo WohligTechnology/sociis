@@ -12073,6 +12073,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             });
         };
         $scope.createInvoice = function (data) {
+            console.log("create invoice inside controller data is",data)
             NavigationService.createInvoice($scope.formData, function (data) {
                 console.log("Data In Result", data);
                 toastr.success("Invoice Created Successfully");

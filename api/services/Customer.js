@@ -44,7 +44,8 @@ var schema = new Schema({
         enum: ["Silver", "Gold", "Platinum"]
     },
     tillDatePayment: {
-        type: Number
+        type: Number,
+        default: 0
     },
     avgMonthlyExpenditure: {
         type: Number
@@ -192,6 +193,45 @@ var model = {
     //         });
     //     }
     // },
+
+
+    upDateCustomer: function (data, callback) {
+        if (data.type == "Credit") {
+            Customer.findOne({
+                _id: data._id
+            }).lean().exec(function (err, found) {
+                found.creditPending = found.creditPending - data.amount;
+                found.creditExhausted = found.creditExhausted + data.amount;
+                Customer.update({
+                    _id: found._id
+                }, found, function (err, updated) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        callback(null, updated);
+                    }
+                });
+            });
+        } else {
+            Customer.findOne({
+                _id: data._id
+            }).lean().exec(function (err, found) {
+
+                found.tillDatePayment = found.tillDatePayment + data.amount;
+                Customer.update({
+                    _id: found._id
+                }, found, function (err, updated) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        callback(null, updated);
+                    }
+                });
+            });
+        }
+
+
+    },
     generateCustomerName: function (data, callback) {
         var name = "";
         CustomerCompany.findOne({

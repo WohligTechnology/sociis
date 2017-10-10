@@ -2,65 +2,85 @@ module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 var controller = {
     createInvoice: function (req, res) {
         async.waterfall([
-            function (callback) {
-                req.model.generateInvoiceNumber(req.body, function (err, invoiceNumber) {
-                    if (err) {
-                        callback(err, null);
-                    } else {
-                        req.body.name = invoiceNumber;
-                        req.model.saveData(req.body, function (err, data) {
-                            console.log("data", err, data);
-                            if (err) {
-                                callback(err, null);
-                            } else {
-                                callback(null, data)
-                            }
-                        });
-                    }
-                });
-            },
-            function (data, callback) {
-                var paymentObj = {
-                    name: "",
-                    shop: req.body.shop,
-                    employee: req.body.employee,
-                    customer: req.body.customer,
-                    amount: req.body.total,
-                    invoice: []
-                };
-                paymentObj.invoice.push(data._id);
-                if (req.body.paymentMethod == "Cash") {
-                    Payment.generatePaymentNumber(req.body, function (err, name) {
+                function (callback) { //Invoice 
+                    req.model.generateInvoiceNumber(req.body, function (err, invoiceNumber) {
                         if (err) {
                             callback(err, null);
                         } else {
-                            paymentObj.name = name;
-                            Payment.saveData(paymentObj, function (err, data) {
+                            req.body.name = invoiceNumber;
+                            if (req.body.paymentMethod == "Cash") {
+                                req.body.status = "Paid";
+                            } else {
+                                req.body.status = "Pending";
+                            }
+                            req.model.saveData(req.body, function (err, data) {
+                                console.log("data", err, data);
                                 if (err) {
                                     callback(err, null);
                                 } else {
-                                    callback(null, data)
+                                    callback(null, data);
                                 }
                             });
                         }
                     });
-                } else {
-                    callback(null, data);
+                },
+                function (data, callback) { // Payment
+                    var paymentObj = {
+                        name: "",
+                        shop: req.body.shop,
+                        employee: req.body.employee,
+                        customer: req.body.customer,
+                        amount: req.body.total,
+                        invoice: []
+                    };
+                    paymentObj.invoice.push(data._id);
+                    if (req.body.paymentMethod == "Cash") {
+                        Payment.generatePaymentNumber(req.body, function (err, name) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                paymentObj.name = name;
+                                Payment.saveData(paymentObj, function (err, data) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, data)
+                                    }
+                                });
+                            }
+                        });
+                    } else {
+                        callback(null, data);
+                    }
+
+                },
+                function (data, callback) {
+                    var customerData = {
+                        type: req.body.paymentMethod,
+                        _id: req.body.customer._id,
+                        amount: req.body.total
+                    };
+                    Customer.upDateCustomer(customerData, function (err, name) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            callback(null, data);
+                        }
+                    });
                 }
+            ],
+            function (err, results) {
 
-            }
-        ], function (err, results) {
-
-            if (err) {
-                res.callback(err, null);
-            } else {
-                // var newData = {
-                //     data: results,
-                //     value: true
-                // }
-                res.callback(null, results);
-            }
-        });
+                if (err) {
+                    res.callback(err, null);
+                } else {
+                    // var newData = {
+                    //     data: results,
+                    //     value: true
+                    // }
+                    res.callback(null, results);
+                }
+            });
     },
     generateSalesRegisterExcel: function (req, res) {
         JsonStore.findOne({
