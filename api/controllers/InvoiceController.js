@@ -60,7 +60,7 @@ var controller = {
                         _id: req.body.customer._id,
                         amount: req.body.total
                     };
-                    Customer.upDateCustomer(customerData, function (err, name) {
+                    Customer.upDateCustomerOnCreateInvoice(customerData, function (err, name) {
                         if (err) {
                             callback(err, null);
                         } else {

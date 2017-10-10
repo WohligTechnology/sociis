@@ -195,7 +195,7 @@ var model = {
     // },
 
 
-    upDateCustomer: function (data, callback) {
+    upDateCustomerOnCreateInvoice: function (data, callback) {
         if (data.type == "Credit") {
             Customer.findOne({
                 _id: data._id
