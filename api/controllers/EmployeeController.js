@@ -401,6 +401,68 @@ var controller = {
             });
         }
     },
+
+    Login: function (req, res) {
+        if (req.body) {
+            var valid = req.body;
+            if (valid.username && valid.password) {
+                var ce = valid.username.split("-")
+                if(ce[0] === "E"){
+                    valid.username = ce[1];
+                    req.model = "Employee";
+                }else{
+                    req.model = "Customer";
+                }
+               
+                req.model.findOne({
+                    username: valid.username
+                }).deepPopulate("role").exec((err, result) => {
+
+                    if (err) {
+                        console.log("error in validating useer", err);
+                        res.callback({
+                            "error": "There was some error"
+                        }, null);
+                    } else if (_.isEmpty(result)) {
+                        res.json({
+                            value: false,
+                            data: "Invalid Request"
+                        });
+                    } else {
+                        if (result.password == valid.password) {
+                            res.callback(null, result);
+                            // var randtoken = require('rand-token');
+                            // var token = randtoken.generate(16);
+                            // Customer.update({
+                            //     "_id": result._id
+                            // }, {
+                            //     accesstoken: token
+                            // }, (err, update) => {
+                            //     if (err) {
+                            //         console.log("error in accesstoken updation", err);
+                            //         res.callback("There was some error");
+                            //     } else {
+                            //         result.accesstoken = token;
+                            //        
+                            //     }
+                            // })
+
+                        } else {
+                            res.callback("Not a valid user", null);
+                        }
+                    }
+                })
+            } else {
+                res.callback("Please fill all fields", null)
+            }
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+
     search: function (req, res) {
         if (!req.body.keyword) {
             req.body.keyword = "";

@@ -290,16 +290,21 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.menutitle = NavigationService.makeactive("Login");
         TemplateService.title = $scope.menutitle;
         $scope.currentHost = window.location.origin;
-        if ($stateParams.id) {
-            NavigationService.parseAccessToken($stateParams.id, function () {
-                NavigationService.profile(function () {
-                    $state.go("dashboard");
-                }, function () {
-                    $state.go("login");
-                });
-            });
-        } else {
-            NavigationService.removeAccessToken();
+        // if ($stateParams.id) {
+        //     NavigationService.parseAccessToken($stateParams.id, function () {
+        //         NavigationService.profile(function () {
+        //             $state.go("dashboard");
+        //         }, function () {
+        //             $state.go("login");
+        //         });
+        //     });
+        // } else {
+        //     NavigationService.removeAccessToken();
+        // }
+        $scope.login = (form)=>{
+            NavigationService.login(form,(loginResult)=>{
+                console.log(loginResult)
+            })
         }
 
     })
