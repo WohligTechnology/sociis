@@ -277,14 +277,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
     .controller('AccessController', function ($scope, $window, TemplateService, NavigationService, $timeout, $state) {
-        if ($.jStorage.get("accessToken")) {
+        if ($.jStorage.get("getLoginEmployee")) {
 
         } else {
             $state.go("login");
         }
     })
 
-    .controller('LoginCtrl', function ($scope, $window, TemplateService, NavigationService, $timeout, $stateParams, $state) {
+    .controller('LoginCtrl', function ($scope, $window, TemplateService, NavigationService, $timeout, $stateParams, $state,toastr) {
         //Used to name the .html file
 
         $scope.menutitle = NavigationService.makeactive("Login");
@@ -304,7 +304,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.login = (form)=>{
             NavigationService.login(form,(loginResult)=>{
                 console.log(loginResult);
+                if(loginResult.value===true){
+                    toastr.success("LOGIN SUCCESSFULL","SUCCESS");
                 $state.go("createInvoice");
+                }else{
+                    toastr.error("INVALID CREDENTIALS","LOGIN ERROR")
+                }
                 // NavigationService.profile(function () {
                 //     $state.go("dashboard");
                 // }, function () {
@@ -11773,7 +11778,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.template = TemplateService.changecontent("invoice-detail");
         $scope.menutitle = NavigationService.makeactive("Create Invoice");
         TemplateService.title = $scope.menutitle;
-        // $scope.navigation = NavigationService.getnav();
+        $scope.navigation = NavigationService.getnav();
         $scope.assignment = {};
         $scope.getLoginEmployee = $.jStorage.get("getLoginEmployee");
         $scope.disableSave = false;

@@ -1643,7 +1643,7 @@ firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $lo
             controller: 'CreateTemplateInvoiceCtrl'
         })
         .state('createInvoice', {
-            url: "/Invoice-create/:assignmentId",
+            url: "/Invoice-create",
             templateUrl: "frontend/views/template.html",
             controller: 'CreateInvoiceCtrl'
         })

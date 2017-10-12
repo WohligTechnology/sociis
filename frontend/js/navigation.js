@@ -1587,9 +1587,11 @@ var navigationservice = angular.module('navigationservice', [])
             },
             login: function (data, callback) {
                 $http.post(adminurl + 'Employee/Login', data).success(function (data) {
+                    if(data.value===true){
                     $.jStorage.set("getLoginEmployee", data.data);
                     var newRole = getRoleSingle(data.data.role);
                     $.jStorage.set("role", newRole);
+                    }
                     callback(data);
                 });
             },
