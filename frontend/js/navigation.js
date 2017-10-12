@@ -566,24 +566,14 @@ var navigationservice = angular.module('navigationservice', [])
                 $http.post(adminurl + 'timeline/updateEmailStatus', data).success(callback);
             },
             profile: function (callback, errorCallback) {
-                var data = {
-                    accessToken: $.jStorage.get("accessToken")
-                };
-                $http.post(adminurl + 'user/profile', data).success(function (data) {
-                    if (data.value === true) {
-                        $.jStorage.set("profile", data.data);
-                        data = {};
-                        data.email = $.jStorage.get("profile").email;
-                        $http.post(adminurl + 'Employee/getLoginEmployee', data).success(function (data) {
-                            $.jStorage.set("getLoginEmployee", data.data);
-                            var newRole = getRoleSingle(data.data.role);
-                            $.jStorage.set("role", newRole);
-                            callback();
-                        });
-                    } else {
-                        errorCallback(data.error);
-                    }
+
+                $http.post(adminurl + 'Employee/getLoginEmployee', data).success(function (data) {
+                    $.jStorage.set("getLoginEmployee", data.data);
+                    var newRole = getRoleSingle(data.data.role);
+                    $.jStorage.set("role", newRole);
+                    callback();
                 });
+
             },
             makeactive: function (menuname) {
                 for (var i = 0; i < navigation.length; i++) {
@@ -1282,29 +1272,29 @@ var navigationservice = angular.module('navigationservice', [])
                     callback(data, i);
                 });
             },
-            getDashboardCounts: function (formData, callback) {
-                formData.ownerId = $.jStorage.get("getLoginEmployee")._id;
-                formData.isSBC = $.jStorage.get("getLoginEmployee").isSBC;
-                formData.accessToken = $.jStorage.get("accessToken");
-                $http.post(adminurl + 'Employee/getDashboardCounts', formData).success(function (data) {
-                    callback(data);
-                });
-            },
-            getAssignmentSummary: function (formData, callback) {
-                formData.ownerId = $.jStorage.get("getLoginEmployee")._id;
-                formData.accessToken = $.jStorage.get("accessToken");
-                $http.post(adminurl + 'Employee/getAssignmentSummary', formData).success(function (data) {
-                    callback(data);
-                });
-            },
-            getNavigationCounts: function (data, callback) {
-                formData = {};
-                formData.ownerId = $.jStorage.get("getLoginEmployee")._id;
-                formData.accessToken = $.jStorage.get("accessToken");
-                $http.post(adminurl + 'Employee/getNavigationCounts', formData).success(function (data) {
-                    callback(data);
-                });
-            },
+            // getDashboardCounts: function (formData, callback) {
+            //     formData.ownerId = $.jStorage.get("getLoginEmployee")._id;
+            //     formData.isSBC = $.jStorage.get("getLoginEmployee").isSBC;
+            //     formData.accessToken = $.jStorage.get("accessToken");
+            //     $http.post(adminurl + 'Employee/getDashboardCounts', formData).success(function (data) {
+            //         callback(data);
+            //     });
+            // },
+            // getAssignmentSummary: function (formData, callback) {
+            //     formData.ownerId = $.jStorage.get("getLoginEmployee")._id;
+            //     formData.accessToken = $.jStorage.get("accessToken");
+            //     $http.post(adminurl + 'Employee/getAssignmentSummary', formData).success(function (data) {
+            //         callback(data);
+            //     });
+            // },
+            // getNavigationCounts: function (data, callback) {
+            //     formData = {};
+            //     formData.ownerId = $.jStorage.get("getLoginEmployee")._id;
+            //     formData.accessToken = $.jStorage.get("accessToken");
+            //     $http.post(adminurl + 'Employee/getNavigationCounts', formData).success(function (data) {
+            //         callback(data);
+            //     });
+            // },
             getPolicyDoc: function (formData, i, callback) {
                 formData.accessToken = $.jStorage.get("accessToken");
                 $http.post(adminurl + 'PolicyDoc/getPolicyDoc', formData).success(function (data) {
@@ -1595,7 +1585,14 @@ var navigationservice = angular.module('navigationservice', [])
                     accessToken: $.jStorage.get("accessToken")
                 }).success(callback);
             },
-
+            login: function (data, callback) {
+                $http.post(adminurl + 'Employee/Login', data).success(function (data) {
+                    $.jStorage.set("getLoginEmployee", data.data);
+                    var newRole = getRoleSingle(data.data.role);
+                    $.jStorage.set("role", newRole);
+                    callback(data);
+                });
+            },
             getLoginEmployee: function (email, callback) {
                 var data = {};
                 data.email = email;

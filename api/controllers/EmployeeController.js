@@ -310,42 +310,42 @@ var controller = {
             })
         }
     },
-    getDashboardCounts: function (req, res) {
-        if (req.body.ownerId) {
-            Employee.getDashboardCounts(req.body, res.callback, req.user);
-        } else {
-            res.json({
-                value: false,
-                data: {
-                    message: "Invalid Request"
-                }
-            })
-        }
-    },
-    getNavigationCounts:function (req, res) {
-        if (req.body.ownerId) {
-            Employee.getNavigationCounts(req.body, res.callback, req.user);
-        } else {
-            res.json({
-                value: false,
-                data: {
-                    message: "Invalid Request"
-                }
-            })
-        }
-    }, 
-    getAssignmentSummary: function (req, res) {
-        if (req.body.ownerId) {
-            Employee.getAssignmentSummary(req.body, res.callback, req.user);
-        } else {
-            res.json({
-                value: false,
-                data: {
-                    message: "Invalid Request"
-                }
-            })
-        }
-    }, 
+    // getDashboardCounts: function (req, res) {
+    //     if (req.body.ownerId) {
+    //         Employee.getDashboardCounts(req.body, res.callback, req.user);
+    //     } else {
+    //         res.json({
+    //             value: false,
+    //             data: {
+    //                 message: "Invalid Request"
+    //             }
+    //         })
+    //     }
+    // },
+    // getNavigationCounts: function (req, res) {
+    //     if (req.body.ownerId) {
+    //         Employee.getNavigationCounts(req.body, res.callback, req.user);
+    //     } else {
+    //         res.json({
+    //             value: false,
+    //             data: {
+    //                 message: "Invalid Request"
+    //             }
+    //         })
+    //     }
+    // },
+    // getAssignmentSummary: function (req, res) {
+    //     if (req.body.ownerId) {
+    //         Employee.getAssignmentSummary(req.body, res.callback, req.user);
+    //     } else {
+    //         res.json({
+    //             value: false,
+    //             data: {
+    //                 message: "Invalid Request"
+    //             }
+    //         })
+    //     }
+    // },
     employeeSearch: function (req, res) {
         if (req.body) {
             Employee.employeeSearch(req.body, res.callback);
@@ -389,7 +389,7 @@ var controller = {
             });
         }
     },
-    searchEmployee:  function (req, res) {
+    searchEmployee: function (req, res) {
         if (req.body) {
             Employee.searchEmployee(req.body, res.callback);
         } else {
@@ -404,18 +404,19 @@ var controller = {
 
     Login: function (req, res) {
         if (req.body) {
+            var a = ""
             var valid = req.body;
-            if (valid.username && valid.password) {
-                var ce = valid.username.split("-")
-                if(ce[0] === "E"){
-                    valid.username = ce[1];
-                    req.model = "Employee";
-                }else{
-                    req.model = "Customer";
+            if (valid.mobile && valid.password) {
+                var ce = valid.mobile.split("-")
+                if (ce[0] === "E") {
+                    valid.mobile = ce[1];
+                    a = "Employee";
+                } else {
+                    a = "Customer";
                 }
-               
+
                 req.model.findOne({
-                    username: valid.username
+                    mobile: valid.mobile
                 }).deepPopulate("role").exec((err, result) => {
 
                     if (err) {

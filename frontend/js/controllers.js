@@ -9,7 +9,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         console.log(' $scope.template == ', $scope.template);
         $scope.menutitle = NavigationService.makeactive("Dashboard");
         TemplateService.title = $scope.menutitle;
-        $scope.navigation = NavigationService.getnav();
+        // $scope.navigation = NavigationService.getnav();
         var global = false;
         var allFiles = false;
         // var myFiles = false;
@@ -303,9 +303,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         // }
         $scope.login = (form)=>{
             NavigationService.login(form,(loginResult)=>{
-                console.log(loginResult)
-            })
-        }
+                console.log(loginResult);
+                $state.go("createInvoice");
+                // NavigationService.profile(function () {
+                //     $state.go("dashboard");
+                // }, function () {
+                //     $state.go("login");
+                // });
+            
+        });
+    
+}
 
     })
 
@@ -11765,7 +11773,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.template = TemplateService.changecontent("invoice-detail");
         $scope.menutitle = NavigationService.makeactive("Create Invoice");
         TemplateService.title = $scope.menutitle;
-        $scope.navigation = NavigationService.getnav();
+        // $scope.navigation = NavigationService.getnav();
         $scope.assignment = {};
         $scope.getLoginEmployee = $.jStorage.get("getLoginEmployee");
         $scope.disableSave = false;
