@@ -52,7 +52,7 @@
                                     <td>{{data.name}}</td>
                                     <td>{{data.mobile}}</td>
                                     <td>{{data.category}}</td>
-                                    <td>{{data.balancePayment || "-"}}</td>
+                                    <td>{{data.creditExhausted || "-"}}</td>
                                     <td>
                                         <a class="btn btn-primary" ui-sref="editcustomer({id:data._id})" ng-if="template.currentRole.edit.val">
                                             <i class="fa fa-pencil"></i>

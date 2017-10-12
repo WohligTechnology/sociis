@@ -44,6 +44,10 @@ var schema = new Schema({
         type: String,
         enum: ["Pending", "Partial Pending", "Paid"]
     },
+    paidAmount: {
+        type: Number,
+        default: 0
+    },
     paymentMethod: {
         type: String,
         enum: ["Cash", "Credit"]

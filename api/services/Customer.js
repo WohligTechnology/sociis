@@ -194,7 +194,24 @@ var model = {
     //     }
     // },
 
-
+    upDateCustomerOnCreatePayment: function (data, callback) {
+        Customer.findOne({
+            _id: data._id
+        }).lean().exec(function (err, found) {
+            found.creditPending = found.creditPending + data.amount;
+            found.creditExhausted = found.creditExhausted - data.amount;
+            found.tillDatePayment = found.tillDatePayment + data.amount;
+            Customer.update({
+                _id: found._id
+            }, found, function (err, updated) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, updated);
+                }
+            });
+        });
+    },
     upDateCustomerOnCreateInvoice: function (data, callback) {
         if (data.type == "Credit") {
             Customer.findOne({
