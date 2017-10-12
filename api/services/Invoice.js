@@ -59,152 +59,62 @@ var schema = new Schema({
 
 schema.plugin(deepPopulate, {
     populate: {
-        'billedTo': {
-            select: ''
-        },
-        'billedTo.city': {
-            select: 'name _id district'
-        },
-        'billedTo.city.district': {
-            select: 'name _id state'
-        },
-        'billedTo.city.district.state': {
-            select: 'name _id zone'
-        },
-        'billedTo.city.district.state.zone': {
-            select: 'name _id country'
-        },
-        'billedTo.city.district.state.zone.country': {
+        'employee': {
             select: 'name _id'
         },
-        'billedTo.customerCompany': {
+        'customer': {
             select: 'name _id'
         },
-        'createdBy': {
-            select: 'name'
-        },
-        'assignment': {
-            select: ''
-        },
-        'assignment.invoice': {
-            select: ''
-        },
-        'assignment.customer': {
-            select: 'name'
-        },
-        'assignment.department': {
-            select: 'name'
-        },
-        'assignment.products.product': {
-            select: 'name _id category'
-        },
-        'assignment.products.product.category': {
-            select: 'name _id industry'
-        },
-        'assignment.causeOfLoss': {
-            select: 'name'
-        },
-        'assignment.natureOfLoss': {
-            select: 'name'
-        },
-        'assignment.insurerOffice': {
-            select: 'name'
-        },
-        'assignment.insuredOffice': {
-            select: 'name'
-        },
-        'assignment.city': {
-            select: 'name _id district'
-        },
-        'assignment.city.district': {
-            select: 'name _id state'
-        },
-        'assignment.city.district.state': {
-            select: 'name _id zone'
-        },
-        'assignment.city.district.state.zone': {
-            select: 'name _id country'
-        },
-        'assignment.city.district.state.zone.country': {
+        'shop': {
             select: 'name _id'
-        },
-        'assignment.company': {
-            select: ''
-        },
-        'assignment.company.GSTINByState.state': {
-            select: ''
-        },
-        'assignment.company.bank': {
-            select: ''
-        },
-        'assignment.company.city': {
-            select: 'name district'
-        },
-        'assignment.company.city.district': {
-            select: 'name state _id'
-        },
-        'assignment.company.city.district.state': {
-            select: 'name _id'
-        },
-        'assignment.insurer': {
-            select: ''
-        },
-        'assignment.insured': {
-            select: ''
-        },
-        'assignment.policyType': {
-            select: ''
-        },
-        'assignment.branch': {
-            select: ''
-        },
+        }
     }
 });
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('Invoice', schema);
 
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "assignment.invoice assignment.company assignment.company.GSTINByState.state assignment.products.product.category billedTo createdBy", "assignment.invoice assignment.company assignment.company.GSTINByState.state assignment.products.product.category billedTo createdBy"));
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "employee customer shop", "employee customer shop"));
 var model = {
-    search: function (data, callback) {
-        var Model = this;
-        var Const = this(data);
-        var maxRow = Config.maxRow;
-        var page = 1;
-        if (data.page) {
-            page = data.page;
-        }
-        var field = data.field;
-        var options = {
-            field: data.field,
-            filters: {
-                keyword: {
-                    fields: ['invoiceNumber'],
-                    term: data.keyword
-                }
-            },
-            sort: {
-                desc: 'invoiceNumber'
-            },
-            start: (page - 1) * maxRow,
-            count: maxRow
-        };
-        var Search = Invoice.find(data.filter)
-            .order(options)
-            .keyword(options)
-            .deepPopulate("assignment.company assignment.insuredOffice assignment.products.product.category billedTo createdBy")
-            .page(options, function (err, found) {
-                if (err) {
-                    callback(err, found);
-                } else {
-                    if (_.isEmpty(found)) {
-                        callback("No data found!!", found);
-                    } else {
-                        callback(null, found);
-                    }
-                }
-            });
-    },
+    // search: function (data, callback) {
+    //     var Model = this;
+    //     var Const = this(data);
+    //     var maxRow = Config.maxRow;
+    //     var page = 1;
+    //     if (data.page) {
+    //         page = data.page;
+    //     }
+    //     var field = data.field;
+    //     var options = {
+    //         field: data.field,
+    //         filters: {
+    //             keyword: {
+    //                 fields: ['invoiceNumber'],
+    //                 term: data.keyword
+    //             }
+    //         },
+    //         sort: {
+    //             desc: 'invoiceNumber'
+    //         },
+    //         start: (page - 1) * maxRow,
+    //         count: maxRow
+    //     };
+    //     var Search = Invoice.find(data.filter)
+    //         .order(options)
+    //         .keyword(options)
+    //         .deepPopulate("assignment.company assignment.insuredOffice assignment.products.product.category billedTo createdBy")
+    //         .page(options, function (err, found) {
+    //             if (err) {
+    //                 callback(err, found);
+    //             } else {
+    //                 if (_.isEmpty(found)) {
+    //                     callback("No data found!!", found);
+    //                 } else {
+    //                     callback(null, found);
+    //                 }
+    //             }
+    //         });
+    // },
     saveData: function (data, callback) {
         var Model = this;
         var Const = this(data);

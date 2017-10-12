@@ -595,6 +595,13 @@ var navigationservice = angular.module('navigationservice', [])
                     callback(data, i);
                 });
             },
+            searchInvoice: function (formData, i, callback) {
+                // console.log("formData : ", formData);
+                // formData.accessToken = $.jStorage.get("accessToken");
+                $http.post(adminurl + 'Invoice/search', formData).success(function (data) {
+                    callback(data, i);
+                });
+            },
             searchEmployees: function (formData, i, callback) {
                 // console.log("formData : ", formData);
                 formData.accessToken = $.jStorage.get("accessToken");
@@ -1587,10 +1594,10 @@ var navigationservice = angular.module('navigationservice', [])
             },
             login: function (data, callback) {
                 $http.post(adminurl + 'Employee/Login', data).success(function (data) {
-                    if(data.value===true){
-                    $.jStorage.set("getLoginEmployee", data.data);
-                    var newRole = getRoleSingle(data.data.role);
-                    $.jStorage.set("role", newRole);
+                    if (data.value === true) {
+                        $.jStorage.set("getLoginEmployee", data.data);
+                        var newRole = getRoleSingle(data.data.role);
+                        $.jStorage.set("role", newRole);
                     }
                     callback(data);
                 });
