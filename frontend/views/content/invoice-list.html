@@ -12,10 +12,6 @@
     </ul>
 </div>
 <div class="heading-sec invoice-sec">
-    <div class="btn-group pull-right">
-        <button type="button" class="btn btn-default" ng-class="{'btn-primary': invoiceFilter.ownerStatus=='My files'}" ng-click="invoiceFilter.ownerStatus='My files';showAllInvoices(true)">My Invoice</button>
-        <button type="button" class="btn btn-default" ng-class="{'btn-primary': invoiceFilter.ownerStatus=='All files'}" ng-click="invoiceFilter.ownerStatus='All files';showAllInvoices(true);">All Invoice</button>
-    </div>
     <div class="row">
         <div class="col-md-4 column">
             <div class="heading-profile">
@@ -58,21 +54,11 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Number</th>
-                                    <th>Name</th>
-                                    <!--<th>Billed To <span ng-click="showAllInvoices(true,['billedTo',invoiceFilter.sortNumber]);"
-                                            class="fa fa-sort"></span></th>
-                                    <th>Invoice Number <span ng-click="showAllInvoices(true,['invoiceNumber',invoiceFilter.sortNumber]);"
-                                            class="fa fa-sort"></span></th>
-                                    <th>Created By <span ng-click="showAllInvoices(true,['createdBy',invoiceFilter.sortNumber]);"
-                                            class="fa fa-sort"></span></th>
-                                    <th>Insured <span ng-click="showAllInvoices(true,['insured',invoiceFilter.sortNumber]);"
-                                            class="fa fa-sort"></span></th>
-                                    <th>Grand Total <span ng-click="showAllInvoices(true,['grandTotal',invoiceFilter.sortNumber]);"
-                                            class="fa fa-sort"></span></th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>-->
+                                    <th>Invoice Number</th>
+                                    <th>Customer</th>
+                                    <th>Employee</th>
+                                    <th>Shop</th>
+                                    <th>Amount</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -82,7 +68,9 @@
                                     </td>-->
                                     <td>{{data.name}}</td>
                                     <td>{{data.customer.name}}</td>
-
+                                    <td>{{data.employee.name}}</td>
+                                    <td>{{data.shop.name}}</td>
+                                    <td>{{data.total}}</td>
                                     <!--<td>{{data.createdBy}}</td>
                                     <td>{{data.insuredName}}</td>
                                     <td style="text-align:right;">{{data.grandTotal | number}}</td>
@@ -100,7 +88,7 @@
                                     <button class="btn btn-danger" ng-if="template.currentRole.delete.val" ng-click="confCancel(data)">Cancel</button>
 
                                     <!--<a class="btn btn-danger" ng-click="deleteModel(data._id)"><i class="fa fa-trash"></i></a>-->
-                                    </td>-->
+
                                 </tr>
                             </tbody>
                         </table>

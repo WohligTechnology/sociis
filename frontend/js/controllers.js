@@ -284,7 +284,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         }
     })
 
-    .controller('LoginCtrl', function ($scope, $window, TemplateService, NavigationService, $timeout, $stateParams, $state,toastr) {
+    .controller('LoginCtrl', function ($scope, $window, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
         //Used to name the .html file
 
         $scope.menutitle = NavigationService.makeactive("Login");
@@ -301,24 +301,24 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         // } else {
         //     NavigationService.removeAccessToken();
         // }
-        $scope.login = (form)=>{
-            NavigationService.login(form,(loginResult)=>{
+        $scope.login = (form) => {
+            NavigationService.login(form, (loginResult) => {
                 console.log(loginResult);
-                if(loginResult.value===true){
-                    toastr.success("LOGIN SUCCESSFULL","SUCCESS");
-                $state.go("invoice-list");
-                }else{
-                    toastr.error("INVALID CREDENTIALS","LOGIN ERROR")
+                if (loginResult.value === true) {
+                    toastr.success("LOGIN SUCCESSFULL", "SUCCESS");
+                    $state.go("invoice-list");
+                } else {
+                    toastr.error("INVALID CREDENTIALS", "LOGIN ERROR")
                 }
                 // NavigationService.profile(function () {
                 //     $state.go("dashboard");
                 // }, function () {
                 //     $state.go("login");
                 // });
-            
-        });
-    
-}
+
+            });
+
+        }
 
     })
 
@@ -2463,7 +2463,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             });
         };
     })
-     .controller('InvoiceViewCtrl', function ($scope, $window, hotkeys, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
+    .controller('InvoiceViewCtrl', function ($scope, $window, hotkeys, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
         //Used to name the .html file        
         $scope.modelCamel = _.camelCase($stateParams.model);
         var a = _.startCase($scope.modelCamel).split(" ");
@@ -10993,12 +10993,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             "name": "Inactive",
             "value": false
         }];
-        $scope.salutations = ["Mr.", "Mrs.", "Ms.", "Dr."];
-        $scope.formData.companyShortName = "";
-        $scope.formData.TOFShortName1 = "";
-        $scope.formData.officeCode = "";
-        $scope.formData.city1 = "";
-
+        $scope.formData.creditExhausted = 0;
+        $scope.changePending = function () {
+            $scope.formData.creditPending = $scope.formData.creditAlloted;
+        };
         $scope.popup = {
             birthDate: false
         };
@@ -11075,7 +11073,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.showing = false;
         $scope.passType = 'password';
 
-
+        $scope.changePending = function () {
+            $scope.formData.creditPending = $scope.formData.creditAlloted - $scope.formData.creditExhausted;
+        };
 
         NavigationService.getOneModel("Customer", $stateParams.id, function (data) {
             $scope.formData = data.data;
@@ -12201,7 +12201,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             });
         };
         $scope.createInvoice = function (data) {
-            console.log("create invoice inside controller data is",data)
+            console.log("create invoice inside controller data is", data)
             NavigationService.createInvoice($scope.formData, function (data) {
                 console.log("Data In Result", data);
                 toastr.success("Invoice Created Successfully");
