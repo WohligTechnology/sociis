@@ -36,17 +36,6 @@
                               </button>
                             </form>
                             <a class="btn btn-primary" ui-sref="createInvoice"><i class="fa fa-plus"></i> Add New</a>
-                            <button class="btn btn-primary" ng-click="invoiceFilterModal()"><i class="fa fa-filter"></i> Filter</button>
-                            <button class="btn btn-primary" ng-click="generateSalesRegisterExcel()"><i class="fa fa-file-excel-o"></i> Excel Export</button>
-                            <a class="space">"</a>
-                            <!--<a class="btn btn-primary" ui-sref="create-invoices">Add New</a>-->
-                            <ui-select class="select-limit pull-right" ng-model="invoiceFilter.maxRow" theme="bootstrap" ng-change="changeRecordLimit()"
-                                title="Choose Record Limit">
-                                <ui-select-match>{{$select.selected}}</ui-select-match>
-                                <ui-select-choices repeat="limit in limitValues | filter: $select.search">
-                                    <span ng-bind-html="limit | highlight: $select.search"></span>
-                                </ui-select-choices>
-                            </ui-select>
                         </div>
                         <h3>List of Invoices <span class="tableTotal">(Total : {{totalItems}}) </span></h3>
                     </div>

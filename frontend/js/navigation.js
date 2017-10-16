@@ -492,36 +492,35 @@ var navigationservice = angular.module('navigationservice', [])
                 formData = {};
                 formData.isSBC = $.jStorage.get("getLoginEmployee").isSBC;
                 formData.ownerId = $.jStorage.get("getLoginEmployee")._id;
-                formData.accessToken = $.jStorage.get("accessToken");
-                $http.post(adminurl + 'Employee/getNavigationCounts', formData).success(function (data) {
-                    _.map(navigation, function (values) {
-                        if (values.name == "Approvals") {
-                            _.map(values.subnav, function (values) {
-                                if (!_.isEmpty(data.data.sbcPending) && values.isView === true && values.name == "SBC Approval") {
-                                    approvalPendingCount = approvalPendingCount + data.data.sbcPending.count;
-                                    values.badge = data.data.sbcPending.count;
-                                }
-                                if (!_.isEmpty(data.data.ilaPending) && values.isView === true && values.name == "ILA Approval") {
-                                    approvalPendingCount = approvalPendingCount + data.data.ilaPending.count;
-                                    values.badge = data.data.ilaPending.count;
-                                }
-                                if (!_.isEmpty(data.data.lorPending) && values.isView === true && values.name == "LOR Approval") {
-                                    approvalPendingCount = approvalPendingCount + data.data.lorPending.count;
-                                    values.badge = data.data.lorPending.count;
-                                }
-                                if (!_.isEmpty(data.data.invoicePending) && values.isView === true && values.name == "Invoice Approval") {
-                                    approvalPendingCount = approvalPendingCount + data.data.invoicePending[0].count;
-                                    values.badge = data.data.invoicePending[0].count;
-                                }
-                                if (!_.isEmpty(data.data.assignmentPending) && values.isView === true && values.name == "Assignment Approval") {
-                                    approvalPendingCount = approvalPendingCount + data.data.assignmentPending.count;
-                                    values.badge = data.data.assignmentPending.count;
-                                }
-                            });
-                            values.badge = approvalPendingCount;
-                        }
-                    });
-                });
+                // $http.post(adminurl + 'Employee/getNavigationCounts', formData).success(function (data) {
+                //     _.map(navigation, function (values) {
+                //         if (values.name == "Approvals") {
+                //             _.map(values.subnav, function (values) {
+                //                 if (!_.isEmpty(data.data.sbcPending) && values.isView === true && values.name == "SBC Approval") {
+                //                     approvalPendingCount = approvalPendingCount + data.data.sbcPending.count;
+                //                     values.badge = data.data.sbcPending.count;
+                //                 }
+                //                 if (!_.isEmpty(data.data.ilaPending) && values.isView === true && values.name == "ILA Approval") {
+                //                     approvalPendingCount = approvalPendingCount + data.data.ilaPending.count;
+                //                     values.badge = data.data.ilaPending.count;
+                //                 }
+                //                 if (!_.isEmpty(data.data.lorPending) && values.isView === true && values.name == "LOR Approval") {
+                //                     approvalPendingCount = approvalPendingCount + data.data.lorPending.count;
+                //                     values.badge = data.data.lorPending.count;
+                //                 }
+                //                 if (!_.isEmpty(data.data.invoicePending) && values.isView === true && values.name == "Invoice Approval") {
+                //                     approvalPendingCount = approvalPendingCount + data.data.invoicePending[0].count;
+                //                     values.badge = data.data.invoicePending[0].count;
+                //                 }
+                //                 if (!_.isEmpty(data.data.assignmentPending) && values.isView === true && values.name == "Assignment Approval") {
+                //                     approvalPendingCount = approvalPendingCount + data.data.assignmentPending.count;
+                //                     values.badge = data.data.assignmentPending.count;
+                //                 }
+                //             });
+                //             values.badge = approvalPendingCount;
+                //         }
+                //     });
+                // });
                 return navigation;
             },
             getNavByRole: function (role) {

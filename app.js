@@ -48,7 +48,7 @@ if (process.env.name == "AbsoluteTesting") {
       // 104.155.238.145
       console.log(err);
     } else {
-      console.log("Database Connected to Absolute");
+      console.log("Database Connected to Sociis");
       setupGFS();
     }
   });
@@ -59,7 +59,7 @@ if (process.env.name == "AbsoluteTesting") {
     if (err) {
       console.log(err);
     } else {
-      console.log("Database Connected to Absolute");
+      console.log("Database Connected to Sociis");
       setupGFS();
     }
   });
@@ -71,7 +71,7 @@ if (process.env.name == "AbsoluteTesting") {
       // 104.155.238.145
       console.log(err);
     } else {
-      console.log("Database Connected to Absolute");
+      console.log("Database Connected to Sociis");
       setupGFS();
     }
   });
@@ -83,7 +83,7 @@ if (process.env.name == "AbsoluteTesting") {
       // 104.155.238.145
       console.log(err);
     } else {
-      console.log("Database Connected to Absolute");
+      console.log("Database Connected to Sociis");
       setupGFS();
     }
   });
