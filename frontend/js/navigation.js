@@ -369,6 +369,17 @@ var navigationservice = angular.module('navigationservice', [])
                     icon: "book"
                 }]
             }, {
+                name: "Payment",
+                classis: "active",
+                anchor: "payment",
+                icon: "money",
+                subnav: [{
+                    name: "Payment",
+                    classis: "active",
+                    anchor: "payment-list",
+                    icon: "money"
+                }]
+            }, {
                 name: "Approvals",
                 classis: "active",
                 anchor: "approval",
@@ -556,10 +567,6 @@ var navigationservice = angular.module('navigationservice', [])
                 data.accessToken = $.jStorage.get("accessToken");
                 $http.post(adminurl + 'user/sendEmail', data).success(callback);
             },
-            // sendEmail: function (data, callback) {
-            //     data.accessToken = $.jStorage.get("accessToken");
-            //     $http.post(adminurl + 'assignment/sendEmailAttachment', data).success(callback);
-            // },
             updateEmailStatus: function (data, callback) {
                 console.log("data email", data);
                 $http.post(adminurl + 'timeline/updateEmailStatus', data).success(callback);
@@ -595,9 +602,12 @@ var navigationservice = angular.module('navigationservice', [])
                 });
             },
             searchInvoice: function (formData, i, callback) {
-                // console.log("formData : ", formData);
-                // formData.accessToken = $.jStorage.get("accessToken");
                 $http.post(adminurl + 'Invoice/search', formData).success(function (data) {
+                    callback(data, i);
+                });
+            },
+            searchPayment: function (formData, i, callback) {
+                $http.post(adminurl + 'Payment/search', formData).success(function (data) {
                     callback(data, i);
                 });
             },
@@ -1143,7 +1153,12 @@ var navigationservice = angular.module('navigationservice', [])
             },
             createInvoice: function (formData, callback) {
                 $http.post(adminurl + 'Invoice/createInvoice', formData).success(function (err, data) {
-                    console.log("CreateInvoice Data", data)
+                    callback(data);
+                })
+            },
+            createPayment: function (formData, callback) {
+                $http.post(adminurl + 'Payment/createPayment', formData).success(function (err, data) {
+                    console.log("CreatePayment Data", data)
                     callback(data);
                 })
             },

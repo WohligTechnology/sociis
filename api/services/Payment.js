@@ -31,12 +31,27 @@ var schema = new Schema({
 
 });
 
-schema.plugin(deepPopulate, {});
+schema.plugin(deepPopulate, {
+    populate: {
+        'employee': {
+            select: 'name _id'
+        },
+        'customer': {
+            select: 'name _id'
+        },
+        'shop': {
+            select: 'name _id'
+        },
+        'invoice': {
+            select: 'name _id'
+        }
+    }
+});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('Payment', schema);
 
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "employee customer shop invoice", "employee customer shop invoice"));
 var model = {
     generatePaymentNumber: function (data, callback) {
         var name = 1;

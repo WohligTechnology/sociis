@@ -159,6 +159,7 @@ function getAllRoles() {
     addRoles("Timeline", "Consent-Waive", "", "assignment,assignment-list", true, false, false, false, false, false, false, false, true); //Added New For Consent Waive
     addRoles("Timeline", "FSR-Waive", "", "assignment,assignment-list", true, false, false, false, false, false, false, false, true); //Added New For FSR Waive
     addRoles("Shop", "Shop", "", "shop,shop-list", true, false, false, false, false, false, false, false, true); //Added New For FSR Waive
+    addRoles("Payment", "Payment", "", "payment,payment-list", true, false, false, false, false, false, false, false, true); //View Payment
 
     addRoles("Assignments", "Assignment", "Global View", "assignment,assignment-list", true, false, false, false, false, false, false, false, false);
     addRoles("Assignments", "Assignment", "All Files", "assignment,assignment-list", true, false, false, false, false, false, false, false, false);

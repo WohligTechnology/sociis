@@ -30,18 +30,12 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <!--<div class="form-group">
-                                <label>Employee*{{formData.employee}}</label>
-                                <multiple-select my-enter name="employee" required ng-model="formData.employee" ng-name="name.employee" api="searchEmployee"></multiple-select>
-                                <div class="error-msg" ng-show="formName.employee.$invalid">Please Select employee </div>
-                            </div>-->
                             <div class="form-group">
                                 <label>Owner*</label>
                                 <multiple-select my-enter name="owner" required ng-model="formData.owner" ng-name="name.owner" api="getBackendEmployeeOnly"></multiple-select>
                                 <div class="error-msg" ng-show="formName.owner.$invalid">Please Select owner</div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

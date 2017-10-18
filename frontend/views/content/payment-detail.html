@@ -1,0 +1,58 @@
+<form name="formName">
+    <div class="heading-sec">
+
+    </div>
+    <div class="panel-content">
+        <div class="widget">
+            <div class="form-elements-sec">
+                <div class="sec">
+                    <div class="row" ng-if="!formData._id">
+                        <div class="col-md-6  invoice--go">
+                            <div class="pull-right" style="color: red"><label>Amount Pending : </label><span><b> {{creditPending | number}}</b></span></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Billed To*</label>
+                                <ui-select ng-change="calculateCreditPending(formData.customer)" ng-model="formData.customer" theme="bootstrap" required>
+                                    <ui-select-match placeholder="Use Dropdown to Select Or Type to Search Others">{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="customer in billedTos | filter:$select.search" refresh="refreshBilledTos($select.search)" ui-disable-choice="billedTos.length==0">{{customer.name}}</ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Shop*</label>
+                                <multiple-select my-enter name="shop" required ng-model="formData.shop" ng-name="name.shop" api="searchShop"></multiple-select>
+                                <div class="error-msg" ng-show="formName.shop.$invalid">Please Select shop </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Employee*</label>
+                                <multiple-select my-enter name="employee" required ng-model="formData.employee" ng-name="name.employee" api="searchEmployee"></multiple-select>
+                                <div class="error-msg" ng-show="formName.employee.$invalid">Please Select owner</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Amount*</label>
+                                <input type="Number" name="amount" class="form-control" ng-model="formData.amount" required>
+                                <div class="error-msg" ng-show="formName.amount.$invalid && formName.amount.$touched">Please Enter Amount</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="text-center mt20 odd-even-button">
+            <button class="btn btn-success" ng-click="createPayment(formData)" ng-disabled="formName.$invalid">Save</button>
+            <a class="btn btn-danger" ng-click="cancel()">Cancel</a>
+        </div>
+        <!--</div>-->
+    </div>
+</form>

@@ -1605,6 +1605,25 @@ firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $lo
                 model: "shop"
             }
         })
+        .state('payment-list', {
+            url: "/payment-list",
+            templateUrl: "frontend/views/template.html",
+            controller: 'PaymentViewCtrl',
+            params: {
+                page: "1",
+                keyword: "",
+                model: "payment"
+            }
+        })
+        .state('createPayment', {
+            url: "/payment-detail/{id:.*}/{model:.*}",
+            templateUrl: "frontend/views/template.html",
+            controller: 'CreatePaymentCtrl',
+            params: {
+                id: "",
+                model: "payment"
+            }
+        })
         .state('templateLor-list', {
             url: "/templateLor-list/{page:.*}/{keyword:.*}/{model:.*}",
             templateUrl: "frontend/views/template.html",

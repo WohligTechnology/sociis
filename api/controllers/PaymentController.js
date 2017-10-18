@@ -2,10 +2,11 @@ module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 var controller = {
     createPayment: function (req, res) {
         var invoiceArr = [];
+        console.log("Customer --->", req.body.customer);
         async.waterfall([
                 function (callback) { //Invoice Search
                     Invoice.find({
-                        customer: req.body.customerId,
+                        customer: req.body.customer,
                         status: {
                             $in: ["Pending", "Partial Pending"]
                         }
@@ -95,7 +96,7 @@ var controller = {
                 },
                 function (data, callback) {
                     var customerData = {
-                        _id: req.body.customerId,
+                        _id: req.body.customer,
                         amount: req.body.amount
                     };
                     Customer.upDateCustomerOnCreatePayment(customerData, function (err, name) {
