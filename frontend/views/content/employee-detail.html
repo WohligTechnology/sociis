@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-md-12 column">
                 <div class="heading-profile">
-                    <toggle-switch ng-model="formData.status" class="switch-small switch-success pull-right"></toggle-switch>
+                    <!--<toggle-switch ng-model="formData.status" class="switch-small switch-success pull-right"></toggle-switch>-->
                     <h2>{{header.name}}</h2>
                 </div>
             </div>
@@ -32,12 +32,12 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label>Company Name*</label>
-                                        <multiple-select my-enter name="company" required ng-model="formData.company" ng-name="name.company" api="searchCompany"
-                                            ng-create="companySave"></multiple-select>
-                                        <div class="error-msg" ng-show="formName.company.$invalid">Please Select Company Name</div>
+                                        <label>Name*</label>
+                                        <input type="text" name="name" class="form-control" ng-model="formData.name" required>
+                                        <div class="error-msg" ng-show="formName.name.$invalid && formName.name.$touched">Please Enter Name</div>
                                     </div>
                                 </div>
+                                
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Salutation*</label>
@@ -45,72 +45,108 @@
                                         <div class="error-msg" ng-show="formName.salutation.$invalid && formName.salutation.$touched">Please Select Salutation</div>
                                     </div>
                                 </div>
+
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label>First Name*</label>
-                                        <input type="text" name="name" class="form-control" ng-model="formData.firstName" required>
-                                        <div class="error-msg" ng-show="formName.name.$invalid && formName.name.$touched">Please Enter First Name</div>
+                                        <label>Email*</label>
+                                        <input type="email" name="email" class="form-control" ng-model="formData.email" required>
+                                        <div class="error-msg" ng-show="formName.email.$invalid && formName.email.$touched">Please Enter Email</div>
                                     </div>
                                 </div>
+
                                 <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Password*</label>
+                                        <input type="password" name="password" class="form-control" ng-model="formData.password" required>
+                                        <div class="error-msg" ng-show="formName.password.$invalid && formName.password.$touched">Please Enter Password</div>
+                                    </div>
+                                </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Number*</label>
+                                        <input type="number" name="mobile" class="form-control" ng-model="formData.mobile" required>
+                                        <div class="error-msg" ng-show="formName.mobile.$invalid && formName.mobile.$touched">Please Enter mobile number</div>
+                                    </div>
+                                </div>
+
+
+                               <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Role</label>
+                                        <ui-select multiple tagging="tagTransform" tagging-label="(press enter to add new)" on-select="clicked($select.selected)"
+                                            name="role" ng-model="formData.role" theme="bootstrap">
+                                            <ui-select-match>{{$item.name}}</ui-select-match>
+                                            <ui-select-choices repeat="role in roleList | filter:$select.search" refresh-delay="0" refresh="refreshNatureRole($select.search)">{{role.name}}</ui-select-choices>
+                                        </ui-select>
+                                        <div class="error-msg" ng-show="formName.role.$invalid && formName.role.$touched">Please Enter Office</div>
+                                    </div>
+                                </div>
+                                <div class="text-center mt20 odd-even-button">
+            <button class="btn btn-default" type="submit" ng-disabled="formName.$invalid">Save</button>
+            <a class="btn btn-default" ng-click="cancel()">Cancel</a>
+        </div>
+
+                                <!--<div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Last Name*</label>
                                         <input type="text" name="lastName" class="form-control" ng-model="formData.lastName" required>
                                         <div class="error-msg" ng-show="formName.lastName.$invalid && formName.lastName.$touched">Please Enter Last Name</div>
                                     </div>
-                                </div>
-                                <div class="col-sm-6">
+                                </div>-->
+                                <!--<div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Posted at*</label>
                                         <multiple-select my-enter name="postedAt" required ng-model="formData.postedAt" ng-name="name.postedAt" api="searchOffice"></multiple-select>
                                         <div class="error-msg" ng-show="formName.postedAt.$invalid">Please Select Current Posting</div>
                                     </div>
-                                </div>
-                                <div class="col-sm-6">
+                                </div>-->
+                                <!--<div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Function*</label>
                                         <multiple-select my-enter name="func" required ng-model="formData.func" ng-name="name.func" api="searchFunc" ng-create="funcSave"></multiple-select>
                                         <div class="error-msg" ng-show="formName.func.$invalid">Please Select Function</div>
                                     </div>
-                                </div>
-                                <div class="col-sm-6">
+                                </div>-->
+                                <!--<div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Grade*</label>
                                         <multiple-select my-enter name="grade" required ng-model="formData.grade" ng-name="name.grade" api="searchGrade" ng-create="gradeSave"
                                             readonly></multiple-select>
                                         <div class="error-msg" ng-show="formName.grade.$invalid">Please Select Grade</div>
                                     </div>
-                                </div>
-                                <div class="col-sm-6"></div>
-                                <div class="col-sm-6">
+                                </div>-->
+                                <!--<div class="col-sm-6"></div>-->
+                                <!--<div class="col-sm-6">
                                     <div class="form-group">
                                         <label>House Color*</label>
                                         <select type="text" name="houseColor" class="form-control" ng-model="formData.houseColor" required ng-options="houseColor for houseColor in houseColors"></select>
                                         <div class="error-msg" ng-show="formName.houseColor.$invalid && formName.houseColor.$touched">Please Select House Color</div>
                                     </div>
-                                </div>
-                                <div class="col-sm-6">
+                                </div>-->
+                                <!--<div class="col-sm-6">
                                     <div class="form-group">
-                                        <label>Branch</label>
+                                        <label>Branch</label>-->
                                         <!--filter='{"office":"{{formData.postedAt}}"}' Removed Office Filter-->
-                                        <multiple-select my-enter name="branch" ng-model="formData.branch" ng-name="name.branch" api="searchBranch" ng-create="branchSave"></multiple-select>
+                                        <!--<multiple-select my-enter name="branch" ng-model="formData.branch" ng-name="name.branch" api="searchBranch" ng-create="branchSave"></multiple-select>
                                         <div class="error-msg" ng-show="formName.branch.$invalid">Please Select Branch</div>
                                     </div>
-                                </div>
-                                <div class="col-sm-6">
+                                </div>-->
+                                <!--<div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Employee Code*</label>
                                         <input type="text" name="employeeCode" class="form-control" ng-model="formData.employeeCode" required>
                                         <div class="error-msg" ng-show="formName.employeeCode.$invalid && formName.employeeCode.$touched">Please Enter Employee Code</div>
                                     </div>
-                                </div>
-                                <div class="col-sm-6">
+                                </div>-->
+                                <!--<div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Upload Photo</label>
                                         <upload-image ng-model="formData.photo"></upload-image>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
+                                </div>-->
+                                <!--<div class="col-md-6">
                                     <div class="form-group">
                                         <label>Role*</label>
                                         <ui-select multiple tagging="tagTransform" tagging-label="(press enter to add new)" on-select="clicked($select.selected)"
@@ -120,15 +156,15 @@
                                         </ui-select>
                                         <div class="error-msg" ng-show="formName.role.$invalid && formName.role.$touched">Please Enter Office</div>
                                     </div>
-                                </div>
-                                <div class="col-sm-6">
+                                </div>-->
+                                <!--<div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Reporting To</label>
                                         <multiple-select my-enter name="employee" ng-model="formData.employee" ng-name="name.employee" api="searchEmployee"></multiple-select>
                                         <div class="error-msg" ng-show="formName.employee.$invalid">Please Select employee</div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
+                                </div>-->
+                                <!--<div class="col-md-6">
                                     <div class="form-group">
                                         <label>Offices*</label>
                                         <ui-select multiple tagging="tagTransform" tagging-label="(press enter to add new)" on-select="clicked($select.selected)"
@@ -138,7 +174,7 @@
                                         </ui-select>
                                         <div class="error-msg" ng-show="formName.allBranch.$invalid && formName.allBranch.$touched">Please Enter Office</div>
                                     </div>
-                                </div>
+                                </div>-->
                                 <!-- <div class="col-sm-6">
                                   <div class="form-group">
                                       <label>Access*</label>
@@ -152,7 +188,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <!--<div class="row">
             <div class="col-md-12">
                 <div class="widget">
                     <div class="form-elements-sec">
@@ -573,5 +609,5 @@
             <button class="btn btn-default" type="submit" ng-disabled="formName.$invalid">Save</button>
             <a class="btn btn-default" ng-click="cancel()">Cancel</a>
         </div>
-    </div>
+    </div>-->
 </form>

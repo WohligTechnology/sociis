@@ -6754,7 +6754,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.cancel = function () {
             $window.history.back();
         }
-        $scope.salutations = ["Mr.", "Mrs.", "Ms.", "Dr."];
+        $scope.salutations = ["Employee", "Manager", "Admin"];
         $scope.houseColors = ["Red", "Green", "Blue", "Yellow", "White"];
 
         $scope.dateOptions = {
@@ -6929,13 +6929,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             }
         });
         $scope.saveModel = function (formData) {
-            if (formData.lat && formData.lng) {
-                formData.location = [];
-                formData.location.push(formData.lat);
-                formData.location.push(formData.lng);
-            }
-            console.log(formData);
-            $scope.formData.name = $scope.formData.firstName + " " + $scope.formData.lastName;
             NavigationService.modelSave("Employee", $scope.formData, function (data) {
                 if (data.value === true) {
                     // $state.go('employee-list');
@@ -6974,27 +6967,15 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             "value": false
         }];
 
-        $scope.salutations = ["Mr.", "Mrs.", "Ms.", "Dr."];
+        $scope.salutations = ["Employee", "Manager", "Admin"];
         $scope.houseColors = ["Red", "Green", "Blue", "Yellow", "White"];
+
+
 
         $scope.dateOptions = {
             showWeeks: true
         };
 
-        $scope.popup = {
-            to: false,
-            from: false,
-            toReciept: false,
-            fromReciept: false,
-            toCertificate: false,
-            fromCertificate: false,
-            toLicense: false,
-            fromLicense: false,
-            birthDate: false,
-            marriageDate: false,
-            joiningDate: false,
-            leavingDate: false
-        };
 
         $scope.format = 'dd-MMMM-yyyy';
         $scope.modalData = {};
@@ -7007,189 +6988,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         };
 
 
-        $scope.refreshNature = function (data) {
-            var formdata = {};
-            formdata.keyword = data;
-            NavigationService.searchBranch(formdata, 1, function (data) {
-                console.log("searchBranch", data);
-                $scope.natureLoss = data.data.results;
-            });
-        };
-        $scope.refreshNatureRole = function (data) {
-            var formdata = {};
-            formdata.keyword = data;
-            NavigationService.searchRole(formdata, 1, function (data) {
-                console.log("searchBranch....", data);
-                $scope.roleList = data.data.results;
-            });
-        };
-
-        $scope.refreshGrade = function (data) {
-            // var formdata = {};
-            // formdata.keyword = data;
-            NavigationService.getOneModel("Grade", data, function (data) {
-                console.log("searchGrade", data);
-                $scope.formData.grade = data.data;
-            });
-        };
-        $scope.addModal = function (filename, index, holdobj, data, current) {
-            console.log("formData.grade", $scope.formData.grade);
-            if (index !== "") {
-
-                $scope.modalData = data;
-                $scope.modalData.from = new Date(data.from);
-                $scope.modalData.to = new Date(data.to);
-
-                $scope.modalIndex = index;
-            } else {
-                $scope.modalData = {};
-                console.log(moment());
-                if (current.length > 0) {
-                    $scope.modalData.from = new Date(current[current.length - 1].to);
-                    $scope.modalData.from = $scope.modalData.from.setDate($scope.modalData.from.getDate() + 1);
-                    $scope.modalData.grade = current[current.length - 1].grade;
-                }
-                $scope.modalIndex = "";
-            }
-            $scope.holdObject = holdobj;
-            var modalInstance = $uibModal.open({
-                scope: $scope,
-                templateUrl: '/frontend/views/modal/' + filename + '.html',
-                size: 'lg'
-            });
-        };
-
-        $scope.addElements = function (data) {
-            switch ($scope.holdObject) {
-                case 'personalDocument':
-                    if ($scope.modalIndex !== "") {
-                        $scope.formData.personalDocument[$scope.modal] = data;
-                    } else {
-                        $scope.formData.personalDocument.push(data);
-                    }
-                    break;
-                case 'licenseDocument':
-                    if ($scope.modalIndex !== "") {
-                        $scope.formData.licenseDocument[$scope.modal] = data;
-                    } else {
-                        $scope.formData.licenseDocument.push(data);
-                    }
-                    break;
-                case 'IIISLACertificate':
-                    if ($scope.modalIndex !== "") {
-                        $scope.formData.IIISLACertificate[$scope.modal] = data;
-                    } else {
-                        $scope.formData.IIISLACertificate.push(data);
-                    }
-                    break;
-                case 'IIISLAReciept':
-                    if ($scope.modalIndex !== "") {
-                        $scope.formData.IIISLAReciept[$scope.modal] = data;
-                    } else {
-                        $scope.formData.IIISLAReciept.push(data);
-                    }
-                    break;
-                case 'CTCDetails':
-                    if ($scope.modalIndex !== "") {
-                        console.log("Model Data if", $scope.formData.grade);
-                        $scope.formData.CTCDetails[$scope.modal] = data;
-                        $scope.formData.grade = data.grade;
-                        // console.log("Model Data if",$scope.formData.grade);                       
-                        $scope.refreshGrade($scope.formData.grade);
-                        // $scope.formData.grade = $scope.formData.CTCDetails[$scope.formData.CTCDetails.length - 1].grade;
-                    } else {
-                        console.log("Model Data else", $scope.formData);
-                        var length1 = $scope.formData.CTCDetails.length;
-                        console.log("Length1", length1);
-                        if (length1 !== 0) {
-                            $scope.formData.CTCDetails[length1 - 1].to = data.from;
-                            console.log("ABC", $scope.formData.CTCDetails[length1 - 1].to);
-                        }
-                        $scope.formData.CTCDetails.push(data);
-                        // $scope.formData.grade = $scope.formData.CTCDetails[$scope.formData.CTCDetails.length - 1].grade;
-                        $scope.formData.grade = data.grade;
-                    }
-                    break;
-                default:
-
-            }
-        };
-        $scope.editElements = function (elemObject, data) {
-
-        };
-
-        $scope.deleteElements = function (index, name) {
-            switch (name) {
-                case 'personalDocument':
-                    $scope.formData.personalDocument.splice(index, 1);
-                    break;
-                case 'licenseDocument':
-                    $scope.formData.licenseDocument.splice(index, 1);
-                    break;
-                case 'IIISLACertificate':
-                    $scope.formData.IIISLACertificate.splice(index, 1);
-                    break;
-                case 'IIISLAReciept':
-                    $scope.formData.IIISLAReciept.splice(index, 1);
-                    break;
-                case 'CTCDetails':
-                    $scope.formData.CTCDetails.splice(index, 1);
-                    break;
-                default:
-
-            }
-        };
-
 
         NavigationService.getOneModel("Employee", $stateParams.id, function (data) {
             $scope.formData = data.data;
-            // if (data.data.city) {
-            //     $scope.formData.country = data.data.city.district.state.zone.country._id;
-            //     $scope.formData.zone = data.data.city.district.state.zone._id;
-            //     $scope.formData.state = data.data.city.district.state._id;
-            //     $scope.formData.district = data.data.city.district._id;
-            //     $scope.formData.city = data.data.city._id;
-            // }
-            NavigationService.getDepartment(function (data1) {
-                $scope.departments = data1.data.results;
-            });
-            if (data.data.birthDate) {
-                $scope.formData.birthDate = new Date(data.data.birthDate);
-            }
-            if (data.data.joiningDate) {
-                $scope.formData.joiningDate = new Date(data.data.joiningDate);
-            }
-            if (data.data.marriageDate) {
-                $scope.formData.marriageDate = new Date(data.data.marriageDate);
-            }
-            if (data.data.leavingDate) {
-                $scope.formData.leavingDate = new Date(data.data.leavingDate);
-            }
+            $scope.formData.mobile=parseInt(data.data.mobile)
+            
+           
         });
         $scope.cancel = function () {
             $window.history.back();
         }
-        hotkeys.bindTo($scope).add({
-            combo: 'ctrl+enter',
-            callback: function (formData) {
-                if (formData.lat && formData.lng) {
-                    formData.location = [];
-                    formData.location.push(formData.lat);
-                    formData.location.push(formData.lng);
-                }
-                $scope.formData.name = $scope.formData.firstName + " " + $scope.formData.lastName;
-                console.log($scope.formData);
-                NavigationService.modelSave("Employee", $scope.formData, function (data) {
-                    if (data.value === true) {
-                        // $state.go('employee-list');
-                        $window.history.back();
-                        toastr.success("Employee" + $scope.formData.name + " edited successfully.", "Employee" + " Edited");
-                    } else {
-                        toastr.error("Employee" + " edition failed.", "Employee" + " editing error");
-                    }
-                });
-            }
-        });
+
         $scope.saveModel = function (formData) {
             if (formData.lat && formData.lng) {
                 formData.location = [];
