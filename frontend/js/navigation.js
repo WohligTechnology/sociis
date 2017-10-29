@@ -1168,6 +1168,11 @@ var navigationservice = angular.module('navigationservice', [])
                     callback(data, i);
                 });
             },
+            getAllItemsName: function (formData, callback) {
+                $http.post(adminurl + 'InvoiceExpenditure/getAllItemsName', formData).success(function (data) {
+                    callback(data);
+                });
+            },
             searchInsured: function (formData, i, callback) {
                 formData.accessToken = $.jStorage.get("accessToken");
                 $http.post(adminurl + 'CustomerCompany/getInsured', formData).success(function (data) {

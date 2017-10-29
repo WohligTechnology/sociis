@@ -34,13 +34,48 @@
                                         <div class="error-msg" ng-show="formName.name.$invalid && formName.name.$touched">Please Enter Salvage</div>
                                     </div>
                                 </div>
-                                <!--<div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Sequence*</label>
-                                        <input type="text" name="sequence" class="form-control" ng-model="formData.sequence" required>
-                                        <div class="error-msg" ng-show="formName.sequence.$invalid && formName.sequence.$touched">Please Enter Sequence</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="widget">
+                                        <div class="form-elements-sec">
+                                            <div class="widget-title">
+                                                <h3>Item Details</h3>
+                                            </div>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Name</th>
+                                                        <th>Rate</th>
+                                                        <th>Unit</th>
+                                                        <th style="width: 100px;">Quantity</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!--<tr>-->
+                                                    <tr ng-repeat="itemObj in formData.items track by $index">
+                                                        <td>
+                                                            {{$index+1}}
+                                                        </td>
+                                                        <td>
+                                                            {{itemObj.item.name}}
+                                                        </td>
+                                                        <td>
+                                                            {{itemObj.item.rate}}
+                                                        </td>
+                                                        <td>
+                                                            {{itemObj.item.unit}}
+                                                        </td>
+                                                        <td>
+                                                            <input type="Number" class="form-control" min=0 style="width: 200px;" ng-model="itemObj.quantity">
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>-->
+                                </div>
                             </div>
                             <div class="text-center mt20 odd-even-button">
                                 <button class="btn btn-default" type="submit" ng-disabled="formName.$invalid">Save</button>

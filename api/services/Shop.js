@@ -6,14 +6,31 @@ var schema = new Schema({
     status: {
         type: Boolean,
         default: true
-    }
+    },
+    items: [{
+        item: {
+            type: Schema.Types.ObjectId,
+            ref: "InvoiceExpenditure",
+            index: true
+        },
+        quantity: {
+            type: Number,
+            default: 0
+        }
+    }]
 });
 
-schema.plugin(deepPopulate, {});
+schema.plugin(deepPopulate, {
+    populate: {
+        'items.item': {
+            select: ''
+        }
+    }
+});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('Shop', schema);
 
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "items.item", "items.item"));
 var model = {};
 module.exports = _.assign(module.exports, exports, model);

@@ -1,26 +1,26 @@
 var schema = new Schema({
-    name: {
-        type: String,
-        required: true,
-        unique: true,
-        uniqueCaseInsensitive: true
-    },
-    description: String,
-    unit: String,
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+    uniqueCaseInsensitive: true
+  },
+  description: String,
+  unit: String,
+  rate: Number,
+  status: {
+    type: Boolean,
+    default: true
+  },
+  type: {
+    type: Boolean,
+    default: false
+  },
+  rateArray: [{
     rate: Number,
-    status: {
-        type: Boolean,
-        default: true
-    },
-     type: {
-        type: Boolean,
-        default: false
-    },
-    rateArray: [{
-        rate: Number,
-        validFrom: Date,
-        validTo: Date
-    }]
+    validFrom: Date,
+    validTo: Date
+  }]
 });
 
 schema.plugin(deepPopulate, {});
@@ -30,7 +30,7 @@ module.exports = mongoose.model('InvoiceExpenditure', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
-    searchForInvoiceList: function (data, callback) {
+  searchForInvoiceList: function (data, callback) {
     var Model = this;
     var Const = this(data);
     var maxRow = 1000;
@@ -68,5 +68,16 @@ var model = {
       .page(options, callback);
 
   },
+  getAllItemsName: function (data, callback) {
+    InvoiceExpenditure.find({}, {
+      name: 1
+    }).exec(function (err, data) {
+      if (err) {
+        callback(err, data)
+      } else {
+        callback(null, data);
+      }
+    });
+  }
 };
 module.exports = _.assign(module.exports, exports, model);

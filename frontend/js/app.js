@@ -1589,7 +1589,7 @@ firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $lo
         .state('createshop', {
             url: "/shop-detail/{id:.*}/{model:.*}",
             templateUrl: "frontend/views/template.html",
-            controller: 'CreateModelCtrl',
+            controller: 'CreateShopCtrl',
             params: {
                 id: "",
                 model: "shop"
@@ -1599,7 +1599,7 @@ firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $lo
         .state('editshop', {
             url: "/shop-edit/{id:.*}/{model:.*}",
             templateUrl: "frontend/views/template.html",
-            controller: 'EditModelCtrl',
+            controller: 'EditShopCtrl',
             params: {
                 id: "",
                 model: "shop"

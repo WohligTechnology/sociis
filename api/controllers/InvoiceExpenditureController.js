@@ -10,5 +10,8 @@ var controller = {
             });
         }
     },
+    getAllItemsName: function (req, res) {
+        InvoiceExpenditure.getAllItemsName(req.body, res.callback);
+    }
 };
 module.exports = _.assign(module.exports, controller);
