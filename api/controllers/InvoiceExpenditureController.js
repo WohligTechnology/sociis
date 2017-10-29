@@ -15,44 +15,48 @@ var controller = {
     },
     save: function (req, res) {
         console.log(req.body)
-        req.model.saveData(req.body, function (err, data) {
-            console.log(err)
-            if (err) {
-                console.log("Here In Error")
-            } else {
-                Shop.find({}, {
-                    name: 1
-                }).lean().exec(function (err, shopsArr) {
-                    console.log("data._id", data._id)
-                    var invoiceObject = {
-                        item: data._id,
-                        quantity: 0
-                    };
-                    console.log("InvoiceObj", invoiceObject);
-                    async.eachSeries(shopsArr, function (n, callback) {
-                        Shop.update({
-                            "_id": n._id
-                        }, {
-                            $addToSet: {
-                                items: invoiceObject
-                            }
-                        }).lean().exec(function (err, Shop) {
+        if (!req.body._id) {
+            req.model.saveData(req.body, function (err, data) {
+                console.log(err)
+                if (err) {
+                    console.log("Here In Error")
+                } else {
+                    Shop.find({}, {
+                        name: 1
+                    }).lean().exec(function (err, shopsArr) {
+                        console.log("data._id", data._id)
+                        var invoiceObject = {
+                            item: data._id,
+                            quantity: 0
+                        };
+                        console.log("InvoiceObj", invoiceObject);
+                        async.eachSeries(shopsArr, function (n, callback) {
+                            Shop.update({
+                                "_id": n._id
+                            }, {
+                                $addToSet: {
+                                    items: invoiceObject
+                                }
+                            }).lean().exec(function (err, Shop) {
+                                if (err) {
+                                    callback();
+                                } else {
+                                    callback();
+                                }
+                            })
+                        }, function (err) {
                             if (err) {
-                                callback();
+                                res.callback(err, data);
                             } else {
-                                callback();
+                                res.callback(null, data);
                             }
-                        })
-                    }, function (err) {
-                        if (err) {
-                            res.callback(err, data);
-                        } else {
-                            res.callback(null, data);
-                        }
-                    });
-                })
-            }
-        });
+                        });
+                    })
+                }
+            });
+        } else {
+            req.model.saveData(req.body, res.callback)
+        }
     },
     // async.eachSeries(newInsurer, function (n, callback) {
     //                 Customer.getChildCustomer({
