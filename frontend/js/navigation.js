@@ -1607,11 +1607,32 @@ var navigationservice = angular.module('navigationservice', [])
             login: function (data, callback) {
                 $http.post(adminurl + 'Employee/Login', data).success(function (data) {
                     if (data.value === true) {
-                        $.jStorage.set("getLoginEmployee", data.data);
-                        var newRole = getRoleSingle(data.data.role);
-                        $.jStorage.set("role", newRole);
+                        console.log("login data",data)
+                        if(data.data.Is == "Customer"){
+                            console.log("inside customer if")
+                            var temp = data.data;
+                            $http.post(adminurl + 'Role/getRoleByName',temp).success((rolesData)=>{
+                                console.log("rolesforcustomer",rolesData);
+                                if(rolesData.value == true){
+                                    
+                                    data.data.role = rolesData.data;
+                                    $.jStorage.set("getLoginEmployee", data.data);
+                                    var newRole = getRoleSingle(data.data.role);
+                                    $.jStorage.set("role", newRole);
+                                    
+                                    callback(data);
+                                }
+                            })
+                        }else{
+                            console.log("inside else")
+                            $.jStorage.set("getLoginEmployee", data.data);
+                            var newRole = getRoleSingle(data.data.role);
+                            $.jStorage.set("role", newRole);
+                            callback(data);
+                        }
+                        
                     }
-                    callback(data);
+                    
                 });
             },
             getLoginEmployee: function (email, callback) {

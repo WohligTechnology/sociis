@@ -10740,6 +10740,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     .controller('headerctrl', function ($scope, $window, $rootScope, TemplateService, $state, $uibModal) {
 
         $scope.template = TemplateService;
+        $rootScope.loginData = $.jStorage.get("getLoginEmployee");
         $rootScope.isMobile = false;
         $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
             $(window).scrollTop(0);

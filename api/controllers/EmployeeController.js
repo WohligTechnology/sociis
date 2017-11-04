@@ -412,13 +412,14 @@ var controller = {
                     valid.mobile = ce[1];
                     a = "Employee";
                 } else {
+                    console.log("inside customer")
                     a = "Customer";
                 }
 
-                req.model.findOne({
+                mongoose.model(a).findOne({
                     mobile: valid.mobile
-                }).deepPopulate("role").exec((err, result) => {
-
+                }).deepPopulate("role").lean().exec((err, result) => {
+                    // console.log(result)
                     if (err) {
                         console.log("error in validating useer", err);
                         res.callback({
@@ -431,6 +432,7 @@ var controller = {
                         });
                     } else {
                         if (result.password == valid.password) {
+                            result.Is = a;
                             res.callback(null, result);
                             // var randtoken = require('rand-token');
                             // var token = randtoken.generate(16);
