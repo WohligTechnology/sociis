@@ -1,6 +1,3 @@
-<!-- <div id="progressBar">
-	<div class="loader"></div>
-</div> -->
 <div class="breadcrumbs">
     <ul>
         <li>
@@ -52,31 +49,12 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="data in modelList">
-                                    <!--<td>
-                                        {{($index + 1)+((currentPage-1)*invoiceFilter.maxRow)}}
-                                    </td>-->
+
                                     <td>{{data.name}}</td>
                                     <td>{{data.customer.name}}</td>
                                     <td>{{data.employee.name}}</td>
                                     <td>{{data.shop.name}}</td>
                                     <td>{{data.total}}</td>
-                                    <!--<td>{{data.createdBy}}</td>
-                                    <td>{{data.insuredName}}</td>
-                                    <td style="text-align:right;">{{data.grandTotal | number}}</td>
-                                    <td>{{data.approvalTime | DateFormat}}</td>
-                                    <td>{{data.approvalStatus}}</td>
-                                    <td>
-                                        <button class="btn btn-clear">
-                                            <a class="btn btn-primary temp-btnbg" ng-if="template.currentRole.add.val" download="{{data.file}}" ng-href="{{data.file|downloadImageWithName:data.invoiceNumber+' INVOICE.pdf'}}">
-                                                 <i class="ln-download"></i>
-                                            </a>
-                                        </button>
-                                        <!--<a class="btn btn-primary" ui-sref="editInvoice({invoiceId:data._id,assignmentId:data.assignment._id})"><i class="fa fa-pencil"></i></a>-->
-                                    <!--<button class="btn btn-warning" ng-click="gotoRevise(data._id,data.assignment._id)">Revise</button>-->
-                                    <button class="btn btn-warning" ng-if="template.currentRole.edit.val" ng-click="reviseCheck($index,data._id,data.assignment._id)">Revise</button>
-                                    <button class="btn btn-danger" ng-if="template.currentRole.delete.val" ng-click="confCancel(data)">Cancel</button>
-
-                                    <!--<a class="btn btn-danger" ng-click="deleteModel(data._id)"><i class="fa fa-trash"></i></a>-->
 
                                 </tr>
                             </tbody>
@@ -85,9 +63,6 @@
                     <div class="tableData" ng-show="totalItems == 0">
                         <h5>No data found</h5>
                     </div>
-                    <!--<div class="tableData" ng-show="totalItems == undefined">
-                        <h5>Loading Data</h5>
-                    </div>-->
                     <ul ng-if="totalItems" ng-change="changePages(currentPage);" uib-pagination total-items="totalItems" items-per-page="invoiceFilter.maxRow"
                         ng-model="currentPage" max-size="template.pageMax" class="pagination-sm" boundary-links="true" force-ellipses="true"></ul>
                 </div>
