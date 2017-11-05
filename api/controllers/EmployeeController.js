@@ -374,9 +374,6 @@ var controller = {
     getParentEmployee: function (req, res) {
         Employee.getParentEmployee(req.body, res.callback);
     },
-    getChildEmployee: function (req, res) {
-        Employee.getChildEmployee(req.body, res.callback);
-    },
     getEmployeeData: function (req, res) {
         if (req.body) {
             Employee.getEmployeeData(req.body, res.callback);

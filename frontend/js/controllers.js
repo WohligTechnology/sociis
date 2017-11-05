@@ -11947,42 +11947,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.cancel = function () {
             $window.history.back();
         }
-        $scope.getParentEmployee = function () {
-            NavigationService.getEmployeeData($scope.empId, function (data) {
-                if (data.value) {
-                    $scope.employee = data.data;
-                    if ($scope.message.employee.employee) {
-                        $scope.employee.push({
-                            _id: $scope.message.employee._id,
-                            name: $scope.message.employee.name,
-                            email: $scope.message.employee.officeEmail
-                        });
-                        _.map($scope.employee, function (values) {
-                            values.email.toString();
-                            values.name.toString();
-                        });
-                        $scope.employee = _.uniqBy($scope.employee, "email");
-                    }
-                } else {
-                    $scope.employee.push({
-                        _id: $scope.message.employee._id,
-                        name: $scope.message.employee.name,
-                        email: $scope.message.employee.officeEmail
-                    });
-                    _.map($scope.employee, function (values) {
-                        values.email.toString();
-                        values.name.toString();
-                    });
-                    $scope.employee = _.uniqBy($scope.employee, "email");
-
-                }
-            });
-        };
         $scope.getLoginEmployee = $.jStorage.get("getLoginEmployee");
         $scope.message.employee = $scope.getLoginEmployee;
         $scope.empId = $scope.getLoginEmployee._id;
         $scope.employee = [];
-        $scope.getParentEmployee();
         // NavigationService.getTimeline($stateParams.assignmentId, function (data) {
         //     $scope.timeline = data.data;
         // });
@@ -12337,44 +12305,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 $scope.calAmtOnRemove();
             }
         };
-        $scope.getParentEmployee = function () {
-            NavigationService.getEmployeeData($scope.empId, function (data) {
-                if (data.value) {
-                    $scope.employee = data.data;
-                    if ($scope.message.employee.employee) {
-                        $scope.employee.push({
-                            _id: $scope.message.employee._id,
-                            name: $scope.message.employee.name,
-                            email: $scope.message.employee.officeEmail
-                        });
-                        _.map($scope.employee, function (values) {
-                            values.email.toString();
-                            values.name.toString();
-                        });
-
-                        $scope.employee = _.uniqBy($scope.employee, "email");
-                    }
-                } else {
-                    $scope.employee.push({
-                        _id: $scope.message.employee._id,
-                        name: $scope.message.employee.name,
-                        email: $scope.message.employee.officeEmail
-                    });
-                    _.map($scope.employee, function (values) {
-                        values.email.toString();
-                        values.name.toString();
-                    });
-                    $scope.employee = _.uniqBy($scope.employee, "email");
-
-                }
-                console.log("$scope.forms.employee", $scope.employee);
-            });
-        };
         $scope.getLoginEmployee = $.jStorage.get("getLoginEmployee");
         $scope.message.employee = $scope.getLoginEmployee;
         $scope.empId = $scope.getLoginEmployee._id;
         $scope.employee = [];
-        $scope.getParentEmployee();
         // NavigationService.getTimeline($stateParams.assignmentId, function (data) {
         //     $scope.timeline = data.data;
         //     console.log("unwanted Hit", $scope.timeline);
@@ -12957,46 +12891,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 toastr.error("Enter Sub-Category Name");
             }
         };
-        $scope.getParentEmployee = function () {
-            console.log("$scope.empId", $scope.empId);
-            NavigationService.getEmployeeData($scope.empId, function (data) {
-                console.log("getparent data", data);
-                if (data.value) {
-                    $scope.employee = data.data;
-                    if ($scope.message.employee.employee) {
-                        $scope.employee.push({
-                            _id: $scope.message.employee._id,
-                            name: $scope.message.employee.name,
-                            email: $scope.message.employee.officeEmail
-                        });
-                        _.map($scope.employee, function (values) {
-                            values.email.toString();
-                            values.name.toString();
-                        });
-
-                        $scope.employee = _.uniqBy($scope.employee, "email");
-                    }
-                } else {
-                    $scope.employee.push({
-                        _id: $scope.message.employee._id,
-                        name: $scope.message.employee.name,
-                        email: $scope.message.employee.officeEmail
-                    });
-                    _.map($scope.employee, function (values) {
-                        values.email.toString();
-                        values.name.toString();
-                    });
-                    $scope.employee = _.uniqBy($scope.employee, "email");
-
-                }
-                console.log("$scope.forms.employee", $scope.employee);
-            });
-        };
         $scope.getLoginEmployee = $.jStorage.get("getLoginEmployee");
         $scope.message.employee = $scope.getLoginEmployee;
         $scope.empId = $scope.getLoginEmployee._id;
         $scope.employee = [];
-        $scope.getParentEmployee();
 
 
         if ($stateParams.assignmentTemplate === "") {
