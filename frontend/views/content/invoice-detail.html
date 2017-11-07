@@ -114,74 +114,7 @@
                             </div>
                         </div>
                     </div>
-
-
-
-
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Unit</th>
-                                    <th>Rate</th>
-                                    <th>Quantity</th>
-                                    <th>Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="form in formData.invoiceList">
-
-                                    <td><div class="right-float mark-float">
-                                        <i class="fa fa-bars handleBar"></i>
-                                    </div>
-                                    <div>
-                                        <ui-select ng-model="form" ng-change="getAll(form,$index)" theme="bootstrap" sortable="true">
-                                            <ui-select-match placeholder="Select">
-                                                <span class="detail-title" title="{{$select.selected.name}}">{{$select.selected.name}}</span>
-                                            </ui-select-match>
-                                            <ui-select-choices repeat="d in descriptions | filter: $select.search" refresh="getdescriptions($select.search)" refresh-delay="0">
-                                                <span>{{d.name}}</span>
-                                            </ui-select-choices>
-                                        </ui-select>
-                                    </div></td>
-                                    <td><div>
-                                        <input type="text" title="{{form.description}}" ng-model="form.description" placeholder="Enter Unit" class="form-control">
-                                    </div></td>
-                                    <td><div>
-                                        <select class="form-control" ng-model="form.unit" ng-change="calAmt(form.rate,form.quantity,$index)">
-											<option value="Kg">Kg</option>
-											<option value="grm">grm</option>
-											<option value="Per">Per</option>
-										</select>
-                                    </div></td>
-                                    <td><div>
-                                        <input type="text" cleave="template.currency" ng-model="form.rate" placeholder="Enter Rate" class="form-control text-right"
-                                            ng-change="calAmt(form.rate,form.quantity,$index)">
-                                    </div></td>
-                                    <td><div>
-                                        <input type="text" cleave="template.currencyNoDecimal" min="0" ng-model="form.quantity" placeholder="Enter Quantity" class="form-control text-right"
-                                            ng-change="calAmt(form.rate,form.quantity,$index)">
-                                    </div></td>
-                                    <td><div>
-                                        <input type="text" cleave="template.currency" ng-model="form.amount" placeholder="Total" class="form-control text-right"
-                                            readonly>
-                                    </div></td>
-                                    <td></td><div class="mark-float">
-                                        <i class="fa fa-plus-circle success" ng-click="addHead();"></i>
-                                        <i class="fa fa-minus-circle danger" ng-click="removeHead($index);"></i>
-                                    </div>
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-
-
-
-                    
+   
                 </div>
             </div>
         </div>
