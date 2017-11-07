@@ -2551,5 +2551,10 @@ form.search-form {
     }
 }
 
+.select_billTo{
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 @import "fancybox-override";
 @import "other/mobile"

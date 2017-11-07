@@ -79,6 +79,18 @@ float: none !important;
 }
 
 @media (max-width:$screen-xs-max) {
+  .sociis h1 {
+    padding: 12% 31%;}
+    .bor-right {
+      height: none;
+     border-right: none;
+  }
+  .login-logo {
+    margin: 0;
+}
+.login-content {
+  margin: 0;
+}
   // .info-holder {
   //   height: auto;
   // }
