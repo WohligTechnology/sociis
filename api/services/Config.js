@@ -169,6 +169,27 @@ var models = {
             callback(null, "Done");
         }
     },
+    // SMS
+    sendSms: function (data, callback) {
+        if (data.mobile) {
+            request.get({
+                url: "https://alerts.solutionsinfini.com/api/v4/?method=sms&api_key=A23b865252a08417ecf80322e20511f83&to=" + data.mobile + "&sender=SOCIIS&message=" + data.content + "&format=json"
+            }, function (err, http, body) {
+                if (err) {
+                    console.log("*************************************************sms gateway error***********************************************")
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    console.log("*************************************************sms sent***********************************************", body);
+                    callback(null, body);
+                }
+            });
+        } else {
+            callback({
+                message: "Mobile number not found"
+            }, null);
+        }
+    },
 
     generateExcel: function (name, found, res) {
         name = _.kebabCase(name);
