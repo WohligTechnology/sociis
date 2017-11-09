@@ -12,7 +12,7 @@ var schema = new Schema({
         type: String,
         validate: validators.isEmail()
     },
-    mobile: { 
+    mobile: {
         type: String,
         required: true
     },
@@ -1827,113 +1827,10 @@ var model = {
             }
         });
     },
-    getChildEmployee: function (data, callback) {
-        var allEmployee = [];
-        var Model = this;
-        var Search = Model.find({
-            "employee": data._id
-        }).lean().exec(function (err, data2) {
-            if (err) {
-                callback(err, allEmployee);
-            } else {
-                allEmployee = _.map(data2, function (n) {
-                    return n._id + "";
-                });
-                if (allEmployee.length > 0) {
 
-                    async.each(allEmployee, function (n, callback) {
 
-                        Model.getChildEmployee({
-                            _id: n
-                        }, function (err, data) {
-                            if (err) {
-                                callback();
-                            } else {
-                                allEmployee = _.concat(allEmployee, data);
-                                callback();
-                            }
-                        });
-                    }, function (err, data) {
-                        callback(err, _.compact(allEmployee));
-                    });
-                } else {
-                    callback(err, _.compact(allEmployee));
-                }
 
-            }
-        });
-    },
 
-    getParentEmployee: function (data, callback) {
-        var allEmployee = [];
-        var Model = this;
-        var Search = Model.findOne({
-            "_id": data._id
-        }).lean().exec(function (err, data2) {
-            if (err) {
-                callback(err, allEmployee);
-            } else {
-                // if (data2.employee) {
-                if (data2 !== null) {
-                    allEmployee.push(data2.employee);
-                    Model.getParentEmployee({
-                        _id: data2.employee
-                    }, function (err, data3) {
-                        if (err) {
-
-                        } else {
-                            allEmployee = _.concat(allEmployee, data3);
-                        }
-                        callback(null, _.compact(allEmployee));
-                    });
-                } else {
-                    callback(null, _.compact(allEmployee));
-                }
-            }
-        });
-    },
-
-    getEmployeeData: function (data, callback) {
-        Employee.getParentEmployee(data, function (err, empData) {
-            if (err) {
-                callback(err, null);
-            } else {
-                if (_.isEmpty(empData)) {
-                    callback(err, null);
-                } else {
-                    Employee.find({
-                        _id: {
-                            $in: empData
-                        }
-                    }, {
-                        _id: 1,
-                        name: 1,
-                        officeEmail: 1
-                    }).lean().exec(function (err, userData) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            if (_.isEmpty(userData)) {
-                                callback([], null);
-                            } else {
-                                var newData = [];
-                                _.each(userData, function (values) {
-                                    newData.push({
-                                        _id: values._id,
-                                        name: values.name,
-                                        email: values.officeEmail
-                                    });
-                                });
-                                callback(null, newData);
-                            }
-
-                        }
-                    });
-                }
-            }
-        });
-
-    }
 
 };
 module.exports = _.assign(module.exports, exports, model);

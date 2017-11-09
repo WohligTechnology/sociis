@@ -84,33 +84,6 @@ module.exports.http = {
                                         }
                                     });
                                 },
-
-                                parents: function (callback) {
-                                    Employee.getParentEmployee(data.employee, function (err, data2) {
-                                        if (err) {
-                                            callback({
-                                                error: err,
-                                                value: false
-                                            });
-                                        } else {
-                                            data.parents = data2;
-                                            callback();
-                                        }
-                                    });
-                                },
-                                children: function (callback) {
-                                    Employee.getChildEmployee(data.employee, function (err, data2) {
-                                        if (err) {
-                                            callback({
-                                                error: err,
-                                                value: false
-                                            });
-                                        } else {
-                                            data.children = data2;
-                                            callback();
-                                        }
-                                    });
-                                }
                             },
                             function (err) {
                                 if (err) {
@@ -157,32 +130,7 @@ module.exports.http = {
                                     });
                                 },
 
-                                parents: function (callback) {
-                                    Employee.getParentEmployee(data.employee, function (err, data2) {
-                                        if (err) {
-                                            callback({
-                                                error: err,
-                                                value: false
-                                            });
-                                        } else {
-                                            data.parents = data2;
-                                            callback();
-                                        }
-                                    });
-                                },
-                                children: function (callback) {
-                                    Employee.getChildEmployee(data.employee, function (err, data2) {
-                                        if (err) {
-                                            callback({
-                                                error: err,
-                                                value: false
-                                            });
-                                        } else {
-                                            data.children = data2;
-                                            callback();
-                                        }
-                                    });
-                                }
+
                             },
                             function (err) {
                                 if (err) {

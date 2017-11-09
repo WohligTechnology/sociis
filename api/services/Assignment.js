@@ -1940,9 +1940,9 @@ var model = {
             }
             $scope.data = data;
             var filter = {
-                _id: data2.assignment.policyDoc
-              }
-              // For policyNumber
+              _id: data2.assignment.policyDoc
+            }
+            // For policyNumber
             PolicyDoc.getPolicyDoc({
               filter
             }, function (err, data4) {
@@ -1989,9 +1989,9 @@ var model = {
                   data.invoiceNumber = "";
                   $scope.data = data;
                   var filter = {
-                      _id: data2.policyDoc
-                    }
-                    // For policyNumber
+                    _id: data2.policyDoc
+                  }
+                  // For policyNumber
                   PolicyDoc.getPolicyDoc({
                     filter
                   }, function (err, data4) {
@@ -2013,9 +2013,9 @@ var model = {
               }
               $scope.data = data;
               var filter = {
-                  _id: data2.assignment.policyDoc
-                }
-                // For policyNumber
+                _id: data2.assignment.policyDoc
+              }
+              // For policyNumber
               PolicyDoc.getPolicyDoc({
                 filter
               }, function (err, data4) {
@@ -2658,11 +2658,11 @@ var model = {
           newChat.address = data.address;
           newChat.event = "On Survey Attended";
           newChat.onSurveyAttended = true
-            // _.each(fileArray, function (n) {
-            //   n.employee = data.empId,
-            //     n.type = "Normal",
-            //     n.title = "Survey Done";
-            // });
+          // _.each(fileArray, function (n) {
+          //   n.employee = data.empId,
+          //     n.type = "Normal",
+          //     n.title = "Survey Done";
+          // });
 
           timelineData.push(newChat);
           Timeline.update({
@@ -4740,124 +4740,7 @@ var model = {
     };
     var childArr = [];
     var pagestartfrom = (data.page - 1) * Config.maxRow;
-    Employee.getChildEmployee(employee, function (err, childArray) {
-      if (err) {
-        callback(err, null);
-      } else {
-        childArray.push(data.employee);
-        _.each(childArray, function (n) {
-          childArr.push(objectid(n));
-        })
 
-        async.parallel([
-            function (callback) {
-              Assignment.find({
-                "$or": [{
-                  'shareWith.persons': {
-                    $in: childArr
-                  }
-                }, {
-                  "owner": {
-                    $in: childArr
-                  }
-                }],
-                "name": {
-                  $regex: data.keyword,
-                  $options: 'i'
-                },
-                templateLor: {
-                  $elemMatch: {
-                    approvalStatus: "Pending"
-                  }
-                }
-              }, {
-                name: 1,
-                owner: 1,
-                "templateLor.$": 1
-              }).sort({
-                "templateLor.reqtimestamp": 1
-              }).lean().deepPopulate("owner templateLor.sentTo templateLor.sentBy", "owner templateLor.sentTo templateLor.sentBy").skip(pagestartfrom).limit(10).exec(function (err, data) {
-                if (err) {
-                  callback(err, null);
-                } else {
-                  var arr = [];
-                  async.eachSeries(data, function (n, callback) {
-                    var templateLor = n.templateLor[0];
-                    delete n.templateLor;
-                    delete templateLor.forms;
-                    n.templateLor = templateLor;
-                    arr.push(n);
-                    callback();
-                  }, function (err) {
-                    if (err) {
-                      callback(err)
-                    } else {
-                      callback(null, arr)
-                    }
-                  })
-
-                }
-              })
-            },
-            function (callback) {
-              Assignment.find({
-                "$or": [{
-                  'shareWith.persons': {
-                    $in: childArr
-                  }
-                }, {
-                  "owner": {
-                    $in: childArr
-                  }
-                }],
-                "name": {
-                  $regex: data.keyword,
-                  $options: 'i'
-                },
-                templateLor: {
-                  $elemMatch: {
-                    approvalStatus: "Pending"
-                  }
-                }
-              }, {
-                name: 1,
-              }).exec(function (err, data) {
-                if (err) {
-                  callback(err, null);
-                } else {
-                  var count = {
-                    count: data.length
-                  }
-                  callback(null, count)
-                }
-              })
-            }
-          ],
-          function (err, data4) {
-            if (err) {
-              callback(err, null);
-            } else {
-              if (_.isEmpty(data4[1])) {
-                var data5 = {
-                  results: data4[0],
-                  options: {
-                    count: 0
-                  }
-                };
-              } else {
-                var data5 = {
-                  results: data4[0],
-                  options: {
-                    count: Config.maxRow
-                  }
-                };
-                data5.total = data4[1].count;
-              }
-              callback(null, data5);
-            }
-          });
-      }
-    });
   },
   getApprovalListIla: function (data, callback) {
     var employee = {
@@ -4865,125 +4748,6 @@ var model = {
     };
     var childArr = [];
     var pagestartfrom = (data.page - 1) * Config.maxRow;
-    Employee.getChildEmployee(employee, function (err, childArray) {
-      if (err) {
-        callback(err, null);
-      } else {
-        childArray.push(data.employee);
-        _.each(childArray, function (n) {
-          childArr.push(objectid(n));
-        })
-
-        async.parallel([
-            function (callback) {
-              Assignment.find({
-                "$or": [{
-                  'shareWith.persons': {
-                    $in: childArr
-                  }
-                }, {
-                  "owner": {
-                    $in: childArr
-                  }
-                }],
-                "name": {
-                  $regex: data.keyword,
-                  $options: 'i'
-                },
-                templateIla: {
-                  $elemMatch: {
-                    approvalStatus: "Pending"
-                  }
-                }
-              }, {
-                name: 1,
-                owner: 1,
-                intimatedLoss: 1,
-                "templateIla.$": 1
-              }).sort({
-                "templateIla.reqtimestamp": 1
-              }).lean().deepPopulate("owner templateIla.sentTo templateIla.sentBy", "owner templateIla.sentTo templateIla.sentBy").skip(pagestartfrom).limit(10).exec(function (err, data) {
-                if (err) {
-                  callback(err, null);
-                } else {
-                  var arr = [];
-                  async.eachSeries(data, function (n, callback) {
-                    var templateIla = n.templateIla[0];
-                    delete n.templateIla;
-                    delete templateIla.forms;
-                    n.templateIla = templateIla;
-                    arr.push(n);
-                    callback();
-                  }, function (err) {
-                    if (err) {
-                      callback(err)
-                    } else {
-                      callback(null, arr)
-                    }
-                  })
-
-                }
-              })
-            },
-            function (callback) {
-              Assignment.find({
-                "$or": [{
-                  'shareWith.persons': {
-                    $in: childArr
-                  }
-                }, {
-                  "owner": {
-                    $in: childArr
-                  }
-                }],
-                "name": {
-                  $regex: data.keyword,
-                  $options: 'i'
-                },
-                templateIla: {
-                  $elemMatch: {
-                    approvalStatus: "Pending"
-                  }
-                }
-              }, {
-                name: 1,
-              }).exec(function (err, data) {
-                if (err) {
-                  callback(err, null);
-                } else {
-                  var count = {
-                    count: data.length
-                  }
-                  callback(null, count)
-                }
-              })
-            }
-          ],
-          function (err, data4) {
-            if (err) {
-              callback(err, null);
-            } else {
-              if (_.isEmpty(data4[1])) {
-                var data5 = {
-                  results: data4[0],
-                  options: {
-                    count: 0
-                  }
-                };
-              } else {
-                var data5 = {
-                  results: data4[0],
-                  options: {
-                    count: Config.maxRow
-                  }
-                };
-                data5.total = data4[1].count;
-              }
-              callback(null, data5);
-            }
-          });
-      }
-    });
   },
   saveTemplate: function (data, callback) {
     var matchObj = {};
@@ -5256,175 +5020,6 @@ var model = {
     };
 
     var childArr = [];
-    Employee.getChildEmployee(employee, function (err, childArray) {
-      if (err) {
-        callback(err, null);
-      } else {
-        childArray.push(data.employee);
-        _.each(childArray, function (n) {
-          childArr.push(objectid(n));
-        })
-
-        aggText = [{
-            $match: {
-              "$or": [{
-                'shareWith.persons': {
-                  $in: childArr
-                }
-              }, {
-                "owner": {
-                  $in: childArr
-                }
-              }],
-              "name": {
-                $regex: data.keyword,
-                $options: 'i'
-              },
-              assignmentapprovalStatus: {
-                $in: arr
-              }
-            }
-          }, {
-            $lookup: {
-              from: "employees",
-              localField: "owner",
-              foreignField: "_id",
-              as: "owner"
-            }
-          }, {
-            $unwind: {
-              path: "$owner",
-              preserveNullAndEmptyArrays: true
-            }
-          }, {
-            $lookup: {
-              from: "employees",
-              localField: "sentBy",
-              foreignField: "_id",
-              as: "sentBy"
-            }
-          }, {
-            $unwind: {
-              path: "$sentBy",
-              preserveNullAndEmptyArrays: true
-            }
-          }, {
-            $project: {
-              "owner.name": "$owner.name",
-              "owner._id": "$owner._id",
-              "sentBy.name": "$sentBy.name",
-              "sentBy._id": "$sentBy._id",
-              reason: "$forceClosedComment",
-              timelineStatus: "$timelineStatus",
-              assignmentapprovalStatus: "$assignmentapprovalStatus",
-              forceClosedReqTime: "$forceClosedReqTime",
-              reopenReqTime: "$reopenReqTime",
-              onholdReqTime: "$onholdReqTime",
-              waiverReqTime: "$waiverReqTime",
-              name: "$name",
-              onholdComment: "$onholdComment",
-              reopenComment: "$reopenComment",
-              getAllTaskStatus: "$getAllTaskStatus",
-              ilaAccessReq: "$ilaAccessReq",
-              lorAccessReq: "$lorAccessReq",
-              surveyAccessReq: "$surveyAccessReq",
-              assessmentAccessReq: "$assessmentAccessReq",
-              consentAccessReq: "$consentAccessReq",
-              fsrAccessReq: "$fsrAccessReq",
-              ilaAccess: "$ilaAccess",
-              lorAccess: "$lorAccess",
-              surveyAccess: "$surveyAccess",
-              assessmentAccess: "$assessmentAccess",
-              consentAccess: "$consentAccess",
-              fsrAccess: "$fsrAccess"
-            }
-          }, {
-            $skip: parseInt(pagestartfrom)
-          }, {
-            $limit: maxRow
-          }],
-          aggTextCount = [{
-            $match: {
-              "$or": [{
-                'shareWith.persons': {
-                  $in: childArr
-                }
-              }, {
-                "owner": {
-                  $in: childArr
-                }
-              }],
-              "name": {
-                $regex: data.keyword,
-                $options: 'i'
-              },
-              assignmentapprovalStatus: {
-                $in: arr
-              }
-            }
-          }, {
-            $group: {
-              _id: null,
-              count: {
-                $sum: 1
-              }
-            }
-          }, {
-            $project: {
-              "_id": 1,
-              "count": 1
-            }
-          }]
-        async.parallel([
-            function (callback) {
-              Model.aggregate(aggText,
-                function (err, data1) {
-                  if (err) {
-                    callback(err, null);
-                  } else {
-                    callback(null, data1)
-                  }
-
-                });
-            },
-            function (callback) {
-              Model.aggregate(aggTextCount,
-                function (err, data2) {
-                  if (err) {
-                    callback(err, null);
-                  } else {
-                    callback(null, data2)
-                  }
-
-                });
-            }
-          ],
-          function (err, data4) {
-            if (err) {
-              callback(err, null);
-            } else {
-              if (_.isEmpty(data4[1])) {
-                var data5 = {
-                  results: data4[0],
-                  options: {
-                    count: 0
-                  }
-                };
-              } else {
-                var data5 = {
-                  results: data4[0],
-                  options: {
-                    count: maxRow
-                  }
-                };
-                data5.total = data4[1][0].count;
-              }
-              callback(null, data5);
-            }
-          });
-
-      }
-    });
     //1111 
 
   },
@@ -6892,7 +6487,7 @@ var model = {
                       _id: n._id
                     }, {
                       getAllTaskStatus: n.getAllTaskStatus
-                        // timelineStatus: n.timelineStatus
+                      // timelineStatus: n.timelineStatus
                     }).exec(function (err, data) {
                       if (err) {
                         callback(err, null);

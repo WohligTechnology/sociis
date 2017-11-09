@@ -5,7 +5,7 @@
     <ul ng-show="menu.subnav!='';">
       <li ng-repeat="submenu in menu.subnav">
         <a href="{{mobileUrl}}" ng-if="submenu.anchor && submenu.isView && isMobile == true && submenu.name == 'Assignment'"><i class="fa fa-{{submenu.icon}}"></i> <span>{{submenu.name}}</span> <span ng-if="submenu.badge" class="badge">{{submenu.badge}}</span></a>
-        <a ui-sref="{{submenu.anchor}}" ng-if="submenu.anchor && submenu.isView && isMobile == false"><i class="fa fa-{{submenu.icon}}"></i> <span>{{submenu.name}}</span> <span ng-if="submenu.badge" class="badge">{{submenu.badge}}</span></a>
+        <a ui-sref="{{submenu.anchor}}" ng-if="submenu.anchor && submenu.isView"><i class="fa fa-{{submenu.icon}}"></i> <span>{{submenu.name}}</span> <span ng-if="submenu.badge" class="badge">{{submenu.badge}}</span></a>
         <a herf="{{submenu.link}}" ng-if="submenu.link"><i class="fa fa-{{submenu.icon}}"></i> <span>{{submenu.name}}</span><span ng-if="submenu.badge" class="badge">{{submenu.badge}}</span></a>
       </li>
     </ul>
