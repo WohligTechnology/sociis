@@ -2545,10 +2545,38 @@ form.search-form {
 
 .sociis {
     h1 {
-        padding: 12% 40%;
+        padding: 0% 40%;
         font-size: 40px;
         color: #fff;
+        position: relative;
+        -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+        -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+        animation-name: h1example;
+        animation-duration: 3s;
+        animation-fill-mode: forwards;
     }
+    img{
+        padding: 0%;
+        width: 200px;
+        height: 200px;
+        position: relative;
+        -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+        -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+        animation-name: example;
+        animation-duration: 3s;
+        animation-fill-mode: forwards;
+        
+    }
+    @keyframes example {
+       from   {left:0%; top:0%;}
+      to  {left:35%; top:0%;}
+      
+    }
+    @keyframes h1example {
+        from   {left:35%; top:0%;}
+       to  {left:0%; top:0%;}
+       
+     }
 }
 
 @import "fancybox-override";
