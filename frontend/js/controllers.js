@@ -11965,42 +11965,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 $scope.descriptions = data.data.results;
             });
         }
-        $scope.saveDraft = function (data) {
-            $scope.disableSave = true;
-            TemplateService.getToastr();
-            var assignmentData = {
-                _id: $scope.assignment._id,
-                invoice: $scope.assignment.invoice,
-                companyState: $scope.assignment.company.city.district.state
-            }
-            var timelineData = {
-                type: "Normal",
-                employee: $scope.message.employee._id,
-                title: "Invoice " + $scope.assignment.name + " Saved as Draft"
-            };
-            $scope.formData.createdBy = $.jStorage.get("getLoginEmployee")._id;
-            var newObj = {
-                invoice: $scope.formData,
-                assignment: assignmentData,
-                createdBy: $.jStorage.get("getLoginEmployee")._id,
-                type: "Create",
-                timeline: timelineData
-            }
-
-            NavigationService.saveInvoiceDraft(newObj, function (data) {
-                if (data.value === true) {
-                    toastr.clear();
-                    toastr.success("Invoice saved as draft");
-                    $window.history.back();
-                } else {
-                    $scope.disableSave = false;
-                    toastr.clear();
-                    toastr.error("Invoice draft failed to save");
-                }
-            });
-        };
         $scope.getAll = function (invoice, $index) {
             console.log("Invoice", invoice);
+            $scope.formData.invoiceList[$index].itemId = invoice._id;
             $scope.formData.invoiceList[$index].name = invoice.name;
             $scope.formData.invoiceList[$index].description = invoice.description;
             $scope.formData.invoiceList[$index].unit = invoice.unit;

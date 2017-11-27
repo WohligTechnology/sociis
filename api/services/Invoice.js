@@ -19,6 +19,11 @@ var schema = new Schema({
         index: true
     },
     invoiceList: [{
+        itemId: {
+            type: Schema.Types.ObjectId,
+            ref: "InvoiceExpenditure",
+            index: true
+        },
         name: String,
         description: String,
         quantity: Number,

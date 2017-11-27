@@ -28,7 +28,6 @@ var controller = {
                                 req.body.status = "Pending";
                             }
                             req.model.saveData(req.body, function (err, data) {
-                                console.log("data", err, data);
                                 if (err) {
                                     callback(err, null);
                                 } else {
@@ -69,6 +68,35 @@ var controller = {
 
                 },
                 function (data, callback) {
+                    Shop.findOne({
+                        _id: req.body.shop
+                    }, function (err, name) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            async.eachSeries(name.items, function (item, callback) {
+                                _.each(req.body.invoiceList, function (n) {
+                                    if (item.item == n.itemId) {
+                                        item.quantity = item.quantity - n.quantity;
+                                    }
+                                });
+                                callback();
+                            }, function () {
+                                Shop.update({
+                                    _id: name.id
+                                }, name, function (err, updated) {
+                                    if (err) {
+                                        callback(null, data);
+                                    } else {
+                                        callback(null, data);
+                                    }
+                                })
+
+                            });
+                        }
+                    });
+                },
+                function (data, callback) {
                     var customerData = {
                         type: req.body.paymentMethod,
                         _id: req.body.customer._id,
@@ -88,10 +116,6 @@ var controller = {
                 if (err) {
                     res.callback(err, null);
                 } else {
-                    // var newData = {
-                    //     data: results,
-                    //     value: true
-                    // }
                     res.callback(null, results);
                 }
             });
