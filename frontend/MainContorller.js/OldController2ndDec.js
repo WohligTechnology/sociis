@@ -17862,6 +17862,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 }
             });
         };
+        
         $scope.rejectApproval = function (assignment) {
             $scope.assignment = assignment;
             $scope.assignment.ilaAccessReq = $scope.assignment.ilaAccess,
