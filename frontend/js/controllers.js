@@ -516,6 +516,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 keyword: $scope.search.keyword,
             }, ++i, function (data, ini) {
                 if (ini == i) {
+                    console.log($scope.ModelApi);
                     $scope.modelList = data.data.results;
                     $scope.totalItems = data.data.total;
                     $scope.maxRow = data.data.options.count;
@@ -619,290 +620,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             });
         };
 
-        $scope.checkStateActive = function (activeVar) {
-            if (activeVar === "active") {
-                $scope.filter.timelineStatus = ["Unassigned", "Survey Pending", "ILA Pending", "LOR Pending", "Dox Pending", "Part Dox Pending", "Assessment Pending", "Consent Pending", "FSR Pending", "OnHold", "DBND"];
-            } else {
-                $scope.filter.timelineStatus = ["Force Closed", "BBND", "Dispatched", "Collected"];
-            }
-        };
-
-        $scope.assignmentFilter = function () {
-            $scope.filter.dates = ["Today", "Date Criteria", "As of Today", "MTD", "Monthly", "Quarterly", "Half yearly", "Annual"];
-            $scope.filter.years = $scope.getYears();
-            $scope.filter.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-            console.log('years : ', $scope.filter.years);
-            var modalInstance = $uibModal.open({
-                scope: $scope,
-                templateUrl: '/frontend/views/modal/assignment-filter.html',
-                size: 'lg'
-            });
-        };
-
-        $scope.getYears = function () {
-            var year = moment(new Date()).year();
-            // year++;
-            var years = [];
-            for (var i = 1970; i <= year; i++) {
-                years.push(i);
-            }
-            return years
-        };
-        //From-To Financial dates filters
-        $scope.getDateCriteria = function (data) {
-            switch (data) {
-                case "Today":
-                    $scope.filter.fromDate = new Date();
-                    $scope.filter.toDate = new Date();
-                    break;
-                case "Date Criteria":
-                    $scope.filter.fromDate = "";
-                    $scope.filter.toDate = new Date();
-                    break;
-                case "As of Today":
-                    $scope.filter.fromDate = new Date("1/1/1970");
-                    $scope.filter.toDate = new Date();
-                    break;
-                case "MTD":
-                    var year = moment(new Date()).year();
-                    var month = moment(new Date()).month();
-                    month++;
-                    $scope.filter.fromDate = new Date(month + "/1/" + year);
-                    $scope.filter.toDate = new Date();
-                    break;
-                case "Monthly":
-                    $scope.filter.fromDate = "";
-                    $scope.filter.toDate = "";
-                    break;
-                case "Quarterly":
-                    $scope.quarterly = "";
-                    $scope.quarterlyYear = "";
-                    $scope.filter.fromDate = "";
-                    $scope.filter.toDate = "";
-                    break;
-                case "Half yearly":
-                    $scope.halfYearly = "";
-                    $scope.halfYearlyYear = "";
-                    $scope.filter.fromDate = "";
-                    $scope.filter.toDate = "";
-                    break;
-                case "Annual":
-                    $scope.annualYear = "";
-                    $scope.filter.fromDate = "";
-                    $scope.filter.toDate = "";
-                    break;
-                default:
-                    {
-                        $scope.filter.fromDate = "";
-                        $scope.filter.toDate = "";
-                    }
-            }
-            console.log('date Criteria', data);
-        };
-        $scope.setQuarterlyDate = function (data) {
-            console.log('setQuarterlyDate Criteria', data);
-            if ($scope.filter.quarterlyYear == "") {
-                var year = moment(new Date()).year();
-            } else {
-                var year = $scope.filter.quarterlyYear;
-            }
-            console.log('years = ', year, $scope.filter.quarterlyYear);
-            if (data === "quarterly1") {
-                $scope.filter.fromDate = new Date("4/1/" + year);
-                $scope.filter.toDate = new Date("6/30/" + year);
-            }
-            if (data === "quarterly2") {
-                $scope.filter.fromDate = new Date("7/1/" + year);
-                $scope.filter.toDate = new Date("9/30/" + year);
-            }
-            if (data === "quarterly3") {
-                $scope.filter.fromDate = new Date("10/1/" + year);
-                $scope.filter.toDate = new Date("12/31/" + year);
-            }
-            if (data === "quarterly4") {
-                year++;
-                $scope.filter.fromDate = new Date("1/1/" + year);
-                $scope.filter.toDate = new Date("3/31/" + year);
-            }
-        };
-        $scope.setHalfYearlyDate = function (data) {
-            console.log('setHalfYearlyDate Criteria', data);
-            if ($scope.filter.halfYearlyYear == "") {
-                var year = moment(new Date()).year();
-            } else {
-                var year = $scope.filter.halfYearlyYear;
-            }
-            console.log('years = ', year);
-            if (data === "halfYearly1") {
-                $scope.filter.fromDate = new Date("4/1/" + year);
-                $scope.filter.toDate = new Date("9/30/" + year);
-            }
-            if (data === "halfYearly2") {
-                $scope.filter.fromDate = new Date("10/1/" + year);
-                $scope.filter.toDate = new Date("3/31/" + year);
-            }
-        };
-
-        $scope.setQuarterlyYear = function () {
-            $scope.filter.quarterly = "";
-            $scope.filter.fromDate = "";
-            $scope.filter.toDate = "";
-        };
-        $scope.setHalfYear = function () {
-            $scope.filter.halfYearly = "";
-            $scope.filter.fromDate = "";
-            $scope.filter.toDate = "";
-        };
-        $scope.setMonthlyYear = function () {
-            $scope.filter.monthlyMonth = "";
-            $scope.filter.fromDate = "";
-            $scope.filter.toDate = "";
-        };
-        $scope.setAnnualYear = function () {
-            var year = $scope.filter.annualYear;
-            $scope.filter.fromDate = new Date("4/1/" + year);
-            $scope.filter.toDate = new Date();
-        };
-        var month = "";
-        $scope.getMonthNumber = function () {
-            _.each($scope.filter.months, function (key, value) {
-                console.log("values key", value, key);
-                if (key == $scope.filter.monthlyMonth) {
-                    month = key;
-                    console.log("values ", value);
-                    return key;
-                }
-            });
-        };
-        $scope.setMonthlyMonth = function () {
-            $scope.getMonthNumber();
-            console.log("months ", month);
-            var start = new Date(month + '/01/' + $scope.filter.monthlyYear);
-            var startDate = moment(month + '/01/' + $scope.filter.monthlyYear);
-            console.log(startDate);
-            var endDate = new Date(startDate.clone().endOf('month'));
-            console.log(endDate);
-            $scope.filter.fromDate = start;
-            $scope.filter.toDate = endDate;
-        };
-        $scope.doFilter = function (data) {
-            console.log("Form Data To Filter", data);
-        };
-        $scope.timelineStatus = ["Unassigned", "Survey Pending", "ILA Pending", "LOR Pending", "Dox Pending", "Part Dox Pending", "Assessment Pending", "Consent Pending", "FSR Pending", "BBND", "Dispatched", "Collected", "Force Closed"];
-        var formData2 = {};
-        formData2.filter = {
-            "name": "Insurer"
-        };
-        NavigationService.searchModel("CustomerSegment", formData2, 1, function (data) {
-            $scope.customerSegmentId = data.data.results[0]._id;
-        });
-        $scope.refreshInsurer = function (data, insurer) {
-            var formdata = {};
-            formdata.keyword = data;
-            formdata.filter = {
-                "customerSegment": $scope.customerSegmentId
-            };
-            NavigationService.searchCustomer(formdata, 1, function (data) {
-                console.log("searchCustomer", data.data.results);
-                $scope.insurerData = data.data.results;
-            });
-        };
-        // $scope.refreshInsurer();
-        var formData3 = {};
-        formData3.filter = {
-            "name": "Insured"
-        };
-        NavigationService.searchModel("CustomerSegment", formData3, 1, function (data) {
-            $scope.customerSegmentInsurerdId = data.data.results[0]._id;
-        });
-        $scope.refreshInsurerd = function (data, insured) {
-            var formdata = {};
-            formdata.keyword = data;
-            formdata.filter = {
-                "customerSegment": $scope.customerSegmentInsurerdId
-            };
-            NavigationService.searchCustomer(formdata, 1, function (data) {
-                console.log("searchCustomer", data.data.results);
-                $scope.insuredData = data.data.results;
-            });
-        };
-        var formData4 = {};
-        formData4.filter = {
-            "name": "Broker"
-        };
-        NavigationService.searchModel("CustomerSegment", formData4, 1, function (data) {
-            $scope.brokerSegmentId = data.data.results[0]._id;
-        });
-        $scope.refreshBroker = function (data, insurer) {
-            var formdata = {};
-            formdata.keyword = data;
-            formdata.filter = {
-                "customerSegment": $scope.brokerSegmentId
-            };
-            NavigationService.searchCustomer(formdata, 1, function (data) {
-                console.log("searchCustomer", data.data.results);
-                $scope.brokerData = data.data.results;
-            });
-        };
-
-        $scope.refreshCity = function (data) {
-            var formdata = {};
-            formdata.keyword = data;
-            // formdata.filter = {
-            //     "_id": causeloss
-            // };
-            NavigationService.searchCity(formdata, 1, function (data) {
-                console.log("searchPopulatedCity", data.data.results);
-                $scope.cityData = data.data.results;
-            });
-        };
-
-        $scope.refreshBranch = function (data) {
-            var formdata = {};
-            formdata.keyword = data;
-            NavigationService.searchBranch(formdata, 1, function (data) {
-                console.log("searchBranch", data.data.results);
-                $scope.branchData = data.data.results;
-            });
-        };
-
-        $scope.refreshDepartment = function (data) {
-            var formdata = {};
-            formdata.keyword = data;
-            // formdata.filter = {
-            //     "_id": causeloss
-            // };
-            NavigationService.searchDepartment(formdata, 1, function (data) {
-                console.log("searchCustomer", data.data.results);
-                $scope.departmentData = data.data.results;
-            });
-        };
-        var formData5 = {};
-        formData5.filter = {
-            "name": "Back Office"
-        };
-        NavigationService.searchModel("Func", formData5, 1, function (data) {
-            $scope.backEnd = data.data.results[0]._id;
-            $scope.getBackendEmployeeOnly();
-        });
-        $scope.getBackendEmployeeOnly = function (data) {
-            console.log("Data Of OWner", data);
-            var formdata = {
-                func: $scope.backEnd
-            };
-            if (data !== undefined) {
-                formdata.keyword = data;
-            }
-
-            // formdata.filter = {
-            //     func: $scope.backEnd,
-            //     isSurveyor: true
-            // };
-            NavigationService.getBackendEmployeeOnly(formdata, 1, function (data) {
-                console.log("Backend", data);
-                $scope.ownerData = data.data.results;
-            });
-        };
 
     })
 
@@ -1177,11 +894,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         };
         //  FOR LIST OF ARRAY ENDS
     })
-
-
-
-
-
     .controller('CreateInvoiceExpenditureCtrl', function ($scope, hotkeys, $window, TemplateService, NavigationService, $timeout, $state, toastr, $uibModal) {
         //Used to name the .html file
 
@@ -1269,7 +981,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         };
 
     })
-
     .controller('EditInvoiceExpenditureCtrl', function ($scope, hotkeys, $window, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
         //Used to name the .html file
 
@@ -1392,7 +1103,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         };
 
     })
-    
     .controller('CreateEmployeeCtrl', function ($scope, hotkeys, $window, TemplateService, NavigationService, $timeout, $state, $uibModal, $stateParams, toastr, $filter) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("employee-detail");
@@ -1681,7 +1391,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             });
         };
     })
-
     .controller('ProductCtrl', function ($scope, $window, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("product-list", $state);
@@ -2421,6 +2130,155 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 } else {
                     toastr.error("District edition failed.", "District editing error");
                 }
+            });
+        };
+    })
+    .controller('PaymentViewCtrl', function ($scope, $window, hotkeys, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
+        //Used to name the .html file        
+        $scope.modelCamel = _.camelCase($stateParams.model);
+        var a = _.startCase($scope.modelCamel).split(" ");
+        $scope.ModelApi = "";
+        _.each(a, function (n) {
+            $scope.ModelApi = $scope.ModelApi + n;
+        });
+        $scope.modelCap = _.capitalize($stateParams.model);
+        $scope.modelLow = _.lowerCase($stateParams.model);
+
+        $scope.template = TemplateService.changecontent($scope.modelCamel + "-list");
+        $scope.menutitle = NavigationService.makeactive($scope.modelCap + " List");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+        $scope.currentPage = $stateParams.page;
+        var i = 0;
+        //  
+        // 
+        $scope.search = {
+            keyword: ""
+        };
+        if ($stateParams.keyword) {
+            $scope.search.keyword = $stateParams.keyword;
+        }
+        // 
+        $scope.showAll = function (keywordChange) {
+            $scope.totalItems = undefined;
+            if (keywordChange) {
+                $scope.currentPage = 1;
+            }
+            NavigationService.searchPayment({
+                page: $scope.currentPage,
+                keyword: $scope.search.keyword
+            }, ++i, function (data, ini) {
+                if (ini == i) {
+                    console.log(data.data);
+                    $scope.modelList = data.data.results;
+                    $scope.totalItems = data.data.total;
+                    $scope.maxRow = data.data.options.count;
+                }
+            });
+        };
+        $scope.cancel = function () {
+            $window.history.back();
+        };
+        $scope.changePage = function (page) {
+            var goTo = $scope.modelCamel + "-list";
+            if ($scope.search.keyword) {
+                goTo = $scope.modelCamel + "-list";
+            }
+            $state.go(goTo, {
+                page: page,
+                keyword: $scope.search.keyword
+            });
+        };
+        $scope.showAll();
+
+
+        $scope.deleteModel = function (id) {
+            console.log("Delete Id", id);
+            globalfunction.confDel(function (value) {
+                console.log("Delete value", value);
+                if (value) {
+                    console.log("$scope.ModelApi", $scope.ModelApi);
+                    NavigationService.deleteModel($scope.ModelApi, id, function (data) {
+                        if (data.value) {
+                            $scope.showAll();
+                            toastr.success($scope.modelCap + " deleted successfully.", $scope.modelCap + " deleted");
+                        } else {
+                            toastr.error("There was an error while deleting " + $scope.modelCap, $scope.modelCap + " deleting error");
+                        }
+
+
+                    });
+                }
+            });
+        };
+    })
+    .controller('CreatePaymentCtrl', function ($scope, hotkeys, $window, TemplateService, NavigationService, $timeout, $state, toastr, $stateParams) {
+        //Used to name the .html file
+        $scope.modelCamel = _.camelCase($stateParams.model);
+        var a = _.startCase($scope.modelCamel).split(" ");
+        $scope.ModelApi = "";
+        _.each(a, function (n) {
+            $scope.ModelApi = $scope.ModelApi + n;
+        });
+
+        $scope.modelCap = _.capitalize($stateParams.model);
+        $scope.modelLow = _.lowerCase($stateParams.model);
+        $scope.template = TemplateService.changecontent($scope.modelCamel + "-detail");
+        $scope.menutitle = NavigationService.makeactive($scope.modelCap);
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+        $scope.header = {
+            "name": "Create " + $scope.modelCap
+        };
+
+        // FOR EMPLOYEE
+        $scope.userStatus = [{
+            "name": "Active",
+            "value": true
+        }, {
+            "name": "Inactive",
+            "value": false
+        }];
+        $scope.salutations = ["Mr.", "Mrs.", "Ms.", "Dr."];
+        $scope.houseColors = ["Red", "Green", "Blue", "Yellow", "White"];
+
+        $scope.dateOptions = {
+            showWeeks: true
+        };
+
+        $scope.calculateCreditPending = function (data) {
+            // $scope.ChangeCustomerState();
+            NavigationService.getOneModel("Customer", data._id, function (data) {
+                if (data.value == true) {
+                    $scope.showCreditLimit = true;
+                    var billedToCreditDetails = data.data;
+                    $scope.creditPending = billedToCreditDetails.creditExhausted;
+                }
+            });
+        };
+
+        $scope.refreshBilledTos = function (data) {
+            var formdata = {};
+            formdata.keyword = data;
+            NavigationService.searchCustomer(formdata, 1, function (data) {
+                $scope.billedTos = data.data.results;
+            });
+
+        };
+        $scope.refreshBilledTos();
+        // FOR EMPLOYEE
+
+        $scope.formData = {};
+        $scope.formData.status = true;
+        $scope.cancel = function () {
+            $window.history.back();
+        };
+        $scope.createPayment = function (data) {
+            $scope.formData.customer = $scope.formData.customer._id;
+            NavigationService.createPayment($scope.formData, function (data) {
+                console.log("Data In Result", data);
+                toastr.success("Payment Created Successfully");
+                $window.history.back();
             });
         };
     })

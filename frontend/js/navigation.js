@@ -733,8 +733,8 @@ var navigationservice = angular.module('navigationservice', [])
                 $http.post(adminurl + 'Assignment/rejectAssignmentApprovalStatus', data).success(callback);
             },
             searchModel: function (model, formData, i, callback) {
-                formData.accessToken = $.jStorage.get("accessToken");
                 $http.post(adminurl + model + '/search', formData).success(function (data) {
+                    console.log("Data", data);
                     callback(data, i);
                 });
             },
