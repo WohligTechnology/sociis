@@ -734,7 +734,6 @@ var navigationservice = angular.module('navigationservice', [])
             },
             searchModel: function (model, formData, i, callback) {
                 $http.post(adminurl + model + '/search', formData).success(function (data) {
-                    console.log("Data", data);
                     callback(data, i);
                 });
             },

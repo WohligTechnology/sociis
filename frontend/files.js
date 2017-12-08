@@ -53,5 +53,15 @@ module.exports = [
   "frontend/js/navigation.js",
   "frontend/js/templateservice.js",
   "frontend/js/assignmenttemplate.js",
-  "bundle.js"
+  "bundle.js",
+
+
+  "frontend/js/controller/rolesCtrl.js",
+  "frontend/js/controller/expenditureCtrl.js",  
+  "frontend/js/controller/customerCtrl.js",    
+  "frontend/js/controller/employeeCtrl.js",
+  "frontend/js/controller/invoiceCtrl.js", 
+  "frontend/js/controller/shopCtrl.js",        
+  "frontend/js/controller/paymentCtrl.js",        
+  
 ];
