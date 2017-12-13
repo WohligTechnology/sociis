@@ -1,6 +1,7 @@
 module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 var controller = {
     sendSms: function (req, res) {
+        console.log("api hit")
         Config.sendSms(req.body, function (err, smsRespo) {
             if (err) {
                 console.log("*************************************************sms gateway error in photographer***********************************************", err);
