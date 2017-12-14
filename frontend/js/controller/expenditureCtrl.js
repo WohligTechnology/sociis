@@ -1,5 +1,4 @@
-firstapp
-.controller('CreateInvoiceExpenditureCtrl', function ($scope, hotkeys, $window, TemplateService, NavigationService, $timeout, $state, toastr, $uibModal) {
+firstapp.controller('CreateInvoiceExpenditureCtrl', function ($scope, hotkeys, $window, TemplateService, NavigationService, $timeout, $state, toastr, $uibModal) {
     //Used to name the .html file
 
     $scope.template = TemplateService.changecontent("invoiceExpenditure-detail");
@@ -84,8 +83,8 @@ firstapp
         });
     };
 
-})
-.controller('EditInvoiceExpenditureCtrl', function ($scope, hotkeys, $window, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
+});
+firstapp.controller('EditInvoiceExpenditureCtrl', function ($scope, hotkeys, $window, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
     //Used to name the .html file
 
     $scope.template = TemplateService.changecontent("invoiceExpenditure-detail");
@@ -102,7 +101,7 @@ firstapp
     NavigationService.getOneinvoiceExpenditure($stateParams.id, function (data) {
         $scope.formData = data.data;
 
-        
+
     });
     $scope.cancel = function () {
         $window.history.back();
@@ -179,4 +178,4 @@ firstapp
         });
     };
 
-})
+});

@@ -47,7 +47,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Rate*</label>
-                                        <input type="number" min="0" step="0.01" name="rate" ng-model="formData.rate" class="form-control" readonly>
+                                        <input type="number" min="0" step="0.01" name="rate" ng-model="formData.rate" class="form-control">
                                         <div class="error-msg" ng-show="policyTypeForm.rate.$invalid && policyTypeForm.rate.$touched">Please Enter Document Name</div>
                                     </div>
                                 </div>
@@ -59,50 +59,11 @@
                                     </div>
                                 </div>
                             </div>
-                           
+
                         </div>
                     </div>
                 </div>
             </div>
-             <div class="widget">
-                                <div class="form-elements-sec">
-                                    <div class="widget-title">
-                                        <a class="btn btn-primary pull-right" ng-click="addModal( 'modal-assignment', '',
-                        'rateArray', '', '',formData.rateArray)">Add New</a>
-                                            <h3>All Rate</h3>
-                                    </div>
-                                    <div class="sec">
-                                        <div class="table-responsive">
-                                            <table class="table table-input" ng-if="formData.rateArray.length!=0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Rate</th>
-                                                        <th>From</th>
-                                                        <th>To</th>
-                                                        <th width="150px">Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr ng-repeat="data in formData.rateArray track by $index">
-                                                        <td>{{data.rate}}</td>
-                                                        <td>{{data.validFrom | date:"dd-MM-yyyy"}}</td>
-                                                        <td>{{data.validTo || "-" | date:"dd-MM-yyyy"}}</td>
-                                                        <td>
-                                                            <a class="btn btn-primary" ng-click="addModal( 'modal-assignment',$index,
-                        'rateArray',data, '',formData.rateArray)">
-                                                                <i class="fa fa-pencil"></i>
-                                                                </a>
-                                                                <a class="btn btn-danger" ng-click="deleteElements($index, formData.rateArray)">
-                                                                    <i class="fa fa-trash"></i>
-                                                                </a>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
         </div>
         <div class="clearfix"></div>
         <div class="text-center mt20 odd-even-button" ng-hide="hideSaveCancel">

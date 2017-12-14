@@ -59,102 +59,102 @@ module.exports.http = {
 
             req.model = mongoose.models[_.upperFirst(req.models[2])];
             req.modelName = _.upperFirst(req.models[2]);
-
-            if (req.body && req.body.accessToken) {
-                User.profile(req.body, function (err, data) {
-                    if (err) {
-                        res.json({
-                            error: err,
-                            value: false
-                        });
-                    } else if (data) {
-                        async.series({
-                                employee: function (callback) {
-                                    Employee.findOne({
-                                        officeEmail: data.email
-                                    }).lean().exec(function (err, data2) {
-                                        if (err) {
-                                            callback({
-                                                error: err,
-                                                value: false
-                                            });
-                                        } else {
-                                            data.employee = data2;
-                                            callback();
-                                        }
-                                    });
-                                },
-                            },
-                            function (err) {
-                                if (err) {
-                                    res.json({
-                                        error: err,
-                                        value: false
-                                    });
-                                } else {
-                                    req.user = data;
-                                    next();
-                                }
-                            });
-
-
-                    } else {
-                        res.json({
-                            error: "Invalid AccessToken",
-                            value: false
-                        });
-                    }
-                }, "Get Google");
-            } else if (req.query && req.query.accessToken) {
-                User.profile(req.query, function (err, data) {
-                    if (err) {
-                        res.json({
-                            error: err,
-                            value: false
-                        });
-                    } else if (data) {
-                        async.series({
-                                employee: function (callback) {
-                                    Employee.findOne({
-                                        officeEmail: data.email
-                                    }).lean().exec(function (err, data2) {
-                                        if (err) {
-                                            callback({
-                                                error: err,
-                                                value: false
-                                            });
-                                        } else {
-                                            data.employee = data2;
-                                            callback();
-                                        }
-                                    });
-                                },
+            next();
+            // if (req.body && req.body.accessToken) {
+            //     User.profile(req.body, function (err, data) {
+            //         if (err) {
+            //             res.json({
+            //                 error: err,
+            //                 value: false
+            //             });
+            //         } else if (data) {
+            //             async.series({
+            //                     employee: function (callback) {
+            //                         Employee.findOne({
+            //                             officeEmail: data.email
+            //                         }).lean().exec(function (err, data2) {
+            //                             if (err) {
+            //                                 callback({
+            //                                     error: err,
+            //                                     value: false
+            //                                 });
+            //                             } else {
+            //                                 data.employee = data2;
+            //                                 callback();
+            //                             }
+            //                         });
+            //                     },
+            //                 },
+            //                 function (err) {
+            //                     if (err) {
+            //                         res.json({
+            //                             error: err,
+            //                             value: false
+            //                         });
+            //                     } else {
+            //                         req.user = data;
+            //                         next();
+            //                     }
+            //                 });
 
 
-                            },
-                            function (err) {
-                                if (err) {
-                                    res.json({
-                                        error: err,
-                                        value: false
-                                    });
-                                } else {
-                                    req.user = data;
-                                    next();
-                                }
-                            });
+            //         } else {
+            //             res.json({
+            //                 error: "Invalid AccessToken",
+            //                 value: false
+            //             });
+            //         }
+            //     }, "Get Google");
+            // } else if (req.query && req.query.accessToken) {
+            //     User.profile(req.query, function (err, data) {
+            //         if (err) {
+            //             res.json({
+            //                 error: err,
+            //                 value: false
+            //             });
+            //         } else if (data) {
+            //             async.series({
+            //                     employee: function (callback) {
+            //                         Employee.findOne({
+            //                             officeEmail: data.email
+            //                         }).lean().exec(function (err, data2) {
+            //                             if (err) {
+            //                                 callback({
+            //                                     error: err,
+            //                                     value: false
+            //                                 });
+            //                             } else {
+            //                                 data.employee = data2;
+            //                                 callback();
+            //                             }
+            //                         });
+            //                     },
 
 
-                    } else {
-                        res.json({
-                            error: "Invalid AccessToken",
-                            value: false
-                        });
-                    }
-                }, "Get Google");
-            } else {
-                next();
-            }
+            //                 },
+            //                 function (err) {
+            //                     if (err) {
+            //                         res.json({
+            //                             error: err,
+            //                             value: false
+            //                         });
+            //                     } else {
+            //                         req.user = data;
+            //                         next();
+            //                     }
+            //                 });
+
+
+            //         } else {
+            //             res.json({
+            //                 error: "Invalid AccessToken",
+            //                 value: false
+            //             });
+            //         }
+            //     }, "Get Google");
+            // } else {
+            //     next();
+            // }
 
 
         }
