@@ -173,11 +173,11 @@ var models = {
     sendSms: function (data, callback) {
         if (true) {
             request.get({
-               // url: "https://alerts.solutionsinfini.com/api/v4/?method=sms&api_key=A23b865252a08417ecf80322e20511f83&to=" + data.mobile + "&sender=SOCIIS&message=" + data.content + "&format=json"
-                url: "http://panel.textlab.in/index.php/smsapi/httpapi/?uname=sanketdeshmukh&password=Sanket@7206&receiver=9922319328,9867624800&route=TA&msgtype=1&sender=TRASMS&sms=HI Bhargav"
+                // url: "https://alerts.solutionsinfini.com/api/v4/?method=sms&api_key=A23b865252a08417ecf80322e20511f83&to=" + data.mobile + "&sender=SOCIIS&message=" + data.content + "&format=json"
+                url: "http://panel.textlab.in/index.php/smsapi/httpapi/?uname=sanketdeshmukh&password=Sanket@7206&receiver=9922319328&route=TA&msgtype=1&sender=SANKET&sms=HI Bhargav"
             }, function (err, http, body) {
                 if (err) {
-                    console.log("*************************************************sms gateway error***********************************************")
+                    console.log("*************************************************sms gateway error***********************************************");
                     console.log(err);
                     callback(err, null);
                 } else {
