@@ -74,7 +74,7 @@
                                         <input type="password" class="form-control" required ng-model="formData.password">
                                     </div>
                                 </div>
-                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="widget">
@@ -103,14 +103,55 @@
                             </div>
                         </div>
                     </div>
-                    <div class="clearfix"></div>
-                    <div class="text-center mt20 odd-even-button">
-                        <button class="btn btn-default" type="submit" ng-disabled="formName.$invalid">Save</button>
-                        <a class="btn btn-default" type="submit" ng-click="cancel()">Cancel</a>
-                    </div>
+
 
                 </div>
             </div>
         </div>
+        <!-- Accordian -->
+        <div class="sec">
+            <uib-accordion>
+                <div uib-accordion-group class="panel-default custom-panel" ng-repeat="invoice in invoiceProductDetails">
+                    <uib-accordion-heading>
+                        Bill No : {{invoice.name}}, Total Amount : {{invoice.total}}, Shop : {{invoice.shop.name}}, Employee : {{invoice.employee.name}}
+                    </uib-accordion-heading>
+                    <div class="line-holder" ng-repeat="product in invoice.invoiceList">
+                        <div class="form-builder">
+                            <div class="form-repeater">
+                                <div>
+                                    <div class="form-builder-item no-pad row-item">
+
+                                        <div class="col-item" style="text-align: center;">
+                                            <p> {{product.name}}[{{product.description}}]</p>
+                                        </div>
+                                        <div class="col-item" style="text-align: center;">
+                                            <!-- <div class="col-item" style="flex:0.5;"> -->
+                                            {{product.quantity}} {{product.unit}}
+                                        </div>
+                                        <div class="col-item" style="text-align: center;">
+                                            {{product.amount}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </uib-accordion>
+        </div>
+
+        <!-- Pagination -->
+
+        <ul ng-change="changePage(currentPage);" uib-pagination total-items="totalItems" items-per-page="filter.maxRow" ng-model="currentPage"
+            max-size="template.pageMax" class="pagination-sm" boundary-links="true" force-ellipses="true"></ul>
+        <!-- Pagination End -->
+        <!-- Accordian End -->
+        <!-- Save & Cancel -->
+        <div class="clearfix"></div>
+        <div class="text-center mt20 odd-even-button">
+            <button class="btn btn-default" type="submit" ng-disabled="formName.$invalid">Save</button>
+            <a class="btn btn-default" type="submit" ng-click="cancel()">Cancel</a>
+        </div>
+        <!-- End Save & Cancel -->
     </div>
 </form>

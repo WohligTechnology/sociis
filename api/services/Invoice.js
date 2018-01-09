@@ -920,7 +920,7 @@ var model = {
                 } else {
                     var filter = {
                         _id: data3.assignment.policyDoc
-                    }
+                    };
                     PolicyDoc.getPolicyDoc({
                         filter
                     }, function (err, data4) {
@@ -938,7 +938,51 @@ var model = {
                 }
             });
 
-    }
+    },
+    getCustomerProductDetailsAccordingToInvoices: function (data, callback) {
+        var maxRow = 10;
+        var skip = 0;
+        if (data.page) {
+            skip = (data.page - 1) * maxRow;
+        }
+        var limit = maxRow;
+        Invoice.find({
+                customer: data.customer
+            }).sort({
+                createdAt: -1
+            }).skip(skip)
+            .limit(limit)
+            .lean()
+            .deepPopulate('shop employee', {
+                populate: {
+                    'shop': {
+                        select: "name _id"
+                    },
+                    'employee': {
+                        select: "name _id"
+                    }
+                }
+            }).exec(function (err, data2) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    Invoice.find({
+                        customer: data.customer
+                    }).lean().exec(function (err, data3) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            var data4 = {
+                                results: data2,
+                                total: data3.length
+                            };
+                            callback(null, data4);
+                        }
+                    });
+                    // callback(null, data2);
+                }
+            });
+    },
 
 };
 module.exports = _.assign(module.exports, exports, model);

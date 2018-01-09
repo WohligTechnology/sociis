@@ -54,7 +54,7 @@ var controller = {
                                     if (err) {
                                         callback(err, null);
                                     } else {
-                                        callback(null, data)
+                                        callback(null, data);
                                     }
                                 });
                             }
@@ -493,6 +493,9 @@ var controller = {
         var round = $scope.formData.grandTotal - Math.floor($scope.formData.grandTotal);
         $scope.formData.grandTotal = $scope.formData.grandTotal - round;
         $scope.formData.roundOff = round.toFixed(2);
+    },
+    getCustomerProductDetailsAccordingToInvoices: function (req, res) {
+        Invoice.getCustomerProductDetailsAccordingToInvoices(req.body, res.callback);
     },
 };
 module.exports = _.assign(module.exports, controller);

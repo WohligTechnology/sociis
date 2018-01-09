@@ -737,6 +737,11 @@ var navigationservice = angular.module('navigationservice', [])
                     callback(data, i);
                 });
             },
+            getCustomerProductDetailsAccordingToInvoices: function (formData, callback) {
+                $http.post(adminurl + 'Invoice/getCustomerProductDetailsAccordingToInvoices', formData).success(function (data) {
+                    callback(data);
+                });
+            },
             getAllAssignment: function (model, formData, i, callback) {
                 formData.accessToken = $.jStorage.get("accessToken");
                 $http.post(adminurl + model + '/getAll', formData).success(function (data) {
