@@ -193,15 +193,15 @@ var model = {
         Invoice.find({}, {
             name: 1
         }).sort({
-            name: -1
+            createdAt: -1
         }).limit(1).exec(function (err, data) {
             if (err) {
-                callback(err, null)
+                callback(err, null);
             } else {
                 if (data.length == 0) {
-                    callback(null, invoiceNumber)
+                    callback(null, invoiceNumber);
                 } else {
-                    invoiceNumber = invoiceNumber + parseInt(data[0].name)
+                    invoiceNumber = invoiceNumber + parseInt(data[0].name);
                     callback(null, invoiceNumber);
                 }
             }
