@@ -43,6 +43,19 @@ firstapp.controller('InvoiceViewCtrl', function ($scope, $window, hotkeys, Templ
     var newTag = 7091990;
 
     // 
+    $scope.changePages = function (page, filter) {
+
+        var goTo = $scope.modelCamel + "-list";
+        if ($scope.search.keyword) {
+            goTo = $scope.modelCamel + "-list";
+        }
+        $scope.modelCamel
+        console.log("goto", goTo);
+        $state.go("invoice-list", {
+            page: page,
+        });
+    };
+
     $scope.showAll = function (keywordChange) {
         $scope.totalItems = undefined;
         if (keywordChange) {

@@ -1567,7 +1567,7 @@ firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $lo
             }
         })
         .state('invoice-list', {
-            url: "/invoice-list",
+            url: "/invoice-list/{page:.*}",
             templateUrl: "frontend/views/template.html",
             controller: 'InvoiceViewCtrl',
             params: {
