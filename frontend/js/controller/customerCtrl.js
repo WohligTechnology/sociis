@@ -172,7 +172,7 @@ firstapp.controller('CustomerCtrl', function ($scope, $window, TemplateService, 
             $scope.totalItems = data.data.total;
             console.log("$scope.invoiceProductDetails", $scope.invoiceProductDetails);
         });
-        $scope.changePage = function (page) {
+        $scope.changePages = function (page) {
             customerObject.page = page;
             $scope.currentPage = page;
             NavigationService.getCustomerProductDetailsAccordingToInvoices(customerObject, function (data) {
