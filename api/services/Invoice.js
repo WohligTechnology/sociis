@@ -173,23 +173,7 @@ var model = {
         }
     },
     generateInvoiceNumber: function (data, callback) {
-        // var sInput = '';
         var invoiceNumber = 1;
-        // sInput = _.split(data.name, '-');
-        // if (sInput.length != 4) {
-        //     invoiceNumber = sInput[0] + "-" + sInput[1] + "-" + sInput[2];
-        // } else {
-        //     invoiceNumber = sInput[1] + "-" + sInput[2] + "-" + sInput[3];
-        // }
-        // if (data.invoice.length > 0) {
-        //     if (data.invoiceApprovalStatus == "Draft") {
-        //         if (data.invoice.length != 1) {
-        //             invoiceNumber = invoiceNumber + "-" + String.fromCharCode(63 + data.invoice.length);
-        //         }
-        //     } else {
-        //         invoiceNumber = invoiceNumber + "-" + String.fromCharCode(64 + data.invoice.length);
-        //     }
-        // }
         Invoice.find({}, {
             name: 1
         }).sort({
