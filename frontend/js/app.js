@@ -1577,7 +1577,7 @@ firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $lo
             }
         })
         .state('shop-list', {
-            url: "/shop-list",
+            url: "/shop-list/{page:.*}",
             templateUrl: "frontend/views/template.html",
             controller: 'ModelViewCtrl',
             params: {

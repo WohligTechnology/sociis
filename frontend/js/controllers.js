@@ -19,14 +19,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $rootScope.isMobile = true;
             var splitUrl = adminurl.split('api/')
             $rootScope.mobileUrl = splitUrl[0] + "mobile/index.html#/app/filterResult";
-           
+
         }
 
 
         $scope.processForm = function (event) {
             var element = angular.element(event.target);
             //Old Class
-            
+
 
         };
 
@@ -193,6 +193,26 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         if ($stateParams.keyword) {
             $scope.search.keyword = $stateParams.keyword;
         }
+
+        $scope.changePages = function (page, filter) {
+            var goTo = $scope.modelCamel + "-list";
+            if ($scope.search.keyword) {
+                goTo = $scope.modelCamel + "-list";
+            }
+            $scope.modelCamel
+            console.log("goto", goTo);
+            if ($scope.modelCamel == "shop") {
+                $state.go("shop-list", {
+                    page: page,
+                });
+            } else {
+                $state.go("employee-list", {
+                    page: page,
+                });
+            }
+
+        };
+        console.log("!!!!!!!!!!!!!!!!", $scope.modelCamel);
         $scope.showAll = function (keywordChange) {
             TemplateService.getLoader();
             $scope.totalItems = undefined;

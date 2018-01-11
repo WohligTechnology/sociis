@@ -11,6 +11,19 @@ firstapp.controller('CustomerCtrl', function ($scope, $window, TemplateService, 
         if ($stateParams.keyword) {
             $scope.search.keyword = $stateParams.keyword;
         }
+
+        $scope.changePages = function (page, filter) {
+
+            var goTo = $scope.modelCamel + "-list";
+            if ($scope.search.keyword) {
+                goTo = $scope.modelCamel + "-list";
+            }
+            $scope.modelCamel
+            console.log("goto", goTo);
+            $state.go("customer-list", {
+                page: page,
+            });
+        };
         $scope.showAll = function (keywordChange) {
             $scope.totalItems = undefined;
             if (keywordChange) {
