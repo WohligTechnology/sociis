@@ -364,6 +364,16 @@ firstapp.controller('CreateInvoiceCtrl', function ($scope, $window, TemplateServ
             $window.history.back();
         });
     };
+    $scope.getPaymentStatus = function (status) {
+        console.log("In Here");
+        var newStatus = "";
+        if (status == "Pending") {
+            newStatus = "pending";
+        } else {
+            newStatus = "paid";
+        }
+        return newStatus;
+    };
 
 });
 firstapp.controller('EditInvoiceExpenditureCtrl', function ($scope, hotkeys, $window, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
