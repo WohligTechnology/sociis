@@ -2549,39 +2549,64 @@ form.search-form {
         font-size: 40px;
         color: #fff;
         position: relative;
-        -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
-        -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+        -webkit-animation-name: example;
+        /* Safari 4.0 - 8.0 */
+        -webkit-animation-duration: 4s;
+        /* Safari 4.0 - 8.0 */
         animation-name: h1example;
         animation-duration: 3s;
         animation-fill-mode: forwards;
     }
-    img{
+    img {
         padding: 0%;
         width: 200px;
         height: 200px;
         position: relative;
-        -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
-        -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+        -webkit-animation-name: example;
+        /* Safari 4.0 - 8.0 */
+        -webkit-animation-duration: 4s;
+        /* Safari 4.0 - 8.0 */
         animation-name: example;
         animation-duration: 3s;
         animation-fill-mode: forwards;
-        
     }
     @keyframes example {
-       from   {left:0%; top:0%;}
-      to  {left:35%; top:0%;}
-      
+        from {
+            left: 0%;
+            top: 0%;
+        }
+        to {
+            left: 35%;
+            top: 0%;
+        }
     }
     @keyframes h1example {
-        from   {left:35%; top:0%;}
-       to  {left:0%; top:0%;}
-       
-     }
+        from {
+            left: 35%;
+            top: 0%;
+        }
+        to {
+            left: 0%;
+            top: 0%;
+        }
+    }
 }
 
-.select_billTo{
+.select_billTo {
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.Pending {
+    background-color: rgba(255, 0, 0, 0.55);
+}
+
+.Partial-Pending {
+    background-color: rgba(255, 255, 0, 0.39);
+}
+
+.Paid {
+    background-color: rgba(0, 128, 0, 0.41);
 }
 
 @import "fancybox-override";

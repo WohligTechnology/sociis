@@ -105,6 +105,19 @@ firstapp.controller('InvoiceViewCtrl', function ($scope, $window, hotkeys, Templ
             }
         });
     };
+    $scope.getStatusColor = function (status) {
+        var newStatus = "";
+        if (status == "Pending") {
+            newStatus = "Pending";
+        }
+        if (status == "Partial Pending") {
+            newStatus = "Partial-Pending";
+        }
+        if (status == "Paid") {
+            newStatus = "Paid";
+        }
+        return newStatus;
+    }
     $scope.changeStatus = function (ind) {
         NavigationService.modelSave($scope.ModelApi, ind, function (data) {
             if (data.value === true) {}

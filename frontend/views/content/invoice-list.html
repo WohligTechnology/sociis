@@ -65,7 +65,7 @@
                     </div> -->
                     <div class="sec">
                         <uib-accordion>
-                            <div uib-accordion-group class="panel-default custom-panel" ng-repeat="invoice in modelList track by $index">
+                            <div uib-accordion-group class="panel-default custom-panel" ng-class="getStatusColor(invoice.status)" ng-repeat="invoice in modelList track by $index">
                                 <uib-accordion-heading>
                                     Bill No : {{invoice.name}}, Total Amount : {{invoice.total}}, Customer : {{invoice.customer.name}}, Shop : {{invoice.shop.name}},
                                     Employee : {{invoice.employee.name}}
