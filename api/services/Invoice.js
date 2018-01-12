@@ -6,7 +6,8 @@ var schema = new Schema({
     customer: {
         type: Schema.Types.ObjectId,
         ref: "Customer",
-        index: true
+        index: true,
+        key: "invoice"
     },
     shop: {
         type: Schema.Types.ObjectId,

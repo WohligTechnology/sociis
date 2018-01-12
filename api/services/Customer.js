@@ -29,16 +29,22 @@ var schema = new Schema({
         type: Boolean,
         default: true
     },
-    invoice: [{
-        type: Schema.Types.ObjectId,
-        ref: "Invoice",
-        index: true
-    }],
-    payment: [{
-        type: Schema.Types.ObjectId,
-        ref: "Payment",
-        index: true
-    }],
+    invoice: {
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: "Invoice"
+        }],
+        index: true,
+        restrictedDelete: true
+    },
+    payment: {
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: "Payment"
+        }],
+        index: true,
+        restrictedDelete: true
+    },
     category: {
         type: String,
         enum: ["Silver", "Gold", "Platinum"]
