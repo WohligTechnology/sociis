@@ -81,45 +81,45 @@ module.exports = mongoose.model('Invoice', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "employee customer shop", "employee customer shop"));
 var model = {
-    // search: function (data, callback) {
-    //     var Model = this;
-    //     var Const = this(data);
-    //     var maxRow = Config.maxRow;
-    //     var page = 1;
-    //     if (data.page) {
-    //         page = data.page;
-    //     }
-    //     var field = data.field;
-    //     var options = {
-    //         field: data.field,
-    //         filters: {
-    //             keyword: {
-    //                 fields: ['invoiceNumber'],
-    //                 term: data.keyword
-    //             }
-    //         },
-    //         sort: {
-    //             desc: 'invoiceNumber'
-    //         },
-    //         start: (page - 1) * maxRow,
-    //         count: maxRow
-    //     };
-    //     var Search = Invoice.find(data.filter)
-    //         .order(options)
-    //         .keyword(options)
-    //         .deepPopulate("assignment.company assignment.insuredOffice assignment.products.product.category billedTo createdBy")
-    //         .page(options, function (err, found) {
-    //             if (err) {
-    //                 callback(err, found);
-    //             } else {
-    //                 if (_.isEmpty(found)) {
-    //                     callback("No data found!!", found);
-    //                 } else {
-    //                     callback(null, found);
-    //                 }
-    //             }
-    //         });
-    // },
+    search: function (data, callback) {
+        var Model = this;
+        var Const = this(data);
+        var maxRow = Config.maxRow;
+        var page = 1;
+        if (data.page) {
+            page = data.page;
+        }
+        var field = data.field;
+        var options = {
+            field: data.field,
+            filters: {
+                keyword: {
+                    fields: ['name'],
+                    term: data.keyword
+                }
+            },
+            sort: {
+                desc: 'createdAt'
+            },
+            start: (page - 1) * maxRow,
+            count: maxRow
+        };
+        var Search = Invoice.find(data.filter)
+            .order(options)
+            .keyword(options)
+            .deepPopulate("employee customer shop")
+            .page(options, function (err, found) {
+                if (err) {
+                    callback(err, found);
+                } else {
+                    if (_.isEmpty(found)) {
+                        callback("No data found!!", found);
+                    } else {
+                        callback(null, found);
+                    }
+                }
+            });
+    },
     saveData: function (data, callback) {
         var Model = this;
         var Const = this(data);
