@@ -67,8 +67,15 @@
                         <uib-accordion>
                             <div uib-accordion-group class="panel-default custom-panel" ng-class="getStatusColor(invoice.status)" ng-repeat="invoice in modelList track by $index">
                                 <uib-accordion-heading>
-                                    Bill No : {{invoice.name}}, Total Amount : {{invoice.total}}, Customer : {{invoice.customer.name}}, Shop : {{invoice.shop.name}},
-                                    Employee : {{invoice.employee.name}}
+                                    <div ng-if="invoice.status=='Partial Pending'">
+                                        Date:{{invoice.createdAt | Date}}, Bill No : {{invoice.name}}, Total Amount : {{invoice.total}}, Pending :{{invoice.total
+                                        - invoice.paidAmount}}, Customer : {{invoice.customer.name}}, Shop : {{invoice.shop.name}},
+                                        Employee : {{invoice.employee.name}}
+                                    </div>
+                                    <div ng-if="invoice.status!=='Partial Pending'">
+                                        Date:{{invoice.createdAt | Date}}, Bill No : {{invoice.name}}, Total Amount : {{invoice.total}}, Customer : {{invoice.customer.name}},
+                                        Shop : {{invoice.shop.name}}, Employee : {{invoice.employee.name}}
+                                    </div>
                                 </uib-accordion-heading>
                                 <div class="line-holder" ng-repeat="product in invoice.invoiceList">
                                     <div class="form-builder">

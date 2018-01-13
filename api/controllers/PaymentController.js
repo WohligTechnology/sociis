@@ -11,7 +11,7 @@ var controller = {
                             $in: ["Pending", "Partial Pending"]
                         }
                     }).sort({
-                        createdAt: -1
+                        createdAt: 1
                     }).exec(function (err, found) {
                         // console.log("Found: ", found);
                         if (err) {
@@ -115,7 +115,7 @@ var controller = {
                     var newData = {
                         data: results,
                         value: true
-                    }
+                    };
                     res.callback(null, newData);
                 }
             });

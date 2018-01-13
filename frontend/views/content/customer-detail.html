@@ -91,29 +91,34 @@
                             <div class="col-md-4 col-sm-4">
                                 <div class="form-group">
                                     <label>Credit Limit exhausted</label>
-                                    <input class="form-control" name="creditExhausted" ng-model="formData.creditExhausted" ng-init="formData.creditExhausted = 0"
-                                        readonly>
+                                    <input class="form-control" name="creditExhausted" ng-model="formData.creditExhausted" readonly>
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-4">
                                 <div class="form-group">
                                     <label>Credit Limit Pending</label>
-                                    <input class="form-control" name="creditPending" ng-model="formData.creditPending" ng-init="formData.creditPending = 0" readonly>
+                                    <input class="form-control" name="creditPending" ng-model="formData.creditPending" readonly>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
         <!-- Accordian -->
         <div class="sec">
             <uib-accordion>
-                <div uib-accordion-group class="panel-default custom-panel" ng-repeat="invoice in invoiceProductDetails">
+                <div uib-accordion-group class="panel-default custom-panel" ng-class="getStatusColor(invoice.status)" ng-repeat="invoice in invoiceProductDetails">
                     <uib-accordion-heading>
-                        Bill No : {{invoice.name}}, Total Amount : {{invoice.total}}, Shop : {{invoice.shop.name}}, Employee : {{invoice.employee.name}}
+                        <div ng-if="invoice.status=='Partial Pending'">
+                            Date:{{invoice.createdAt | Date}}, Bill No : {{invoice.name}}, Total Amount : {{invoice.total}}, Pending :{{invoice.total
+                            - invoice.paidAmount}}, Customer : {{invoice.customer.name}}, Shop : {{invoice.shop.name}}, Employee
+                            : {{invoice.employee.name}}
+                        </div>
+                        <div ng-if="invoice.status!=='Partial Pending'">
+                            Date:{{invoice.createdAt | Date}}, Bill No : {{invoice.name}}, Total Amount : {{invoice.total}}, Customer : {{invoice.customer.name}},
+                            Shop : {{invoice.shop.name}}, Employee : {{invoice.employee.name}}
+                        </div>
                     </uib-accordion-heading>
                     <div class="line-holder" ng-repeat="product in invoice.invoiceList">
                         <div class="form-builder">

@@ -117,7 +117,7 @@ firstapp.controller('InvoiceViewCtrl', function ($scope, $window, hotkeys, Templ
             newStatus = "Paid";
         }
         return newStatus;
-    }
+    };
     $scope.changeStatus = function (ind) {
         NavigationService.modelSave($scope.ModelApi, ind, function (data) {
             if (data.value === true) {}

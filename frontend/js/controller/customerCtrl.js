@@ -18,7 +18,7 @@ firstapp.controller('CustomerCtrl', function ($scope, $window, TemplateService, 
             if ($scope.search.keyword) {
                 goTo = $scope.modelCamel + "-list";
             }
-            $scope.modelCamel
+            // $scope.modelCamel
             console.log("goto", goTo);
             $state.go("customer-list", {
                 page: page,
@@ -208,5 +208,18 @@ firstapp.controller('CustomerCtrl', function ($scope, $window, TemplateService, 
                 }
             });
         };
+        $scope.getStatusColor = function (status) {
+            var newStatus = "";
+            if (status == "Pending") {
+                newStatus = "Pending";
+            }
+            if (status == "Partial Pending") {
+                newStatus = "Partial-Pending";
+            }
+            if (status == "Paid") {
+                newStatus = "Paid";
+            }
+            return newStatus;
+        };
 
-    })
+    });

@@ -3495,7 +3495,7 @@ firstapp.filter('ageFilter', function () {
 });
 firstapp.filter('Date', function () {
     return function (input) {
-        var retText = moment(new Date(input)).add(5, "hours").add(30, "minutes").format("DD/MM/YYYY");
+        var retText = moment(new Date(input)).format("DD/MM/YYYY HH:mm");
         return retText;
     };
 });
