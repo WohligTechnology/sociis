@@ -75,7 +75,7 @@ templateservicemod.service('TemplateService', function ($filter, NavigationServi
       retClass = "delay-72";
     }
     return retClass;
-  }
+  };
   this.getInvoiceWithTax = function (formData, callback) {
     async.waterfall([
       function (callback) {

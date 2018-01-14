@@ -9,7 +9,12 @@
                     <div class="row" ng-if="!formData._id">
                         <div class="col-md-6  invoice--go" ng-if="formData.templateInvoice && formData.billedTo">
                             <button class="btn btn-default" ng-click="getTemplateDetails(formData.templateInvoice)">GO</button>
-                            <div class="pull-right" style="color: red"><label>Credit Limit Pending : </label><span><b> {{creditPending | number}}</b></span></div>
+                            <div class="pull-right" style="color: red">
+                                <label>Credit Limit Pending : </label>
+                                <span>
+                                    <b> {{creditPending | number}}</b>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -89,17 +94,17 @@
                                         <!--<input type="text" ng-model="form.unit" placeholder="Enter Unit" class="form-control">
                                         -->
                                         <select class="form-control" ng-model="form.unit" ng-change="calAmt(form.rate,form.quantity,$index)">
-											<option value="Kg">Kg</option>
-											<option value="grm">grm</option>
-											<option value="Per">Per</option>
-										</select>
+                                            <option value="Kg">Kg</option>
+                                            <option value="grm">grm</option>
+                                            <option value="Per">Per</option>
+                                        </select>
                                     </div>
                                     <div class="col-item col-item-15">
                                         <input type="text" cleave="template.currency" ng-model="form.rate" placeholder="Enter Rate" class="form-control text-right"
                                             ng-change="calAmt(form.rate,form.quantity,$index)">
                                     </div>
                                     <div class="col-item col-item-15">
-                                        <input type="text" cleave="template.currencyNoDecimal" min="0" ng-model="form.quantity" placeholder="Enter Quantity" class="form-control text-right"
+                                        <input type="text" cleave="template.currency" min="0" ng-model="form.quantity" placeholder="Enter Quantity" class="form-control text-right"
                                             ng-change="calAmt(form.rate,form.quantity,$index)">
                                     </div>
                                     <div class="col-item col-item-15">
@@ -114,7 +119,7 @@
                             </div>
                         </div>
                     </div>
-   
+
                 </div>
             </div>
         </div>
@@ -140,11 +145,11 @@
                             <label>Payment Method*</label>
                             <br>
                             <label class="radio-inline">
-                                            <input type="radio" name="paymentMethod" value="Cash" required ng-model="formData.paymentMethod">Cash
-                                        </label>
+                                <input type="radio" name="paymentMethod" value="Cash" required ng-model="formData.paymentMethod">Cash
+                            </label>
                             <label class="radio-inline">
-                                            <input type="radio" name="paymentMethod" value="Credit" required ng-model="formData.paymentMethod">Credit
-                                        </label>
+                                <input type="radio" name="paymentMethod" value="Credit" required ng-model="formData.paymentMethod">Credit
+                            </label>
                             <div class="error-msg" ng-show="formName.paymentMethod.$invalid && formName.paymentMethod.$touched">Please Select paymentMethod</div>
                         </div>
                     </div>
