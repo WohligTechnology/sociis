@@ -147,7 +147,7 @@
                             <label class="radio-inline">
                                 <input type="radio" name="paymentMethod" value="Cash" required ng-model="formData.paymentMethod">Cash
                             </label>
-                            <label class="radio-inline">
+                            <label class="pull-right radio-inline">
                                 <input type="radio" name="paymentMethod" value="Credit" required ng-model="formData.paymentMethod">Credit
                             </label>
                             <div class="error-msg" ng-show="formName.paymentMethod.$invalid && formName.paymentMethod.$touched">Please Select paymentMethod</div>
@@ -162,7 +162,6 @@
                 </div>
             </div>
         </div>
-
         <div class="text-center mt20 odd-even-button">
             <button class="btn btn-success" ng-click="createInvoice(formData)" ng-disabled="formName.$invalid">Save</button>
             <a class="btn btn-danger" ng-click="cancel()">Cancel</a>

@@ -48,7 +48,6 @@ var model = {
           term: data.keyword
         }
       },
-
       sort: {
         desc: "name",
       },
@@ -64,7 +63,6 @@ var model = {
       .order(options)
       .deepPopulate()
       .keyword(options)
-
       .page(options, callback);
 
   },

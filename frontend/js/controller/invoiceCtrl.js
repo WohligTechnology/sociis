@@ -140,6 +140,33 @@ firstapp.controller('CreateInvoiceCtrl', function ($scope, $window, TemplateServ
     $scope.addHead = function () {
         $scope.formData.invoiceList.push({});
     };
+    /* To assign values after selecting a particular UI Select */
+    $scope.getAll = function (invoice, $index) {
+        $scope.formData.invoiceList[$index].itemId = invoice._id;
+        $scope.formData.invoiceList[$index].name = invoice.name;
+        $scope.formData.invoiceList[$index].description = invoice.description;
+        $scope.formData.invoiceList[$index].unit = invoice.unit;
+        $scope.formData.invoiceList[$index].rate = invoice.rate;
+        $scope.formData.invoiceList[$index].type = invoice.type;
+        if ($scope.formData.invoiceList[$index].quantity) {
+            $scope.calAmt($scope.formData.invoiceList[$index].rate, $scope.formData.invoiceList[$index].quantity, $index);
+        } else {
+            $scope.calAmt($scope.formData.invoiceList[$index].rate, 0, $index);
+        }
+    };
+    /* To Calculate Amount  a=rate b= quantity index = $index of that invoiceList*/
+    $scope.calAmt = function (a, b, index) {
+        $scope.formData.total = 0;
+        $scope.formData.grandTotal = 0;
+        if ($scope.formData.invoiceList[index].unit == "grm") {
+            $scope.formData.invoiceList[index].amount = a * b / 1000;
+        } else {
+            $scope.formData.invoiceList[index].amount = a * b;
+        }
+        TemplateService.getInvoiceWithTax($scope.formData, function (err, data) {
+            $scope.formData = data;
+        });
+    };
     $scope.removeHead = function (index) {
         if ($scope.formData.invoiceList.length > 1) {
             $scope.formData.invoiceList.splice(index, 1);
@@ -199,18 +226,11 @@ firstapp.controller('CreateInvoiceCtrl', function ($scope, $window, TemplateServ
         NavigationService.searchInvoiceExpenditure(formData, 1, function (data) {
             $scope.descriptions = data.data.results;
         });
-    }
-    $scope.getAll = function (invoice, $index) {
-        $scope.formData.invoiceList[$index].itemId = invoice._id;
-        $scope.formData.invoiceList[$index].name = invoice.name;
-        $scope.formData.invoiceList[$index].description = invoice.description;
-        $scope.formData.invoiceList[$index].unit = invoice.unit;
-        $scope.formData.invoiceList[$index].rate = invoice.rate;
-        $scope.formData.invoiceList[$index].type = invoice.type;
-    }
+    };
+
     $scope.change = function (form, $index) {
         // $scope.formData.invoiceList[$index].name=form.name;
-    }
+    };
     $scope.getTemplateDetails = function (data) {
         // $scope.ChangeCustomerState();
         NavigationService.getTemplate("TemplateInvoice", data, function (data) {
@@ -248,18 +268,7 @@ firstapp.controller('CreateInvoiceCtrl', function ($scope, $window, TemplateServ
             $scope.formData = data;
         });
     };
-    $scope.calAmt = function (a, b, index) {
-        $scope.formData.total = 0;
-        $scope.formData.grandTotal = 0;
-        if ($scope.formData.invoiceList[index].unit == "grm") {
-            $scope.formData.invoiceList[index].amount = a * b / 1000;
-        } else {
-            $scope.formData.invoiceList[index].amount = a * b;
-        }
-        TemplateService.getInvoiceWithTax($scope.formData, function (err, data) {
-            $scope.formData = data;
-        });
-    };
+
     $scope.calAmtOnRemove = function () {
         $scope.formData.total = 0;
         $scope.formData.grandTotal = 0;
