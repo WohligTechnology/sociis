@@ -1,7 +1,7 @@
-firstapp.controller('CustomerCtrl', function ($scope, $window, TemplateService, NavigationService, $timeout, $state, $stateParams, $uibModal, toastr) {
+firstapp.controller('MarketingCtrl', function ($scope, $window, TemplateService, NavigationService, $timeout, $state, $stateParams, $uibModal, toastr) {
         //Used to name the .html file
-        $scope.template = TemplateService.changecontent("customer-list", $state);
-        $scope.menutitle = NavigationService.makeactive("Customer List");
+        $scope.template = TemplateService.changecontent("marketing-list", $state);
+        $scope.menutitle = NavigationService.makeactive("marketing List");
         TemplateService.title = $scope.menutitle;
         $scope.currentPage = $stateParams.page;
         var i = 0;
@@ -20,7 +20,7 @@ firstapp.controller('CustomerCtrl', function ($scope, $window, TemplateService, 
             }
             // $scope.modelCamel
             console.log("goto", goTo);
-            $state.go("customer-list", {
+            $state.go("marketing-list", {
                 page: page,
             });
         };
@@ -29,7 +29,7 @@ firstapp.controller('CustomerCtrl', function ($scope, $window, TemplateService, 
             if (keywordChange) {
                 $scope.currentPage = 1;
             }
-            NavigationService.searchCustomer({
+            NavigationService.searchMarketing({
                 page: $scope.currentPage,
                 keyword: $scope.search.keyword
             }, ++i, function (data, ini) {
@@ -42,9 +42,9 @@ firstapp.controller('CustomerCtrl', function ($scope, $window, TemplateService, 
         };
 
         $scope.changePage = function (page) {
-            var goTo = "typeOfOffice-list";
+            var goTo = "marketing-list";
             if ($scope.search.keyword) {
-                goTo = "typeOfOffice-list";
+                goTo = "marketing-list";
             }
             $state.go(goTo, {
                 page: page,
@@ -53,15 +53,13 @@ firstapp.controller('CustomerCtrl', function ($scope, $window, TemplateService, 
         };
         $scope.showAll();
     })
-    .controller('CreateCustomerCtrl', function ($scope, hotkeys, $window, TemplateService, NavigationService, $timeout, $state, $uibModal, $stateParams, toastr, $filter) {
+    .controller('CreateMarketingCtrl', function ($scope, hotkeys, $window, TemplateService, NavigationService, $timeout, $state, $uibModal, $stateParams, toastr, $filter) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("customer-detail");
         $scope.menutitle = NavigationService.makeactive("Create Customer");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
         $scope.formData = {};
-        $scope.formData.creditAlloted = 30000;
-        $scope.formData.creditPending = 30000;
         $scope.formIndex = 0;
         $scope.buttonValue = "Save";
         $scope.formData.officers = [];
@@ -123,7 +121,7 @@ firstapp.controller('CustomerCtrl', function ($scope, $window, TemplateService, 
             });
         };
     })
-    .controller('EditCustomerCtrl', function ($scope, hotkeys, $window, TemplateService, NavigationService, $timeout, $state, $stateParams, $uibModal, toastr) {
+    .controller('EditMarketingCtrl', function ($scope, hotkeys, $window, TemplateService, NavigationService, $timeout, $state, $stateParams, $uibModal, toastr) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("customer-detail");
         $scope.menutitle = NavigationService.makeactive("Edit Customer");

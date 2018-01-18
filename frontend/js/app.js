@@ -1723,6 +1723,16 @@ firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $lo
                 model: "invoice expenditure"
             }
         })
+        .state('marketing-list', {
+            url: "/marketing-list/{page:.*}/{keyword:.*}/{model:.*}",
+            templateUrl: "frontend/views/template.html",
+            controller: 'MarketingCtrl',
+            params: {
+                page: "1",
+                keyword: "",
+                model: "marketing"
+            }
+        })
 
 
 

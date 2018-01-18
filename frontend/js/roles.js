@@ -123,5 +123,6 @@ function getAllRoles() {
     addRoles("Invoice", "Invoice", "", "invoice,invoice-list", true, true, true, true, false, false, false, false, true);
     addRoles("Shop", "Shop", "", "shop,shop-list", true, false, false, false, false, false, false, false, true); //Added New For FSR Waive
     addRoles("Payment", "Payment", "", "payment,payment-list", true, false, false, false, false, false, false, false, true); //View Payment
+    addRoles("Marketing", "Marketing", "", "marketing,marketing-list", true, true, true, false, false, false, false, false, true); //View  Edit & Add Marketing
     return retVal;
 }

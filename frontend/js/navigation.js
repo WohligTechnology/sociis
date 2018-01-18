@@ -83,6 +83,17 @@ var navigationservice = angular.module('navigationservice', [])
                     anchor: "payment-list",
                     icon: "money"
                 }]
+            }, {
+                name: "Marketing",
+                classis: "active",
+                anchor: "marketing",
+                icon: "line-chart",
+                subnav: [{
+                    name: "Marketing",
+                    classis: "active",
+                    anchor: "marketing-list",
+                    icon: "shopping-basket"
+                }]
             }
         ];
         var membershipLevel = [{
@@ -797,7 +808,6 @@ var navigationservice = angular.module('navigationservice', [])
                 $http.post(adminurl + 'Department/search', {}).success(callback);
             },
             searchCustomer: function (formData, i, callback) {
-
                 _.each(formData.filter, function (n, key) {
                     if (n === "") {
                         n = undefined;
@@ -805,15 +815,17 @@ var navigationservice = angular.module('navigationservice', [])
                 });
                 formData.accessToken = $.jStorage.get("accessToken");
                 $http.post(adminurl + 'Customer/search', formData).success(function (data) {
-                    // _.each(data.data.results, function(n) {
-                    //     n.name = n.officeCode;
-                    // });
                     callback(data, i);
                 });
             },
             searchSegment: function (formData, i, callback) {
                 formData.accessToken = $.jStorage.get("accessToken");
                 $http.post(adminurl + 'Segment/search', formData).success(function (data) {
+                    callback(data, i);
+                });
+            },
+            searchMarketing: function (formData, i, callback) {
+                $http.post(adminurl + 'Marketing/search', formData).success(function (data) {
                     callback(data, i);
                 });
             },

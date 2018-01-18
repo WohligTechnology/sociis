@@ -57,11 +57,12 @@ module.exports = [
 
 
   "frontend/js/controller/rolesCtrl.js",
-  "frontend/js/controller/expenditureCtrl.js",  
-  "frontend/js/controller/customerCtrl.js",    
+  "frontend/js/controller/expenditureCtrl.js",
+  "frontend/js/controller/customerCtrl.js",
   "frontend/js/controller/employeeCtrl.js",
-  "frontend/js/controller/invoiceCtrl.js", 
-  "frontend/js/controller/shopCtrl.js",        
-  "frontend/js/controller/paymentCtrl.js",        
-  
+  "frontend/js/controller/invoiceCtrl.js",
+  "frontend/js/controller/shopCtrl.js",
+  "frontend/js/controller/paymentCtrl.js",
+  "frontend/js/controller/marketingCtrl.js",
+
 ];

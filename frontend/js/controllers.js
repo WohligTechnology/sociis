@@ -137,7 +137,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
             });
 
-        }
+        };
 
     })
     .controller('ModelViewCtrl', function ($scope, $window, hotkeys, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal) {
@@ -248,7 +248,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 } else {
                     toastr("Error in ForceClosing Assignment " + formData.name);
                 }
-            })
+            });
 
         };
         $scope.changePages = function (page, filter) {
