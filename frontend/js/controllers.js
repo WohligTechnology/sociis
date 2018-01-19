@@ -24,6 +24,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
         $scope.processForm = function (event) {
+            console.log(event)
             var element = angular.element(event.target);
             //Old Class
 
