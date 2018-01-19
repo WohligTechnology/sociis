@@ -1,7 +1,6 @@
 <form name="formName">
-    <div class="heading-sec">
-
-    </div>
+    <!-- <div class="heading-sec">
+    </div> -->
     <div class="panel-content">
         <div class="widget">
             <div class="form-elements-sec">
@@ -27,7 +26,7 @@
                                 </ui-select>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <div class="form-group">
                                 <label>Shop*</label>
                                 <multiple-select my-enter name="shop" required ng-model="formData.shop" ng-name="name.shop" api="searchShop"></multiple-select>
@@ -40,7 +39,7 @@
                                 <multiple-select my-enter name="owner" required ng-model="formData.owner" ng-name="name.owner" api="getBackendEmployeeOnly"></multiple-select>
                                 <div class="error-msg" ng-show="formName.owner.$invalid">Please Select owner</div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -163,7 +162,7 @@
             </div>
         </div>
         <div class="text-center mt20 odd-even-button">
-            <button class="btn btn-success" ng-click="createInvoice(formData)" ng-disabled="formName.$invalid">Save</button>
+            <button ng-if="disableSave==false" class="btn btn-success" ng-click="createInvoice(formData)" ng-disabled="formName.$invalid">Save</button>
             <a class="btn btn-danger" ng-click="cancel()">Cancel</a>
         </div>
         <!--</div>-->

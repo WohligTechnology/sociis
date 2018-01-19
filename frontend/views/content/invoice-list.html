@@ -69,12 +69,10 @@
                                 <uib-accordion-heading>
                                     <div ng-if="invoice.status=='Partial Pending'">
                                         Date:{{invoice.createdAt | Date}}, Bill No : {{invoice.name}}, Total Amount : {{invoice.total}}, Pending :{{invoice.total
-                                        - invoice.paidAmount}}, Customer : {{invoice.customer.name}}, Shop : {{invoice.shop.name}},
-                                        Employee : {{invoice.employee.name}}
+                                        - invoice.paidAmount}}, Customer : {{invoice.customer.name}}
                                     </div>
                                     <div ng-if="invoice.status!=='Partial Pending'">
-                                        Date:{{invoice.createdAt | Date}}, Bill No : {{invoice.name}}, Total Amount : {{invoice.total}}, Customer : {{invoice.customer.name}},
-                                        Shop : {{invoice.shop.name}}, Employee : {{invoice.employee.name}}
+                                        Date:{{invoice.createdAt | Date}}, Bill No : {{invoice.name}}, Total Amount : {{invoice.total}}, Customer : {{invoice.customer.name}}
                                     </div>
                                 </uib-accordion-heading>
                                 <div class="line-holder" ng-repeat="product in invoice.invoiceList">
@@ -84,7 +82,8 @@
                                                 <div class="form-builder-item no-pad row-item">
 
                                                     <div class="col-item" style="text-align: center;">
-                                                        <p> {{product.name}}[{{product.description}}]</p>
+                                                        <p> {{product.name}}</p>
+                                                        <!-- <p> {{product.name}}[{{product.description}}]</p> -->
                                                     </div>
                                                     <div class="col-item" style="text-align: center;">
                                                         <!-- <div class="col-item" style="flex:0.5;"> -->

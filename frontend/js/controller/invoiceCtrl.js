@@ -135,6 +135,8 @@ firstapp.controller('CreateInvoiceCtrl', function ($scope, $window, TemplateServ
     $scope.disableSave = false;
     $scope.formData = {};
     $scope.formData.name = "";
+    $scope.formData.shop = "59e76bbb79de0910f7d45daf";
+    $scope.formData.owner = "58996fb21d8a3a0fc6ea7820";
     $scope.formData.employee = $scope.getLoginEmployee._id;
     $scope.formData.invoiceList = [{}];
     $scope.addHead = function () {
@@ -275,112 +277,10 @@ firstapp.controller('CreateInvoiceCtrl', function ($scope, $window, TemplateServ
         TemplateService.getInvoiceWithTax($scope.formData, function (err, data) {
             $scope.formData = data;
         });
-    }
-    $scope.saveModel = function (data) {
-        var Name = _.split($scope.formData.officeEmail, "<");
-        var newName = _.trim(Name[0]);
-        _.each($scope.employee, function (n) {
-            if (n.name == newName) {
-                $scope.formData.sentTo = n._id // SentTo is Authorizer
-            }
-        });
-        NavigationService.getOneModel("Customer", $scope.formData.billedTo._id, function (data) {
-            if (data.value == true) {
-                var billedToCreditDetails = data.data;
-                var creditLimitPending = billedToCreditDetails.creditLimitAlloted - billedToCreditDetails.creditLimitExhausted;
-                if (creditLimitPending >= $scope.formData.grandTotal) {
-                    $scope.formData.createdBy = $.jStorage.get("getLoginEmployee")._id,
-                        $scope.formData.assignment = $stateParams.assignmentId;
-                    // Sending For Generate of Invoice Number
-                    var newAssignment = {
-                        _id: $scope.assignment._id,
-                        name: $scope.assignment.name,
-                        invoice: $scope.assignment.invoice,
-                        companyState: $scope.assignment.company.city.district.state,
-                        timelineStatus: $scope.assignment.timelineStatus
-                    }
-                    var wholeFormData = {
-                        invoiceData: _.clone($scope.formData),
-                        getAllTaskStatus: $scope.assignment.getAllTaskStatus,
-                        employee: $.jStorage.get("getLoginEmployee")._id,
-                        invoiceApproval: false,
-                        newAssignment: newAssignment
-                    }
-                    NavigationService.invoiceApproval(wholeFormData, function (data) {
-                        if (data.value) {
-                            toastr.clear();
-                            $window.history.back();
-                            toastr.success("Invoice " + data.data.invoiceNumber + " sent for Authorization");
-                        } else {
-                            if (data.error.msg == "Invoice number is to be unique") {
-                                toastr.error(data.error.number + " already exist");
-                            } else {
-                                toastr.clear();
-                                toastr.error("GSTIN missing for " + $scope.billedToState.name + " for " + $scope.customerCompany, "Cannot create Invoice");
-                                $scope.disableSave = false;
-                            }
-                        }
-                    });
-                } else {
-                    toastr.clear();
-                    toastr.error("Invoice Total exceeds credit limit pending");
-                    $window.history.back();
-                }
-            }
-        });
-    }
-
-    $scope.previewPdf = function (data) {
-        var Name = _.split($scope.formData.officeEmail, "<");
-        var newName = _.trim(Name[0]);
-        _.each($scope.employee, function (n) {
-            if (n.name == newName) {
-                $scope.formData.sentTo = n._id // SentTo is Authorizer
-            }
-        });
-        NavigationService.getOneModel("Customer", $scope.formData.billedTo._id, function (data) {
-            if (data.value == true) {
-                var billedToCreditDetails = data.data;
-                var creditLimitPending = billedToCreditDetails.creditLimitAlloted - billedToCreditDetails.creditLimitExhausted;
-                if (creditLimitPending >= $scope.formData.grandTotal) {
-                    $scope.formData.createdBy = $.jStorage.get("getLoginEmployee")._id,
-                        $scope.formData.assignment = $stateParams.assignmentId;
-                    // Sending For Generate of Invoice Number
-                    var newAssignment = {
-                        _id: $scope.assignment._id,
-                        name: $scope.assignment.name,
-                        invoice: $scope.assignment.invoice,
-                        companyState: $scope.assignment.company.city.district.state
-                    }
-                    var wholeFormData = {
-                        invoiceData: _.clone($scope.formData),
-                        getAllTaskStatus: $scope.assignment.getAllTaskStatus,
-                        employee: $.jStorage.get("getLoginEmployee")._id,
-                        invoiceApproval: false,
-                        newAssignment: newAssignment
-                    }
-                    NavigationService.generateInvoicePreview(wholeFormData, function (data) {
-                        if (data.value) {
-                            toastr.clear();
-                            window.open(adminurl + 'upload/readFile?file=' + data.data, '_blank');
-                        } else {
-                            if (data.error.msg == "Invoice number is to be unique") {
-                                toastr.error(data.error.number + " already exist");
-                            } else {
-                                toastr.clear();
-                                toastr.error("GSTIN missing for " + $scope.billedToState.name + " for " + $scope.customerCompany, "Cannot create Invoice");
-                                $scope.disableSave = false;
-                            }
-                        }
-                    });
-                } else {
-                    toastr.clear();
-                    toastr.error("Invoice Total exceeds credit limit pending");
-                }
-            }
-        });
     };
+
     $scope.createInvoice = function (data) {
+        $scope.disableSave = true;
         NavigationService.createInvoice($scope.formData, function (data) {
             toastr.success("Invoice Created Successfully");
             $window.history.back();
