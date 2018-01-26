@@ -76,12 +76,9 @@ var controller = {
                             async.eachSeries(name.items, function (item, callback) {
 
                                 _.each(req.body.invoiceList, function (n, key) {
-                                    // console.log("key", n, key);
-                                    // console.log("item.item", item.item);
                                     if (item.item == n.itemId) {
                                         if (n.unit == "grm") {
                                             item.quantity = item.quantity - (n.quantity / 1000);
-                                            console.log("item", item);
                                         } else {
                                             item.quantity = item.quantity - n.quantity;
                                         }
@@ -139,8 +136,6 @@ var controller = {
                                 callback(null, "Hi2");
                             }
                         });
-                        // console.log("SMS OBJ", smsObj);
-                        // callback(null, customer);
                     } else {
                         callback(null, customer);
                     }
