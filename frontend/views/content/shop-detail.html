@@ -1,13 +1,3 @@
-<div class="breadcrumbs">
-    <ul>
-        <li>
-            <a title="Home">Insurance</a>
-        </li>
-        <li>
-            <a ui-sref="salvage-list">Salvage List</a>
-        </li>
-    </ul>
-</div>
 <form name="formName" ng-submit="saveModel(formData)">
     <div class="heading-sec">
         <div class="row">
@@ -68,7 +58,7 @@
                                                             {{itemObj.item.unit}}
                                                         </td>
                                                         <td>
-                                                            <input type="Number" class="form-control" min=0 style="width: 200px;" ng-model="itemObj.quantity">
+                                                            <input type="Number" step=".001" class="form-control" min=0 style="width: 200px;" ng-model="itemObj.quantity">
                                                         </td>
                                                     </tr>
                                                 </tbody>

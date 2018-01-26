@@ -1,5 +1,8 @@
 module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 var controller = {
+    getCustomerProductDetailsAccordingToInvoices: function (req, res) {
+        Invoice.getCustomerProductDetailsAccordingToInvoices(req.body, res.callback);
+    },
     sendSms: function (req, res) {
         Config.sendSms(req.body, function (err, smsRespo) {
             if (err) {
@@ -64,7 +67,7 @@ var controller = {
                     }
 
                 },
-                function (data, callback) {
+                function (data, callback) { //Shop
                     Shop.findOne({
                         _id: req.body.shop
                     }, function (err, name) {
@@ -72,9 +75,17 @@ var controller = {
                             callback(err, null);
                         } else {
                             async.eachSeries(name.items, function (item, callback) {
-                                _.each(req.body.invoiceList, function (n) {
+
+                                _.each(req.body.invoiceList, function (n, key) {
+                                    // console.log("key", n, key);
+                                    // console.log("item.item", item.item);
                                     if (item.item == n.itemId) {
-                                        item.quantity = item.quantity - n.quantity;
+                                        if (n.unit == "grm") {
+                                            item.quantity = item.quantity - (n.quantity / 1000);
+                                            console.log("item", item);
+                                        } else {
+                                            item.quantity = item.quantity - n.quantity;
+                                        }
                                     }
                                 });
                                 callback();
@@ -87,13 +98,12 @@ var controller = {
                                     } else {
                                         callback(null, data);
                                     }
-                                })
-
+                                });
                             });
                         }
                     });
                 },
-                function (data, callback) {
+                function (data, callback) { //Customer
                     var customerData = {
                         type: req.body.paymentMethod,
                         _id: req.body.customer._id,
@@ -494,8 +504,6 @@ var controller = {
         $scope.formData.grandTotal = $scope.formData.grandTotal - round;
         $scope.formData.roundOff = round.toFixed(2);
     },
-    getCustomerProductDetailsAccordingToInvoices: function (req, res) {
-        Invoice.getCustomerProductDetailsAccordingToInvoices(req.body, res.callback);
-    },
+
 };
 module.exports = _.assign(module.exports, controller);
