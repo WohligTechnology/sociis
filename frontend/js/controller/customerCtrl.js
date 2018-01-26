@@ -11,15 +11,11 @@ firstapp.controller('CustomerCtrl', function ($scope, $window, TemplateService, 
         if ($stateParams.keyword) {
             $scope.search.keyword = $stateParams.keyword;
         }
-
         $scope.changePages = function (page, filter) {
-
             var goTo = $scope.modelCamel + "-list";
             if ($scope.search.keyword) {
                 goTo = $scope.modelCamel + "-list";
             }
-            // $scope.modelCamel
-            console.log("goto", goTo);
             $state.go("customer-list", {
                 page: page,
             });
@@ -40,17 +36,6 @@ firstapp.controller('CustomerCtrl', function ($scope, $window, TemplateService, 
                 }
             });
         };
-
-        $scope.changePage = function (page) {
-            var goTo = "typeOfOffice-list";
-            if ($scope.search.keyword) {
-                goTo = "typeOfOffice-list";
-            }
-            $state.go(goTo, {
-                page: page,
-                keyword: $scope.search.keyword
-            });
-        };
         $scope.showAll();
     })
     .controller('CreateCustomerCtrl', function ($scope, hotkeys, $window, TemplateService, NavigationService, $timeout, $state, $uibModal, $stateParams, toastr, $filter) {
@@ -64,18 +49,9 @@ firstapp.controller('CustomerCtrl', function ($scope, $window, TemplateService, 
         $scope.formData.creditPending = 30000;
         $scope.formIndex = 0;
         $scope.buttonValue = "Save";
-        $scope.formData.officers = [];
-        $scope.format = 'dd-MMMM-yyyy';
         $scope.header = {
             "name": "Create Customer"
         };
-        $scope.userStatus = [{
-            "name": "Active",
-            "value": true
-        }, {
-            "name": "Inactive",
-            "value": false
-        }];
         $scope.formData.creditExhausted = 0;
         $scope.changePending = function () {
             $scope.formData.creditPending = $scope.formData.creditAlloted;
@@ -83,38 +59,12 @@ firstapp.controller('CustomerCtrl', function ($scope, $window, TemplateService, 
         $scope.popup = {
             birthDate: false
         };
-        $scope.showing = false;
-        $scope.passType = 'password';
-        $scope.showPass = function () {
-            $scope.showing = !$scope.showing;
-            if ($scope.showing === false) {
-                $scope.passType = 'password';
-            } else {
-                $scope.passType = 'text';
-            }
-        };
-
         $scope.cancel = function () {
             $window.history.back();
-        }
-        hotkeys.bindTo($scope).add({
-            combo: 'ctrl+enter',
-            callback: function (formData) {
-                NavigationService.modelSave("Customer", $scope.formData, function (data) {
-                    if (data.value === true) {
-                        // $state.go('customer' + '-list');
-                        $window.history.back();
-                        toastr.success("Customer" + " " + formData.name + " created successfully.", "Customer" + " Created");
-                    } else {
-                        toastr.error("Error while creating " + data.error.message, "Error");
-                    }
-                });
-            }
-        });
+        };
         $scope.saveModel = function (formData) {
             NavigationService.modelSave("Customer", $scope.formData, function (data) {
                 if (data.value === true) {
-                    // $state.go('customer' + '-list');
                     $window.history.back();
                     toastr.success("Customer" + " " + formData.name + " created successfully.", "Customer" + " Created");
                 } else {
@@ -130,33 +80,12 @@ firstapp.controller('CustomerCtrl', function ($scope, $window, TemplateService, 
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
         $scope.formData = {};
-        $scope.formIndex = 0;
         $scope.buttonValue = "Save";
-        $scope.formData.officers = [];
         $scope.currentPage = 1;
-        $scope.format = 'dd-MMMM-yyyy';
-        // $scope.
         $scope.header = {
             "name": "Edit Customer"
         };
-        $scope.userStatus = [{
-            "name": "Active",
-            "value": true
-        }, {
-            "name": "Inactive",
-            "value": false
-        }];
         $scope.salutations = ["Mr.", "Mrs.", "Ms.", "Dr."];
-        $scope.formData.companyShortName = "";
-        $scope.formData.TOFShortName = "";
-        $scope.formData.officeCode = "";
-        $scope.formData.city1 = "";
-        $scope.popup = {
-            birthDate: false
-        };
-        $scope.showing = false;
-        $scope.passType = 'password';
-
         $scope.changePending = function () {
             $scope.formData.creditPending = $scope.formData.creditAlloted - $scope.formData.creditExhausted;
         };
@@ -185,20 +114,6 @@ firstapp.controller('CustomerCtrl', function ($scope, $window, TemplateService, 
         $scope.cancel = function () {
             $window.history.back();
         };
-        hotkeys.bindTo($scope).add({
-            combo: 'ctrl+enter',
-            callback: function (formData) {
-                NavigationService.modelSave("Customer", $scope.formData, function (data) {
-                    if (data.value === true) {
-                        // $state.go("customer" + '-list');
-                        $window.history.back();
-                        toastr.success("Customer" + $scope.formData.name + " edited successfully.", "Customer" + " Edited");
-                    } else {
-                        toastr.error("Customer" + data.error.message + " edition failed.", "Customer" + " editing error");
-                    }
-                });
-            }
-        });
         $scope.saveModel = function (formValid) {
             NavigationService.modelSave("Customer", $scope.formData, function (data) {
                 if (data.value === true) {

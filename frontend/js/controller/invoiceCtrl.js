@@ -8,14 +8,6 @@ firstapp.controller('InvoiceViewCtrl', function ($scope, $window, hotkeys, Templ
     });
 
 
-    hotkeys.bindTo($scope).add({
-        combo: 'enter',
-        description: 'This one goes to 11',
-        callback: function () {
-            $state.go("create" + $scope.modelCamel);
-        }
-    });
-
     $scope.modelCap = _.capitalize($stateParams.model);
     $scope.modelLow = _.lowerCase($stateParams.model);
 
@@ -33,15 +25,6 @@ firstapp.controller('InvoiceViewCtrl', function ($scope, $window, hotkeys, Templ
     if ($stateParams.keyword) {
         $scope.search.keyword = $stateParams.keyword;
     }
-    $scope.getAllTags = function () {
-        NavigationService.searchModel("Tag", {}, 0, function (data) {
-            $scope.tags = data.data.results;
-        });
-    };
-    $scope.getAllTags();
-
-    var newTag = 7091990;
-
     // 
     $scope.changePages = function (page, filter) {
 
@@ -49,8 +32,6 @@ firstapp.controller('InvoiceViewCtrl', function ($scope, $window, hotkeys, Templ
         if ($scope.search.keyword) {
             goTo = $scope.modelCamel + "-list";
         }
-        $scope.modelCamel
-        console.log("goto", goTo);
         $state.go("invoice-list", {
             page: page,
         });
@@ -88,23 +69,6 @@ firstapp.controller('InvoiceViewCtrl', function ($scope, $window, hotkeys, Templ
     };
     $scope.showAll();
 
-
-    $scope.deleteModel = function (id) {
-        globalfunction.confDel(function (value) {
-            if (value) {
-                NavigationService.deleteModel($scope.ModelApi, id, function (data) {
-                    if (data.value) {
-                        $scope.showAll();
-                        toastr.success($scope.modelCap + " deleted successfully.", $scope.modelCap + " deleted");
-                    } else {
-                        toastr.error("There was an error while deleting " + $scope.modelCap, $scope.modelCap + " deleting error");
-                    }
-
-
-                });
-            }
-        });
-    };
     $scope.getStatusColor = function (status) {
         var newStatus = "";
         if (status == "Pending") {
