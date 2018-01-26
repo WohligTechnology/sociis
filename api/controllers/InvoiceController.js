@@ -117,7 +117,7 @@ var controller = {
                     });
                 },
                 function (customer, callback) { // SMS
-                    if (customer.mobile) {
+                    if (customer.mobile && req.body.total > 50) {
                         var content = "Dear " + customer.name + ", your Current Bill = " + req.body.total + ".";
                         if (customer.creditExhausted) {
                             content = content + " Your Total Pending Bill = " + customer.creditExhausted + ".";
