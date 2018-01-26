@@ -65,7 +65,6 @@ var controller = {
                     } else {
                         callback(null, data);
                     }
-
                 },
                 function (data, callback) { //Shop
                     Shop.findOne({
@@ -113,13 +112,41 @@ var controller = {
                         if (err) {
                             callback(err, null);
                         } else {
-                            callback(null, data);
+                            callback(null, name);
                         }
                     });
+                },
+                function (customer, callback) { // SMS
+                    if (customer.mobile) {
+                        var content = "Dear " + customer.name + ", your Current Bill = " + req.body.total + ".";
+                        if (customer.creditExhausted) {
+                            content = content + " Your Total Pending Bill = " + customer.creditExhausted + ".";
+                        }
+                        content = content + " Thank You !!!";
+                        var smsObj = {
+                            content: content,
+                            mobile: customer.mobile
+                        };
+                        Config.sendSms(smsObj, function (err, smsRespo) {
+                            if (err) {
+                                console.log("1");
+                                callback(null, "Hi");
+                            } else if (smsRespo) {
+                                console.log("2");
+                                callback(null, "Hi1");
+                            } else {
+                                console.log("3");
+                                callback(null, "Hi2");
+                            }
+                        });
+                        // console.log("SMS OBJ", smsObj);
+                        // callback(null, customer);
+                    } else {
+                        callback(null, customer);
+                    }
                 }
             ],
             function (err, results) {
-
                 if (err) {
                     res.callback(err, null);
                 } else {
@@ -152,72 +179,6 @@ var controller = {
     getAll: function (req, res) {
         if (req.body) {
             req.model.getAll(req.body, res.callback, req.user);
-        } else {
-            res.json({
-                value: false,
-                data: "Invalid Request"
-            });
-        }
-    },
-    saveInvoiceDraft: function (req, res) {
-        if (req.body) {
-            var invoice = _.cloneDeep(req.body.invoice);
-            var assignment = req.body.assignment;
-            res.calcTax(req.body, function (err, data) {
-                if (data != null) {
-                    invoice = data;
-
-                    var dateNow = moment().toDate();
-                    if (req.body.type == "Create") {
-                        invoice.createdBy = req.body.createdBy;
-                        invoice.assignment = req.body.assignment._id;
-                        invoice.approvalStatus = "Draft";
-                    }
-                    var timeline = {
-                        _id: assignment._id,
-                        timeline: req.body.timeline
-                    }
-                    invoice.draftTimeStamp = dateNow; // Captures Last Modifieds
-                    async.parallel([
-                            function (callback1) {
-                                Invoice.saveData(invoice, function (err, savedInvoiceData) {
-                                    if (err) {
-                                        callback1(false)
-                                    } else {
-                                        if (req.body.type == "Create") {
-                                            assignment.invoice.push(savedInvoiceData._id);
-                                            Assignment.saveData(assignment, function (err, savedAssignmentData) {
-                                                if (err) {
-                                                    callback1(false)
-                                                } else {
-                                                    callback1(null, "Success In Invoice and Assignment");
-                                                }
-                                            });
-                                        } else {
-                                            callback1(null, "Success in Invoice");
-                                        }
-                                    }
-                                });
-                            }
-                        ],
-                        function (err, results) {
-                            if (err) {
-                                res.callback(err, null);
-                            } else {
-                                var newData = {
-                                    data: results,
-                                    value: true
-                                }
-                                res.callback(null, newData);
-                            }
-                        });
-                } else {
-                    res.json({
-                        value: false,
-                        data: "cannot generate Invoice"
-                    });
-                }
-            });
         } else {
             res.json({
                 value: false,

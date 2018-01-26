@@ -231,7 +231,12 @@ var model = {
                     if (err) {
                         callback(err, null);
                     } else {
-                        callback(null, updated);
+                        var callbackData = {
+                            mobile: found.mobile,
+                            creditExhausted: found.creditExhausted,
+                            name: found.name
+                        };
+                        callback(null, callbackData);
                     }
                 });
             });
@@ -239,7 +244,6 @@ var model = {
             Customer.findOne({
                 _id: data._id
             }).lean().exec(function (err, found) {
-
                 found.tillDatePayment = found.tillDatePayment + data.amount;
                 Customer.update({
                     _id: found._id
@@ -247,7 +251,12 @@ var model = {
                     if (err) {
                         callback(err, null);
                     } else {
-                        callback(null, updated);
+                        var callbackData = {
+                            mobile: found.mobile,
+                            creditExhausted: found.creditExhausted,
+                            name: found.name
+                        };
+                        callback(null, callbackData);
                     }
                 });
             });
