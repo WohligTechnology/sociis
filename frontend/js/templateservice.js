@@ -256,6 +256,9 @@ templateservicemod.service('TemplateService', function ($filter, NavigationServi
   };
 
   this.changecontent = function (page, state) {
+    if(_.isEmpty($.jStorage.get("getLoginEmployee"))){
+      $state.go("login")
+  }
     this.init();
     var data = this;
     var role = $.jStorage.get("role");
