@@ -223,8 +223,46 @@ var model = {
             Customer.findOne({
                 _id: data._id
             }).lean().exec(function (err, found) {
+                // Old
                 found.creditPending = found.creditPending - data.amount;
                 found.creditExhausted = found.creditExhausted + data.amount;
+                // 
+                // creditPending Round Off
+                var creditPendingRound = 0; // var creditPendingRound For Each Value
+                // For Getting creditPendingRoundValue
+                creditPendingRound = found.creditPending % 1;
+                if (creditPendingRound != 0 && creditPendingRound <= 0.5) {
+                    creditPendingRound = 0.5;
+                } else if (creditPendingRound != 0) {
+                    creditPendingRound = 1;
+                } else {
+                    creditPendingRound = 0;
+                }
+                // Get floor value      
+                found.creditPending = Math.floor(found.creditPending);
+                // Add the floor value + New creditPendingRound Value      
+                found.creditPending = found.creditPending + creditPendingRound;
+
+                // End found.creditPending
+                // creditExhausted Round Off
+                var creditExhaustedRound = 0; // var creditExhaustedRound For Each Value
+                // For Getting creditExhaustedRoundValue
+                creditExhaustedRound = found.creditExhausted % 1;
+                if (creditExhaustedRound != 0 && creditExhaustedRound <= 0.5) {
+                    creditExhaustedRound = 0.5;
+                } else if (creditExhaustedRound != 0) {
+                    creditExhaustedRound = 1;
+                } else {
+                    creditExhaustedRound = 0;
+                }
+                // Get floor value      
+                found.creditExhausted = Math.floor(found.creditExhausted);
+                // Add the floor value + New creditExhaustedRound Value      
+                found.creditExhausted = found.creditExhausted + creditExhaustedRound;
+
+                // End found.creditExhausted
+
+                // 
                 Customer.update({
                     _id: found._id
                 }, found, function (err, updated) {

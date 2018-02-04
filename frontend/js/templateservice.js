@@ -160,11 +160,11 @@ templateservicemod.service('TemplateService', function ($filter, NavigationServi
     $state.go("timeline", {
       id: data[0]._id
     });
-  }
+  };
 
   this.closeProgressbar = function () {
     $rootScope.viewProgressBar = false;
-  }
+  };
 
 
   this.init();
