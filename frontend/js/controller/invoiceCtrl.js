@@ -129,7 +129,9 @@ firstapp.controller('CreateInvoiceCtrl', function ($scope, $window, TemplateServ
         } else {
             $scope.formData.invoiceList[index].amount = a * b;
         }
-        TemplateService.getInvoiceWithTax($scope.formData, function (err, data) {
+        $scope.disableSave = true;
+        TemplateService.calAmt($scope.formData, function (err, data) {
+            $scope.disableSave = false;
             $scope.formData = data;
         });
     };
@@ -230,7 +232,9 @@ firstapp.controller('CreateInvoiceCtrl', function ($scope, $window, TemplateServ
     $scope.calAmtAfterBilledToChange = function () {
         $scope.formData.total = 0;
         $scope.formData.grandTotal = 0;
-        TemplateService.getInvoiceWithTax($scope.formData, function (err, data) {
+        $scope.disableSave = true;
+        TemplateService.calAmt($scope.formData, function (err, data) {
+            $scope.disableSave = false;
             $scope.formData = data;
         });
     };
@@ -238,7 +242,9 @@ firstapp.controller('CreateInvoiceCtrl', function ($scope, $window, TemplateServ
     $scope.calAmtOnRemove = function () {
         $scope.formData.total = 0;
         $scope.formData.grandTotal = 0;
-        TemplateService.getInvoiceWithTax($scope.formData, function (err, data) {
+        $scope.disableSave = true;
+        TemplateService.calAmt($scope.formData, function (err, data) {
+            $scope.disableSave = false;
             $scope.formData = data;
         });
     };
