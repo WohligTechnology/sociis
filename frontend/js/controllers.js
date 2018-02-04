@@ -1,14 +1,12 @@
-var globalfunction = {};
-// var adminurl = adminurl;
 angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'assignmenttemplate', 'ui.bootstrap', 'ui.select', 'ngAnimate', 'toastr', 'ngSanitize', 'angular-flexslider', 'ui.tinymce', 'imageupload', 'ngMap', 'toggle-switch', 'cfp.hotkeys', 'ui.sortable', 'infinite-scroll', 'dragularModule', 'cleave.js', 'monospaced.elastic', 'ngFileUpload'])
 
     .controller('headerctrl', function ($scope, $window, $rootScope, TemplateService, $state, $uibModal) {
-      
-       
+
+
         $scope.template = TemplateService;
         $rootScope.loginData = $.jStorage.get("getLoginEmployee");
         $rootScope.isMobile = false;
-       
+
         $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
             $(window).scrollTop(0);
             // if viewable is not there in navigation state send to dashboard
@@ -100,26 +98,13 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         };
         // TemplateService.getRole();
     })
-    .controller('AccessController', function ($scope, $window, TemplateService, NavigationService, $timeout, $state) {
-       
-    })
+    .controller('AccessController', function ($scope, $window, TemplateService, NavigationService, $timeout, $state) {})
     .controller('LoginCtrl', function ($scope, $window, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
         //Used to name the .html file
         $.jStorage.flush();
         $scope.menutitle = NavigationService.makeactive("Login");
         TemplateService.title = $scope.menutitle;
         $scope.currentHost = window.location.origin;
-        // if ($stateParams.id) {
-        //     NavigationService.parseAccessToken($stateParams.id, function () {
-        //         NavigationService.profile(function () {
-        //             $state.go("dashboard");
-        //         }, function () {
-        //             $state.go("login");
-        //         });
-        //     });
-        // } else {
-        //     NavigationService.removeAccessToken();
-        // }
         $scope.login = (form) => {
             NavigationService.login(form, (loginResult) => {
                 if (loginResult.value === true) {
@@ -128,12 +113,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 } else {
                     toastr.error("INVALID CREDENTIALS", "LOGIN ERROR")
                 }
-                // NavigationService.profile(function () {
-                //     $state.go("dashboard");
-                // }, function () {
-                //     $state.go("login");
-                // });
-
             });
 
         };
@@ -318,4 +297,4 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         };
 
 
-    })
+    });

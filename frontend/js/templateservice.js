@@ -256,37 +256,40 @@ templateservicemod.service('TemplateService', function ($filter, NavigationServi
   };
 
   this.changecontent = function (page, state) {
-    if(_.isEmpty($.jStorage.get("getLoginEmployee"))){
-      $state.go("login")
-  }
-    this.init();
-    var data = this;
-    var role = $.jStorage.get("role");
-    data.content = "frontend/views/content/" + page + ".html";
-    if (state) {
-      var stateName = state.current.name;
-      data.role = role;
-      data.currentRole = _.filter(role.roles, function (n) {
-        var index = _.indexOf(n.states, stateName);
-        if (index >= 0) {
-          return true;
-        } else {
-          return false;
+    if (_.isEmpty($.jStorage.get("getLoginEmployee"))) {
+      $state.go("login");
+      return false;
+    } else {
+      this.init();
+      var data = this;
+      var role = $.jStorage.get("role");
+      data.content = "frontend/views/content/" + page + ".html";
+      if (state) {
+        var stateName = state.current.name;
+        data.role = role;
+        data.currentRole = _.filter(role.roles, function (n) {
+          var index = _.indexOf(n.states, stateName);
+          if (index >= 0) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+        if (data.currentRole.length > 0) {
+          data.currentRole = data.currentRole[0];
         }
-      });
-      if (data.currentRole.length > 0) {
-        data.currentRole = data.currentRole[0];
+        var assignmentFilter = _.filter(role.roles, {
+          "subMenu": "Assignment"
+        });
+        data.assignmentRole = _.groupBy(assignmentFilter, "subThirdMenu");
+        _.each(data.assignmentRole, function (n, key) {
+          data.assignmentRole[key] = n[0];
+        });
       }
-      var assignmentFilter = _.filter(role.roles, {
-        "subMenu": "Assignment"
-      });
-      data.assignmentRole = _.groupBy(assignmentFilter, "subThirdMenu");
-      _.each(data.assignmentRole, function (n, key) {
-        data.assignmentRole[key] = n[0];
-      });
+      NavigationService.getNavByRole(role);
+      return data;
     }
-    NavigationService.getNavByRole(role);
-    return data;
+
   };
 
   this.getMrNumber = function (text, callback) {

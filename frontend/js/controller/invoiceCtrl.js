@@ -6,87 +6,87 @@ firstapp.controller('InvoiceViewCtrl', function ($scope, $window, hotkeys, Templ
     _.each(a, function (n) {
         $scope.ModelApi = $scope.ModelApi + n;
     });
-
-
     $scope.modelCap = _.capitalize($stateParams.model);
     $scope.modelLow = _.lowerCase($stateParams.model);
-
     $scope.template = TemplateService.changecontent($scope.modelCamel + "-list");
-    $scope.menutitle = NavigationService.makeactive($scope.modelCap + " List");
-    TemplateService.title = $scope.menutitle;
-    $scope.navigation = NavigationService.getnav();
-    $scope.currentPage = $stateParams.page;
-    var i = 0;
-    //  
-    // 
-    $scope.search = {
-        keyword: ""
-    };
-    if ($stateParams.keyword) {
-        $scope.search.keyword = $stateParams.keyword;
-    }
-    // 
-    $scope.changePages = function (page, filter) {
-
-        var goTo = $scope.modelCamel + "-list";
-        if ($scope.search.keyword) {
-            goTo = $scope.modelCamel + "-list";
+    if ($scope.template) {
+        $scope.menutitle = NavigationService.makeactive($scope.modelCap + " List");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+        $scope.currentPage = $stateParams.page;
+        var i = 0;
+        //  
+        // 
+        $scope.search = {
+            keyword: ""
+        };
+        if ($stateParams.keyword) {
+            $scope.search.keyword = $stateParams.keyword;
         }
-        $state.go("invoice-list", {
-            page: page,
-        });
-    };
+        // 
+        $scope.changePages = function (page, filter) {
 
-    $scope.showAll = function (keywordChange) {
-        $scope.totalItems = undefined;
-        if (keywordChange) {
-            $scope.currentPage = 1;
-        }
-        NavigationService.searchInvoice({
-            page: $scope.currentPage,
-            keyword: $scope.search.keyword
-        }, ++i, function (data, ini) {
-
-            if (ini == i) {
-                $scope.modelList = data.data.results;
-                $scope.totalItems = data.data.total;
-                $scope.maxRow = data.data.options.count;
+            var goTo = $scope.modelCamel + "-list";
+            if ($scope.search.keyword) {
+                goTo = $scope.modelCamel + "-list";
             }
-        });
-    };
-    $scope.cancel = function () {
-        $window.history.back();
-    };
-    $scope.changePage = function (page) {
-        var goTo = $scope.modelCamel + "-list";
-        if ($scope.search.keyword) {
-            goTo = $scope.modelCamel + "-list";
-        }
-        $state.go(goTo, {
-            page: page,
-            keyword: $scope.search.keyword
-        });
-    };
-    $scope.showAll();
+            $state.go("invoice-list", {
+                page: page,
+            });
+        };
 
-    $scope.getStatusColor = function (status) {
-        var newStatus = "";
-        if (status == "Pending") {
-            newStatus = "Pending";
-        }
-        if (status == "Partial Pending") {
-            newStatus = "Partial-Pending";
-        }
-        if (status == "Paid") {
-            newStatus = "Paid";
-        }
-        return newStatus;
-    };
-    $scope.changeStatus = function (ind) {
-        NavigationService.modelSave($scope.ModelApi, ind, function (data) {
-            if (data.value === true) {}
-        });
-    };
+        $scope.showAll = function (keywordChange) {
+            $scope.totalItems = undefined;
+            if (keywordChange) {
+                $scope.currentPage = 1;
+            }
+            NavigationService.searchInvoice({
+                page: $scope.currentPage,
+                keyword: $scope.search.keyword
+            }, ++i, function (data, ini) {
+
+                if (ini == i) {
+                    $scope.modelList = data.data.results;
+                    $scope.totalItems = data.data.total;
+                    $scope.maxRow = data.data.options.count;
+                }
+            });
+        };
+        $scope.cancel = function () {
+            $window.history.back();
+        };
+        $scope.changePage = function (page) {
+            var goTo = $scope.modelCamel + "-list";
+            if ($scope.search.keyword) {
+                goTo = $scope.modelCamel + "-list";
+            }
+            $state.go(goTo, {
+                page: page,
+                keyword: $scope.search.keyword
+            });
+        };
+        $scope.showAll();
+
+        $scope.getStatusColor = function (status) {
+            var newStatus = "";
+            if (status == "Pending") {
+                newStatus = "Pending";
+            }
+            if (status == "Partial Pending") {
+                newStatus = "Partial-Pending";
+            }
+            if (status == "Paid") {
+                newStatus = "Paid";
+            }
+            return newStatus;
+        };
+        $scope.changeStatus = function (ind) {
+            NavigationService.modelSave($scope.ModelApi, ind, function (data) {
+                if (data.value === true) {}
+            });
+        };
+    }
+
 });
 firstapp.controller('CreateInvoiceCtrl', function ($scope, $window, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
     //Used to name the .html file
