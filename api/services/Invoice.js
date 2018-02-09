@@ -85,7 +85,7 @@ var model = {
     search: function (data, callback) {
         var Model = this;
         var Const = this(data);
-        var maxRow = Config.maxRow;
+        var maxRow = 50;
         var page = 1;
         if (data.page) {
             page = data.page;

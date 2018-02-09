@@ -163,6 +163,32 @@ var navigationservice = angular.module('navigationservice', [])
 
 
         return {
+            // Actually Used
+            login: function (data, callback) {
+                $http.post(adminurl + 'Employee/Login', data).success(function (data) {
+                    if (data.value === true) {
+                        if (data.data.Is == "Customer") {
+                            var temp = data.data;
+                            $http.post(adminurl + 'Role/getRoleByName', temp).success((rolesData) => {
+                                console.log("rolesforcustomer", rolesData);
+                                if (rolesData.value == true) {
+                                    data.data.role = rolesData.data;
+                                    $.jStorage.set("getLoginEmployee", data.data);
+                                    var newRole = getRoleSingle(data.data.role);
+                                    $.jStorage.set("role", newRole);
+                                    callback(data);
+                                }
+                            });
+                        } else {
+                            $.jStorage.set("getLoginEmployee", data.data);
+                            var newRole = getRoleSingle(data.data.role);
+                            $.jStorage.set("role", newRole);
+                            callback(data);
+                        }
+                    }
+                });
+            },
+            // 
             getRoleSingle: function (arr) {
                 return getRoleSingle(arr);
             },
@@ -176,35 +202,7 @@ var navigationservice = angular.module('navigationservice', [])
                 formData = {};
                 formData.isSBC = $.jStorage.get("getLoginEmployee").isSBC;
                 formData.ownerId = $.jStorage.get("getLoginEmployee")._id;
-                // $http.post(adminurl + 'Employee/getNavigationCounts', formData).success(function (data) {
-                //     _.map(navigation, function (values) {
-                //         if (values.name == "Approvals") {
-                //             _.map(values.subnav, function (values) {
-                //                 if (!_.isEmpty(data.data.sbcPending) && values.isView === true && values.name == "SBC Approval") {
-                //                     approvalPendingCount = approvalPendingCount + data.data.sbcPending.count;
-                //                     values.badge = data.data.sbcPending.count;
-                //                 }
-                //                 if (!_.isEmpty(data.data.ilaPending) && values.isView === true && values.name == "ILA Approval") {
-                //                     approvalPendingCount = approvalPendingCount + data.data.ilaPending.count;
-                //                     values.badge = data.data.ilaPending.count;
-                //                 }
-                //                 if (!_.isEmpty(data.data.lorPending) && values.isView === true && values.name == "LOR Approval") {
-                //                     approvalPendingCount = approvalPendingCount + data.data.lorPending.count;
-                //                     values.badge = data.data.lorPending.count;
-                //                 }
-                //                 if (!_.isEmpty(data.data.invoicePending) && values.isView === true && values.name == "Invoice Approval") {
-                //                     approvalPendingCount = approvalPendingCount + data.data.invoicePending[0].count;
-                //                     values.badge = data.data.invoicePending[0].count;
-                //                 }
-                //                 if (!_.isEmpty(data.data.assignmentPending) && values.isView === true && values.name == "Assignment Approval") {
-                //                     approvalPendingCount = approvalPendingCount + data.data.assignmentPending.count;
-                //                     values.badge = data.data.assignmentPending.count;
-                //                 }
-                //             });
-                //             values.badge = approvalPendingCount;
-                //         }
-                //     });
-                // });
+
                 return navigation;
             },
             getNavByRole: function (role) {
@@ -976,29 +974,6 @@ var navigationservice = angular.module('navigationservice', [])
                     callback(data, i);
                 });
             },
-            // getDashboardCounts: function (formData, callback) {
-            //     formData.ownerId = $.jStorage.get("getLoginEmployee")._id;
-            //     formData.isSBC = $.jStorage.get("getLoginEmployee").isSBC;
-            //     formData.accessToken = $.jStorage.get("accessToken");
-            //     $http.post(adminurl + 'Employee/getDashboardCounts', formData).success(function (data) {
-            //         callback(data);
-            //     });
-            // },
-            // getAssignmentSummary: function (formData, callback) {
-            //     formData.ownerId = $.jStorage.get("getLoginEmployee")._id;
-            //     formData.accessToken = $.jStorage.get("accessToken");
-            //     $http.post(adminurl + 'Employee/getAssignmentSummary', formData).success(function (data) {
-            //         callback(data);
-            //     });
-            // },
-            // getNavigationCounts: function (data, callback) {
-            //     formData = {};
-            //     formData.ownerId = $.jStorage.get("getLoginEmployee")._id;
-            //     formData.accessToken = $.jStorage.get("accessToken");
-            //     $http.post(adminurl + 'Employee/getNavigationCounts', formData).success(function (data) {
-            //         callback(data);
-            //     });
-            // },
             getPolicyDoc: function (formData, i, callback) {
                 formData.accessToken = $.jStorage.get("accessToken");
                 $http.post(adminurl + 'PolicyDoc/getPolicyDoc', formData).success(function (data) {
@@ -1285,32 +1260,25 @@ var navigationservice = angular.module('navigationservice', [])
             login: function (data, callback) {
                 $http.post(adminurl + 'Employee/Login', data).success(function (data) {
                     if (data.value === true) {
-                        console.log("login data", data)
                         if (data.data.Is == "Customer") {
-                            console.log("inside customer if")
                             var temp = data.data;
                             $http.post(adminurl + 'Role/getRoleByName', temp).success((rolesData) => {
                                 console.log("rolesforcustomer", rolesData);
                                 if (rolesData.value == true) {
-
                                     data.data.role = rolesData.data;
                                     $.jStorage.set("getLoginEmployee", data.data);
                                     var newRole = getRoleSingle(data.data.role);
                                     $.jStorage.set("role", newRole);
-
                                     callback(data);
                                 }
-                            })
+                            });
                         } else {
-                            console.log("inside else")
                             $.jStorage.set("getLoginEmployee", data.data);
                             var newRole = getRoleSingle(data.data.role);
                             $.jStorage.set("role", newRole);
                             callback(data);
                         }
-
                     }
-
                 });
             },
             getLoginEmployee: function (email, callback) {
