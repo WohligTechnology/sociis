@@ -113,10 +113,10 @@
                     <uib-accordion-heading>
                         <div ng-if="invoice.status=='Partial Pending'">
                             Date:{{invoice.createdAt | Date}}, Bill No : {{invoice.name}}, Total Amount : {{invoice.total}}, Pending :{{invoice.total
-                            - invoice.paidAmount}}, Customer : {{invoice.customer.name}}
+                            - invoice.paidAmount}}
                         </div>
                         <div ng-if="invoice.status!=='Partial Pending'">
-                            Date:{{invoice.createdAt | Date}}, Bill No : {{invoice.name}}, Total Amount : {{invoice.total}}, Customer : {{invoice.customer.name}}
+                            Date:{{invoice.createdAt | Date}}, Bill No : {{invoice.name}}, Total Amount : {{invoice.total}}
                         </div>
                     </uib-accordion-heading>
                     <div class="line-holder" ng-repeat="product in invoice.invoiceList">
