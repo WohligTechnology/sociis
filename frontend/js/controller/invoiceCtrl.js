@@ -44,7 +44,7 @@ firstapp.controller('InvoiceViewCtrl', function ($scope, $window, hotkeys, Templ
             NavigationService.searchInvoice({
                 page: $scope.currentPage,
                 keyword: $scope.search.keyword,
-                filter:
+                filter:{}
             }, ++i, function (data, ini) {
 
                 if (ini == i) {
