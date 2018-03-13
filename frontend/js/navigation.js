@@ -811,7 +811,6 @@ var navigationservice = angular.module('navigationservice', [])
                         n = undefined;
                     }
                 });
-                formData.accessToken = $.jStorage.get("accessToken");
                 $http.post(adminurl + 'Customer/search', formData).success(function (data) {
                     callback(data, i);
                 });

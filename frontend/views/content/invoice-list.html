@@ -18,6 +18,15 @@
     </div>
 </div>
 <!-- Top Bar Chart -->
+<div class="col-md-6">
+    <div class="form-group">
+        <ui-select multiple tagging="tagTransform" tagging-label="(press enter to add new)" on-select="clicked($select.selected)"
+            name="customer" ng-model="formData.customer" theme="bootstrap">
+            <ui-select-match>{{$item.name}}</ui-select-match>
+            <ui-select-choices repeat="customer in customerArr | filter:$select.search" refresh-delay="0" refresh="searchCustomer($select.search)">{{customer.name}}</ui-select-choices>
+        </ui-select>
+    </div>
+</div>
 <div class="panel-content city-list-content">
     <div class="row">
         <div class="col-md-12">
@@ -26,8 +35,7 @@
                     <div class="widget-title">
                         <div class="pull-right">
                             <form class="search-form mr-form">
-                                <input type="text" ng-change="showAllInvoices(true)" placeholder="Search Here..." ng-model="invoiceFilter.invoiceNumber"
-                                />
+                                <input type="text" ng-change="showAllInvoices(true)" placeholder="Search Here..." ng-model="invoiceFilter.invoiceNumber">
                                 <button type="submit">
                                     <i class="fa fa-search"></i>
                                 </button>
@@ -39,6 +47,9 @@
                             <span class="tableTotal">(Total : {{totalItems}}) </span>
                         </h3>
                     </div>
+
+
+
                     <!-- <div class="table-responsive" ng-show="totalItems>0">
                         <table class="table table-striped">
                             <thead>

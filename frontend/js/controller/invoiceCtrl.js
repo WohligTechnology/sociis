@@ -35,14 +35,16 @@ firstapp.controller('InvoiceViewCtrl', function ($scope, $window, hotkeys, Templ
             });
         };
 
-        $scope.showAll = function (keywordChange) {
+        $scope.showAll = function (keywordChange,filterObj) {
             $scope.totalItems = undefined;
             if (keywordChange) {
                 $scope.currentPage = 1;
             }
+            if(!filterObj)
             NavigationService.searchInvoice({
                 page: $scope.currentPage,
-                keyword: $scope.search.keyword
+                keyword: $scope.search.keyword,
+                filter:
             }, ++i, function (data, ini) {
 
                 if (ini == i) {
@@ -82,7 +84,23 @@ firstapp.controller('InvoiceViewCtrl', function ($scope, $window, hotkeys, Templ
         };
         $scope.changeStatus = function (ind) {
             NavigationService.modelSave($scope.ModelApi, ind, function (data) {
-                if (data.value === true) {}
+                if (data.value === true) { }
+            });
+        };
+        $scope.searchCustomer = function (data) {
+            var formData2 = {};
+            formData2.filter = {
+                "name": data
+            };
+            if (!data) {
+                data = "";
+            }
+            NavigationService.searchCustomer({
+                keyword: $scope.search.keyword
+            }, ++i, function (data, ini) {
+                if (ini == i) {
+                    $scope.customerArr = data.data.results;
+                }
             });
         };
     }
