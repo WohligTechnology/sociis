@@ -94,6 +94,7 @@ firstapp.controller('CreatePaymentCtrl', function ($scope, hotkeys, $window, Tem
     _.each(a, function (n) {
         $scope.ModelApi = $scope.ModelApi + n;
     });
+    $scope.DisableSave = false;
 
     $scope.modelCap = _.capitalize($stateParams.model);
     $scope.modelLow = _.lowerCase($stateParams.model);
@@ -127,6 +128,8 @@ firstapp.controller('CreatePaymentCtrl', function ($scope, hotkeys, $window, Tem
                 $scope.showCreditLimit = true;
                 var billedToCreditDetails = data.data;
                 $scope.creditPending = billedToCreditDetails.creditExhausted;
+            } else {
+
             }
         });
     };
@@ -150,6 +153,7 @@ firstapp.controller('CreatePaymentCtrl', function ($scope, hotkeys, $window, Tem
         $window.history.back();
     };
     $scope.createPayment = function (data) {
+        $scope.DisableSave = true;
         $scope.formData.customer = $scope.formData.customer._id;
         NavigationService.createPayment($scope.formData, function (data) {
             toastr.success("Payment Created Successfully");

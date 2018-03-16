@@ -113,33 +113,33 @@ var controller = {
                         }
                     });
                 },
-                function (customer, callback) { // SMS
-                    if (customer.mobile && req.body.total > 50) {
-                        var content = "Dear " + customer.name + ", your Current Bill = " + req.body.total + ".";
-                        if (customer.creditExhausted) {
-                            content = content + " Your Total Pending Bill = " + customer.creditExhausted + ".";
-                        }
-                        content = content + " Thank You !!!";
-                        var smsObj = {
-                            content: content,
-                            mobile: customer.mobile
-                        };
-                        Config.sendSms(smsObj, function (err, smsRespo) {
-                            if (err) {
-                                console.log("1");
-                                callback(null, "Hi");
-                            } else if (smsRespo) {
-                                console.log("2");
-                                callback(null, "Hi1");
-                            } else {
-                                console.log("3");
-                                callback(null, "Hi2");
-                            }
-                        });
-                    } else {
-                        callback(null, customer);
-                    }
-                }
+                // function (customer, callback) { // SMS
+                //     if (customer.mobile && req.body.total > 50) {
+                //         var content = "Dear " + customer.name + ", your Current Bill = " + req.body.total + ".";
+                //         if (customer.creditExhausted) {
+                //             content = content + " Your Total Pending Bill = " + customer.creditExhausted + ".";
+                //         }
+                //         content = content + " Thank You !!!";
+                //         var smsObj = {
+                //             content: content,
+                //             mobile: customer.mobile
+                //         };
+                //         Config.sendSms(smsObj, function (err, smsRespo) {
+                //             if (err) {
+                //                 console.log("1");
+                //                 callback(null, "Hi");
+                //             } else if (smsRespo) {
+                //                 console.log("2");
+                //                 callback(null, "Hi1");
+                //             } else {
+                //                 console.log("3");
+                //                 callback(null, "Hi2");
+                //             }
+                //         });
+                //     } else {
+                //         callback(null, customer);
+                //     }
+                // }
             ],
             function (err, results) {
                 if (err) {

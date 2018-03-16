@@ -29,7 +29,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Amount*</label>
-                                <input type="Number" name="amount" class="form-control" ng-model="formData.amount" required>
+                                <input type="Number" min=0 name="amount" class="form-control" ng-model="formData.amount" required>
                                 <div class="error-msg" ng-show="formName.amount.$invalid && formName.amount.$touched">Please Enter Amount</div>
                             </div>
                         </div>
@@ -41,7 +41,7 @@
 
 
         <div class="text-center mt20 odd-even-button">
-            <button class="btn btn-success" ng-click="createPayment(formData)" ng-disabled="formName.$invalid">Save</button>
+            <button class="btn btn-success" ng-if="!DisableSave" ng-click="createPayment(formData)" ng-disabled="formName.$invalid">Save</button>
             <a class="btn btn-danger" ng-click="cancel()">Cancel</a>
         </div>
         <!--</div>-->

@@ -2,7 +2,7 @@ module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 var controller = {
     createPayment: function (req, res) {
         var invoiceArr = [];
-        console.log("Customer --->", req.body.customer);
+        // console.log("Customer --->", req.body.customer);
         async.waterfall([
                 function (callback) { //Invoice Search
                     Invoice.find({
@@ -26,7 +26,7 @@ var controller = {
                     });
                 },
                 function (data, callback) { // Invoice Update
-                    console.log("data", data);
+                    // console.log("data", data);
                     var PayAmount = req.body.amount;
                     async.eachSeries(data, function (n, callback1) {
                         var remaning = n.total - n.paidAmount;
@@ -42,6 +42,7 @@ var controller = {
                                 _id: n._id
                             }, n, function (err, updated) {
                                 if (err) {
+                                    // console.log("In Err1");
                                     callback1(err, null);
                                 } else {
                                     invoiceArr.push(n._id);
@@ -58,8 +59,14 @@ var controller = {
                             n.status = "Partial Pending";
                             Invoice.update({
                                 _id: n._id
-                            }, n, function (err, updated) {
+                            }, {
+                                $set: {
+                                    status: n.status,
+                                    paidAmount: n.paidAmount
+                                }
+                            }, function (err, updated) {
                                 if (err) {
+                                    // console.log("In Err2");
                                     callback1(err, null);
                                 } else {
                                     invoiceArr.push(n._id);
@@ -71,6 +78,7 @@ var controller = {
                         }
                     }, function (err, data2) {
                         if (err) {
+                            // console.log("In Err3");
                             callback(err, data2);
                         } else {
                             callback(null, data2);
@@ -81,11 +89,16 @@ var controller = {
                     req.body.invoice = invoiceArr;
                     Payment.generatePaymentNumber(req.body, function (err, name) {
                         if (err) {
+                            // console.log("In Err4");
                             callback(err, null);
                         } else {
                             req.body.name = name;
+                            console.log(req.body);
                             Payment.saveData(req.body, function (err, data) {
+                                // console.log("after payment req:",req.body);
+                                // console.log("after payment resp",data,err);
                                 if (err) {
+                                    console.log("In Err5");
                                     callback(err, null);
                                 } else {
                                     callback(null, data);
@@ -101,8 +114,10 @@ var controller = {
                     };
                     Customer.upDateCustomerOnCreatePayment(customerData, function (err, name) {
                         if (err) {
+                            console.log("In Err6");
                             callback(err, null);
                         } else {
+                            console.log("Exec 7")
                             callback(null, data);
                         }
                     });
@@ -110,6 +125,7 @@ var controller = {
             ],
             function (err, results) {
                 if (err) {
+                    console.log("In Err7");
                     res.callback(err, null);
                 } else {
                     var newData = {
