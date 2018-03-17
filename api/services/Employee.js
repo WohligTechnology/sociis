@@ -89,7 +89,7 @@ schema.plugin(deepPopulate, {
     }
 });
 // schema.plugin(uniqueValidator);
-schema.plugin(timestamps);
+schema.plugin(timestamps,timestampsAppendObject);
 module.exports = mongoose.model('Employee', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "city.district.state.zone.country func grade department IIISLACertificate.department allBranch role employee", "city.district.state.zone.country  func grade postedAt allBranch role employee"));

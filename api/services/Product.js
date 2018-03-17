@@ -27,7 +27,7 @@ var schema = new Schema({
 });
 
 schema.plugin(uniqueValidator);
-schema.plugin(timestamps);
+schema.plugin(timestamps,timestampsAppendObject);
 schema.plugin(deepPopulate, {
     populate: {
         'category': {

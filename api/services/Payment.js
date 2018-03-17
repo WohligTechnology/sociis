@@ -49,7 +49,7 @@ schema.plugin(deepPopulate, {
     }
 });
 schema.plugin(uniqueValidator);
-schema.plugin(timestamps);
+schema.plugin(timestamps,timestampsAppendObject);
 module.exports = mongoose.model('Payment', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "employee customer shop invoice", "employee customer shop invoice"));

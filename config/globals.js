@@ -74,7 +74,8 @@ module.exports.globals = {
 global["mongoose"] = require('mongoose');
 global["deepPopulate"] = require('mongoose-deep-populate')(mongoose);
 global["uniqueValidator"] = require('mongoose-unique-validator');
-global["timestamps"] = require('mongoose-timestamp');
+// global["timestamps"] = require('mongoose-timestamp');
+global["timestamps"] = require('mongoose-timestamp-plugin');
 global["validators"] = require('mongoose-validators');
 global["monguurl"] = require('monguurl');
 require('mongoose-middleware').initialize(mongoose);
@@ -126,7 +127,12 @@ global["Jimp"] = require("jimp");
 
 //Mime types
 global["mime"] = require('mime-types');
-
+global["timestampsAppendObject"] = {
+    createdName: 'created_at', // default: 'createdAt' 
+    updatedName: 'updated_at', // default: 'updatedAt' 
+    disableCreated: false, // Disables the logging of the creation date 
+    disableUpdated: false // Disabled the loggin of the modification date 
+};
 // //xoauth2 for send gmail mail with NodeMailer
 // global["xoauth2"] = require('xoauth2');
 
