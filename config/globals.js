@@ -128,8 +128,8 @@ global["Jimp"] = require("jimp");
 //Mime types
 global["mime"] = require('mime-types');
 global["timestampsAppendObject"] = {
-    createdName: 'created_at', // default: 'createdAt' 
-    updatedName: 'updated_at', // default: 'updatedAt' 
+    createdName: 'createdAt', // default: 'createdAt' 
+    updatedName: 'updatedAt', // default: 'updatedAt' 
     disableCreated: false, // Disables the logging of the creation date 
     disableUpdated: false // Disabled the loggin of the modification date 
 };

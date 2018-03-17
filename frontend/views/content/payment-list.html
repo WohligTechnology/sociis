@@ -33,6 +33,7 @@
                             <thead>
                                 <tr>
                                     <th>Payment Number</th>
+                                    <th>Time</th>
                                     <th>Customer</th>
                                     <th>Shop</th>
                                     <th>Employee</th>
@@ -42,6 +43,7 @@
                             <tbody>
                                 <tr ng-repeat="data in modelList">
                                     <td>{{data.name}}</td>
+                                    <td>{{data.createdAt| Date}}</td>
                                     <td>{{data.customer.name}}</td>
                                     <td>{{data.shop.name}}</td>
                                     <td>{{data.employee.name}}</td>

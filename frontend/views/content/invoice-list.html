@@ -47,33 +47,6 @@
                             <span class="tableTotal">(Total : {{totalItems}}) </span>
                         </h3>
                     </div>
-
-
-
-                    <!-- <div class="table-responsive" ng-show="totalItems>0">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Invoice Number</th>
-                                    <th>Customer</th>
-                                    <th>Employee</th>
-                                    <th>Shop</th>
-                                    <th>Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="data in modelList">
-
-                                    <td>{{data.name}}</td>
-                                    <td>{{data.customer.name}}</td>
-                                    <td>{{data.employee.name}}</td>
-                                    <td>{{data.shop.name}}</td>
-                                    <td>{{data.total}}</td>
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div> -->
                     <div class="sec">
                         <uib-accordion>
                             <div uib-accordion-group class="panel-default custom-panel" ng-class="getStatusColor(invoice.status)" ng-repeat="invoice in modelList track by $index">
