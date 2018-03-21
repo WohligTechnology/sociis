@@ -46,7 +46,6 @@ firstapp.controller('InvoiceViewCtrl', function ($scope, $window, hotkeys, Templ
                 keyword: $scope.search.keyword,
                 filter:{}
             }, ++i, function (data, ini) {
-
                 if (ini == i) {
                     $scope.modelList = data.data.results;
                     $scope.totalItems = data.data.total;
