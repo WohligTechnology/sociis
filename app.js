@@ -40,31 +40,8 @@ function setupGFS() {
 }
 
 
-if (process.env.name == "AbsoluteTesting") {
+if (process.env.name == "Sociis") {
   global["env"] = require("./config/env/testing.js");
-  // 'mongodb://localhost:27017/' + database +'?socketTimeoutMS=150000'
-  mongoose.connect('mongodb://localhost:27017/' + database, function (err, data) {
-    if (err) {
-      // 104.155.238.145
-      console.log(err);
-    } else {
-      console.log("Database Connected to Sociis");
-      setupGFS();
-    }
-  });
-} else if (process.env.name == "ABM Live") {
-  global["env"] = require("./config/env/live.js");
-  global.url = 'mongodb://' + username + ':' + encodeURI(password) + '@' + host + ':' + port + '/' + database;
-  mongoose.connect(url, function (err) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Database Connected to Sociis");
-      setupGFS();
-    }
-  });
-} else if (process.env.name == "Absolute ABM 3") {
-  global["env"] = require("./config/env/production.js");
   // 'mongodb://localhost:27017/' + database +'?socketTimeoutMS=150000'
   mongoose.connect('mongodb://localhost:27017/' + database, function (err, data) {
     if (err) {
