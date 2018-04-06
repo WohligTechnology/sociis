@@ -1,6 +1,0 @@
-apps:
-  - script: "app.js"
-    name: "Sociis"
-    watch: false
-    args: "--prod"
-    exec_mode: "cluster"
