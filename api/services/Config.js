@@ -174,8 +174,8 @@ var models = {
         console.log("Data mobile content", data.mobile, data.content);
         if (true) {
             request.get({
-                // url: "https://alerts.solutionsinfini.com/api/v4/?method=sms&api_key=A23b865252a08417ecf80322e20511f83&to=" + data.mobile + "&sender=SOCIIS&message=" + data.content + "&format=json"
-                url: "http://panel.textlab.in/index.php/smsapi/httpapi/?uname=sanketdeshmukh&password=Sanket@7206&receiver=" + data.mobile + "&route=TA&msgtype=1&sender=SOCIIS&sms=" + data.content
+                url: "http://bhashsms.com/api/sendmsg.php?user=sanketdeshmukh&pass=Sanket2628&sender=SOCIIS&phone=" + data.mobile + "&text=" + data.content + "&priority=ndnd&stype=normal"
+                // url: "http://panel.textlab.in/index.php/smsapi/httpapi/?uname=sanketdeshmukh&password=Sanket@7206&receiver=" + data.mobile + "&route=TA&msgtype=1&sender=SOCIIS&sms=" + data.content
             }, function (err, http, body) {
                 if (err) {
                     console.log("*************************************************sms gateway error***********************************************");
