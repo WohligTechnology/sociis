@@ -10,12 +10,17 @@
 </div>
 <form name="formName" ng-submit="saveModel(formData)">
     <div class="heading-sec">
-        <div class="row">
+        <div class="row" ng-if="isCustomer">
             <div class="col-md-12 column">
                 <div class="heading-profile">
                     <toggle-switch ng-model="formData.status" class="switch-small switch-success pull-right"></toggle-switch>
                     <h2>{{header.name}}</h2>
                 </div>
+            </div>
+        </div>
+        <div class="col-md-6" ng-if="!isCustomer">
+            <div class="form-group">
+                <input type="text" name="name" class="form-control" ng-model="formData.name" ng-value="formData.name" readonly>
             </div>
         </div>
     </div>
@@ -24,7 +29,7 @@
             <div class="col-md-12">
                 <div class="sec">
                     <div class="widget">
-                        <div class="form-elements-sec">
+                        <div class="form-elements-sec" ng-if="isCustomer">
                             <div class="widget-title">
                                 <h3>Customer</h3>
                             </div>
@@ -79,10 +84,10 @@
                     </div>
                     <div class="widget">
                         <div class="form-elements-sec">
-                            <div class="widget-title">
+                            <div class="widget-title" ng-if="isCustomer">
                                 <h3>Credit Limit</h3>
                             </div>
-                            <div class="col-md-4 col-sm-4">
+                            <div class="col-md-4 col-sm-4" ng-if="isCustomer">
                                 <div class="form-group">
                                     <label>Credit Limit Alloted</label>
                                     <input type="Number" class="form-control" name="creditAlloted" ng-change="changePending()" ng-model="formData.creditAlloted"
@@ -91,11 +96,11 @@
                             </div>
                             <div class="col-md-4 col-sm-4">
                                 <div class="form-group">
-                                    <label>Credit Limit exhausted</label>
+                                    <label>Bill Pending</label>
                                     <input class="form-control" name="creditExhausted" ng-model="formData.creditExhausted" readonly>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-sm-4">
+                            <div class="col-md-4 col-sm-4" ng-if="isCustomer">
                                 <div class="form-group">
                                     <label>Credit Limit Pending</label>
                                     <input class="form-control" name="creditPending" ng-model="formData.creditPending" readonly>
@@ -151,7 +156,7 @@
         <!-- Accordian End -->
         <!-- Save & Cancel -->
         <div class="clearfix"></div>
-        <div class="text-center mt20 odd-even-button">
+        <div class="text-center mt20 odd-even-button" ng-if="isCustomer">
             <button class="btn btn-default" type="submit" ng-disabled="formName.$invalid">Save</button>
             <a class="btn btn-default" type="submit" ng-click="cancel()">Cancel</a>
         </div>
