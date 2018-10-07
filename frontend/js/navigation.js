@@ -96,16 +96,6 @@ var navigationservice = angular.module('navigationservice', [])
                 }]
             }
         ];
-        var membershipLevel = [{
-            name: "Student",
-            id: "Student"
-        }, {
-            name: "Licentiate",
-            id: "Licentiate"
-        }, {
-            name: "Associate",
-            id: "Associate"
-        }];
 
         function isViewHidden(nav, role) {
             stateName = nav.anchor;
@@ -164,30 +154,31 @@ var navigationservice = angular.module('navigationservice', [])
 
         return {
             // Actually Used
-            login: function (data, callback) {
-                $http.post(adminurl + 'Employee/Login', data).success(function (data) {
-                    if (data.value === true) {
-                        if (data.data.Is == "Customer") {
-                            var temp = data.data;
-                            $http.post(adminurl + 'Role/getRoleByName', temp).success((rolesData) => {
-                                console.log("rolesforcustomer", rolesData);
-                                if (rolesData.value == true) {
-                                    data.data.role = rolesData.data;
-                                    $.jStorage.set("getLoginEmployee", data.data);
-                                    var newRole = getRoleSingle(data.data.role);
-                                    $.jStorage.set("role", newRole);
-                                    callback(data);
-                                }
-                            });
-                        } else {
-                            $.jStorage.set("getLoginEmployee", data.data);
-                            var newRole = getRoleSingle(data.data.role);
-                            $.jStorage.set("role", newRole);
-                            callback(data);
-                        }
-                    }
-                });
-            },
+            // login: function (data, callback) {
+            //     $http.post(adminurl + 'Employee/Login', data).success(function (data) {
+            //         if (data.value === true) {
+            //             console.log("Data.data", data.data);
+            //             if (data.data.Is == "Customer") {
+            //                 var temp = data.data;
+            //                 $http.post(adminurl + 'Role/getRoleByName', temp).success((rolesData) => {
+            //                     console.log("rolesforcustomer", rolesData);
+            //                     if (rolesData.value == true) {
+            //                         data.data.role = rolesData.data;
+            //                         $.jStorage.set("getLoginEmployee", data.data);
+            //                         var newRole = getRoleSingle(data.data.role);
+            //                         $.jStorage.set("role", newRole);
+            //                         callback(data);
+            //                     }
+            //                 });
+            //             } else {
+            //                 $.jStorage.set("getLoginEmployee", data.data);
+            //                 var newRole = getRoleSingle(data.data.role);
+            //                 $.jStorage.set("role", newRole);
+            //                 callback(data);
+            //             }
+            //         }
+            //     });
+            // },
             // 
             getRoleSingle: function (arr) {
                 return getRoleSingle(arr);
@@ -916,12 +907,6 @@ var navigationservice = angular.module('navigationservice', [])
                     callback(data, i);
                 });
             },
-            searchLeaves: function (formData, i, callback) {
-                formData.accessToken = $.jStorage.get("accessToken");
-                $http.post(adminurl + 'LeaveManagement/search', formData).success(function (data) {
-                    callback(data, i);
-                });
-            },
             searchCustomerCompany: function (formData, i, callback) {
                 formData.accessToken = $.jStorage.get("accessToken");
                 $http.post(adminurl + 'CustomerCompany/search', formData).success(function (data) {
@@ -932,21 +917,6 @@ var navigationservice = angular.module('navigationservice', [])
                 formData.accessToken = $.jStorage.get("accessToken");
                 $http.post(adminurl + 'office/search', formData).success(function (data) {
                     callback(data, i);
-                });
-            },
-            // thirdPartyApi: function (formData, callback) {
-            //     $http.post('http://180.150.249.125/absolute/webservice/Mobile_HRMS.asmx', formData).success(function (data) {
-            //         callback(data);
-            //     });
-            // },
-            thirdPartyApi: function (formData, callback) {
-                $http({
-                    url: 'http://180.150.249.125/absolute/webservice/Mobile_HRMS.asmx',
-                    method: 'POST',
-                    withCredentials: false,
-                }).success(function (data) {
-                    console.log("getLatLng In Nav", data);
-                    callback(data);
                 });
             },
             searchOfficer: function (formData, i, callback) {
@@ -1257,8 +1227,10 @@ var navigationservice = angular.module('navigationservice', [])
                 }).success(callback);
             },
             login: function (data, callback) {
+                console.log("Data");
                 $http.post(adminurl + 'Employee/Login', data).success(function (data) {
                     if (data.value === true) {
+                        console.log("Data", data.data);
                         if (data.data.Is == "Customer") {
                             var temp = data.data;
                             $http.post(adminurl + 'Role/getRoleByName', temp).success((rolesData) => {

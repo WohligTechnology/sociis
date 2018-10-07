@@ -431,22 +431,6 @@ var controller = {
                         if (result.password == valid.password) {
                             result.Is = a;
                             res.callback(null, result);
-                            // var randtoken = require('rand-token');
-                            // var token = randtoken.generate(16);
-                            // Customer.update({
-                            //     "_id": result._id
-                            // }, {
-                            //     accesstoken: token
-                            // }, (err, update) => {
-                            //     if (err) {
-                            //         console.log("error in accesstoken updation", err);
-                            //         res.callback("There was some error");
-                            //     } else {
-                            //         result.accesstoken = token;
-                            //        
-                            //     }
-                            // })
-
                         } else {
                             res.callback("Not a valid user", null);
                         }
