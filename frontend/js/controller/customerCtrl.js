@@ -79,6 +79,11 @@ firstapp
     $scope.header = {
       name: "Create Customer"
     };
+    if ($.jStorage.get("getLoginEmployee").Is == "Customer") {
+      $scope.isCustomer = false;
+    } else {
+      $scope.isCustomer = true;
+    }
     $scope.formData.creditExhausted = 0;
     $scope.changePending = function() {
       $scope.formData.creditPending = $scope.formData.creditAlloted;
