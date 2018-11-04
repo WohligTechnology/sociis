@@ -1,4 +1,4 @@
 module.exports = {
   port: 80,
-  realHost: "http://sociis.in"
+  realHost: "https://sociis.in"
 };
