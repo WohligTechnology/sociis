@@ -1482,7 +1482,7 @@ var navigationservice = angular
           .success(callback);
       },
       login: function(data, callback) {
-        console.log("Data");
+        console.log("Data", adminurl);
         $http.post(adminurl + "Employee/Login", data).success(function(data) {
           if (data.value === true) {
             console.log("Data", data.data);
