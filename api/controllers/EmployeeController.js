@@ -383,6 +383,7 @@ var controller = {
                 null
               );
             } else if (_.isEmpty(result)) {
+              console.log("Before CallBack2")
               res.json({
                 value: false,
                 data: "Invalid Request"
@@ -390,6 +391,7 @@ var controller = {
             } else {
               if (result.password == valid.password) {
                 result.Is = a;
+                console.log("Before CallBack")
                 res.callback(null, result);
               } else {
                 res.callback("Not a valid user", null);
@@ -397,6 +399,7 @@ var controller = {
             }
           });
       } else {
+        console.log("Before CallBack1")
         res.callback("Please fill all fields", null);
       }
     } else {
