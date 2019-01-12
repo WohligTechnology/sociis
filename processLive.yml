@@ -2,5 +2,5 @@ apps:
   - script: "app.js"
     name: "Sociis"
     watch: false
-    args: "--prod"
+    args: "--prod --port 82"
     exec_mode: "cluster"
