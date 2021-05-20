@@ -37,7 +37,7 @@
     "gulp-sass": "^2.3.2",
     "gulp-sourcemaps": "^1.9.0",
     "gulp-util": "^3.0.7",
-    "html-pdf": "^2.1.0",
+    "html-pdf": "^3.0.1",
     "include-all": "~0.1.6",
     "install": "^0.8.1",
     "jimp": "^0.2.27",
